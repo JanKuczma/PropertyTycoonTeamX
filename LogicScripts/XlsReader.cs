@@ -10,7 +10,7 @@ public class XlsReader
         public XlsReader() { }
 
         // Writes the stack
-        public CardStack WriteStack(CardStack c, int cell1, int cell2)
+        public CardStack WriteStack(CardStack c, int detailsBegin, int detailsEnd)
         {
             using (var package =
                    new ExcelPackage(
@@ -18,7 +18,7 @@ public class XlsReader
             {
                 var sheet = package.Workbook.Worksheets["Default"];
 
-                var dict = ExtractCardDetails(sheet, cell1, cell2);
+                var dict = ExtractCardDetails(sheet, detailsBegin, detailsEnd);
 
 
                 foreach (var pl in dict)
@@ -30,11 +30,11 @@ public class XlsReader
             return c;
         }
         
-        private static Dictionary<string, string> ExtractCardDetails(ExcelWorksheet sheet, int cell1, int cell2)
+        private static Dictionary<string, string> ExtractCardDetails(ExcelWorksheet sheet, int detailsBegin, int detailsEnd)
         {
             var cardStack = new Dictionary<string, string>();
 
-            for (var i = cell1; i < cell2 + 1; i++)
+            for (var i = detailsBegin; i < detailsEnd + 1; i++)
             {
                 var rs1 = "";
                 var rs2 = "";
@@ -67,6 +67,7 @@ public class XlsReader
                     cardStack.Add(rs1, rs2);
                 }
 
+                // Compiler flags these as redundant but function breaks without it ¯\_(ツ)_/¯
                 rs1 = null;
                 rs2 = null;
             }
