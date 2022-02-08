@@ -6,12 +6,10 @@ using System.Collections.Generic;
 /// </summary>
 public class CardStack
 {
-private string stackName;
     private List<Card> cards;
 
-    public CardStack(string stackName)
+    public CardStack()
     {
-        this.stackName = stackName;
         cards = new List<Card>();
     }
 
@@ -39,7 +37,7 @@ private string stackName;
     {
         foreach (var card in cards)
         {
-            Console.WriteLine(card.GetName() + " " + card.GetDescription());
+            Console.WriteLine(card.ToString());
         }
     }
 }
