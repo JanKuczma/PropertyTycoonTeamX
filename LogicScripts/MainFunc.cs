@@ -23,8 +23,8 @@ public class MainFunc
         const int oppKnocksDetailsBegin = 25;
         const int oppKnocksDetailsEnd = 40;
         
-        var potLuck = new CardStack("Pot Luck");
-        var oppKnocks = new CardStack("Opportunity Knocks");
+        var potLuck = new CardStack();
+        var oppKnocks = new CardStack();
 
         InstantiateStack(ref potLuck, potLuckDetailsBegin, potLuckDetailsEnd);
         InstantiateStack(ref oppKnocks, oppKnocksDetailsBegin, oppKnocksDetailsEnd);
