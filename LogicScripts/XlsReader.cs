@@ -33,7 +33,6 @@ public class XlsReader
         private static Dictionary<string, string> ExtractCardDetails(ExcelWorksheet sheet, int detailsBegin, int detailsEnd)
         {
             var cardStack = new Dictionary<string, string>();
-
             for (var i = detailsBegin; i < detailsEnd + 1; i++)
             {
                 var rs1 = "";
