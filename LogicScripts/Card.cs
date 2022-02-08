@@ -18,4 +18,9 @@ public class Card
     {
         return description;
     }
+
+    public override string ToString()
+    {
+        return name + " " + description;
+    }
 }
