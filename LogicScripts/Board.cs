@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OfficeOpenXml.Sparkline;
 
 public class Board
 {
@@ -16,9 +17,18 @@ public class Board
     private List<Space.OpportunityKnocks> opportunityKnocksSpace;
     private List<Space.PotLuck> potLucksSpace;
     
+    //Bank
+    
+    
     //Card decks
     private CardStack oppKnocks;
     private CardStack potLuck;
+    
+    //Players
+    private List<Player> players;
+    
+    //Pieces
+    private List<Piece> pieces;
 
     public Board(
         List<Space.Property> properties, 
@@ -32,8 +42,9 @@ public class Board
         Space.JustVisiting justVisiting,
         List<Space.OpportunityKnocks> opportunityKnocksSpace,
         List<Space.PotLuck> potLucksSpace,
-        CardStack oppknocks,
-        CardStack potLuck
+        CardStack oppKnocks,
+        CardStack potLuck,
+        List<Player> players
     )
     {
         this.properties = properties;
@@ -47,13 +58,15 @@ public class Board
         this.justVisiting = justVisiting;
         this.opportunityKnocksSpace = opportunityKnocksSpace;
         this.potLucksSpace = potLucksSpace;
-        this.oppKnocks = oppknocks;
+        this.oppKnocks = oppKnocks;
         this.potLuck = potLuck;
+        this.players = players;
     }
 
     // Just for testing
     public void getDetails()
     {
+        //Print board spaces
         Console.WriteLine("Properties:");
         foreach (var p in properties)
         {
@@ -92,24 +105,20 @@ public class Board
             Console.WriteLine(p.ToString());
         }
         Console.WriteLine();
+        
+        // Print cards
         Console.WriteLine("Opp Knocks Cards");
         oppKnocks.PrintCards();
         Console.WriteLine();
         Console.WriteLine("Pot Luck Cards");
         potLuck.PrintCards();
         Console.WriteLine();
-        //counted manually
-        const int numOnXlSheet = 40;
-        const int numOfActionSpaces = 6;
         
-        if (properties.Count + utilities.Count + stations.Count + numOfActionSpaces + opportunityKnocksSpace.Count + potLucksSpace.Count
-            == numOnXlSheet)
+        //Print players
+        Console.WriteLine("Players");
+        foreach (var p in players)
         {
-            Console.WriteLine("Same number of places as xl sheet!");
-        }
-        else
-        {
-            Console.WriteLine("Missed something");
+            Console.WriteLine(p.ToString());
         }
     }
 }
