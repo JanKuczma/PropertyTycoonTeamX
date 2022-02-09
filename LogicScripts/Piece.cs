@@ -1,6 +1,3 @@
-using System.Security.Authentication.ExtendedProtection.Configuration;
-using System.Security.Cryptography;
-
 public class Piece
 {
     private string name;
@@ -12,8 +9,8 @@ public class Piece
         this.modelData = modelData;
     }
 
-    public void jump()
+    public override string ToString()
     {
-        
+        return "Piece: " + name;
     }
 }
