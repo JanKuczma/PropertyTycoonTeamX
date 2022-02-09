@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/LogicScripts/Space.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogicScripts/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Board.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/MainFunc.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/MainFunc.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicScripts/MainFunc.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicScripts/Piece.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Piece.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogicScripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Property.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/XlsReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/XlsCardReader.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +50,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="rider.run.widget.enabled.cache" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager" selected=".NET Project.LogicScripts">
     <configuration name="LogicScripts" type="DotNetProject" factoryName=".NET Project">
@@ -108,7 +106,7 @@
       <workItem from="1644253541180" duration="47000" />
       <workItem from="1644320086630" duration="2862000" />
       <workItem from="1644324716565" duration="7390000" />
-      <workItem from="1644354170024" duration="16874000" />
+      <workItem from="1644354170024" duration="21630000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>
