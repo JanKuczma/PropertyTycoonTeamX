@@ -23,12 +23,6 @@ public class Board
     //Card decks
     private CardStack oppKnocks;
     private CardStack potLuck;
-    
-    //Players
-    private List<Player> players;
-    
-    //Pieces
-    private List<Piece> pieces;
 
     public Board(
         List<Space.Property> properties, 
@@ -43,8 +37,7 @@ public class Board
         List<Space.OpportunityKnocks> opportunityKnocksSpace,
         List<Space.PotLuck> potLucksSpace,
         CardStack oppKnocks,
-        CardStack potLuck,
-        List<Player> players
+        CardStack potLuck
     )
     {
         this.properties = properties;
@@ -60,11 +53,22 @@ public class Board
         this.potLucksSpace = potLucksSpace;
         this.oppKnocks = oppKnocks;
         this.potLuck = potLuck;
-        this.players = players;
+    }
+    
+    
+
+    public void ShufflePotLuck()
+    {
+        potLuck.ShuffleStack();
     }
 
+    public void ShuffleOppKnocks()
+    {
+        oppKnocks.ShuffleStack();
+    }
+    
     // Just for testing
-    public void getDetails()
+    public void GetDetails()
     {
         //Print board spaces
         Console.WriteLine("Properties:");
@@ -113,12 +117,5 @@ public class Board
         Console.WriteLine("Pot Luck Cards");
         potLuck.PrintCards();
         Console.WriteLine();
-        
-        //Print players
-        Console.WriteLine("Players");
-        foreach (var p in players)
-        {
-            Console.WriteLine(p.ToString());
-        }
     }
 }
