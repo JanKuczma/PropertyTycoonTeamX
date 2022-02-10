@@ -3,15 +3,46 @@ using System.Collections.Generic;
 
 public class Program
 {
-    private static CardStack InstantiateStack(ref CardStack cs, int cell1, int cell2)
+    /*
+     * Creates a new card reader object, writes the name and description for each element of the card stack
+     * onto a Card object and appends that to a CardStack
+     * The completed CardStack is then shuffled before being returned
+     */
+    private static CardStack InstantiatePotLuckStack()
     {
+        // Cell numbers on the spreadsheet
+        const int potLuckDetailsBegin = 5;
+        const int potLuckDetailsEnd = 21;
         var xr = new XlsCardReader();
+        var potLuck = xr.WriteStack(potLuckDetailsBegin, potLuckDetailsEnd);
 
-        xr.WriteStack(cs, cell1, cell2);
-        return cs;
+        potLuck.ShuffleStack();
+        
+        return potLuck;
     }
-    
-    
+   /*
+    * Creates a new card reader object, writes the name and description for each element of the card stack
+    * onto a Card object and appends that to a CardStack
+    * The completed CardStack is then shuffled before being returned
+    */
+    private static CardStack InstantiateOppKnocksStack()
+    {
+        // Cell numbers on the spreadsheet
+        const int oppKnocksDetailsBegin = 25;
+        const int oppKnocksDetailsEnd = 40;
+
+        var xr = new XlsCardReader();
+        var oppKnocks = xr.WriteStack(oppKnocksDetailsBegin, oppKnocksDetailsEnd);
+        
+        oppKnocks.ShuffleStack();
+        
+        return oppKnocks;
+    }
+        
+    /*
+     * Instantiates each possible piece as specified by Mr Raffles
+     * Returns them in a List
+     */
     private static List<Piece> InstantiatePieces()
     {
         var pieces = new List<Piece>();
@@ -32,10 +63,14 @@ public class Program
         return pieces;
     }
     
+    /*
+     * Instantiates Player objects. Currently, dach Player constructor reads user input for a name.
+     */
     private static List<Player> InstantiatePlayers()
     {
-        //Proper error handling to be done later
-        var input = 2;
+        //Proper error handling to be done later, if necessary
+        Console.Write("Please enter the number of players!\n>");
+        var input = Int32.Parse(Console.ReadLine());
         var players = new List<Player>();
         for (var i = 0; i < input; i++)
         {
@@ -44,6 +79,11 @@ public class Program
         return players;
     }
     
+    /*
+     * Each Player has the opportunity to pick a Piece.
+     * By having the lists passed by reference, the overhead of this operation is reduced.
+     * After a piece is picked, it is automatically removed from the available choices for the next player
+     */
     private static void PickPieces(ref List<Player> players, ref List<Piece> pieces)
     {
         foreach(var p in players)
@@ -52,23 +92,19 @@ public class Program
         }
     }
     
-    public static Board InstantiateBoard()
+    /*
+     * Creates both card stacks, writes each space of the Board into an object and saves them into separate lists
+     * Gets all pieces and players
+     * Board object is returned containing all of the details 
+     */
+    public static Board InstantiateBoard(ref List<Player> players)
     {
-        
-        // Cell numbers on the spreadsheet
-        const int potLuckDetailsBegin = 5;
-        const int potLuckDetailsEnd = 21;
-        const int oppKnocksDetailsBegin = 25;
-        const int oppKnocksDetailsEnd = 40;
-        
-        var potLuck = new CardStack();
-        var oppKnocks = new CardStack();
+        // Get cards
+        var potLuck = InstantiatePotLuckStack();
+        var oppKnocks = InstantiateOppKnocksStack();
 
-        InstantiateStack(ref potLuck, potLuckDetailsBegin, potLuckDetailsEnd);
-        InstantiateStack(ref oppKnocks, oppKnocksDetailsBegin, oppKnocksDetailsEnd);
-
+        // Get board spaces
         var xr = new XlsSpaceReader();
-
         List<Space.Property> properties = xr.WritePropertySpaces();
         List<Space.Utility> utilities = xr.WriteUtilitySpaces();
         List<Space.Station> stations = xr.WriteStationSpaces();
@@ -81,25 +117,34 @@ public class Program
         List<Space.OpportunityKnocks> opportunityKnocksSpace = xr.WriteOpportunityKnocksSpace();
         List<Space.PotLuck> potLucksSpace = xr.WritePotLuckSpaces();
 
+        // Get pieces
         List<Piece> pieces = InstantiatePieces();
 
-        var players = InstantiatePlayers();
-
+        // Get players
         PickPieces(ref players, ref pieces);
-        // Pieces have now been picked and assigned to Player so any remaining can be discarded by not being passed
-        // to the board
+        // Each Piece has now been picked and assigned to a Player so any remaining can be discarded
         
         return new Board(properties, utilities, stations, go, incomeTax, freeParking, superTax,
-            goToJail, justVisiting, opportunityKnocksSpace, potLucksSpace, oppKnocks, potLuck, players);
+            goToJail, justVisiting, opportunityKnocksSpace, potLucksSpace, oppKnocks, potLuck);
     }
     
-    public static void Main(string[] args)
+    public static void Main()
     {
         Console.WriteLine("Welcome to Property Tycoon\n");
-        // Instantiates 2 card decks, all spaces of the board, pieces and players and contains them all in one class
-        var board = InstantiateBoard();
+        // By having the players separate from Board, methods can be called on them from Main directly 
+        var players = InstantiatePlayers();
+        // Instantiates 2 card decks, all spaces of the board and pieces and contains them all in one class
+        var board = InstantiateBoard(ref players);
+
+        var bank = new Bank();
+        bank.starterMonies(ref players);
+
+        foreach (var player in players)
+        {
+            Console.WriteLine(player.ToString());
+        }
         
-        //Prints everything
-        board.getDetails();
+        // //Prints everything
+        // board.GetDetails();
     }
 }
