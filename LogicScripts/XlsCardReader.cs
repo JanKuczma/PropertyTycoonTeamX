@@ -10,8 +10,9 @@ public class XlsCardReader
         public XlsCardReader() { }
 
         // Writes the stack
-        public CardStack WriteStack(CardStack c, int detailsBegin, int detailsEnd)
+        public CardStack WriteStack(int detailsBegin, int detailsEnd)
         {
+            var c = new CardStack();
             using (var package =
                    new ExcelPackage(
                        new FileInfo("/Users/anthonygavriel/OneDrive/Year 2/Spring/Software Engineering/SE Assignment/Input/PropertyTycoonCardData.xlsx")))
