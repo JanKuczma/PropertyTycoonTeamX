@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Bank.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Bank.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Board.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogicScripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Player.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/LogicScripts/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/XlsCardReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/XlsCardReader.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +122,7 @@
       <workItem from="1644320086630" duration="2862000" />
       <workItem from="1644324716565" duration="7390000" />
       <workItem from="1644354170024" duration="22712000" />
-      <workItem from="1644493094029" duration="12274000" />
+      <workItem from="1644493094029" duration="13598000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>

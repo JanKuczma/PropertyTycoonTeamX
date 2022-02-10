@@ -9,6 +9,7 @@ public class Player
     private string name;
     private Piece token;
     private int cash;
+    private Card getOutOfJail;
 
      public Player()
      {
@@ -17,12 +18,8 @@ public class Player
        this.name = Console.ReadLine();
        Console.WriteLine("Welcome " + name +"!");
        Console.WriteLine();
-     }
-
-     public Player(Player p)
-     {
-         name = p.GetName();
-         token = p.GetToken();
+       cash = 0;
+       getOutOfJail = null;
      }
 
      public void PickPiece(ref List<Piece> pieces)
