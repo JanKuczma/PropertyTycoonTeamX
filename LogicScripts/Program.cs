@@ -3,15 +3,14 @@ using System.Collections.Generic;
 
 public class Program
 {
-    private static CardStack InstantiateStack(ref CardStack cs, int cell1, int cell2)
+    private static CardStack InstantiateStack(int cell1, int cell2)
     {
         var xr = new XlsCardReader();
 
-        xr.WriteStack(cs, cell1, cell2);
-        return cs;
+        return xr.WriteStack(cell1, cell2);
     }
-    
-    
+
+
     private static List<Piece> InstantiatePieces()
     {
         var pieces = new List<Piece>();
@@ -52,20 +51,16 @@ public class Program
         }
     }
     
-    public static Board InstantiateBoard()
+    public static Board InstantiateBoard(ref List<Player> players)
     {
-        
         // Cell numbers on the spreadsheet
         const int potLuckDetailsBegin = 5;
         const int potLuckDetailsEnd = 21;
         const int oppKnocksDetailsBegin = 25;
         const int oppKnocksDetailsEnd = 40;
-        
-        var potLuck = new CardStack();
-        var oppKnocks = new CardStack();
 
-        InstantiateStack(ref potLuck, potLuckDetailsBegin, potLuckDetailsEnd);
-        InstantiateStack(ref oppKnocks, oppKnocksDetailsBegin, oppKnocksDetailsEnd);
+        var potLuck = InstantiateStack(potLuckDetailsBegin, potLuckDetailsEnd);
+        var oppKnocks = InstantiateStack(oppKnocksDetailsBegin, oppKnocksDetailsEnd);
 
         var xr = new XlsSpaceReader();
 
@@ -83,23 +78,31 @@ public class Program
 
         List<Piece> pieces = InstantiatePieces();
 
-        var players = InstantiatePlayers();
+        
 
         PickPieces(ref players, ref pieces);
         // Pieces have now been picked and assigned to Player so any remaining can be discarded by not being passed
         // to the board
         
         return new Board(properties, utilities, stations, go, incomeTax, freeParking, superTax,
-            goToJail, justVisiting, opportunityKnocksSpace, potLucksSpace, oppKnocks, potLuck, players);
+            goToJail, justVisiting, opportunityKnocksSpace, potLucksSpace, oppKnocks, potLuck);
     }
     
     public static void Main(string[] args)
     {
         Console.WriteLine("Welcome to Property Tycoon\n");
+        var players = InstantiatePlayers();
         // Instantiates 2 card decks, all spaces of the board, pieces and players and contains them all in one class
-        var board = InstantiateBoard();
+        var board = InstantiateBoard(ref players);
+        var bank = new Bank();
+        bank.starterMonies(ref players);
         
         //Prints everything
-        board.getDetails();
+        board.GetDetails();
+        Console.WriteLine();
+        foreach (var p in players)
+        {
+            Console.WriteLine(p.ToString());
+        }
     }
 }
