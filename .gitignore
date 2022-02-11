@@ -122,3 +122,18 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.idea/.idea.PropertyTycoon/.idea/indexLayout.xml
+.idea/.idea.PropertyTycoon/.idea/projectSettingsUpdater.xml
+.idea/.idea.PropertyTycoon/.idea/workspace.xml
+.idea/.idea.PropertyTycoon/.idea/vcs.xml
+*.xml
+Packages/System.ComponentModel.Annotations.4.7.0/THIRD-PARTY-NOTICES.TXT
+LogicScripts/bin/Debug/EPPlus.dll
+LogicScripts/bin/Debug/Microsoft.IO.RecyclableMemoryStream.dll
+LogicScripts/bin/Debug/System.ComponentModel.Annotations.dll
+.idea/.idea.PropertyTycoon/.idea/workspace.xml
+.idea/.idea.PropertyTycoon/.idea/workspace.xml
+.idea/.idea.PropertyTycoon/.idea/workspace.xml
+.idea/.idea.PropertyTycoon/.idea/workspace.xml
+.idea/.idea.PropertyTycoon/.idea/workspace.xml
+.idea/.idea.PropertyTycoon/.idea/workspace.xml
