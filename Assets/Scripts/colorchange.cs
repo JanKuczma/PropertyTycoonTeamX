@@ -8,7 +8,6 @@ public class colorchange : MonoBehaviour
     bool selected;
     bool mouseOver;
     Color start_color;
-
     Renderer rend;
     void Start()
     {
