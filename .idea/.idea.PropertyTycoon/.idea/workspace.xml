@@ -6,18 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Bank.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Board Package/Board.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Card.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Board Package/Card.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/CardStack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Board Package/CardStack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Piece.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Board Package/Piece.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Game Package/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Game Package/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/Space.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Board Package/Space.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/XlsCardReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Xls Readers/XlsCardReader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/XlsSpaceReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Xls Readers/XlsSpaceReader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/packages.config" beforeDir="false" afterPath="$PROJECT_DIR$/LogicScripts/Xls Readers/packages.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicScripts/XlsCardReader.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicScripts/XlsSpaceReader.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LogicScripts/packages.config" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,9 +31,7 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/TestProject1/Tests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/de80aed0bd3646409e8bfb15c101f005db800/3c/c99b2d80/Object.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/TestProject2/Tests.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -153,7 +142,7 @@
       <workItem from="1644324716565" duration="7390000" />
       <workItem from="1644354170024" duration="22712000" />
       <workItem from="1644493094029" duration="13598000" />
-      <workItem from="1644602639453" duration="3722000" />
+      <workItem from="1644602639453" duration="4087000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>
