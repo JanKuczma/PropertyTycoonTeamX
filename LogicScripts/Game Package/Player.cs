@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Permissions;
-using OfficeOpenXml.Drawing.Chart;
 
 public class Player
 {
