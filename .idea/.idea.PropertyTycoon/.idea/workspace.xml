@@ -5,11 +5,7 @@
     <projectFile>UnitTests/UnitTests.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/LogicScripts/XlsCardReader.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/XlsSpaceReader.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LogicScripts/packages.config" beforeDir="false" />
-    </list>
+    <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,7 +138,7 @@
       <workItem from="1644324716565" duration="7390000" />
       <workItem from="1644354170024" duration="22712000" />
       <workItem from="1644493094029" duration="13598000" />
-      <workItem from="1644602639453" duration="4087000" />
+      <workItem from="1644602639453" duration="4634000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>
