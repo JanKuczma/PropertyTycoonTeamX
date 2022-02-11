@@ -38,7 +38,7 @@ public class PieceBehaviour : MonoBehaviour
         while(steps > 0)
         {
             // nextPos is just position of the next square
-            Vector3 nextPos = currentRoute.spaceTransforms[(currentPos + 1) % 40].position;
+            Vector3 nextPos = currentRoute.squares[(currentPos + 1) % 40].spaces[0];
             // the target height is the same as current piece height
             nextPos[1] = transform.position.y;
             if((currentPos + 1) % 10 == 0)
