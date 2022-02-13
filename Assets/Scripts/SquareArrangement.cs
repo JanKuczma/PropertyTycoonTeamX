@@ -13,8 +13,9 @@ public class SquareArrangement : MonoBehaviour
         int index = transform.GetSiblingIndex();
         freeSpaces = new List<int> {0,1,2,3,4,5};
         spaces = new Vector3[6];
-        float offsetSmall = 0.6f;
-        float offsetBig = 0.8f;
+        // the offsets adjust according to the square scale
+        float offsetSmall = 0.6f*(transform.localScale.x/100);
+        float offsetBig = 0.8f*(transform.localScale.x/100);
         // depending on the square (corner, jail, horizontal side, vertical side)
         // assign positions of the areas
         switch(index){
@@ -51,29 +52,29 @@ public class SquareArrangement : MonoBehaviour
     }
     private void visitJail(float offsetSmall, float offsetBig)
     {
-        spaces[0] = transform.position + Vector3.right*offsetBig;
-        spaces[1] = transform.position + Vector3.right*offsetBig + Vector3.forward*offsetBig;
-        spaces[2] = transform.position + Vector3.right*offsetBig - Vector3.forward*offsetBig;
-        spaces[3] = transform.position + Vector3.forward*offsetBig;
-        spaces[4] = transform.position + Vector3.forward*offsetBig - Vector3.right*offsetBig;
-        spaces[5] = transform.position;
+        spaces[0] = transform.position + Vector3.right*(2*offsetSmall);
+        spaces[1] = transform.position + Vector3.right*(2*offsetSmall) + Vector3.forward*(2*offsetSmall);
+        spaces[2] = transform.position + Vector3.right*(2*offsetSmall) - Vector3.forward*(2*offsetSmall);
+        spaces[3] = transform.position + Vector3.forward*(2*offsetSmall) + Vector3.right*(offsetSmall/2.0f);
+        spaces[4] = transform.position + Vector3.forward*(2*offsetSmall) - Vector3.right*offsetSmall;
+        spaces[5] = transform.position + Vector3.forward*(2*offsetSmall) - Vector3.right*(offsetBig+offsetSmall);
     }
     private void horSide(float offsetSmall, float offsetBig)
     {
-        spaces[0] = transform.position + Vector3.right*offsetSmall;
-        spaces[1] = transform.position + Vector3.right*offsetSmall + Vector3.forward*offsetBig;
-        spaces[2] = transform.position + Vector3.right*offsetSmall - Vector3.forward*offsetBig;
-        spaces[3] = transform.position - Vector3.right*offsetSmall;
-        spaces[4] = transform.position - Vector3.right*offsetSmall + Vector3.forward*offsetBig;
-        spaces[5] = transform.position - Vector3.right*offsetSmall - Vector3.forward*offsetBig;
+        spaces[0] = transform.position + Vector3.right*offsetSmall + Vector3.forward*(offsetSmall/2);
+        spaces[1] = transform.position + Vector3.right*offsetSmall + Vector3.forward*(offsetBig + offsetSmall/2);
+        spaces[2] = transform.position + Vector3.right*offsetSmall - Vector3.forward*(offsetBig -offsetSmall/2);
+        spaces[3] = transform.position - Vector3.right*offsetSmall + Vector3.forward*(offsetSmall/2);
+        spaces[4] = transform.position - Vector3.right*offsetSmall + Vector3.forward*(offsetBig + offsetSmall/2);
+        spaces[5] = transform.position - Vector3.right*offsetSmall - Vector3.forward*(offsetBig - offsetSmall/2);
     }
     private void verSide(float offsetSmall, float offsetBig)
     {
-        spaces[0] = transform.position + Vector3.forward*offsetSmall;
-        spaces[1] = transform.position + Vector3.forward*offsetSmall + Vector3.right*offsetBig;
-        spaces[2] = transform.position + Vector3.forward*offsetSmall - Vector3.right*offsetBig;
-        spaces[3] = transform.position - Vector3.forward*offsetSmall;
-        spaces[4] = transform.position - Vector3.forward*offsetSmall + Vector3.right*offsetBig;
-        spaces[5] = transform.position - Vector3.forward*offsetSmall - Vector3.right*offsetBig;
+        spaces[0] = transform.position + Vector3.forward*offsetSmall + Vector3.right*(offsetSmall/2);
+        spaces[1] = transform.position + Vector3.forward*offsetSmall + Vector3.right*(offsetBig + offsetSmall/2);
+        spaces[2] = transform.position + Vector3.forward*offsetSmall - Vector3.right*(offsetBig - offsetSmall/2);
+        spaces[3] = transform.position - Vector3.forward*offsetSmall + Vector3.right*(offsetSmall/2);;
+        spaces[4] = transform.position - Vector3.forward*offsetSmall + Vector3.right*(offsetBig + offsetSmall/2);
+        spaces[5] = transform.position - Vector3.forward*offsetSmall - Vector3.right*(offsetBig - offsetSmall/2);
     }
 }

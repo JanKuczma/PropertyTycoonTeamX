@@ -5,37 +5,55 @@ using UnityEngine;
 public class TurnController : MonoBehaviour
 {
     // list of references to piecesBehaviour
-    public PieceBehaviour[] pieceMovements;
+    public PieceBehaviour[] pieces;
     // current piece
     int current;
     void Start()
     {
         current = 0;
-        pieceMovements = GetComponentsInChildren<PieceBehaviour>();
-        foreach(PieceBehaviour behaviour in pieceMovements)
+        pieces = GetComponentsInChildren<PieceBehaviour>();
+        foreach(PieceBehaviour behaviour in pieces)
         {
             behaviour.enabled = false;
         }
-        pieceMovements[0].enabled = true;
+        pieces[0].enabled = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // temp code for start_setup
+        if(Input.GetKeyDown(KeyCode.CapsLock))
+        {
+            foreach(PieceBehaviour piece in pieces)
+            {
+                piece.set_on_start();
+            }
+        }
         // temp code for piecec switch
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            pieceMovements[current].enabled = false;
-            current = (current + 1) % pieceMovements.Length;
-            pieceMovements[current].enabled = true;
+            pieces[current].enabled = false;
+            current = (current + 1) % pieces.Length;
+            pieces[current].enabled = true;
             Debug.Log("Current: " + current);
         }
         // temporary code for dice roll simulation
-        if(Input.GetKeyDown(KeyCode.Space) && !pieceMovements[current].isMoving)
+        if(Input.GetKeyDown(KeyCode.Space) && !pieces[current].isMoving)
         {
             int st = Random.Range(1, 13);
-            StartCoroutine(pieceMovements[current].move(st));
+            StartCoroutine(pieces[current].move(st));
             Debug.Log("rolled " + st);
+        }
+        // temporary code for go to jail
+        if(Input.GetKeyDown("a") && !pieces[current].isMoving)
+        {
+            StartCoroutine(pieces[current].goToJail());
+        }
+        // temporary code for leave jail
+        if(Input.GetKeyDown("s") && !pieces[current].isMoving)
+        {
+            StartCoroutine(pieces[current].leaveJail());
         }
     }
 }
