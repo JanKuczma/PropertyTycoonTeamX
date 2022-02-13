@@ -225,6 +225,6 @@ public class PieceBehaviour : MonoBehaviour
 
     public void set_on_start()
     {
-        moveInstant(13);
+        moveInstant(0);
     }
 }

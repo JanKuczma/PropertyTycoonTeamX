@@ -12,11 +12,6 @@ public class TurnController : MonoBehaviour
     {
         current = 0;
         pieces = GetComponentsInChildren<PieceBehaviour>();
-        foreach(PieceBehaviour behaviour in pieces)
-        {
-            behaviour.enabled = false;
-        }
-        pieces[0].enabled = true;
     }
 
     // Update is called once per frame
@@ -33,9 +28,7 @@ public class TurnController : MonoBehaviour
         // temp code for piecec switch
         if(Input.GetKeyDown(KeyCode.Tab))
         {
-            pieces[current].enabled = false;
             current = (current + 1) % pieces.Length;
-            pieces[current].enabled = true;
             Debug.Log("Current: " + current);
         }
         // temporary code for dice roll simulation
