@@ -8,9 +8,8 @@ public class Route : MonoBehaviour
     public SquareArrangement[] squares;
     void Start()
     {
-        // loops through all the side spaces of the board (i = 0 is the center of the board)
-        // and adds them to the list
-            squares = GetComponentsInChildren<SquareArrangement>();
+        // referneces to all squares on the board
+        squares = GetComponentsInChildren<SquareArrangement>();
     }
     // Update is called once per frame
     void Update()

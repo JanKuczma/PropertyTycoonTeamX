@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TurnController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // list of references to piecesBehaviour
     public PieceBehaviour[] pieceMovements;
+    // current piece
     int current;
     void Start()
     {
@@ -27,6 +28,7 @@ public class TurnController : MonoBehaviour
             pieceMovements[current].enabled = false;
             current = (current + 1) % pieceMovements.Length;
             pieceMovements[current].enabled = true;
+            Debug.Log("Current: " + current);
         }
         // temporary code for dice roll simulation
         if(Input.GetKeyDown(KeyCode.Space) && !pieceMovements[current].isMoving)
