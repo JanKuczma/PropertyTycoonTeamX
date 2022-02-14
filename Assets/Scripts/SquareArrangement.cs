@@ -36,7 +36,7 @@ public class SquareArrangement : MonoBehaviour
             case int n when (n > 21 && n < 31):
                 horSideUp(offsetSmall,offsetBig);
                 break;
-            case int n when (n > 31 && n < 40):
+            case int n when (n > 31 && n < 41):
                 verSideRight(offsetSmall,offsetBig);
                 break;
         }

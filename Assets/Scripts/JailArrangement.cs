@@ -9,6 +9,7 @@ public class JailArrangement : SquareArrangement
     new void Start()
     {
         base.Start();
+        Debug.Log(transform.GetSiblingIndex());
         cellIs = new List<int> {0,1,2,3,4,5};
         cells = new Vector3[6];
         // the offsets adjust according to the square scale

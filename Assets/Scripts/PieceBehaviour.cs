@@ -198,10 +198,10 @@ public class PieceBehaviour : MonoBehaviour
     // calculates list of points of bezier curve
     private List<Vector3> BezierCurve(Vector3 start, Vector3 control, Vector3 target)
     {
-        List<Vector3> mid_positions = new List<Vector3>(21);
-        for (int i = 0; i < 20; i++)
+        List<Vector3> mid_positions = new List<Vector3>(31);
+        for (int i = 0; i < 30; i++)
         {
-            Vector3 newPosition = BezierCurvePoint(start, control, target, (float)i / 20);
+            Vector3 newPosition = BezierCurvePoint(start, control, target, (float)i / 30);
             mid_positions.Add(newPosition);
         }
         mid_positions.Add(target);
