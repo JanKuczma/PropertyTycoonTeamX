@@ -7,7 +7,7 @@ public class SquareArrangement : MonoBehaviour
     // each square is divided into 6 areas stored in spaces
     public Vector3[] spots;
     public List<int> spotsIs;
-    void Start()
+    protected virtual void Start()
     {
         // get the index of the square
         int index = transform.GetSiblingIndex();

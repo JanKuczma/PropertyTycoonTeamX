@@ -124,8 +124,8 @@ public class PieceBehaviour : MonoBehaviour
         // free the current area
         route.squares[currentSquare].releaseSpotI(currentSpot);
         currentSquare = 10; // jail square
-        currentSpot = route.jail.popSpotI();
-        Vector3 target = route.jail.peekSpot(currentSpot);
+        currentSpot = route.jail.popCellI();
+        Vector3 target = route.jail.peekCell(currentSpot);
         // the target height is the same as current piece height
         target[1] = transform.position.y;
         // this bit basically calculates trajectory using Bezier Curve (20 points plus the target position)
@@ -155,7 +155,7 @@ public class PieceBehaviour : MonoBehaviour
         }
         isMoving = true;
         // free the current area
-        route.jail.releaseSpotI(currentSpot);
+        route.jail.releaseCellI(currentSpot);
         currentSpot = route.squares[currentSquare].popSpotI();
         Vector3 target = route.squares[currentSquare].peekSpot(currentSpot);
         // the target height is the same as current piece height
