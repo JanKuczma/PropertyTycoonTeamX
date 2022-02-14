@@ -52,23 +52,30 @@ public class TurnController : MonoBehaviour
         {
             StartCoroutine(pieces[current].leaveJail());
         }
+        // temp code for touch devices
+        if(Input.touchCount > 0)
+        {
+            int st = Random.Range(1, 13);
+            StartCoroutine(pieces[current].move(st));
+            Debug.Log("rolled " + st);
+        }
     }
     //temp code for camera movement
     void LateUpdate()
     {
         if(pieces[current].isMoving)
         {
-            Vector3 target = pieces[current].transform.position/2.0f;
+            Vector3 target = pieces[current].transform.position*1.5f;
             target[1] = 7.0f;
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
             Vector3 lookDirection = pieces[current].transform.position - Camera.main.transform.position;
             lookDirection.Normalize();
             Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 3.0f * Time.deltaTime);
         } else {
-            Camera.main.transform.position = Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,cam_pos_top,8.0f*Time.deltaTime);
+            Camera.main.transform.position = Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,cam_pos_top,10.0f*Time.deltaTime);
             Vector3 lookDirection = -1.0f*Camera.main.transform.position;
             lookDirection.Normalize();
-            Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 3.0f * Time.deltaTime);
+            Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 4.0f * Time.deltaTime);
         }
     }
 }
