@@ -17,12 +17,12 @@ public class TurnController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // temp code for start_setup
-        if(Input.GetKeyDown(KeyCode.CapsLock))
+        // temp code for setting up pieces on start
+        if(Input.GetKeyDown("z"))
         {
             foreach(PieceBehaviour piece in pieces)
             {
-                piece.set_on_start();
+                piece.moveInstant(0);
             }
         }
         // temp code for piecec switch

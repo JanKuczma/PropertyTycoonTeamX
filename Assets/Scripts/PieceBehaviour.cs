@@ -10,8 +10,8 @@ public class PieceBehaviour : MonoBehaviour
     float rotationSpeed;
     // current position 0 - 39 (40 squares)
     int currentSquare;
-    // current area 0 - 5 (6 areas)
-    public int currentArea;
+    // current spot 0 - 5 (6 areas)
+    public int currentSpot;
     // bool to control the movement
     public bool isMoving;
     // Board's Route
@@ -23,6 +23,7 @@ public class PieceBehaviour : MonoBehaviour
         isMoving = false;
         speed = 6f;
         rotationSpeed = 4f;
+        currentSpot = -1;
     }
 
     //coroutine for movement
@@ -35,35 +36,28 @@ public class PieceBehaviour : MonoBehaviour
         }
         isMoving = true;
         // free the current area
-        route.squares[currentSquare].freeSpaces.Add(currentArea);
+        route.squares[currentSquare].releaseSpotI(currentSpot);
         while(steps > 0)
         {
+            int nextSquare = (currentSquare + 1) % 40;
             // target is just position of the next square (free spot)
-            currentArea = route.squares[(currentSquare + 1) % 40].nextFree();
-            Vector3 target = route.squares[(currentSquare + 1) % 40].spaces[currentArea];
+            currentSpot = route.squares[nextSquare].peekSpotI();
+            Vector3 target = route.squares[nextSquare].peekSpot(currentSpot);
             // the target height is the same as current piece height
             target[1] = transform.position.y;
             // this bit basically calculates trajectory using Bezier Curve (20 points plus the target position)
-            Vector3 _initialPosition = transform.position;
-            List<Vector3> _allPositions = new List<Vector3>(21);
-            Vector3 control = (_initialPosition+target)/2 + new Vector3(0.0f,3.0f, 0);
-            for (int i = 0; i < 20; i++)
-            {
-                Vector3 newPosition = BezierCurve(_initialPosition, control,
-                target, (float)i / 20);
-                _allPositions.Add(newPosition);
-            }
-            _allPositions.Add(target);
+            Vector3 control = (transform.position+target)/2 + new Vector3(0.0f,3.0f, 0);
+            List<Vector3> path = BezierCurve(transform.position,control,target);
             // this bit depending on transition (side or corner square)
             // moves piece along the curve
             int counter = 0;
-            if((currentSquare + 1) % 10 == 0)
+            if(nextSquare % 10 == 0)
             {
                 Vector3 targetRight = transform.right;
                 // while piece is not on the target square and not finished rotating
-                while(counter < _allPositions.Count && rotateRight(targetRight))
+                while(counter < path.Count && rotate(targetRight))
                 {
-                    if(MoveTo(_allPositions[counter]))
+                    if(moveTo(path[counter]))
                     {
                         counter++;
                     }
@@ -71,9 +65,9 @@ public class PieceBehaviour : MonoBehaviour
                 }
             } else {
                 // while piece is not on the target square
-                while(counter < _allPositions.Count)
+                while(counter < path.Count)
                 {
-                    if(MoveTo(_allPositions[counter]))
+                    if(moveTo(path[counter]))
                     {
                         counter++;
                     }
@@ -84,39 +78,23 @@ public class PieceBehaviour : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             // decrement steps and increment currentSquare (0 - 39)
             steps--;
-            currentSquare = ((currentSquare + 1) % 40);
+            currentSquare = nextSquare;
         }
-        // remove the current area from freeSpaces
-        route.squares[currentSquare].freeSpaces.Remove(currentArea);
+        // remove the current spot from freeSpots
+        route.squares[currentSquare].removeSpotI(currentSpot);
         isMoving = false;
     }
 
-    // moves piece to next position and returns false if already on the target
-    bool MoveTo(Vector3 targetPos)
-    { 
-        return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,speed*Time.deltaTime));
-    }
-    // rotates piece to the right
-    bool rotateRight(Vector3 targetright)
-    {
-        return Quaternion.Euler(targetright) != 
-            (transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward,targetright,rotationSpeed*Time.deltaTime,0.0f)));
-    }
-    // calculates bezier curve point
-    private Vector3 BezierCurve(Vector3 start, Vector3 control, Vector3 end, float t)
-    {
-    return (1-t)*(1-t)*start + 2*(1-t)*t*control + t*t*end;
-    }
     // moves instantaneously to specified square
     public void moveInstant(int square)
     {
-        //route.squares[currentSquare].freeSpaces.Add(currentArea);
-        currentSquare = square;
-        currentArea = route.squares[square].nextFree();
-        route.squares[square].freeSpaces.Remove(currentArea);
-        Vector3 newPos = route.squares[square].spaces[currentArea];
-        newPos[1] = transform.position.y;
-        transform.position = newPos;
+        route.squares[currentSquare].releaseSpotI(currentSpot);
+        // target is just position of the next square (free spot)
+        currentSpot = route.squares[square].popSpotI();
+        Vector3 target = route.squares[square].peekSpot(currentSpot);
+        // the target height is the same as current piece height
+        target[1] = transform.position.y;
+        transform.position = target;
         switch(square)
         {
             case int n when (n > 29):
@@ -144,30 +122,21 @@ public class PieceBehaviour : MonoBehaviour
         }
         isMoving = true;
         // free the current area
-        route.squares[currentSquare].freeSpaces.Add(currentArea);
-        currentSquare = 10;
-        currentArea = route.jail.nextFree();
-        Vector3 target = route.jail.spaces[currentArea];
+        route.squares[currentSquare].releaseSpotI(currentSpot);
+        currentSquare = 10; // jail square
+        currentSpot = route.jail.popSpotI();
+        Vector3 target = route.jail.peekSpot(currentSpot);
         // the target height is the same as current piece height
         target[1] = transform.position.y;
         // this bit basically calculates trajectory using Bezier Curve (20 points plus the target position)
-        Vector3 _initialPosition = transform.position;
-        List<Vector3> _allPositions = new List<Vector3>(21);
         Vector3 control = target + new Vector3(0.0f,3.0f, 0);
-        for (int i = 0; i < 20; i++)
-        {
-            Vector3 newPosition = BezierCurve(_initialPosition, control,
-            target, (float)i / 20);
-            _allPositions.Add(newPosition);
-        }
-        _allPositions.Add(target);
-        // this bit depending on transition (side or corner square)
+        List<Vector3> path = BezierCurve(transform.position,control,target);
         // moves piece along the curve
         int counter = 0;
         // while piece is not on the target square and not finished rotating
-        while(counter < _allPositions.Count && rotateRight(Vector3.right))
+        while(counter < path.Count && rotate(Vector3.right))
         {
-            if(MoveTo(_allPositions[counter]))
+            if(moveTo(path[counter]))
             {
                 counter++;
             }
@@ -175,8 +144,6 @@ public class PieceBehaviour : MonoBehaviour
         }
         // this just wait small amout of time before moving to the next square
         yield return new WaitForSeconds(0.1f);
-        // remove the current area from freeSpaces
-        route.jail.freeSpaces.Remove(currentArea);
         isMoving = false;
     }
     public IEnumerator leaveJail()
@@ -188,29 +155,20 @@ public class PieceBehaviour : MonoBehaviour
         }
         isMoving = true;
         // free the current area
-        route.jail.freeSpaces.Add(currentArea);
-        currentArea = route.squares[currentSquare].nextFree();
-        Vector3 target = route.squares[currentSquare].spaces[currentArea];
+        route.jail.releaseSpotI(currentSpot);
+        currentSpot = route.squares[currentSquare].popSpotI();
+        Vector3 target = route.squares[currentSquare].peekSpot(currentSpot);
         // the target height is the same as current piece height
         target[1] = transform.position.y;
         // this bit basically calculates trajectory using Bezier Curve (20 points plus the target position)
-        Vector3 _initialPosition = transform.position;
-        List<Vector3> _allPositions = new List<Vector3>(21);
-        Vector3 control = (_initialPosition+target)/2 + new Vector3(0.0f,3.0f, 0);
-        for (int i = 0; i < 20; i++)
-        {
-            Vector3 newPosition = BezierCurve(_initialPosition, control,
-            target, (float)i / 20);
-            _allPositions.Add(newPosition);
-        }
-        _allPositions.Add(target);
-        // this bit depending on transition (side or corner square)
+        Vector3 control = (transform.position+target)/2 + new Vector3(0.0f,3.0f, 0);
+        List<Vector3> path = BezierCurve(transform.position,control,target);
         // moves piece along the curve
         int counter = 0;
         // while piece is not on the target square and not finished rotating
-        while(counter < _allPositions.Count)
+        while(counter < path.Count && rotate(Vector3.right))
         {
-            if(MoveTo(_allPositions[counter]))
+            if(moveTo(path[counter]))
             {
                 counter++;
             }
@@ -218,13 +176,36 @@ public class PieceBehaviour : MonoBehaviour
         }
         // this just wait small amout of time before moving to the next square
         yield return new WaitForSeconds(0.1f);
-        // remove the current area from freeSpaces
-        route.squares[currentSquare].freeSpaces.Remove(currentArea);
         isMoving = false;
     }
 
-    public void set_on_start()
+    // moves piece towards next position and returns true if already on the target
+    private bool moveTo(Vector3 targetPos)
+    { 
+        return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,speed*Time.deltaTime));
+    }
+    // rotates piece towards specified direction, returns false if on the target
+    private bool rotate(Vector3 targetright)
     {
-        moveInstant(0);
+        return Quaternion.Euler(targetright) != 
+            (transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward,targetright,rotationSpeed*Time.deltaTime,0.0f)));
+    }
+    // calculates bezier curve point
+    private Vector3 BezierCurvePoint(Vector3 start, Vector3 control, Vector3 end, float t)
+    {
+    return (1-t)*(1-t)*start + 2*(1-t)*t*control + t*t*end;
+    }
+    // calculates list of points of bezier curve
+    private List<Vector3> BezierCurve(Vector3 start, Vector3 control, Vector3 target)
+    {
+        List<Vector3> mid_positions = new List<Vector3>(21);
+        for (int i = 0; i < 20; i++)
+        {
+            Vector3 newPosition = BezierCurvePoint(start, control, target, (float)i / 20);
+            mid_positions.Add(newPosition);
+        }
+        mid_positions.Add(target);
+        return mid_positions;
+        
     }
 }
