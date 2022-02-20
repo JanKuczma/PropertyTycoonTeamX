@@ -2,20 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Route : MonoBehaviour
+public class Board : MonoBehaviour
 {
-    // list for transforms(positions) of all the spaces
+    // list for squares references
     public SquareArrangement[] squares;
-    public JailArrangement jail;
+    public JailArrangement jail;    // parameter for jail square reference
     void Start()
     {
         // referneces to all squares on the board
         squares = GetComponentsInChildren<SquareArrangement>();
         jail = GetComponentInChildren<JailArrangement>();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
