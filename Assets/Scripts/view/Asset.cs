@@ -37,8 +37,8 @@ public static class Asset
     static GameObject IronPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Iron");
     static GameObject DiceContainerPrefab = Resources.Load<GameObject>("Prefabs/dice/DiceContainer");
     //cursors
-    static Texture2D FingerTexture = Resources.Load<Texture2D>("Prefabs/Textures/FINGER-CURSOR");
-    static Texture2D GrabTexture = Resources.Load<Texture2D>("Prefabs/Textures/FINGER-CURSOR");
+    static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
+    static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
 
 
     public static GameObject Board(SqType type)
