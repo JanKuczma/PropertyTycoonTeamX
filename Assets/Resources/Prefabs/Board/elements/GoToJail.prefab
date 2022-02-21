@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4865869564981714214}
   - component: {fileID: 7233904561412270572}
   - component: {fileID: -135783261945369058}
-  - component: {fileID: -9181145579678682881}
+  - component: {fileID: 8757864029649574537}
   m_Layer: 0
   m_Name: GoToJail
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0026000005, y: 0.00012000011, z: 0.0026000019}
   m_Center: {x: -0.0000000035506682, y: -1.0913936e-11, z: 0.0000000018044379}
---- !u!114 &-9181145579678682881
+--- !u!114 &8757864029649574537
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9179182317122471993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6a6f9470bf0b854688851edcef36e77, type: 3}
+  m_Script: {fileID: 11500000, guid: 531757dc93512be43a98df49cbac517e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spots: []

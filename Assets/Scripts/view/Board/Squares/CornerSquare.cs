@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class CornerSquare : Square
 {
-    // Start is called before the first frame update
+    protected string _first = "";
+    protected string _sceond = "";
     
     virtual public void assignSpots()
     {

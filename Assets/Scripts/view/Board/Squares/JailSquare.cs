@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class JailSquare : CornerSquare
 {
     List<int> cellIs;
@@ -58,5 +58,19 @@ public class JailSquare : CornerSquare
         spots[3] = transform.position + transform.forward*(2*offsetSmall)   + transform.right*(offsetSmall/2.0f);
         spots[4] = transform.position + transform.forward*(2*offsetSmall)   - transform.right*offsetSmall;
         spots[5] = transform.position + transform.forward*(2*offsetSmall)   - transform.right*(offsetBig+offsetSmall);
+    }
+
+    public override void setName(string just="")
+    {
+        if(just.Equals("")) just = "JUST";
+        _first = just;
+        GetComponentsInChildren<TextMeshPro>()[0].SetText(just);
+    }
+
+    public void setVisiting(string visiting="")
+    {
+        if(visiting.Equals("")) visiting = "VISITNG";
+        _sceond = visiting;
+        GetComponentsInChildren<TextMeshPro>()[1].SetText(visiting);
     }
 }
