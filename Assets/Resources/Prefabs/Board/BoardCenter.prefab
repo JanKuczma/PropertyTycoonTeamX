@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6436600945373064470}
   - component: {fileID: 5006127231676198500}
   m_Layer: 0
-  m_Name: UncompleteBoard
+  m_Name: BoardCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PieceBehaviour : MonoBehaviour
+public class Piece : MonoBehaviour
 {
     const float SPEED = 6f;    // const movement speed
     float var_speed;    // variable movement speed
@@ -10,7 +10,7 @@ public class PieceBehaviour : MonoBehaviour
     int currentSquare;  // current position 0 - 39 (40 squares)
     int currentSpot; // current spot 0 - 5 (6 areas)
     [System.NonSerialized] public bool isMoving;   // bool to control the movement
-    Board board; // reference to Board
+    Board _board; // reference to Board
     void Awake()
     {
         // sets up initial values
@@ -21,9 +21,13 @@ public class PieceBehaviour : MonoBehaviour
         currentSquare = 0;
     }
 
-    public void assignBoard(Board board)
+    public static Piece Create(Token token, Transform parent, Board board)
     {
-        this.board = board;
+        Piece new_piece = Instantiate(Asset.Piece(token),parent).GetComponent<Piece>();
+        new_piece._board = board;
+        new_piece.transform.localPosition = new Vector3(0,0.1f,0);
+        new_piece.moveInstant(0);
+        return new_piece;
     }
 
     /// coroutine for movement
@@ -47,15 +51,15 @@ public class PieceBehaviour : MonoBehaviour
             steps *= -1;
         }
         // free the current area
-        board.squares[currentSquare].releaseSpotI(currentSpot);
+        _board.squares[currentSquare].releaseSpotI(currentSpot);
         while(steps > 0)
         {
             // because negative iterator in case 0 - 1 we would like to get 39
             currentSquare = currentSquare == 0 ? 40 : currentSquare;
             int nextSquare = (currentSquare + iterator) % 40;
             // target is just position of the next square (free spot)
-            currentSpot = board.squares[nextSquare].peekSpotI();
-            Vector3 target = board.squares[nextSquare].peekSpot(currentSpot);
+            currentSpot = _board.squares[nextSquare].peekSpotI();
+            Vector3 target = _board.squares[nextSquare].peekSpot(currentSpot);
             // the target height is the same as current piece height
             target[1] = transform.position.y;
             // this bit basically calculates trajectory using Bezier Curve (20 points plus the target position)
@@ -92,7 +96,7 @@ public class PieceBehaviour : MonoBehaviour
             currentSquare = nextSquare;
         }
         // remove the current spot from freeSpots
-        board.squares[currentSquare].removeSpotI(currentSpot);
+        _board.squares[currentSquare].removeSpotI(currentSpot);
         var_speed = SPEED;
         isMoving = false;
     }
@@ -100,10 +104,10 @@ public class PieceBehaviour : MonoBehaviour
     // moves instantaneously to specified square
     public void moveInstant(int square)
     {
-        board.squares[currentSquare].releaseSpotI(currentSpot);
+        _board.squares[currentSquare].releaseSpotI(currentSpot);
         // target is just position of the next square (free spot)
-        currentSpot = board.squares[square].popSpotI();
-        Vector3 target = board.squares[square].peekSpot(currentSpot);
+        currentSpot = _board.squares[square].popSpotI();
+        Vector3 target = _board.squares[square].peekSpot(currentSpot);
         // the target height is the same as current piece height
         target[1] = transform.position.y;
         transform.position = target;
@@ -134,10 +138,10 @@ public class PieceBehaviour : MonoBehaviour
         }
         isMoving = true;
         // free the current area
-        board.squares[currentSquare].releaseSpotI(currentSpot);
+        _board.squares[currentSquare].releaseSpotI(currentSpot);
         currentSquare = 10; // jail square
-        currentSpot = board.jail.popCellI();
-        Vector3 target = board.jail.peekCell(currentSpot);
+        currentSpot = _board.jail.popCellI();
+        Vector3 target = _board.jail.peekCell(currentSpot);
         // the target height is the same as current piece height
         target[1] = transform.position.y;
         // create control point and build the path along curve
@@ -165,9 +169,9 @@ public class PieceBehaviour : MonoBehaviour
         }
         isMoving = true;
         // free the current area
-        board.jail.releaseCellI(currentSpot);
-        currentSpot = board.squares[currentSquare].popSpotI();
-        Vector3 target = board.squares[currentSquare].peekSpot(currentSpot);
+        _board.jail.releaseCellI(currentSpot);
+        currentSpot = _board.squares[currentSquare].popSpotI();
+        Vector3 target = _board.squares[currentSquare].peekSpot(currentSpot);
         // the target height is the same as current piece height
         target[1] = transform.position.y;
         // this bit basically calculates trajectory using Bezier Curve (20 points plus the target position)

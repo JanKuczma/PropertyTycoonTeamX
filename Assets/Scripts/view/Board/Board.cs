@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
 public class Board : MonoBehaviour
 {
     [System.NonSerialized] public SquareArrangement[] squares; // list for squares references
     [System.NonSerialized] public JailArrangement jail;    // parameter for jail square reference
-    public GameObject   GoPrefab, JailVisitPrefab, ParkingPrefab, GoToJailPrefab,
-                        PropertyPrefab, StationPrefab, BulbPrefab, WaterPrefab, PotLuckPrefab,
-                        Chance1Prefab, Chance2Prefab, Chance3Prefab, SuperTaxPrefab, IncomeTaxPrefab;
     private Vector3[] squareCoordinates;
 
     void Awake()
@@ -16,148 +15,48 @@ public class Board : MonoBehaviour
         generateSquareCoordinates();
         squares = new SquareArrangement[40];
     }
-
-    public void initProperty(int position, string name, string price, string group)
+    public static Board Create(Transform parent)
     {
-        GameObject square = Instantiate(PropertyPrefab,transform);
+        return Instantiate(Asset.Board(),parent).GetComponent<Board>();
+    }
+    /// SqType is just enum, instantiates squre depending on the type
+    /// commented stuff to be developed/implemented
+    public void initSquare(SqType type,int position, string name="", string price="",string group="")
+    {
+        GameObject square = Instantiate(Asset.Board(type),transform);
         square.transform.localScale = new Vector3(1,1,1);
         square.transform.localPosition = squareCoordinates[position-1];
         square.transform.localRotation = getRotation(position);
         squares[position-1] = square.GetComponent<SquareArrangement>();
         squares[position-1].assignSpots(position);
-        //square.GetComponent<CustomisableSquareProp>().setName(name);
-        //square.GetComponent<CustomisableSquareProp>().setPrice(price);
-        //square.GetComponent<CustomisableSquareProp>().setGroup(group);
-    }
-    public void initBulb(int position, string name, string price)
-    {
-        GameObject square = Instantiate(BulbPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-        //square.GetComponent<CustomisableSquare>().setName(name);
-        //square.GetComponent<CustomisableSquare>().setPrice(price);
-    }
-    public void initWater(int position, string name, string price)
-    {
-        GameObject square = Instantiate(WaterPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-        //square.GetComponent<CustomisableSquare>().setName(name);
-        //square.GetComponent<CustomisableSquare>().setPrice(price);
-    }
-    public void initStation(int position, string name, string price)
-    {
-        GameObject square = Instantiate(StationPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-        //square.GetComponent<CustomisableSquare>().setName(name);
-        //square.GetComponent<CustomisableSquare>().setPrice(price);
-    }
-    public void initPotLuck(int position)
-    {
-        GameObject square = Instantiate(PotLuckPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-    }
-    public void initChance1(int position)
-    {
-        GameObject square = Instantiate(Chance1Prefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-    }
-    public void initChance2(int position)
-    {
-        GameObject square = Instantiate(Chance2Prefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-    }
-    public void initChance3(int position)
-    {
-        GameObject square = Instantiate(Chance3Prefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-    }
-    public void initSuperTax(int position, string amount)
-    {
-        GameObject square = Instantiate(SuperTaxPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-        //square.GetComponent<CustomisableTax>().setAmount(amount);
-    }
-    public void initIncomeTax(int position, string amount)
-    {
-        GameObject square = Instantiate(IncomeTaxPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-        //square.GetComponent<CustomisableTax>().setAmount(amount);
-    }
-    public void initGo(int position = 1)
-    {
-        GameObject square = Instantiate(GoPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-    }
-    public void initJailVisit(int position = 11)
-    {
-        GameObject square = Instantiate(JailVisitPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        jail = square.GetComponent<JailArrangement>(); 
-        squares[position-1] = jail;
-        jail.assignSpots(position);
-        jail.assignCells();
         
+        switch(type)
+        {
+            case SqType.PROPERTY:
+            //square.GetComponent<CustomisableSquareProp>().setName(name);
+            //square.GetComponent<CustomisableSquareProp>().setPrice(price);
+            //square.GetComponent<CustomisableSquareProp>().setGroup(group);
+            break;
+            case SqType.STATION:
+            case SqType.BULB:
+            case SqType.WATER:
+            //square.GetComponent<CustomisableSquare>().setName(name);
+            //square.GetComponent<CustomisableSquare>().setPrice(price);
+            break;
+            case SqType.SUPERTAX:
+            case SqType.INCOMETAX:
+            //square.GetComponent<CustomisableTax>().setAmount(amount);
+            break;
+            case SqType.JAILVISIT:
+            jail = square.GetComponent<JailArrangement>(); 
+            squares[position-1] = jail;
+            jail.assignSpots(position);
+            jail.assignCells();
+            break;
+            
+        }
     }
-    public void initParking(int position = 21)
-    {
-        GameObject square = Instantiate(ParkingPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-    }
-    public void initGoToJail(int position = 31)
-    {
-        GameObject square = Instantiate(GoToJailPrefab,transform);
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = squareCoordinates[position-1];
-        square.transform.localRotation = getRotation(position);
-        squares[position-1] = square.GetComponent<SquareArrangement>();
-        squares[position-1].assignSpots(position);
-    }
-
+    /// generates square coordinates accordingly to the board center(this) postion/scale
     private void generateSquareCoordinates()
     {
         float displacement = .0064f;
@@ -175,6 +74,7 @@ public class Board : MonoBehaviour
         squareCoordinates[30] = new Vector3(-.0085f,0,-.0085f);
     }
 
+    /// generates rotation depending on the which side the square is (fornt,left,top,right)
     private Quaternion getRotation(int position)
     {
         return  position > 30 ? Quaternion.Euler(0,-90,0) :

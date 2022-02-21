@@ -3,84 +3,91 @@ using System.Collections.Generic;
 using UnityEngine;
 // enum for keeping track of the turnstate state
 public enum TurnState {DICEROLL, PIECEMOVE, ACTION, END}
-public enum Token {CAT=0 ,BOOT=1,IRON=2,SHIP=3,HATSTAND=4,SMARTPHONE=5}
+/*
+    it's just temporary script to test all MonoBehaviour Scripts together
+*/
 public class temp_contr : MonoBehaviour
 {
-    public GameObject   CatPrefab, BootPrefab, IronPrefab,
-                        ShipPrefab, HatStandPrefab, SmartphonePrefab;
-    public GameObject DicePrefab;
-    public GameObject BoardPrefab;
-    public Texture2D pointing_hand; // cursor
-    private Board board;
-    private DiceContainer dice;
-
-    Dictionary<Token,PieceBehaviour> pieces;
+    //game elements
+    Board board;
+    DiceContainer dice;
+    Dictionary<Token,Piece> pieces;
     Dictionary<int,Token> players;
+    // bits needed to run the turns
     Vector3 cam_pos_top;    // top cam position
     int current_player;
     Token current;
     TurnState state;
-
+    //init lists
     void Awake()
     {
         players = new Dictionary<int, Token>();
-        pieces = new Dictionary<Token, PieceBehaviour>();
+        pieces = new Dictionary<Token, Piece>();
     }
     void Start()
     {
-        board = Instantiate(BoardPrefab,transform).GetComponent<Board>();
-        dice = Instantiate(DicePrefab,transform).GetComponent<DiceContainer>();
-        board.initGo();
-        board.initProperty(2,"","","");
-        board.initPotLuck(3);
-        board.initProperty(4,"","","");
-        board.initIncomeTax(5,"");
-        board.initStation(6,"","");
-        board.initProperty(7,"","","");
-        board.initChance1(8);
-        board.initProperty(9,"","","");
-        board.initProperty(10,"","","");
-        board.initJailVisit();
-        board.initProperty(12,"","","");
-        board.initBulb(13,"","");
-        board.initProperty(14,"","","");
-        board.initProperty(15,"","","");
-        board.initStation(16,"","");
-        board.initProperty(17,"","","");
-        board.initPotLuck(18);
-        board.initProperty(19,"","","");
-        board.initProperty(20,"","","");
-        board.initParking();
-        board.initProperty(22,"","","");
-        board.initChance2(23);
-        board.initProperty(24,"","","");
-        board.initProperty(25,"","","");
-        board.initStation(26,"","");
-        board.initProperty(27,"","","");
-        board.initProperty(28,"","","");
-        board.initWater(29,"","");
-        board.initProperty(30,"","","");
-        board.initGoToJail();
-        board.initProperty(32,"","","");
-        board.initProperty(33,"","","");
-        board.initPotLuck(34);
-        board.initProperty(35,"","","");
-        board.initStation(36,"","");
-        board.initChance3(37);
-        board.initProperty(38,"","","");
-        board.initSuperTax(39,"");
-        board.initProperty(40,"","","");
-        addPiece(Token.CAT);
+        //create board and dice
+        board = Board.Create(transform);
+        dice = DiceContainer.Create(transform);
+        board.initSquare(SqType.GO,1);
+        board.initSquare(SqType.PROPERTY,2);
+        board.initSquare(SqType.POTLUCK,3);
+        board.initSquare(SqType.PROPERTY,4);
+        board.initSquare(SqType.INCOMETAX,5);
+        board.initSquare(SqType.STATION,6);
+        board.initSquare(SqType.PROPERTY,7);
+        board.initSquare(SqType.CHANCE1,8);
+        board.initSquare(SqType.PROPERTY,9);
+        board.initSquare(SqType.PROPERTY,10);
+        board.initSquare(SqType.JAILVISIT,11);
+        board.initSquare(SqType.PROPERTY,12);
+        board.initSquare(SqType.BULB,13);
+        board.initSquare(SqType.PROPERTY,14);
+        board.initSquare(SqType.PROPERTY,15);
+        board.initSquare(SqType.STATION,16);
+        board.initSquare(SqType.PROPERTY,17);
+        board.initSquare(SqType.POTLUCK,18);
+        board.initSquare(SqType.PROPERTY,19);
+        board.initSquare(SqType.PROPERTY,20);
+        board.initSquare(SqType.PARKING,21);
+        board.initSquare(SqType.PROPERTY,22);
+        board.initSquare(SqType.CHANCE2,23);
+        board.initSquare(SqType.PROPERTY,24);
+        board.initSquare(SqType.PROPERTY,25);
+        board.initSquare(SqType.STATION,26);
+        board.initSquare(SqType.PROPERTY,27);
+        board.initSquare(SqType.PROPERTY,28);
+        board.initSquare(SqType.WATER,29);
+        board.initSquare(SqType.PROPERTY,30);
+        board.initSquare(SqType.GOTOJAIL,31);
+        board.initSquare(SqType.PROPERTY,32);
+        board.initSquare(SqType.PROPERTY,33);
+        board.initSquare(SqType.POTLUCK,34);
+        board.initSquare(SqType.PROPERTY,35);
+        board.initSquare(SqType.STATION,36);
+        board.initSquare(SqType.CHANCE3,37);
+        board.initSquare(SqType.PROPERTY,38);
+        board.initSquare(SqType.SUPERTAX,39);
+        board.initSquare(SqType.PROPERTY,40);
+        //add players: player<int,token> dict, pieces<token,piece> dict
+        addPlayer(Token.CAT);
         players.Add(0,Token.CAT);
-        addPiece(Token.SHIP);
+        addPlayer(Token.SHIP);
         players.Add(1,Token.SHIP);
-        addPiece(Token.BOOT);
+        addPlayer(Token.BOOT);
         players.Add(2,Token.BOOT);
+        addPlayer(Token.IRON);
+        players.Add(3,Token.IRON);
+        addPlayer(Token.HATSTAND);
+        players.Add(4,Token.HATSTAND);
+        addPlayer(Token.SMARTPHONE);
+        players.Add(5,Token.SMARTPHONE);
         current_player = 0;
         current = players[current_player];
-
-        Cursor.SetCursor(pointing_hand,Vector2.zero,CursorMode.Auto);
+        //setup finger cursor and get init cemara pos (top pos)
+        Cursor.SetCursor(Asset.Cursor(CursorType.FiNGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
+        //set current turn state to DICEROLL
         state = TurnState.DICEROLL;
     }
 
@@ -94,6 +101,7 @@ public class temp_contr : MonoBehaviour
                 pieces[current].speedUp();
             }
         }
+        //temp code to try if piece can move backwards
         if(state == TurnState.DICEROLL)
         {
             if(Input.GetKeyDown(KeyCode.Return))
@@ -140,7 +148,7 @@ public class temp_contr : MonoBehaviour
     }
 
     //temp code for camera movement
-    void LateUpdate()
+     void LateUpdate()
     {
         // simply if the current piece is moving move camera towards it, else move camera towards top position
         if(pieces[current].isMoving)
@@ -158,18 +166,9 @@ public class temp_contr : MonoBehaviour
             Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 4.0f * Time.deltaTime);
         }
     }
-
-    public void addPiece(Token token)
+   
+    public void addPlayer(Token token)
     {
-        GameObject tmp =    token == Token.CAT ? CatPrefab:
-                            token == Token.BOOT ? BootPrefab :
-                            token == Token.IRON ? IronPrefab :
-                            token == Token.HATSTAND ? HatStandPrefab :
-                            token == Token.SHIP ? ShipPrefab :
-                            SmartphonePrefab ;
-        pieces.Add(token,Instantiate(tmp,transform).GetComponent<PieceBehaviour>());
-        pieces[token].assignBoard(board);
-        pieces[token].transform.localPosition = new Vector3(0,0.1f,0);
-        pieces[token].moveInstant(0);
+        pieces.Add(token,Piece.Create(token, transform, board));
     }
 }

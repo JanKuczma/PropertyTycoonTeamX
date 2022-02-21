@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+///DICE IMPLEMENTATION NEEDS REFACTORING
 public class DiceContainer : MonoBehaviour
 {
-    public Texture2D pointing_hand; // textures for cursor
-    public Texture2D closed_hand;
     float move_speed = 20.0f;   // how fast dice is following cursor
     Vector3 previous_frame_pos; // parameter used to calculate dice velocity
     Dice[] dice;                // list for references to dice monobehaviour
@@ -16,9 +15,14 @@ public class DiceContainer : MonoBehaviour
         dice = GetComponentsInChildren<Dice>();
     }
 
+    public static DiceContainer Create(Transform parent)
+    {
+        return Instantiate(Asset.Dice(),parent).GetComponent<DiceContainer>();
+    }
+
     void OnMouseDown()
     {
-        Cursor.SetCursor(closed_hand,Vector2.zero,CursorMode.Auto); // on click change cursor to 'closed hand'
+        Cursor.SetCursor(Asset.Cursor(CursorType.GRAB),Vector2.zero,CursorMode.Auto); // on click change cursor to 'closed hand'
     }
     void OnMouseDrag()
     {   // when dragging keep recalculating velocity and move towards cursor
@@ -28,7 +32,7 @@ public class DiceContainer : MonoBehaviour
     }
     void OnMouseUp()
     {   // on mouse button release change cursor to 'poiniting hand'
-        Cursor.SetCursor(pointing_hand,Vector2.zero,CursorMode.Auto);
+        Cursor.SetCursor(Asset.Cursor(CursorType.FiNGER),Vector2.zero,CursorMode.Auto);
         foreach (Dice d in dice)    // for each dice assign velcity
         {
             d.roll((transform.position - previous_frame_pos)/Time.deltaTime);
