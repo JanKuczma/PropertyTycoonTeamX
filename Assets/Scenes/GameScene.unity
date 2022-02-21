@@ -152,15 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4973e42e6bdd81c47ade2112bc06f327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CatPrefab: {fileID: 5170083114102756678, guid: 92e6f226e770bc746ae0e18d95ab101d, type: 3}
-  BootPrefab: {fileID: 2516881475296216702, guid: 5ae5cb1eaebe1cc4ca377392c4fdd59d, type: 3}
-  IronPrefab: {fileID: 5696732893834393533, guid: 0f5fe10868439d5418452740f3d8f654, type: 3}
-  ShipPrefab: {fileID: 511638931390896359, guid: 0cb62d63ae7d5324698bf091f3e8a619, type: 3}
-  HatStandPrefab: {fileID: 1891778265428103552, guid: 072cc7d9e02812343a8985c9dfa90683, type: 3}
-  SmartphonePrefab: {fileID: 634128678551699655, guid: 49d974a1e9372d4408fb4506626635a3, type: 3}
-  DicePrefab: {fileID: 5901425165616159431, guid: 045c833fc182f084ba8dbd6e02dc6cc5, type: 3}
-  BoardPrefab: {fileID: 2168428152303578064, guid: 5998286b7da6ee34ebbd27966bc17e5c, type: 3}
-  pointing_hand: {fileID: 2800000, guid: efcc77a1a76a49d49b4f43f38328ce75, type: 3}
 --- !u!4 &13825638
 Transform:
   m_ObjectHideFlags: 0
@@ -424,7 +415,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776171307}
   m_LocalRotation: {x: -0, y: 0.88424766, z: -0.4670183, w: 0}
-  m_LocalPosition: {x: 0, y: 13.93, z: 22.55}
+  m_LocalPosition: {x: 0, y: 19.96, z: 22.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
