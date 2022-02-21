@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 3d9913af138c3534abf0aa7be4708330
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - jail: {instanceID: 0}
+  - GoPrefab: {fileID: 2061633889400496170, guid: 0f4f27958a92c2c48bd3ec2d9a0b916a, type: 3}
+  - JailVisitPrefab: {fileID: 919132149155446097, guid: 0c3bb23ae2d81854d82db9bba2aa482b, type: 3}
+  - ParkingPrefab: {fileID: 1880325767646919912, guid: 661bffc6fb270e1499b87d952562948f, type: 3}
+  - GoToJailPrefab: {fileID: 9179182317122471993, guid: 45b273bc74c246742931a131f591e458, type: 3}
+  - PropertyPrefab: {fileID: 6709407043780637509, guid: c641a40c10b11f94eb42d59c18b8eb01, type: 3}
+  - StationPrefab: {fileID: 1605341176247320642, guid: c2100a63cd5f9094f80ce2ae82515a49, type: 3}
+  - BulbPrefab: {fileID: 3984328588203052806, guid: e34d8a042a9a5f84d876daef99224f0d, type: 3}
+  - WaterPrefab: {fileID: 6425374852640767135, guid: f9210c41b5d81c34ea820e35be5d6c78, type: 3}
+  - PotLuckPrefab: {fileID: 2110831815799983317, guid: a301c81fe54df4644898b16f48c2ba80, type: 3}
+  - Chance1Prefab: {fileID: 8169157309110011766, guid: a4e78072bbb990346b2581273dbb30bc, type: 3}
+  - Chance2Prefab: {fileID: 7883748799775219833, guid: 98af05dcb49d0484cb68a3f0bf9fe89b, type: 3}
+  - Chance3Prefab: {fileID: 6345052483878763441, guid: 6641743758faed94e9b9f45247d750ff, type: 3}
+  - SuperTaxPrefab: {fileID: 5151231609018983963, guid: 47eba5a779bf1c2428b48c2d8b04d0d0, type: 3}
+  - IncomeTaxPrefab: {fileID: 7300140700073813906, guid: c6f867bf3a792894683ca26fb3704777, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
