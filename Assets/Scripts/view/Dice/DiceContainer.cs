@@ -10,8 +10,8 @@ public class DiceContainer : MonoBehaviour
     Vector3 previous_frame_pos; // parameter used to calculate dice velocity
     Dice[] dice;                // list for references to dice monobehaviour
     Vector3 init_pos;           // initial position of the container
-    void Start()
-    {       // setting up the parameters
+    void Awake()
+    {
         init_pos = transform.position;
         dice = GetComponentsInChildren<Dice>();
     }

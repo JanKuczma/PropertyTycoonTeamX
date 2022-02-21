@@ -9,9 +9,9 @@ public class PieceBehaviour : MonoBehaviour
     float rotationSpeed;    // rotation speed
     int currentSquare;  // current position 0 - 39 (40 squares)
     int currentSpot; // current spot 0 - 5 (6 areas)
-    public bool isMoving;   // bool to control the movement
-    public Board board; // reference to Board, to be assigned in the unity inspector
-    void Start()
+    [System.NonSerialized] public bool isMoving;   // bool to control the movement
+    Board board; // reference to Board
+    void Awake()
     {
         // sets up initial values
         isMoving = false;
@@ -19,6 +19,11 @@ public class PieceBehaviour : MonoBehaviour
         rotationSpeed = 4f;
         currentSpot = -1;
         currentSquare = 0;
+    }
+
+    public void assignBoard(Board board)
+    {
+        this.board = board;
     }
 
     /// coroutine for movement

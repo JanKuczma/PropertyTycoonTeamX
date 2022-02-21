@@ -6,22 +6,12 @@ public class JailArrangement : SquareArrangement
 {
     List<int> cellIs;
     Vector3[] cells;
-    new void Start()
+
+    new void Awake()
     {
-        base.Start();
+        base.Awake();
         cellIs = new List<int> {0,1,2,3,4,5};
         cells = new Vector3[6];
-        // the offsets adjust according to the square scale
-        float offsetSmall = 0.6f*(transform.localScale.x/100);
-        float offsetBig = 0.8f*(transform.localScale.x/100);
-
-        cells[0] = transform.position - Vector3.forward*(offsetBig+offsetSmall) + Vector3.right*(offsetSmall/2.0f);
-        cells[1] = transform.position - Vector3.forward*(offsetBig+offsetSmall) - Vector3.right*offsetSmall;
-        cells[2] = transform.position - Vector3.right*(offsetBig+offsetSmall) - Vector3.forward*(offsetBig+offsetSmall);
-        cells[3] = transform.position + Vector3.right*(offsetSmall/2.0f);
-        cells[4] = transform.position - Vector3.right*offsetSmall;
-        cells[5] = transform.position - Vector3.right*(offsetBig+offsetSmall);
-        
     }
 
     public Vector3 peekCell(int cellI)
@@ -45,5 +35,17 @@ public class JailArrangement : SquareArrangement
         } else {
             return -1;
         }
+    }
+    public void assignCells()
+    {
+        float offsetSmall = 0.6f*(transform.localScale.x);
+        float offsetBig = 0.8f*(transform.localScale.x);
+
+        cells[0] = transform.position - Vector3.forward*(offsetBig+offsetSmall) + Vector3.right*(offsetSmall/2.0f);
+        cells[1] = transform.position - Vector3.forward*(offsetBig+offsetSmall) - Vector3.right*offsetSmall;
+        cells[2] = transform.position - Vector3.right*(offsetBig+offsetSmall) - Vector3.forward*(offsetBig+offsetSmall);
+        cells[3] = transform.position + Vector3.right*(offsetSmall/2.0f);
+        cells[4] = transform.position - Vector3.right*offsetSmall;
+        cells[5] = transform.position - Vector3.right*(offsetBig+offsetSmall);
     }
 }
