@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6128432728307517882}
   - component: {fileID: 8279980414386650480}
   - component: {fileID: -6442728138150507215}
-  - component: {fileID: 343213441481332771}
+  - component: {fileID: -8342441946112005238}
   m_Layer: 0
   m_Name: JailVisit
   m_TagString: Untagged
@@ -99,7 +99,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.002600001, y: 0.00012000015, z: 0.002600001}
   m_Center: {x: 6.4028444e-10, y: -3.1650416e-10, z: 0}
---- !u!114 &343213441481332771
+--- !u!114 &-8342441946112005238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7631519036783369381}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522fe92953f8a45449d6f9046792230f, type: 3}
+  m_Script: {fileID: 11500000, guid: 51ae26275d72cf84fa94603f05bc676f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spots: []

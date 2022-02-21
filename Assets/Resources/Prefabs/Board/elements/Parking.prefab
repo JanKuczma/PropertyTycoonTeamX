@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2809200991988410871}
   - component: {fileID: 79022050814205245}
   - component: {fileID: -8143095638372308459}
-  - component: {fileID: 4514957381499963864}
+  - component: {fileID: -6848916981996739217}
   m_Layer: 0
   m_Name: Parking
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0026000012, y: 0.00012000033, z: 0.0026000002}
   m_Center: {x: -0.0000000018044375, y: -9.094947e-12, z: 0.0000000035506673}
---- !u!114 &4514957381499963864
+--- !u!114 &-6848916981996739217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1880325767646919912}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b333579d1475b43ae6cab5f1d84ad2, type: 3}
+  m_Script: {fileID: 11500000, guid: aaa975b347fcf474cabaa5719cbc2a34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spots: []

@@ -30,45 +30,45 @@ public class temp_contr : MonoBehaviour
         board = Board.Create(transform);
         dice = DiceContainer.Create(transform);
         board.initSquare(SqType.GO,1);
-        board.initSquare(SqType.PROPERTY,2);
-        board.initSquare(SqType.POTLUCK,3);
-        board.initSquare(SqType.PROPERTY,4);
-        board.initSquare(SqType.INCOMETAX,5);
-        board.initSquare(SqType.STATION,6);
-        board.initSquare(SqType.PROPERTY,7);
-        board.initSquare(SqType.CHANCE1,8);
-        board.initSquare(SqType.PROPERTY,9);
-        board.initSquare(SqType.PROPERTY,10);
+        board.initSquare(SqType.PROPERTY,2,"THE OLD CREEK","60",Group.BROWN);
+        board.initSquare(SqType.POTLUCK,3,"POT LUCK");
+        board.initSquare(SqType.PROPERTY,4,"GANGSTER PARADISE","60",Group.BROWN);
+        board.initSquare(SqType.INCOMETAX,5,"INCOME TAX","100");
+        board.initSquare(SqType.STATION,6,"BRIGHTON STATION","200");
+        board.initSquare(SqType.PROPERTY,7,"THE ANGELS DELIGHT","60",Group.BLUE);
+        board.initSquare(SqType.CHANCE1,8,"OPPORTUNITY KNOCKS");
+        board.initSquare(SqType.PROPERTY,9,"POTTER AVENUE","100",Group.BLUE);
+        board.initSquare(SqType.PROPERTY,10,"GRANGER DRIVE","100",Group.BLUE);
         board.initSquare(SqType.JAILVISIT,11);
-        board.initSquare(SqType.PROPERTY,12);
-        board.initSquare(SqType.BULB,13);
-        board.initSquare(SqType.PROPERTY,14);
-        board.initSquare(SqType.PROPERTY,15);
-        board.initSquare(SqType.STATION,16);
-        board.initSquare(SqType.PROPERTY,17);
-        board.initSquare(SqType.POTLUCK,18);
-        board.initSquare(SqType.PROPERTY,19);
-        board.initSquare(SqType.PROPERTY,20);
+        board.initSquare(SqType.PROPERTY,12,"SKYWALKER DRIVE","140",Group.PURPLE);
+        board.initSquare(SqType.BULB,13,"TESLA POWER CO","150");
+        board.initSquare(SqType.PROPERTY,14,"WOOKIE HOLE","140",Group.PURPLE);
+        board.initSquare(SqType.PROPERTY,15,"REY LANE","160",Group.PURPLE);
+        board.initSquare(SqType.STATION,16,"HOVE STATION","200");
+        board.initSquare(SqType.PROPERTY,17,"BISHOP DRIVE","180",Group.ORANGE);
+        board.initSquare(SqType.POTLUCK,18,"POT LUCK");
+        board.initSquare(SqType.PROPERTY,19,"DUNHAM STREET","180",Group.ORANGE);
+        board.initSquare(SqType.PROPERTY,20,"BROYLES LANE","200",Group.ORANGE);
         board.initSquare(SqType.PARKING,21);
-        board.initSquare(SqType.PROPERTY,22);
-        board.initSquare(SqType.CHANCE2,23);
-        board.initSquare(SqType.PROPERTY,24);
-        board.initSquare(SqType.PROPERTY,25);
-        board.initSquare(SqType.STATION,26);
-        board.initSquare(SqType.PROPERTY,27);
-        board.initSquare(SqType.PROPERTY,28);
-        board.initSquare(SqType.WATER,29);
-        board.initSquare(SqType.PROPERTY,30);
+        board.initSquare(SqType.PROPERTY,22,"YUE FEI SQUARE","220",Group.RED);
+        board.initSquare(SqType.CHANCE2,23,"OPPORTUNITY KNOCKS");
+        board.initSquare(SqType.PROPERTY,24,"MILAN ROGUE","220",Group.RED);
+        board.initSquare(SqType.PROPERTY,25,"HAN XIN GARDENS","240",Group.RED);
+        board.initSquare(SqType.STATION,26,"FALMER STATION","200");
+        board.initSquare(SqType.PROPERTY,27,"SHATNER CLOSE","260",Group.YELLOW);
+        board.initSquare(SqType.PROPERTY,28,"PICARD AVENUE","260",Group.YELLOW);
+        board.initSquare(SqType.WATER,29,"EDISON WATER","150");
+        board.initSquare(SqType.PROPERTY,30,"CRUSHER CREEK","280",Group.YELLOW);
         board.initSquare(SqType.GOTOJAIL,31);
-        board.initSquare(SqType.PROPERTY,32);
-        board.initSquare(SqType.PROPERTY,33);
-        board.initSquare(SqType.POTLUCK,34);
-        board.initSquare(SqType.PROPERTY,35);
-        board.initSquare(SqType.STATION,36);
-        board.initSquare(SqType.CHANCE3,37);
-        board.initSquare(SqType.PROPERTY,38);
-        board.initSquare(SqType.SUPERTAX,39);
-        board.initSquare(SqType.PROPERTY,40);
+        board.initSquare(SqType.PROPERTY,32,"SIRAT MEWS","300",Group.GREEN);
+        board.initSquare(SqType.PROPERTY,33,"GENGHIS CRESCENT","300",Group.GREEN);
+        board.initSquare(SqType.POTLUCK,34,"POT LUCK");
+        board.initSquare(SqType.PROPERTY,35,"IBIS CLOSE","320",Group.GREEN);
+        board.initSquare(SqType.STATION,36,"PORTSLADE STATION","200");
+        board.initSquare(SqType.CHANCE3,37,"OPPORTUNITY KNOCKS");
+        board.initSquare(SqType.PROPERTY,38,"JAMES WEBB WAY","350",Group.DEEPBLUE);
+        board.initSquare(SqType.SUPERTAX,39,"SUPER TAX","100");
+        board.initSquare(SqType.PROPERTY,40,"TURING HEIGHTS","400",Group.DEEPBLUE);
         //add players: player<int,token> dict, pieces<token,piece> dict
         addPlayer(Token.CAT);
         players.Add(0,Token.CAT);
@@ -106,7 +106,7 @@ public class temp_contr : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.Return))
             {
-                StartCoroutine(pieces[current].move(-3));
+                Debug.Log("lol");
             }
         }
     }

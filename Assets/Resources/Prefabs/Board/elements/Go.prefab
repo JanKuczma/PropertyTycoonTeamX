@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2339741093058377013}
   - component: {fileID: 548481932026970623}
   - component: {fileID: 6608551268097971891}
-  - component: {fileID: -4661349772688521927}
+  - component: {fileID: 6965795729669994980}
   m_Layer: 0
   m_Name: Go
   m_TagString: Untagged
@@ -97,7 +97,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0026000012, y: 0.00012000011, z: 0.0025999998}
   m_Center: {x: -0.0000000018044375, y: -7.275958e-12, z: 0.0000000035506673}
---- !u!114 &-4661349772688521927
+--- !u!114 &6965795729669994980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2061633889400496170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b333579d1475b43ae6cab5f1d84ad2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b070aa3f3812414eb0985689382db7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spots: []
