@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8906100135523021572}
   - component: {fileID: 6664242965339736014}
   - component: {fileID: 6851493859216979654}
-  - component: {fileID: -5030349724333588595}
+  - component: {fileID: -4847014352470114909}
   m_Layer: 0
   m_Name: SuperTax
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.001600001, y: 0.00012000007, z: 0.0025999998}
   m_Center: {x: -0.0000000020954758, y: 0.0000000016498234, z: 0.000000005355105}
---- !u!114 &-5030349724333588595
+--- !u!114 &-4847014352470114909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5151231609018983963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b333579d1475b43ae6cab5f1d84ad2, type: 3}
+  m_Script: {fileID: 11500000, guid: 549b52ebf7fe24146b61d1ec7dabd7cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spots: []

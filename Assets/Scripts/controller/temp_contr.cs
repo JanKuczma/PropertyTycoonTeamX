@@ -106,7 +106,9 @@ public class temp_contr : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.Return))
             {
-                StartCoroutine(pieces[current].move(-3));
+                StartCoroutine(pieces[current].goToJail());
+                current_player = (current_player+1)%players.Count;
+                current = players[current_player];
             }
         }
     }

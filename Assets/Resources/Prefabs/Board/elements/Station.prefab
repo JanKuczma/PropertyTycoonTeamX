@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3072398818704676189}
   - component: {fileID: 956923916619096471}
   - component: {fileID: -2279865178323518402}
-  - component: {fileID: -7423725308066071474}
+  - component: {fileID: -8431258403397346469}
   m_Layer: 0
   m_Name: Station
   m_TagString: Untagged
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0016000008, y: 0.00012000011, z: 0.0025999998}
   m_Center: {x: -0.0000000017753337, y: 0.0000000016498234, z: 0.000000005995389}
---- !u!114 &-7423725308066071474
+--- !u!114 &-8431258403397346469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1605341176247320642}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b333579d1475b43ae6cab5f1d84ad2, type: 3}
+  m_Script: {fileID: 11500000, guid: 70d710bc49513f1459bd3e532eac8004, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spots: []

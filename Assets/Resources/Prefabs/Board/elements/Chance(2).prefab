@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5876275000540722534}
   - component: {fileID: 8532157125406491052}
   - component: {fileID: -1919225829131891419}
-  - component: {fileID: 8768357520071350015}
+  - component: {fileID: 827193914912765852}
   m_Layer: 0
   m_Name: Chance(2)
   m_TagString: Untagged
@@ -97,7 +97,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0015999997, y: 0.00012000011, z: 0.0026000005}
   m_Center: {x: -0.00000000547152, y: 0.0000000016498234, z: 0.000000006868504}
---- !u!114 &8768357520071350015
+--- !u!114 &827193914912765852
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7883748799775219833}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82b333579d1475b43ae6cab5f1d84ad2, type: 3}
+  m_Script: {fileID: 11500000, guid: b6cf873dda980ce40be945039a609c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spots: []
