@@ -51,9 +51,11 @@ public class Square : MonoBehaviour
             break;
             case SqType.GO:
             square.GetComponent<GoSquare>().setSecond(price_secoond);
+            square.GetComponent<CornerSquare>().assignSpots();
             break;
             case SqType.PARKING:
             square.GetComponent<ParkingSquare>().setVisiting(price_secoond);
+            square.GetComponent<CornerSquare>().assignSpots();
             break;
             case SqType.GOTOJAIL:
             square.GetComponent<CornerSquare>().assignSpots();
