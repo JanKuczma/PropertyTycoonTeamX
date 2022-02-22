@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // enum for keeping track of the turnstate state
-public enum TurnState {DICEROLL, PIECEMOVE, ACTION, END}
+public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
 */
@@ -13,8 +13,8 @@ public class temp_contr : MonoBehaviour
     DiceContainer dice;
     Dictionary<Token,Piece> pieces;
     Dictionary<int,Token> players;
-    // bits needed to run the turns
     Vector3 cam_pos_top;    // top cam position
+    // bits needed to run the turns
     int current_player;
     Token current;
     TurnState state;
@@ -88,7 +88,7 @@ public class temp_contr : MonoBehaviour
         Cursor.SetCursor(Asset.Cursor(CursorType.FiNGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
         //set current turn state to DICEROLL
-        state = TurnState.DICEROLL;
+        state = TurnState.BEGIN;
     }
 
     void Update()
@@ -101,20 +101,16 @@ public class temp_contr : MonoBehaviour
                 pieces[current].speedUp();
             }
         }
-        //temp code to try if piece can move backwards
-        if(state == TurnState.DICEROLL)
-        {
-            if(Input.GetKeyDown(KeyCode.Return))
-            {
-                StartCoroutine(pieces[current].move(10));
-                current_player = (current_player+1)%players.Count;
-            current = players[current_player];
-            }
-        }
     }
 
     void FixedUpdate()
     {
+        if(state == TurnState.BEGIN)
+        {
+            if(dice.start_roll) {
+                state = TurnState.DICEROLL;
+            }
+        }
         if(state == TurnState.DICEROLL) // turn begins
         {
             if(!dice.areRolling())  // if dice are not rolling anymore
@@ -145,7 +141,7 @@ public class temp_contr : MonoBehaviour
             dice.reset();                   // reset dice
             current_player = (current_player+1)%players.Count;
             current = players[current_player];
-            state = TurnState.DICEROLL;     // change state to initial state
+            state = TurnState.BEGIN;     // change state to initial state
         }
     }
 
@@ -153,12 +149,21 @@ public class temp_contr : MonoBehaviour
      void LateUpdate()
     {
         // simply if the current piece is moving move camera towards it, else move camera towards top position
-        if(pieces[current].isMoving)
+        if(state == TurnState.PIECEMOVE)
         {
             Vector3 target = pieces[current].transform.position*1.5f;
-            target[1] = 7.0f;
+            target[1] = board.transform.position.y+7.0f;
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
             Vector3 lookDirection = pieces[current].transform.position - Camera.main.transform.position;
+            lookDirection.Normalize();
+            Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 3.0f * Time.deltaTime);
+        }
+        else if(state == TurnState.DICEROLL)
+        {
+            Vector3 target = dice.position();
+            target[1] = 1.7f*dice.av_distance()/Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2));//Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2)) depends only on fieldview angle so it is pretty much constatnt, could be set as constract in terms of optimisation
+            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
+            Vector3 lookDirection = dice.position() - Camera.main.transform.position;
             lookDirection.Normalize();
             Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 3.0f * Time.deltaTime);
         } else {
