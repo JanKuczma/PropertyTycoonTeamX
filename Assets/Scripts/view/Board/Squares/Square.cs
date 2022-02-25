@@ -70,6 +70,58 @@ public class Square : MonoBehaviour
         }
         return square;
     }
+    public static Square Create(SqType type, Transform parent, int position, string name_first="", string price_secoond="",int group = ((int)Group.BROWN))
+    {
+        Square square = Instantiate(Asset.Board(type),parent).GetComponent<Square>();
+        square.transform.localScale = new Vector3(1,1,1);
+        square.transform.localPosition = generateCoordinates(position);
+        square.transform.localRotation = getRotation(position);
+        square.setName(name_first);
+        switch(type)
+        {
+            case SqType.PROPERTY:
+            square.GetComponent<PropertySquare>().assignSpots();
+            square.GetComponent<PropertySquare>().setPrice(price_secoond);
+            square.GetComponent<PropertySquare>().setGroup(group);
+            break;
+            case SqType.STATION:
+            case SqType.BULB:
+            case SqType.WATER:
+            square.GetComponent<FullSquare>().assignSpots();
+            square.GetComponent<UtilitySqaure>().setPrice(price_secoond);
+            break;
+            case SqType.SUPERTAX:
+            case SqType.INCOMETAX:
+            square.GetComponent<FullSquare>().assignSpots();
+            square.GetComponent<TaxSqaure>().setAmount(price_secoond);
+            break;
+            case SqType.POTLUCK:
+            case SqType.CHANCE1:
+            case SqType.CHANCE2:
+            case SqType.CHANCE3:
+            square.GetComponent<FullSquare>().assignSpots();
+            break;
+            case SqType.GO:
+            square.GetComponent<GoSquare>().setSecond(price_secoond);
+            square.GetComponent<CornerSquare>().assignSpots();
+            break;
+            case SqType.PARKING:
+            square.GetComponent<ParkingSquare>().setVisiting(price_secoond);
+            square.GetComponent<CornerSquare>().assignSpots();
+            break;
+            case SqType.GOTOJAIL:
+            square.GetComponent<CornerSquare>().assignSpots();
+            square.GetComponent<GoToJailSquare>().setJailText(price_secoond);
+            break;
+            case SqType.JAILVISIT:
+            square.GetComponent<JailSquare>().assignSpots();
+            square.GetComponent<JailSquare>().assignCells();
+            square.GetComponent<JailSquare>().setVisiting(price_secoond);
+            break;
+            
+        }
+        return square;
+    }
     virtual public void setName(string name)
     {
         _name = name;

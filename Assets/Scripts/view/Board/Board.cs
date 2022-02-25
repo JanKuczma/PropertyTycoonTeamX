@@ -26,4 +26,10 @@ public class Board : MonoBehaviour
         squares[position-1] = square;
         if (type == SqType.JAILVISIT) jail = square.GetComponent<JailSquare>();
     }
+    public void initSquare(SqType type,int position, string name="", string price="",int group=((int)Group.BROWN))
+    {
+        Square square = Square.Create(type,transform,position,name,price,group);
+        squares[position-1] = square;
+        if (type == SqType.JAILVISIT) jail = square.GetComponent<JailSquare>();
+    }
 }
