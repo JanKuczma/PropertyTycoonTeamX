@@ -85,7 +85,7 @@ public class temp_contr : MonoBehaviour
         current_player = 0;
         current = players[current_player];
         //setup finger cursor and get init cemara pos (top pos)
-        Cursor.SetCursor(Asset.Cursor(CursorType.FiNGER),Vector2.zero,CursorMode.Auto);
+        Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
         //set current turn state to DICEROLL
         state = TurnState.BEGIN;

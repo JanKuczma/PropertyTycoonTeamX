@@ -34,7 +34,7 @@ public class DiceContainer : MonoBehaviour
     }
     void OnMouseUp()
     {   // on mouse button release change cursor to 'poiniting hand'
-        Cursor.SetCursor(Asset.Cursor(CursorType.FiNGER),Vector2.zero,CursorMode.Auto);
+        Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         foreach (Dice d in dice)    // for each dice assign velcity
         {
             d.roll((transform.position - previous_frame_pos)/Time.deltaTime);
