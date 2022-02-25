@@ -18,7 +18,7 @@ public class Square : MonoBehaviour
         spots = new Vector3[6];
         spotsIs = new List<int> {0,1,2,3,4,5};
     }
-    public static Square Create(SqType type, Transform parent, int position, string name_first="", string price_secoond="",Group group = Group.BROWN)
+    public static Square Create(SqType type, Transform parent, int position, string name_first="", string price_secoond="",int group = ((int)Group.BROWN))
     {
         Square square = Instantiate(Asset.Board(type),parent).GetComponent<Square>();
         square.transform.localScale = new Vector3(1,1,1);

@@ -52,12 +52,12 @@ public class JailSquare : CornerSquare
     {
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);
-        spots[0] = transform.position + transform.right*(2*offsetSmall);
-        spots[1] = transform.position + transform.right*(2*offsetSmall)     + transform.forward*(2*offsetSmall);
-        spots[2] = transform.position + transform.right*(2*offsetSmall)     - transform.forward*(2*offsetSmall);
-        spots[3] = transform.position + transform.forward*(2*offsetSmall)   + transform.right*(offsetSmall/2.0f);
-        spots[4] = transform.position + transform.forward*(2*offsetSmall)   - transform.right*offsetSmall;
-        spots[5] = transform.position + transform.forward*(2*offsetSmall)   - transform.right*(offsetBig+offsetSmall);
+        spots[0] = transform.position + transform.forward*(2*offsetSmall);
+        spots[1] = transform.position + transform.forward*(2*offsetSmall)           + transform.right*(2*offsetSmall);
+        spots[2] = transform.position + transform.forward*(2*offsetSmall)           - transform.right*(2*offsetSmall);
+        spots[3] = transform.position + transform.forward*(offsetSmall/2.0f)        - transform.right*(2*offsetSmall);
+        spots[4] = transform.position - transform.forward*offsetSmall               - transform.right*(2*offsetSmall);
+        spots[5] = transform.position - transform.forward*(offsetBig+offsetSmall)   - transform.right*(2*offsetSmall);
     }
 
     public override void setName(string just="")

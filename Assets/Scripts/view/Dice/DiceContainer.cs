@@ -9,10 +9,12 @@ public class DiceContainer : MonoBehaviour
     Vector3 previous_frame_pos; // parameter used to calculate dice velocity
     Dice[] dice;                // list for references to dice monobehaviour
     Vector3 init_pos;           // initial position of the container
+    [System.NonSerialized] public bool start_roll; 
     void Awake()
     {
         init_pos = transform.position;
         dice = GetComponentsInChildren<Dice>();
+        start_roll = false;
     }
 
     public static DiceContainer Create(Transform parent)
@@ -32,12 +34,13 @@ public class DiceContainer : MonoBehaviour
     }
     void OnMouseUp()
     {   // on mouse button release change cursor to 'poiniting hand'
-        Cursor.SetCursor(Asset.Cursor(CursorType.FiNGER),Vector2.zero,CursorMode.Auto);
+        Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         foreach (Dice d in dice)    // for each dice assign velcity
         {
             d.roll((transform.position - previous_frame_pos)/Time.deltaTime);
         }
-        enabled = false;    // disable the container collider component
+        start_roll = true;
+        enabled = false;    // disable the container
     }
 
     Vector3 getTargetPos()
@@ -62,6 +65,7 @@ public class DiceContainer : MonoBehaviour
         {
             d.reset();
         }
+        start_roll = false;
         enabled = true;
     }
 
@@ -85,6 +89,20 @@ public class DiceContainer : MonoBehaviour
             tmp.Add(d.isRolling());
         }
         return tmp.Contains(true);
+    }
+
+    public Vector3 position()
+    {
+        Vector3 point = Vector3.zero;
+        foreach(Dice d in dice)
+        {
+            point += d.transform.position;
+        }
+        return point/dice.Length;
+    }
+    public float av_distance()
+    {
+        return (position()-dice[0].transform.position).magnitude;
     }
 
 }

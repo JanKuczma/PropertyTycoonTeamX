@@ -5,7 +5,7 @@ using UnityEngine;
 /// enum types
 public enum SqType {GO,JAILVISIT,PARKING,GOTOJAIL,PROPERTY,STATION,BULB,WATER,POTLUCK,SUPERTAX,INCOMETAX,CHANCE1,CHANCE2,CHANCE3}
 public enum Token {CAT ,BOOT,IRON,SHIP,HATSTAND,SMARTPHONE}
-public enum CursorType {FiNGER,GRAB}
+public enum CursorType {FINGER,GRAB}
 /*
     This static class is used to get the assets at the runtime
     it seems to be the most efficient way to load the assets to the game atm
@@ -83,7 +83,7 @@ public static class Asset
     
     public static Texture2D Cursor(CursorType type)
     {
-        return  type == CursorType.FiNGER ? FingerTexture :
+        return  type == CursorType.FINGER ? FingerTexture :
                 type == CursorType.GRAB ? GrabTexture :
                 null;
     }
