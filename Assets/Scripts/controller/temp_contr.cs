@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // enum for keeping track of the turnstate state
+// just chucking a comment in here, testing git stuff :) (RD)
 public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
