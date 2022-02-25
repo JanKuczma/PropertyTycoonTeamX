@@ -20,12 +20,6 @@ public class Board : MonoBehaviour
     }
     /// SqType is just enum, instantiates squre depending on the type
     /// commented stuff to be developed/implemented
-    public void initSquare(SqType type,int position, string name="", string price="",Group group=Group.BROWN)
-    {
-        Square square = Square.Create(type,transform,position,name,price,group);
-        squares[position-1] = square;
-        if (type == SqType.JAILVISIT) jail = square.GetComponent<JailSquare>();
-    }
     public void initSquare(SqType type,int position, string name="", string price="",int group=((int)Group.BROWN))
     {
         Square square = Square.Create(type,transform,position,name,price,group);
