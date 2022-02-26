@@ -28,6 +28,9 @@ public static class Asset
     static GameObject Chance1Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(1)");
     static GameObject Chance2Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(2)");
     static GameObject Chance3Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(3)");
+    //house and hotel
+    static GameObject HousePrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/House");
+    static GameObject HotelPrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/Hotel");
     //pieces
     static GameObject CatPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Cat");
     static GameObject BootPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Boot");
@@ -86,5 +89,15 @@ public static class Asset
         return  type == CursorType.FINGER ? FingerTexture :
                 type == CursorType.GRAB ? GrabTexture :
                 null;
+    }
+
+    public static GameObject House()
+    {
+        return HousePrefab;
+    }
+
+    public static GameObject Hotel()
+    {
+        return HotelPrefab;
     }
 }

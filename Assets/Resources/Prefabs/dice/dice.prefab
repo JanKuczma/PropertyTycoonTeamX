@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1618530115273950637
+--- !u!1 &845706360187172433
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,13 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2107117535737241367}
-  - component: {fileID: 3067557904599109810}
-  - component: {fileID: 970192433281410168}
-  - component: {fileID: 1925083512119701268}
-  - component: {fileID: 1925083512119701271}
-  - component: {fileID: 1925083512119701269}
-  - component: {fileID: 1925083512119701270}
+  - component: {fileID: 69627504587893995}
+  - component: {fileID: 3988085139392553806}
+  - component: {fileID: 1205963062651197316}
+  - component: {fileID: 1053633488498520872}
+  - component: {fileID: 3994198433657102061}
+  - component: {fileID: 4933356070665815840}
+  - component: {fileID: -309014383460145841}
   m_Layer: 0
   m_Name: dice
   m_TagString: Untagged
@@ -22,35 +22,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2107117535737241367
+--- !u!4 &69627504587893995
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618530115273950637}
-  m_LocalRotation: {x: -0.15536222, y: 0.49469355, z: 0.7162433, w: -0.46705073}
-  m_LocalPosition: {x: -0.32, y: 0.36, z: -0.49}
-  m_LocalScale: {x: 30.757801, y: 30.757797, z: 30.757807}
+  m_GameObject: {fileID: 845706360187172433}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: 9.365257, y: 0.41, z: 3.154696}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -34.299, y: -55.972, z: 264.841}
---- !u!33 &3067557904599109810
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3988085139392553806
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618530115273950637}
-  m_Mesh: {fileID: -835688487210165693, guid: 716c25579baac2742b1213fe18ce6258, type: 3}
---- !u!23 &970192433281410168
+  m_GameObject: {fileID: 845706360187172433}
+  m_Mesh: {fileID: -5495902117074765545, guid: 716c25579baac2742b1213fe18ce6258, type: 3}
+--- !u!23 &1205963062651197316
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618530115273950637}
+  m_GameObject: {fileID: 845706360187172433}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -63,8 +63,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 06142e620c96ea543beec0e61fb858cd, type: 2}
-  - {fileID: 2100000, guid: 91102081440515944ad87439a0963a1d, type: 2}
+  - {fileID: -1512603805845493134, guid: 716c25579baac2742b1213fe18ce6258, type: 3}
+  - {fileID: 3672343303693253515, guid: 716c25579baac2742b1213fe18ce6258, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,13 +86,52 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &1925083512119701268
+--- !u!114 &1053633488498520872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845706360187172433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4524c8d9d59a92f419c2e65a856d5bee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!64 &3994198433657102061
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845706360187172433}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 716c25579baac2742b1213fe18ce6258, type: 3}
+--- !u!65 &4933356070665815840
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845706360187172433}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &-309014383460145841
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618530115273950637}
+  m_GameObject: {fileID: 845706360187172433}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -102,42 +141,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &1925083512119701271
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618530115273950637}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.026, y: 0.026, z: 0.026}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!64 &1925083512119701269
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618530115273950637}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -835688487210165693, guid: 716c25579baac2742b1213fe18ce6258, type: 3}
---- !u!114 &1925083512119701270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618530115273950637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4524c8d9d59a92f419c2e65a856d5bee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -32,7 +32,7 @@ public class Dice : MonoBehaviour
     /// returns true if dice is not colliding with anything OR velocity is not 0
     public bool isRolling()
     {
-        return !(onGround && rb_comp.velocity.magnitude == 0.0f);
+        return !(onGround && rb_comp.velocity.magnitude == 0);
     }
 
     /// starts the dice roll

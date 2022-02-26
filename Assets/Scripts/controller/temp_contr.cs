@@ -101,6 +101,16 @@ public class temp_contr : MonoBehaviour
                 pieces[current].speedUp();
             }
         }
+        if(Input.GetKeyDown(KeyCode.Return))
+            {
+                ((PropertySquare)board.squares[1]).addHouse();
+            }
+        if(Input.GetKeyDown("r"))
+        {
+            StartCoroutine(pieces[current].move(1));
+            current_player = (current_player+1)%players.Count;
+            current = players[current_player];
+        }
     }
 
     void FixedUpdate()

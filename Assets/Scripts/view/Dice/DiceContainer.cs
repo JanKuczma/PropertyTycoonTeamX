@@ -83,12 +83,11 @@ public class DiceContainer : MonoBehaviour
     /// returns true if at least one dice is rolling
     public bool areRolling()
     {
-        List<bool> tmp = new List<bool>();
         foreach(Dice d in dice)
         {
-            tmp.Add(d.isRolling());
+            if(d.isRolling()) return true;
         }
-        return tmp.Contains(true);
+        return false;
     }
 
     public Vector3 position()

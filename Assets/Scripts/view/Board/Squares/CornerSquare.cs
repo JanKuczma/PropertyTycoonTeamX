@@ -4,10 +4,15 @@ using UnityEngine;
 using TMPro;
 public class CornerSquare : Square
 {
+    new void Awake()
+    {
+        base.Awake();
+        assignSpots();
+    }
     protected string _first = "";
     protected string _sceond = "";
     
-    virtual public void assignSpots()
+    virtual protected void assignSpots()
     {
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);
