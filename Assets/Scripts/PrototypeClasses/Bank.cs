@@ -15,7 +15,7 @@ public class Bank
     {
         foreach (var player in players)
         {
-            player.ReceiveCash(1500);
+            // player.ReceiveCash(1500);
         }
     }
 
