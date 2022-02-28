@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=0xeb882c, RED=0xfff005, YELLOW=0xFFF005, GREEN=0x13a857, DEEPBLUE=0x0066a4}
+public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=0xeb882c, RED=0xdb2428, YELLOW=0xFFF005, GREEN=0x13a857, DEEPBLUE=0x0066a4}
 public class PropertySquare : Square
 {
     new void Awake()

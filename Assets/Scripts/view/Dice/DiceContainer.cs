@@ -40,6 +40,7 @@ public class DiceContainer : MonoBehaviour
             d.roll((transform.position - previous_frame_pos)/Time.deltaTime);
         }
         start_roll = true;
+        GetComponent<BoxCollider>().enabled = false;
         enabled = false;    // disable the container
     }
 
@@ -66,6 +67,7 @@ public class DiceContainer : MonoBehaviour
             d.reset();
         }
         start_roll = false;
+        GetComponent<BoxCollider>().enabled = true;
         enabled = true;
     }
 

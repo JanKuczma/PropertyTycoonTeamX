@@ -7,7 +7,7 @@ public class Dice : MonoBehaviour
     Rigidbody rb_comp;  // reference to RigidBody component
     Vector3 init_pos;   // initial position
     bool onGround;  // parameter used to keep track if dice is colliding with something
-    void Start()
+    void Awake()
     {
         rb_comp = GetComponent<Rigidbody>();
         init_pos = transform.position;
