@@ -12,6 +12,8 @@ public class JailSquare : CornerSquare
         base.Awake();
         cellIs = new List<int> {0,1,2,3,4,5};
         cells = new Vector3[6];
+        assignCells();
+        assignSpots();
     }
 
     public Vector3 peekCell(int cellI)
@@ -36,7 +38,7 @@ public class JailSquare : CornerSquare
             return -1;
         }
     }
-    public void assignCells()
+    private void assignCells()
     {
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);
@@ -48,7 +50,7 @@ public class JailSquare : CornerSquare
         cells[4] = transform.position - transform.forward*offsetSmall;
         cells[5] = transform.position - transform.forward*(offsetBig+offsetSmall);
     }
-    override public void assignSpots()
+    override protected void assignSpots()
     {
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);

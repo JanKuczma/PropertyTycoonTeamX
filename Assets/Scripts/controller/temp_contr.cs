@@ -101,6 +101,16 @@ public class temp_contr : MonoBehaviour
                 pieces[current].speedUp();
             }
         }
+        if(Input.GetKeyDown(KeyCode.Return))
+            {
+                ((PropertySquare)board.squares[1]).addHouse();
+            }
+        if(Input.GetKeyDown("r"))
+        {
+            StartCoroutine(pieces[current].goToJail());
+            current_player = (current_player+1)%players.Count;
+            current = players[current_player];
+        }
     }
 
     void FixedUpdate()
@@ -119,6 +129,7 @@ public class temp_contr : MonoBehaviour
                 if(steps < 0)                   // if result is negative (dice are stuck)
                 {                               // reset the dice
                     dice.reset();
+                    state = TurnState.BEGIN;
                 } else {                        // else start moving piece and change the turn state
                     StartCoroutine(pieces[current].move(steps));
                     state = TurnState.PIECEMOVE;
@@ -161,7 +172,7 @@ public class temp_contr : MonoBehaviour
         else if(state == TurnState.DICEROLL)
         {
             Vector3 target = dice.position();
-            target[1] = 1.7f*dice.av_distance()/Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2));//Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2)) depends only on fieldview angle so it is pretty much constatnt, could be set as constract in terms of optimisation
+            target[1] = (dice.transform.localScale.x + dice.av_distance())/Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2));//Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2)) depends only on fieldview angle so it is pretty much constatnt, could be set as constract in terms of optimisation
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
             Vector3 lookDirection = dice.position() - Camera.main.transform.position;
             lookDirection.Normalize();

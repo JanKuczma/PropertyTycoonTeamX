@@ -7,7 +7,7 @@ public class Dice : MonoBehaviour
     Rigidbody rb_comp;  // reference to RigidBody component
     Vector3 init_pos;   // initial position
     bool onGround;  // parameter used to keep track if dice is colliding with something
-    void Start()
+    void Awake()
     {
         rb_comp = GetComponent<Rigidbody>();
         init_pos = transform.position;
@@ -32,7 +32,7 @@ public class Dice : MonoBehaviour
     /// returns true if dice is not colliding with anything OR velocity is not 0
     public bool isRolling()
     {
-        return !(onGround && rb_comp.velocity.magnitude == 0.0f);
+        return !(onGround && rb_comp.velocity.magnitude == 0);
     }
 
     /// starts the dice roll
