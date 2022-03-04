@@ -6,7 +6,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/controller/temp_contr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/controller/temp_contr.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +21,11 @@
         <option value="Anthony &lt;anthonygavriel@gmail.com&gt;" />
       </list>
     </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -29,6 +36,8 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/3f/d0b624f0/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/25/bb7d0422/CursorMode.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/7a/f0391f66/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -163,7 +172,10 @@
       <workItem from="1644354170024" duration="22712000" />
       <workItem from="1644493094029" duration="13598000" />
       <workItem from="1644602639453" duration="4634000" />
-      <workItem from="1645804667187" duration="565000" />
+      <workItem from="1645804667187" duration="1652000" />
+      <workItem from="1645810988184" duration="2686000" />
+      <workItem from="1645872845126" duration="3248000" />
+      <workItem from="1646403444983" duration="863000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>
@@ -179,7 +191,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644253242806</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Test commit, added comment to tempcontr">
+      <created>1645805468635</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1645805468635</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,6 +222,7 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Initial Commits" />
     <MESSAGE value="Renamed some variables" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Test commit, added comment to tempcontr" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test commit, added comment to tempcontr" />
   </component>
 </project>
