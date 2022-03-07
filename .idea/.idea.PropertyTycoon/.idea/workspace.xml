@@ -7,8 +7,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/controller/temp_contr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/controller/temp_contr.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/New TMP Color Gradient.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/New TMP Color Gradient.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +176,9 @@
       <workItem from="1645804667187" duration="1652000" />
       <workItem from="1645810988184" duration="2686000" />
       <workItem from="1645872845126" duration="3248000" />
-      <workItem from="1646403444983" duration="863000" />
+      <workItem from="1646403444983" duration="1491000" />
+      <workItem from="1646487975685" duration="67000" />
+      <workItem from="1646661456050" duration="459000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>
