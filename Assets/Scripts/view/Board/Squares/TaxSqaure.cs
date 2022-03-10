@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace View{
 public class TaxSqaure : FullSquare
 {
     string _amount;
@@ -11,4 +12,5 @@ public class TaxSqaure : FullSquare
         _amount = amount;
         GetComponentsInChildren<TextMeshPro>()[1].SetText("PAY £"+amount);
     }
+}
 }

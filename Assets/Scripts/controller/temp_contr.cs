@@ -10,26 +10,27 @@ public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
 public class temp_contr : MonoBehaviour
 {
     //game elements
-    Board board;
-    DiceContainer dice;
-    Dictionary<Token,Piece> pieces;
+    View.Board board;
+    View.DiceContainer dice;
+    Dictionary<Token,View.Piece> pieces;
     Dictionary<int,Token> players;
     Vector3 cam_pos_top;    // top cam position
     // bits needed to run the turns
     int current_player;
     Token current;
     TurnState state;
+    List<int> no = new List<int> {0,1,2,3,4,5};
     //init lists
     void Awake()
     {
         players = new Dictionary<int, Token>();
-        pieces = new Dictionary<Token, Piece>();
+        pieces = new Dictionary<Token, View.Piece>();
     }
     void Start()
     {
         //create board and dice
-        board = Board.Create(transform);
-        dice = DiceContainer.Create(transform);
+        board = View.Board.Create(transform);
+        dice = View.DiceContainer.Create(transform);
         board.initSquare(SqType.GO,1);
         board.initSquare(SqType.PROPERTY,2,"THE OLD CREEK","60",((int)Group.BROWN));
         board.initSquare(SqType.POTLUCK,3,"POT LUCK");
@@ -101,6 +102,12 @@ public class temp_contr : MonoBehaviour
             {
                 pieces[current].speedUp();
             }
+        }
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            StartCoroutine(pieces[current].goToJail());
+            current_player = (current_player+1)%players.Count;
+            current = players[current_player];
         }
     }
 
@@ -181,6 +188,6 @@ public class temp_contr : MonoBehaviour
    
     public void addPlayer(Token token)
     {
-        pieces.Add(token,Piece.Create(token, transform, board));
+        pieces.Add(token,View.Piece.Create(token, transform, board));
     }
 }

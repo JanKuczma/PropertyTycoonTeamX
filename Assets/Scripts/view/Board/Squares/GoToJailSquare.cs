@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace View{
 public class GoToJailSquare : CornerSquare
 {
     public override void setName(string goTo = "")
@@ -18,4 +19,5 @@ public class GoToJailSquare : CornerSquare
         _sceond = jail;
         GetComponentsInChildren<TextMeshPro>()[1].SetText(jail);
     }
+}
 }

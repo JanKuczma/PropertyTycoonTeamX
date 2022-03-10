@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace View{
 public class GoSquare : CornerSquare
 {
     public override void setName(string amount="")
@@ -17,4 +18,5 @@ public class GoSquare : CornerSquare
         _sceond = second;
         GetComponentsInChildren<TextMeshPro>()[0].SetText(_first+_sceond);
     }
+}
 }

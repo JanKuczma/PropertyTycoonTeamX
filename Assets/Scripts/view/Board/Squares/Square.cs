@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace View {
 public class Square : MonoBehaviour
 {
     string _name;
@@ -78,7 +79,7 @@ public class Square : MonoBehaviour
     // returns index of free area at random 
     public int peekSpotI()
     {
-        if(spotsIs.Count > 0) return spotsIs[Random.Range(0,spotsIs.Count)];
+        if(spotsIs.Count > 0) return spotsIs[0];
         else return -1; 
     }
 
@@ -88,7 +89,7 @@ public class Square : MonoBehaviour
         int spotIndex;
         if(spotsIs.Count > 0)
         {
-            spotIndex = spotsIs[Random.Range(0,spotsIs.Count)];
+            spotIndex = spotsIs[0];
             spotsIs.Remove(spotIndex);
             return spotIndex;
         } else {
@@ -104,13 +105,14 @@ public class Square : MonoBehaviour
     public void releaseSpotI(int spotI)
     {
         if(!spotsIs.Contains(spotI) && spotI >= 0) spotsIs.Add(spotI);
+        spotsIs.Sort();
     }
     // returns Vector3 of the next free spot, (0,0,0) if no free spots
     public Vector3 peekSpot()
     {
         if(spotsIs.Count > 0)
         {
-            int spotIndex = spotsIs[Random.Range(0,spotsIs.Count)];
+            int spotIndex = spotsIs[0];
             return spots[spotIndex];
         } else {
             return Vector3.zero;
@@ -149,4 +151,5 @@ public class Square : MonoBehaviour
                 position > 10 ? Quaternion.Euler(0,90,0) :
                                 Quaternion.Euler(0,0,0);
     }
+}
 }

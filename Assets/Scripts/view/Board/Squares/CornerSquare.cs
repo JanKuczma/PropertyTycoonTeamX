@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+namespace View{
 public class CornerSquare : Square
 {
     protected string _first = "";
@@ -19,4 +20,5 @@ public class CornerSquare : Square
         spots[4] = transform.position - transform.right*(offsetBig + offsetSmall/2) + transform.forward*(offsetBig + offsetSmall/2);
         spots[5] = transform.position - transform.right*(offsetBig + offsetSmall/2) - transform.forward*(offsetBig + offsetSmall/2);
     }
+}
 }

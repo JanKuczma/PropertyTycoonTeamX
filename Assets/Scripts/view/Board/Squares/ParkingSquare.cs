@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace View{
 public class ParkingSquare : CornerSquare
 {
     public override void setName(string free="")
@@ -18,4 +19,5 @@ public class ParkingSquare : CornerSquare
         _sceond = parking;
         GetComponentsInChildren<TextMeshPro>()[1].SetText(parking);
     }
+}
 }

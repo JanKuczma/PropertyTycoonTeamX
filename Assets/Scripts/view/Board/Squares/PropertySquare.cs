@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=0xeb882c, RED=0xfff005, YELLOW=0xFFF005, GREEN=0x13a857, DEEPBLUE=0x0066a4}
+namespace View{
 public class PropertySquare : Square
 {
     int _group;
@@ -26,10 +27,11 @@ public class PropertySquare : Square
         float offsetBig = offsetB*transform.localScale.x;
 
         spots[0] = transform.position + transform.right*offsetSmall + transform.forward*(offsetSmall/2);
-        spots[1] = transform.position + transform.right*offsetSmall + transform.forward*(offsetBig + offsetSmall/2);
-        spots[2] = transform.position + transform.right*offsetSmall - transform.forward*(offsetBig -offsetSmall/2);
-        spots[3] = transform.position - transform.right*offsetSmall + transform.forward*(offsetSmall/2);
-        spots[4] = transform.position - transform.right*offsetSmall + transform.forward*(offsetBig + offsetSmall/2);
-        spots[5] = transform.position - transform.right*offsetSmall - transform.forward*(offsetBig - offsetSmall/2);
+        spots[1] = transform.position - transform.right*offsetSmall + transform.forward*(offsetBig + offsetSmall/2);
+        spots[2] = transform.position - transform.right*offsetSmall - transform.forward*(offsetBig - offsetSmall/2);
+        spots[3] = transform.position + transform.right*offsetSmall + transform.forward*(offsetBig + offsetSmall/2);
+        spots[4] = transform.position - transform.right*offsetSmall + transform.forward*(offsetSmall/2);
+        spots[5] = transform.position + transform.right*offsetSmall - transform.forward*(offsetBig -offsetSmall/2);
     }
+}
 }

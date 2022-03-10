@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace View{
 public class UtilitySqaure : FullSquare
 {
     string _price;
@@ -11,4 +12,5 @@ public class UtilitySqaure : FullSquare
         _price = price;
         GetComponentsInChildren<TextMeshPro>()[1].SetText("£"+price);
     }
+}
 }

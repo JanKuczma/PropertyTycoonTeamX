@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+
+namespace View{
 public class JailSquare : CornerSquare
 {
     List<int> cellIs;
@@ -22,6 +24,7 @@ public class JailSquare : CornerSquare
     public void releaseCellI(int cellI)
     {
         if(!cellIs.Contains(cellI) && cellI >= 0) cellIs.Add(cellI);
+        cellIs.Sort();
     }
 
     public int popCellI()
@@ -29,7 +32,7 @@ public class JailSquare : CornerSquare
         int cellIndex;
         if(cellIs.Count > 0)
         {
-            cellIndex = cellIs[Random.Range(0,cellIs.Count)];
+            cellIndex = cellIs[0];
             cellIs.Remove(cellIndex);
             return cellIndex;
         } else {
@@ -41,20 +44,20 @@ public class JailSquare : CornerSquare
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);
 
-        cells[0] = transform.position + transform.forward*(offsetSmall/2.0f)        + transform.right*(offsetBig+offsetSmall);
-        cells[1] = transform.position - transform.forward*offsetSmall               + transform.right*(offsetBig+offsetSmall);
-        cells[2] = transform.position - transform.forward*(offsetBig+offsetSmall)   + transform.right*(offsetBig+offsetSmall);
+        cells[0] = transform.position - transform.forward*offsetSmall;
         cells[3] = transform.position + transform.forward*(offsetSmall/2.0f);
-        cells[4] = transform.position - transform.forward*offsetSmall;
+        cells[2] = transform.position + transform.forward*(offsetSmall/2.0f)        + transform.right*(offsetBig+offsetSmall);
+        cells[4] = transform.position - transform.forward*offsetSmall               + transform.right*(offsetBig+offsetSmall);
+        cells[1] = transform.position - transform.forward*(offsetBig+offsetSmall)   + transform.right*(offsetBig+offsetSmall);
         cells[5] = transform.position - transform.forward*(offsetBig+offsetSmall);
     }
     override public void assignSpots()
     {
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);
-        spots[0] = transform.position + transform.forward*(2*offsetSmall);
-        spots[1] = transform.position + transform.forward*(2*offsetSmall)           + transform.right*(2*offsetSmall);
-        spots[2] = transform.position + transform.forward*(2*offsetSmall)           - transform.right*(2*offsetSmall);
+        spots[0] = transform.position + transform.forward*(2*offsetSmall)           + transform.right*(2*offsetSmall);
+        spots[1] = transform.position + transform.forward*(2*offsetSmall)           - transform.right*(2*offsetSmall);
+        spots[2] = transform.position + transform.forward*(2*offsetSmall);
         spots[3] = transform.position + transform.forward*(offsetSmall/2.0f)        - transform.right*(2*offsetSmall);
         spots[4] = transform.position - transform.forward*offsetSmall               - transform.right*(2*offsetSmall);
         spots[5] = transform.position - transform.forward*(offsetBig+offsetSmall)   - transform.right*(2*offsetSmall);
@@ -73,4 +76,5 @@ public class JailSquare : CornerSquare
         _sceond = visiting;
         GetComponentsInChildren<TextMeshPro>()[1].SetText(visiting);
     }
+}
 }

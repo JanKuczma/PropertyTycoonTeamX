@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace View{
 public class Dice : MonoBehaviour
 {
     Rigidbody rb_comp;  // reference to RigidBody component
@@ -64,4 +65,5 @@ public class Dice : MonoBehaviour
         rb_comp.velocity = Vector3.zero;
     }
 
+}
 }
