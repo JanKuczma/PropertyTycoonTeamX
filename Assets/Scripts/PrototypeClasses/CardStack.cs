@@ -33,13 +33,5 @@ public class CardStack
             cards[n] = i;
         }
     }
-
-    public void PrintCards()
-    {
-        foreach (var card in cards)
-        {
-            Console.WriteLine(card.ToString());
-        }
-    }
 }
 }

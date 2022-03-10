@@ -9,29 +9,19 @@ public abstract class Space
 {
     private int position;
     private string name;
-    private bool canBeBought;
 
-    public class Property : Space
+    public SqType type;
+
+    public class PurchasableSpace : Space
     {
-        private Player owner;
-        private bool owned;
-        private int cost;
-        private int rentAmount;
-        
-        public Property(int position, string name, int cost, int rentAmount)
-        {
-            this.position = position;
-            this.name = name;
-            this.canBeBought = true;
-            this.cost = cost;
-            this.rentAmount = rentAmount;
-        }
-        
-        //trigger on player arriving
+        public Player owner;
+        public int cost;
+        public int rentAmount;
+                //trigger on player arriving
         public void collectRent(Player player)
         {
             //something like 
-            // if (owned)
+            // if (owner)
             // {
             //     player.payRent(owner);
             // }
@@ -43,221 +33,114 @@ public abstract class Space
         }
     }
 
-    public class Utility : Space
+    public class Property : PurchasableSpace
     {
-        private int cost;
-        public Utility(int position, string name, int cost)
+        int noOfHouses;
+        
+        public Property(int position, string name, int cost, int rentAmount)
         {
             this.position = position;
             this.name = name;
-            this.canBeBought = true;
             this.cost = cost;
+            this.rentAmount = rentAmount;
+            this.noOfHouses = 0;
         }
-        //add utility methods
-        public void collectRent(Player p)
-        {
-            //give owner cash from p
-        }
-
-        public override string ToString()
-        {
-            return position + " " + name + " £" + cost;
-        }
+        //add property methods
     }
 
-    public class Station : Space
+    public class Utility : PurchasableSpace
     {
-        private Player owner;
-        private bool owned;
-        private int cost;
-        private int rentAmount;
+        public Utility(int position, string name, int cost, int rentAmount)
+        {
+            this.position = position;
+            this.name = name;
+            this.cost = cost;
+            this.rentAmount = rentAmount;
+        }
+        //add utility methods
+    }
+
+    public class Station : PurchasableSpace
+    {
         public Station(int position, string name, int cost)
         {
             this.position = position;
             this.name = name;
             this.cost = cost;
             this.rentAmount = 25;
-            this.canBeBought = true;
-        }
-
-        public void collectRent(Player p)
-        {
-            //give owner cash from p
-        }
-
-        public override string ToString()
-        {
-            return position + " " + name + " £" + cost;
+            this.owner = null;
         }
     }
     
-    public class Go : Space
+    public class Tax : Space
     {
-        public Go()
+        int amount;
+        public Tax()
         {
             
         }
-        public Go(int position, string name)
+        public Tax(int position, string name, int amount)
         {
             this.position = position;
             this.name = name;
-            this.canBeBought = false;
+            this.amount = amount;
         }
         
-        // Something like
-        // public int passGo(Player player)
+        //Something like
+        // public void TaxPlayer(ref Player p, ref FreeParking parkingSpace)
         // {
-        //      player may be passed by ref
-        //     player.receiveMoney(200);
+        //     var x = p.PayMoney(200); // return 200 from player cash
+        //     parkingSpace.add(x);
+        // }
+        
+        public override string ToString()
+        {
+            return position + " " + name + " (action space)";
+        }
+    }
+
+    public class FreeParking : Space
+    {
+        private int collectedFines;
+
+        public FreeParking()
+        {
+            
+        }
+        
+        public FreeParking(int position, string name)
+        {
+            this.position = position;
+            this.name = name;
+            collectedFines = 0;
+        }
+
+        // //Something like
+        // public void dispenseFunds(ref Player p)
+        // {
+        //     p.collectMoney(collectedFines);
+        //     collectedFines = 0;
         // }
 
-        public override string ToString()
+        public void addFine(int fine)
         {
-            return position + " " + name + " (action space)";
-        }
-    }
-    
-        public class IncomeTax : Space
-        {
-            public IncomeTax()
-            {
-                
-            }
-            public IncomeTax(int position, string name)
-            {
-                this.position = position;
-                this.name = name;
-                this.canBeBought = false;
-            }
-            
-            //Something like
-            // public void TaxPlayer(ref Player p, ref FreeParking parkingSpace)
-            // {
-            //     var x = p.PayMoney(200); // return 200 from player cash
-            //     parkingSpace.add(x);
-            // }
-            
-            public override string ToString()
-            {
-                return position + " " + name + " (action space)";
-            }
-        }
-
-        public class FreeParking : Space
-        {
-            private int collectedFines;
-
-            public FreeParking()
-            {
-                
-            }
-            
-            public FreeParking(int position, string name)
-            {
-                this.position = position;
-                this.name = name;
-                this.canBeBought = false;
-                collectedFines = 0;
-            }
-
-            // //Something like
-            // public void dispenseFunds(ref Player p)
-            // {
-            //     p.collectMoney(collectedFines);
-            //     collectedFines = 0;
-            // }
-
-            public void addFine(int fine)
-            {
-                collectedFines += fine;
-            }
-            
-            public override string ToString()
-            {
-                return position + " " + name + " (action space)";
-            }
-        }
-
-        public class SuperTax : Space
-        {
-            private int taxAmount;
-
-            public SuperTax()
-            {
-                
-            }
-            public SuperTax(int position, string name)
-            {
-                this.position = position;
-                this.name = name;
-                this.canBeBought = false;
-                taxAmount = 100;
-            }
-
-            // public void TaxPlayer(ref Player player, ref FreeParking parking)
-            // {
-            //     var x = player.PayMoney(taxAmount);
-            //     parking.addFine(x);
-            // }
-            public override string ToString()
-            {
-                return position + " " + name + " (action space)";
-            }
+            collectedFines += fine;
         }
         
-    public class GoToJail : Space
-    {
-        private int cost;
-
-        public GoToJail()
-        {
-            
-        }
-        
-        public GoToJail(int position, string name)
-        {
-            this.position = position;
-            this.name = name;
-            this.canBeBought = false;
-        }
-        //add methods
         public override string ToString()
         {
             return position + " " + name + " (action space)";
         }
-    }
-
-    public class JustVisiting : Space
-    {
-
-        public JustVisiting()
-        {
-            
-        }
-        public JustVisiting(int position, string name)
-        {
-            this.position = position;
-            this.name = name;
-            this.canBeBought = false;
-        }
-        //Create invisible wall method for just visiting
-        public override string ToString()
-        {
-            return position + " " + name + " (action space)";
-        }
-    }
+    } 
     
-    
-    
-    public class OpportunityKnocks : Space
+    public class Chance : Space
     {
         private CardStack oppKnocks;
 
-        public OpportunityKnocks(int position, string name)
+        public Chance(int position, string name)
         {
             this.position = position;
             this.name = name;
-            this.canBeBought = false;
         }
 
         public void AddCards(CardStack c)
@@ -265,32 +148,6 @@ public abstract class Space
             oppKnocks = c;
         }
         
-        // public void dispenseCard(ref Player p)
-        // {
-        //     //trigger action to remove card from list, show to player and then add to end of list
-        // }
-        public override string ToString()
-        {
-            return position + " " + name + " (CardStack space)";
-        }
-    }
-
-    public class PotLuck : Space
-    {
-        private CardStack potLuck;
-
-        public PotLuck(int position, string name)
-        {
-            this.position = position;
-            this.name = name;
-            this.canBeBought = false;
-        }
-        
-        public void AddCards(CardStack c)
-        {
-            potLuck = c;
-        }
-
         // public void dispenseCard(ref Player p)
         // {
         //     //trigger action to remove card from list, show to player and then add to end of list
