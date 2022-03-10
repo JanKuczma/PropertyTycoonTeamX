@@ -1,3 +1,4 @@
+namespace Model{
 public class Card
 {
     private string name;
@@ -23,4 +24,5 @@ public class Card
     {
         return name + " " + description;
     }
+}
 }

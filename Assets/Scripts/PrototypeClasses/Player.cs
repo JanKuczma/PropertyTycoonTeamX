@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+namespace Model{
 public class Player
 {
     private string name;
@@ -58,4 +59,5 @@ public class Player
     {
         return name + " is using the " + token + "\n" + name +" has £" + cash + "\n";
     }
+}
 }

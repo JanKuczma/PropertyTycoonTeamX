@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using OfficeOpenXml.Sparkline;
-
+namespace Model{
 public class Board
 {
     //Board spaces
@@ -17,7 +16,7 @@ public class Board
     private List<Space.OpportunityKnocks> opportunityKnocksSpace;
     private List<Space.PotLuck> potLucksSpace;
     
-    //Bank
+    //Bankasd
     
     
     //Card decks
@@ -118,4 +117,5 @@ public class Board
         potLuck.PrintCards();
         Console.WriteLine();
     }
+}
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 
+namespace Model{
 public class Bank
 {
     private int cash;
@@ -23,4 +24,5 @@ public class Bank
     {
         cash = 50000;
     }
+}
 }

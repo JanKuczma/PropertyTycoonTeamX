@@ -4,6 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class for a deck of cards
 /// </summary>
+namespace Model{
 public class CardStack
 {
     private List<Card> cards;
@@ -40,4 +41,5 @@ public class CardStack
             Console.WriteLine(card.ToString());
         }
     }
+}
 }
