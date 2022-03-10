@@ -7,9 +7,8 @@
 namespace Model{
 public abstract class Space
 {
-    private int position;
-    private string name;
-
+    public int position;
+    public string name;
     public SqType type;
 
     public class PurchasableSpace : Space
@@ -44,18 +43,20 @@ public abstract class Space
             this.cost = cost;
             this.rentAmount = rentAmount;
             this.noOfHouses = 0;
+            this.type = SqType.PROPERTY;
         }
         //add property methods
     }
 
     public class Utility : PurchasableSpace
     {
-        public Utility(int position, string name, int cost, int rentAmount)
+        public Utility(int position, string name, SqType type, int cost, int rentAmount)
         {
             this.position = position;
             this.name = name;
             this.cost = cost;
             this.rentAmount = rentAmount;
+            this.type = type;
         }
         //add utility methods
     }
@@ -69,21 +70,19 @@ public abstract class Space
             this.cost = cost;
             this.rentAmount = 25;
             this.owner = null;
+            this.type = SqType.STATION;
         }
     }
     
     public class Tax : Space
     {
-        int amount;
-        public Tax()
-        {
-            
-        }
-        public Tax(int position, string name, int amount)
+        public int amount;
+        public Tax(int position, string name, SqType type, int amount)
         {
             this.position = position;
             this.name = name;
             this.amount = amount;
+            this.type = type;
         }
         
         //Something like
@@ -102,11 +101,6 @@ public abstract class Space
     public class FreeParking : Space
     {
         private int collectedFines;
-
-        public FreeParking()
-        {
-            
-        }
         
         public FreeParking(int position, string name)
         {
@@ -135,23 +129,13 @@ public abstract class Space
     
     public class Chance : Space
     {
-        private CardStack oppKnocks;
-
-        public Chance(int position, string name)
+        public Chance(int position, SqType type, string name)
         {
             this.position = position;
             this.name = name;
+            this.type = type;
         }
 
-        public void AddCards(CardStack c)
-        {
-            oppKnocks = c;
-        }
-        
-        // public void dispenseCard(ref Player p)
-        // {
-        //     //trigger action to remove card from list, show to player and then add to end of list
-        // }
         public override string ToString()
         {
             return position + " " + name + " (CardStack space)";
