@@ -6,17 +6,13 @@ using TMPro;
 namespace View{
 public class GoSquare : CornerSquare
 {
-    public override void setName(string amount="")
+    public override void setName(string name="")
     {
-        if(amount.Equals("")) amount = "200";
-        _first = "COLLECT £"+amount+" ";
-        GetComponentsInChildren<TextMeshPro>()[0].SetText(_first+_sceond);
+        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT £200 SALARY AS YOU PASS");
     }
-    public void setSecond(string second = "")
+    public void setAmount(string amount = "200")
     {
-        if(second.Equals("")) second = "SALARY AS YOU PASS";
-        _sceond = second;
-        GetComponentsInChildren<TextMeshPro>()[0].SetText(_first+_sceond);
+        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT £"+amount+" SALARY AS YOU PASS");
     }
 }
 }

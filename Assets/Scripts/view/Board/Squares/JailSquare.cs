@@ -51,7 +51,7 @@ public class JailSquare : CornerSquare
         cells[1] = transform.position - transform.forward*(offsetBig+offsetSmall)   + transform.right*(offsetBig+offsetSmall);
         cells[5] = transform.position - transform.forward*(offsetBig+offsetSmall);
     }
-    override public void assignSpots()
+    override protected void assignSpots()
     {
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);
@@ -63,18 +63,10 @@ public class JailSquare : CornerSquare
         spots[5] = transform.position - transform.forward*(offsetBig+offsetSmall)   - transform.right*(2*offsetSmall);
     }
 
-    public override void setName(string just="")
+    public override void setName(string name)
     {
-        if(just.Equals("")) just = "JUST";
-        _first = just;
-        GetComponentsInChildren<TextMeshPro>()[0].SetText(just);
-    }
-
-    public void setVisiting(string visiting="")
-    {
-        if(visiting.Equals("")) visiting = "VISITNG";
-        _sceond = visiting;
-        GetComponentsInChildren<TextMeshPro>()[1].SetText(visiting);
+        GetComponentsInChildren<TextMeshPro>()[0].SetText("JUST");
+        GetComponentsInChildren<TextMeshPro>()[1].SetText("VISITING");
     }
 }
 }

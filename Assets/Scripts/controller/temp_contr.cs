@@ -35,15 +35,15 @@ public class temp_contr : MonoBehaviour
         board.initSquare(SqType.PROPERTY,2,"THE OLD CREEK","60",((int)Group.BROWN));
         board.initSquare(SqType.POTLUCK,3,"POT LUCK");
         board.initSquare(SqType.PROPERTY,4,"GANGSTER PARADISE","60",((int)Group.BROWN));
-        board.initSquare(SqType.INCOMETAX,5,"INCOME TAX","100");
+        board.initSquare(SqType.TAX,5,"INCOME TAX","100",variant:"INCOMETAX");
         board.initSquare(SqType.STATION,6,"BRIGHTON STATION","200");
         board.initSquare(SqType.PROPERTY,7,"THE ANGELS DELIGHT","60",((int)Group.BLUE));
-        board.initSquare(SqType.CHANCE1,8,"OPPORTUNITY KNOCKS");
+        board.initSquare(SqType.CHANCE,8,"OPPORTUNITY KNOCKS",variant:"1");
         board.initSquare(SqType.PROPERTY,9,"POTTER AVENUE","100",((int)Group.BLUE));
         board.initSquare(SqType.PROPERTY,10,"GRANGER DRIVE","100",((int)Group.BLUE));
         board.initSquare(SqType.JAILVISIT,11);
         board.initSquare(SqType.PROPERTY,12,"SKYWALKER DRIVE","140",((int)Group.PURPLE));
-        board.initSquare(SqType.BULB,13,"TESLA POWER CO","150");
+        board.initSquare(SqType.UTILITY,13,"TESLA POWER CO","150",variant:"BULB");
         board.initSquare(SqType.PROPERTY,14,"WOOKIE HOLE","140",((int)Group.PURPLE));
         board.initSquare(SqType.PROPERTY,15,"REY LANE","160",((int)Group.PURPLE));
         board.initSquare(SqType.STATION,16,"HOVE STATION","200");
@@ -53,13 +53,13 @@ public class temp_contr : MonoBehaviour
         board.initSquare(SqType.PROPERTY,20,"BROYLES LANE","200",((int)Group.ORANGE));
         board.initSquare(SqType.PARKING,21);
         board.initSquare(SqType.PROPERTY,22,"YUE FEI SQUARE","220",((int)Group.RED));
-        board.initSquare(SqType.CHANCE2,23,"OPPORTUNITY KNOCKS");
+        board.initSquare(SqType.CHANCE,23,"OPPORTUNITY KNOCKS",variant:"2");
         board.initSquare(SqType.PROPERTY,24,"MILAN ROGUE","220",((int)Group.RED));
         board.initSquare(SqType.PROPERTY,25,"HAN XIN GARDENS","240",((int)Group.RED));
         board.initSquare(SqType.STATION,26,"FALMER STATION","200");
         board.initSquare(SqType.PROPERTY,27,"SHATNER CLOSE","260",((int)Group.YELLOW));
         board.initSquare(SqType.PROPERTY,28,"PICARD AVENUE","260",((int)Group.YELLOW));
-        board.initSquare(SqType.WATER,29,"EDISON WATER","150");
+        board.initSquare(SqType.UTILITY,29,"EDISON WATER","150",variant:"WATER");
         board.initSquare(SqType.PROPERTY,30,"CRUSHER CREEK","280",((int)Group.YELLOW));
         board.initSquare(SqType.GOTOJAIL,31);
         board.initSquare(SqType.PROPERTY,32,"SIRAT MEWS","300",((int)Group.GREEN));
@@ -67,9 +67,9 @@ public class temp_contr : MonoBehaviour
         board.initSquare(SqType.POTLUCK,34,"POT LUCK");
         board.initSquare(SqType.PROPERTY,35,"IBIS CLOSE","320",((int)Group.GREEN));
         board.initSquare(SqType.STATION,36,"PORTSLADE STATION","200");
-        board.initSquare(SqType.CHANCE3,37,"OPPORTUNITY KNOCKS");
+        board.initSquare(SqType.CHANCE,37,"OPPORTUNITY KNOCKS",variant:"3");
         board.initSquare(SqType.PROPERTY,38,"JAMES WEBB WAY","350",((int)Group.DEEPBLUE));
-        board.initSquare(SqType.SUPERTAX,39,"SUPER TAX","100");
+        board.initSquare(SqType.TAX,39,"SUPER TAX","100",variant:"SUPERTAX");
         board.initSquare(SqType.PROPERTY,40,"TURING HEIGHTS","400",((int)Group.DEEPBLUE));
         //add players: player<int,token> dict, pieces<token,piece> dict
         addPlayer(Token.CAT);

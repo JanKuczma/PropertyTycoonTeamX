@@ -21,7 +21,7 @@ public class PropertySquare : Square
         _price = price;
         GetComponentsInChildren<TextMeshPro>()[1].SetText("£"+price);
     }
-    public void assignSpots()
+    override protected void assignSpots()
     {
         float offsetSmall = offsetS*transform.localScale.x;
         float offsetBig = offsetB*transform.localScale.x;

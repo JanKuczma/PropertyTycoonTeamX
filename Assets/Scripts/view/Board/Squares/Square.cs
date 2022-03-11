@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 namespace View {
-public class Square : MonoBehaviour
+public abstract class Square : MonoBehaviour
 {
     string _name;
     // each square is divided into 6 areas stored in spaces
@@ -13,59 +13,37 @@ public class Square : MonoBehaviour
     // offsets used for spot arrangement
     protected const float offsetS = 0.6f;
     protected const float offsetB = 0.8f;
-
     protected virtual void Awake()
     {
         spots = new Vector3[6];
         spotsIs = new List<int> {0,1,2,3,4,5};
     }
-    public static Square Create(SqType type, Transform parent, int position, string name_first="", string price_secoond="",int group = ((int)Group.BROWN))
+    public static Square Create(SqType type, Transform parent, int position, string name="", string price_amount="",int group = ((int)Group.BROWN),string variant="")
     {
-        Square square = Instantiate(Asset.Board(type),parent).GetComponent<Square>();
+        Square square = Instantiate(Asset.Board(type,variant),parent).GetComponent<Square>();
         square.transform.localScale = new Vector3(1,1,1);
         square.transform.localPosition = generateCoordinates(position);
         square.transform.localRotation = getRotation(position);
-        square.setName(name_first);
+        square.setName(name);
+        square.assignSpots();
         switch(type)
         {
             case SqType.PROPERTY:
-            square.GetComponent<PropertySquare>().assignSpots();
-            square.GetComponent<PropertySquare>().setPrice(price_secoond);
+            square.GetComponent<PropertySquare>().setPrice(price_amount);
             square.GetComponent<PropertySquare>().setGroup(group);
             break;
             case SqType.STATION:
-            case SqType.BULB:
-            case SqType.WATER:
-            square.GetComponent<FullSquare>().assignSpots();
-            square.GetComponent<UtilitySqaure>().setPrice(price_secoond);
+            case SqType.UTILITY:
+            square.GetComponent<UtilitySqaure>().setPrice(price_amount);
             break;
-            case SqType.SUPERTAX:
-            case SqType.INCOMETAX:
-            square.GetComponent<FullSquare>().assignSpots();
-            square.GetComponent<TaxSqaure>().setAmount(price_secoond);
-            break;
-            case SqType.POTLUCK:
-            case SqType.CHANCE1:
-            case SqType.CHANCE2:
-            case SqType.CHANCE3:
-            square.GetComponent<FullSquare>().assignSpots();
+            case SqType.TAX:
+            square.GetComponent<TaxSqaure>().setAmount(price_amount);
             break;
             case SqType.GO:
-            square.GetComponent<GoSquare>().setSecond(price_secoond);
-            square.GetComponent<CornerSquare>().assignSpots();
-            break;
-            case SqType.PARKING:
-            square.GetComponent<ParkingSquare>().setVisiting(price_secoond);
-            square.GetComponent<CornerSquare>().assignSpots();
-            break;
-            case SqType.GOTOJAIL:
-            square.GetComponent<CornerSquare>().assignSpots();
-            square.GetComponent<GoToJailSquare>().setJailText(price_secoond);
+            square.GetComponent<GoSquare>().setAmount(price_amount);
             break;
             case SqType.JAILVISIT:
-            square.GetComponent<JailSquare>().assignSpots();
             square.GetComponent<JailSquare>().assignCells();
-            square.GetComponent<JailSquare>().setVisiting(price_secoond);
             break;
             
         }
@@ -151,5 +129,6 @@ public class Square : MonoBehaviour
                 position > 10 ? Quaternion.Euler(0,90,0) :
                                 Quaternion.Euler(0,0,0);
     }
+    protected abstract void assignSpots();
 }
 }

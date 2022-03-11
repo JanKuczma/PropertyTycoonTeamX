@@ -4,11 +4,8 @@ using UnityEngine;
 using TMPro;
 namespace View{
 public class CornerSquare : Square
-{
-    protected string _first = "";
-    protected string _sceond = "";
-    
-    virtual public void assignSpots()
+{   
+    override protected void assignSpots()
     {
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);

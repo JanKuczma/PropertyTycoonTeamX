@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace View{
 public class FullSquare : Square
 {
-        public void assignSpots()
+    override protected void assignSpots()
     {
         float offsetSmall = offsetS*transform.localScale.x;
         float offsetBig = offsetB*transform.localScale.x;

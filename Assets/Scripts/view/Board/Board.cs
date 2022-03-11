@@ -22,9 +22,9 @@ public class Board : MonoBehaviour
         return Instantiate(Asset.Board(),parent).GetComponent<Board>();
     }
     /// SqType is just enum, instantiates squre depending on the type
-    public void initSquare(SqType type,int position, string name="", string price="",int group=((int)Group.BROWN))
+    public void initSquare(SqType type,int position, string name="", string price="",int group=((int)Group.BROWN),string variant="")
     {
-        Square square = Square.Create(type,transform,position,name,price,group);
+        Square square = Square.Create(type,transform,position,name,price,group,variant);
         squares[position-1] = square;
         if (type == SqType.JAILVISIT) jail = square.GetComponent<JailSquare>();
     }

@@ -11,20 +11,11 @@ public abstract class Space
     public string name;
     public SqType type;
 
-    public class PurchasableSpace : Space
+    public abstract class PurchasableSpace : Space
     {
         public Player owner;
         public int cost;
-        public int rentAmount;
-                //trigger on player arriving
-        public void collectRent(Player player)
-        {
-            //something like 
-            // if (owner)
-            // {
-            //     player.payRent(owner);
-            // }
-        }
+        public abstract void collectRent(Player player);
 
         public override string ToString()
         {
@@ -36,27 +27,41 @@ public abstract class Space
     {
         int noOfHouses;
         
-        public Property(int position, string name, int cost, int rentAmount)
+        public Property(int position, string name, int cost)
         {
             this.position = position;
             this.name = name;
             this.cost = cost;
-            this.rentAmount = rentAmount;
             this.noOfHouses = 0;
             this.type = SqType.PROPERTY;
+        }
+        override public void collectRent(Player player)
+        {
+            //something like 
+            // if (owner)
+            // {
+            //     player.payRent(owner);
+            // }
         }
         //add property methods
     }
 
     public class Utility : PurchasableSpace
     {
-        public Utility(int position, string name, SqType type, int cost, int rentAmount)
+        public Utility(int position, string name, int cost)
         {
             this.position = position;
             this.name = name;
             this.cost = cost;
-            this.rentAmount = rentAmount;
-            this.type = type;
+            this.type = SqType.UTILITY;
+        }
+        override public void collectRent(Player player)
+        {
+            //something like 
+            // if (owner)
+            // {
+            //     player.payRent(owner);
+            // }
         }
         //add utility methods
     }
@@ -68,9 +73,16 @@ public abstract class Space
             this.position = position;
             this.name = name;
             this.cost = cost;
-            this.rentAmount = 25;
             this.owner = null;
             this.type = SqType.STATION;
+        }
+        override public void collectRent(Player player)
+        {
+            //something like 
+            // if (owner)
+            // {
+            //     player.payRent(owner);
+            // }
         }
     }
     

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// enum types
-public enum SqType {GO,JAILVISIT,PARKING,GOTOJAIL,PROPERTY,STATION,BULB,WATER,POTLUCK,SUPERTAX,INCOMETAX,CHANCE1,CHANCE2,CHANCE3}
+public enum SqType {GO,JAILVISIT,PARKING,GOTOJAIL,PROPERTY,STATION,UTILITY,POTLUCK,TAX,CHANCE}
 public enum Token {CAT ,BOOT,IRON,SHIP,HATSTAND,SMARTPHONE}
 public enum CursorType {FINGER,GRAB}
 /*
@@ -41,7 +41,7 @@ public static class Asset
     static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
 
 
-    public static GameObject Board(SqType type)
+    public static GameObject Board(SqType type,string variant = "")
     {
 
         return  type == SqType.GO ? GoPrefab :
@@ -50,14 +50,10 @@ public static class Asset
                 type == SqType.GOTOJAIL ? GoToJailPrefab :
                 type == SqType.PROPERTY ? PropertyPrefab :
                 type == SqType.STATION ? StationPrefab :
-                type == SqType.BULB ? BulbPrefab :
-                type == SqType.WATER ? WaterPrefab :
+                type == SqType.UTILITY ? variant == "BULB" ? BulbPrefab : WaterPrefab :
                 type == SqType.POTLUCK ? PotLuckPrefab :
-                type == SqType.SUPERTAX ? SuperTaxPrefab :
-                type == SqType.INCOMETAX ? IncomeTaxPrefab :
-                type == SqType.CHANCE1 ? Chance1Prefab :
-                type == SqType.CHANCE2 ? Chance2Prefab :
-                type == SqType.CHANCE3 ? Chance3Prefab :
+                type == SqType.TAX ? variant == "INCOMETAX" ? IncomeTaxPrefab : SuperTaxPrefab :
+                type == SqType.CHANCE ? variant == "1" ? Chance1Prefab : variant == "2" ? Chance2Prefab : Chance3Prefab :
                 null;
     }
     public static GameObject Board()
