@@ -6,8 +6,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Menu/MainMenu without text.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Menu/PlayerSelect blank.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Menu/PlayerSelect blank.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/SelectPlayers.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scenes/SelectPlayers.unity.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/Monopoly Bold SDF.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/Monopoly Bold SDF.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/Monopoly Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/Monopoly Bold.ttf.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Excel Sheets/BoardDataFormatted.xlsx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Excel Sheets/BoardDataFormatted.xlsx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Excel Sheets/PropertyTycoonCardData.xlsx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Excel Sheets/PropertyTycoonCardData.xlsx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainMenu.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Menu/MenuBG.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Menu/MenuBG.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Menu/MainMenu without text.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/dice/dice.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/dice/dice.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PrototypeClasses/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PrototypeClasses/Board.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PrototypeClasses/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PrototypeClasses/Player.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/New TMP Color Gradient.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/New TMP Color Gradient.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
@@ -130,6 +149,14 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$USER_HOME$/Desktop/PT1.app/Contents/MacOS/PropertyTycoonUnity" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$USER_HOME$/Desktop/PT1.app/Contents/MacOS" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
@@ -179,6 +206,8 @@
       <workItem from="1646403444983" duration="1491000" />
       <workItem from="1646487975685" duration="67000" />
       <workItem from="1646661456050" duration="459000" />
+      <workItem from="1646915459756" duration="5295000" />
+      <workItem from="1646997410465" duration="10222000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>

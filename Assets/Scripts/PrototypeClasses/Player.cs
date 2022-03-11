@@ -21,20 +21,9 @@ public class Player
         getOutOfJail = null;
     }
 
-    public void PickPiece(ref List<Piece> pieces)
+    public void setToken(Piece piece)
     {
-        Console.WriteLine("Pick a piece: ");
-        Console.WriteLine();
-        for (int i = 0; i < pieces.Count; i++)
-        {
-            Console.WriteLine(i+1 + ". " + pieces[i]);
-        }
-
-        var choice = Int32.Parse(Console.ReadLine());
-        choice -= 1;
-        token = pieces.ElementAt(choice);
-        pieces.RemoveAt(choice);
-        Console.WriteLine();
+        token = piece;
     }
 
     public void ReceiveCash(int cash)

@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
-namespace Model{
+//using OfficeOpenXml.Sparkline;
+
+namespace Model {
+
 public class Board
 {
     //Board spaces
