@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// enum types
@@ -39,6 +37,7 @@ public static class Asset
     //cursors
     static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
     static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
+    static TextAsset classic_board_json = Resources.Load<TextAsset>("board_data");
 
 
     public static GameObject Board(SqType type,string variant = "")
@@ -50,9 +49,9 @@ public static class Asset
                 type == SqType.GOTOJAIL ? GoToJailPrefab :
                 type == SqType.PROPERTY ? PropertyPrefab :
                 type == SqType.STATION ? StationPrefab :
-                type == SqType.UTILITY ? variant == "BULB" ? BulbPrefab : WaterPrefab :
+                type == SqType.UTILITY ? variant == "TESLA POWER CO" ? BulbPrefab : WaterPrefab :
                 type == SqType.POTLUCK ? PotLuckPrefab :
-                type == SqType.TAX ? variant == "INCOMETAX" ? IncomeTaxPrefab : SuperTaxPrefab :
+                type == SqType.TAX ? variant == "INCOME TAX" ? IncomeTaxPrefab : SuperTaxPrefab :
                 type == SqType.CHANCE ? variant == "1" ? Chance1Prefab : variant == "2" ? Chance2Prefab : Chance3Prefab :
                 null;
     }
@@ -82,5 +81,10 @@ public static class Asset
         return  type == CursorType.FINGER ? FingerTexture :
                 type == CursorType.GRAB ? GrabTexture :
                 null;
+    }
+
+    public static string board_data_json()
+    {
+        return classic_board_json.ToString();
     }
 }

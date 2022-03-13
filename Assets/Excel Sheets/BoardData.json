@@ -3,389 +3,328 @@
         {
             "type" : "GO",
             "position" : 1,
-            "name" : "Go",
-            "kwargs" : {
-                "amount" : 200
-            }
+            "name" : "GO",
+            "amount" : 200
         },
         {
             "type" : "PROPERTY",
             "position" : 2,
-            "name" : "The Old Creek",
-            "kwargs" : {
-                "group" : "BROWN",
-                "cost" : 60,
-                "rents" : [2,10,30,90,160,250]
-            }
+            "name" : "THE OLD CREEK",
+            "group" : "BROWN",
+            "cost" : 60,
+            "rents" : [2,10,30,90,160,250],
+            "house_cost" : 50,
+            "hotel_cost" : 250
         },
         {
             "type" : "POTLUCK",
             "position" : 3,
-            "name" : "Pot Luck",
-            "kwargs" : {}
+            "name" : "POT LUCK"
         },
         {
             "type" : "PROPERTY",
             "position" : 4,
-            "name" : "Gangster Paradise",
-            "kwargs" : {
-                "group" : "BROWN",
-                "cost" : 60,
-                "rents" : [4,20,60,180,320,450]
-            }
+            "name" : "GANGSTER PARADISE",
+            "group" : "BROWN",
+            "cost" : 60,
+            "rents" : [4,20,60,180,320,450],
+            "house_cost" : 50,
+            "hotel_cost" : 250
         },
         {
             "type" : "TAX",
             "position" : 5,
-            "name" : "Income Tax",
-            "kwargs" : {
-                "amount" : 200
-            }
+            "name" : "INCOME TAX",
+            "amount" : 200
         },
         {
             "type" : "STATION",
             "position" : 6,
-            "name" : "Brighton Station",
-            "kwargs" : {
-                "cost" : 200
-            }
+            "name" : "BRIGHTON STATION",
+            "cost" : 200,
+            "rents" : [25,50,100,200]
         },
         {
             "type" : "PROPERTY",
             "position" : 7,
-            "name" : "The Angels Delight",
-            "kwargs" : {
-                "group" : "BLUE",
-                "cost" : 100,
-                "rents" : [6,30,90,270,400,550]
-            }
+            "name" : "THE ANGELS DELIGHT",
+            "group" : "BLUE",
+            "cost" : 100,
+            "rents" : [6,30,90,270,400,550],
+            "house_cost" : 50,
+            "hotel_cost" : 250
         },
         {
             "type" : "CHANCE",
             "position" : 8,
-            "name" : "Opportunity Knocks",
-            "kwargs" : {}
+            "name" : "OPPORTUNITY KNOCKS"
         },
         {
             "type" : "PROPERTY",
             "position" : 9,
-            "name" : "Potter Avenue",
-            "kwargs" : {
-                "group" : "BLUE",
-                "cost" : 100,
-                "rents" : [6,30,90,270,400,550]
-            }
+            "name" : "POTTER AVENUE",
+            "group" : "BLUE",
+            "cost" : 100,
+            "rents" : [6,30,90,270,400,550],
+            "house_cost" : 50,
+            "hotel_cost" : 250
         },
         {
             "type" : "PROPERTY",
             "position" : 10,
-            "name" : "Granger Drive",
-            "kwargs" : {
-                "group" : "BLUE",
-                "cost" : 120,
-                "rents" : [8,40,100,300,450,600]
-            }
+            "name" : "GRANGER DRIVE",
+            "group" : "BLUE",
+            "cost" : 120,
+            "rents" : [8,40,100,300,450,600],
+            "house_cost" : 50,
+            "hotel_cost" : 250
         },
         {
             "type" : "JAILVISIT",
             "position" : 11,
-            "name" : "Just Visiting",
-            "kwargs" : {
-                "first" : "JUST",
-                "second" : "VISITING"
-            }
+            "name" : "JUST VISITING"
         },
         {
             "type" : "PROPERTY",
             "position" : 12,
-            "name" : "Skywalker Drive",
-            "kwargs" : {
-                "group" : "PURPLE",
-                "cost" : 140,
-                "rents" : [10,50,150,450,625,750]
-            }
+            "name" : "SKYWALKER DRIVE",
+            "group" : "PURPLE",
+            "cost" : 140,
+            "rents" : [10,50,150,450,625,750],
+            "house" : 100,
+            "hotel" : 500
         },
         {
             "type" : "UTILITY",
             "position" : 13,
-            "name" : "Tesla Power Co",
-            "kwargs" : {
-                "cost" : 150
-            }
+            "name" : "TESLA POWER CO",
+            "cost" : 150,
+            "utility_rents" : [4,10]
         },
         {
             "type" : "PROPERTY",
             "position" : 14,
-            "name" : "Wookie Hole",
-            "kwargs" : {
-                "group" : "PURPLE",
-                "cost" : 140,
-                "rents" : [10,50,150,450,625,750]
-            }
+            "name" : "WOOKIE HOLE",
+            "group" : "PURPLE",
+            "cost" : 140,
+            "rents" : [10,50,150,450,625,750],
+            "house" : 100,
+            "hotel" : 500
         },
         {
             "type" : "PROPERTY",
             "position" : 15,
-            "name" : "Rey Lane",
-            "kwargs" : {
-                "group" : "PURPLE",
-                "cost" : 160,
-                "rents" : [12,60,180,500,700,900]
-            }
+            "name" : "REY LANE",
+            "group" : "PURPLE",
+            "cost" : 160,
+            "rents" : [12,60,180,500,700,900],
+            "house" : 100,
+            "hotel" : 500
         },
         {
             "type" : "STATION",
             "position" : 16,
-            "name" : "Hove Station",
-            "kwargs" : {
-                "cost" : 200
-            }
+            "name" : "HOVE STATION",
+            "cost" : 200,
+            "rents" : [25,50,100,200]
         },
         {
             "type" : "PROPERTY",
             "position" : 17,
-            "name" : "Bishop Drive",
-            "kwargs" : {
-                "group" : "ORANGE",
-                "cost" : 180,
-                "rents" : [14,70,200,550,750,950]
-            }
+            "name" : "BISHOP DRIVE",
+            "group" : "ORANGE",
+            "cost" : 180,
+            "rents" : [14,70,200,550,750,950],
+            "house" : 100,
+            "hotel" : 500
         },
         {
             "type" : "POTLUCK",
             "position" : 18,
-            "name" : "Pot Luck",
-            "kwargs" : {}
+            "name" : "POT LUCK"
         },
         {
             "type" : "PROPERTY",
             "position" : 19,
-            "name" : "Dunham Street",
-            "kwargs" : {
-                "group" : "ORANGE",
-                "cost" : 180,
-                "rents" : [14,70,200,550,750,950]
-            }
+            "name" : "DUNHAM STREET",
+            "group" : "ORANGE",
+            "cost" : 180,
+            "rents" : [14,70,200,550,750,950],
+            "house" : 100,
+            "hotel" : 500
         },
         {
             "type" : "PROPERTY",
             "position" : 20,
-            "name" : "Broyles Lane",
-            "kwargs" : {
-                "group" : "ORANGE",
-                "cost" : 200,
-                "rents" : [16,80,220,600,800,1000]
-            }
+            "name" : "BROYLES LANE",
+            "group" : "ORANGE",
+            "cost" : 200,
+            "rents" : [16,80,220,600,800,1000],
+            "house" : 100,
+            "hotel" : 500
         },
         {
             "type" : "PARKING",
             "position" : 21,
-            "name" : "Free Parking",
-            "kwargs" : {}
+            "name" : "FREE PARKING"
         },
         {
             "type" : "PROPERTY",
             "position" : 22,
-            "name" : "Broyles Lane",
-            "kwargs" : {
-                "group" : "RED",
-                "cost" : 220,
-                "rents" : [18,90,250,700,875,1050]
-            }
+            "name" : "BROYLES LANE",
+            "group" : "RED",
+            "cost" : 220,
+            "rents" : [18,90,250,700,875,1050],
+            "house" : 150,
+            "hotel" : 750
         },
         {
             "type" : "CHANCE",
             "position" : 23,
-            "name" : "Opportunity Knocks",
-            "kwargs" : {}
+            "name" : "OPPORTUNITY KNOCKS"
         },
         {
             "type" : "PROPERTY",
             "position" : 24,
-            "name" : "Mulan Rogue",
-            "kwargs" : {
-                "group" : "RED",
-                "cost" : 220,
-                "rents" : [18,90,250,700,875,1050]
-            }
+            "name" : "MULAN ROGUE",
+            "group" : "RED",
+            "cost" : 220,
+            "rents" : [18,90,250,700,875,1050],
+            "house" : 150,
+            "hotel" : 750
         },
         {
             "type" : "PROPERTY",
             "position" : 25,
-            "name" : "Han Xin Gardens",
-            "kwargs" : {
-                "group" : "RED",
-                "cost" : 240,
-                "rents" : [20,100,300,750,925,1100]
-            }
+            "name" : "HAN XIN GARDENS",
+            "group" : "RED",
+            "cost" : 240,
+            "rents" : [20,100,300,750,925,1100],
+            "house" : 150,
+            "hotel" : 750
         },
         {
             "type" : "STATION",
             "position" : 26,
-            "name" : "Falmer Station",
-            "kwargs" : {
-                "cost" : 200
-            }
+            "name" : "FALMER STATION",
+            "cost" : 200,
+            "rents" : [25,50,100,200]
         },
         {
             "type" : "PROPERTY",
             "position" : 27,
-            "name" : "Shatner Close",
-            "kwargs" : {
-                "group" : "YELLOW",
-                "cost" : 260,
-                "rents" : [22,110,330,800,975,1150]
-            }
+            "name" : "SHATNER CLOSE",
+            "group" : "YELLOW",
+            "cost" : 260,
+            "rents" : [22,110,330,800,975,1150],
+            "house" : 150,
+            "hotel" : 750
         },
         {
             "type" : "PROPERTY",
             "position" : 28,
-            "name" : "Picard Avenue",
-            "kwargs" : {
-                "group" : "YELLOW",
-                "cost" : 260,
-                "rents" : [22,110,330,800,975,1150]
-            }
+            "name" : "PICARD AVENUE",
+            "group" : "YELLOW",
+            "cost" : 260,
+            "rents" : [22,110,330,800,975,1150],
+            "house" : 150,
+            "hotel" : 750
         },
         {
             "type" : "UTILITY",
             "position" : 29,
-            "name" : "Edison Water",
-            "kwargs" : {
-                "cost" : 150
-            }
+            "name" : "EDISON WATER",
+            "cost" : 150,
+            "rents" : [4,10]
         },
         {
             "type" : "PROPERTY",
             "position" : 30,
-            "name" : "Crusher Creek",
-            "kwargs" : {
-                "group" : "YELLOW",
-                "cost" : 280,
-                "rents" : [22,120,360,850,1025,1200]
-            }
+            "name" : "CRUSHER CREEK",
+            "group" : "YELLOW",
+            "cost" : 280,
+            "rents" : [22,120,360,850,1025,1200],
+            "house" : 150,
+            "hotel" : 750
         },
         {
             "type" : "GOTOJAIL",
             "position" : 31,
-            "name" : "Go To Jail",
-            "kwargs" : {
-                "amount" : 200
-            }
+            "name" : "GO TO JAIL",
+            "amount" : 200
         },
         {
             "type" : "PROPERTY",
             "position" : 32,
-            "name" : "Sirat Mews",
-            "kwargs" : {
-                "group" : "GREEN",
-                "cost" : 300,
-                "rents" : [26,130,390,900,1100,1275]
-            }
+            "name" : "SIRAT MEWS",
+            "group" : "GREEN",
+            "cost" : 300,
+            "rents" : [26,130,390,900,1100,1275],
+            "house" : 200,
+            "hotel" : 1000
         },
         {
             "type" : "PROPERTY",
             "position" : 33,
-            "name" : "Ghengis Crescent",
-            "kwargs" : {
-                "group" : "GREEN",
-                "cost" : 300,
-                "rents" : [26,130,390,900,1100,1275]
-            }
+            "name" : "GHENGIS CRESCENT",
+            "group" : "GREEN",
+            "cost" : 300,
+            "rents" : [26,130,390,900,1100,1275],
+            "house" : 200,
+            "hotel" : 1000
         },
         {
             "type" : "POTLUCK",
             "position" : 34,
-            "name" : "Pot Luck",
-            "kwargs" : {}
+            "name" : "POT LUCK"
         },
         {
             "type" : "PROPERTY",
             "position" : 35,
-            "name" : "Ibis Close",
-            "kwargs" : {
-                "group" : "GREEN",
-                "cost" : 320,
-                "rents" : [28,150,450,1000,1200,1400]
-            }
+            "name" : "IBIS CLOSE",
+            "group" : "GREEN",
+            "cost" : 320,
+            "rents" : [28,150,450,1000,1200,1400],
+            "house" : 200,
+            "hotel" : 1000
         },
         {
             "type" : "STATION",
             "position" : 36,
-            "name" : "Portslade Station",
-            "kwargs" : {
-                "cost" : 200
-            }
+            "name" : "PORTSLADE STATION",
+            "cost" : 200,
+            "rents" : [25,50,100,200]
         },
         {
             "type" : "CHANCE",
             "position" : 37,
-            "name" : "Opportunity Knocks",
-            "kwargs" : {}
+            "name" : "OPPORTUNITY KNOCKS"
         },
         {
             "type" : "PROPERTY",
             "position" : 38,
-            "name" : "James Webb Way",
-            "kwargs" : {
-                "group" : "DEEPBLUE",
-                "cost" : 350,
-                "rents" : [35,175,500,1100,1300,1500]
-            }
+            "name" : "JAMES WEBB WAY",
+            "group" : "DEEPBLUE",
+            "cost" : 350,
+            "rents" : [35,175,500,1100,1300,1500],
+            "house" : 200,
+            "hotel" : 1000
         },
         {
             "type" : "TAX",
             "position" : 39,
-            "name" : "Super Tax",
-            "kwargs" : {
-                "amount" : 100
-            }
+            "name" : "SUPER TAX",
+            "amount" : 100
         },
         {
             "type" : "PROPERTY",
             "position" : 40,
-            "name" : "Turing Heights",
-            "kwargs" : {
-                "group" : "DEEPBLUE",
-                "cost" : 400,
-                "rents" : [50,200,600,1400,1700,2000]
-            }
-        }
-    ],
-    "house_hotel_cost" : {
-        "BROWN" : {
-            "house" : 50,
-            "hotel" : 250
-        },
-        "BLUE" : {
-            "house" : 50,
-            "hotel" : 250
-        },
-        "PURPLE" : {
-            "house" : 100,
-            "hotel" : 500
-        },
-        "ORANGE" : {
-            "house" : 100,
-            "hotel" : 500
-        },
-        "RED" : {
-            "house" : 150,
-            "hotel" : 750
-        },
-        "YELLOW" : {
-            "house" : 150,
-            "hotel" : 750
-        },
-        "GREEN" : {
-            "house" : 200,
-            "hotel" : 1000
-        },
-        "DEEPBLUE" : {
+            "name" : "TURING HEIGHTS",
+            "group" : "DEEPBLUE",
+            "cost" : 400,
+            "rents" : [50,200,600,1400,1700,2000],
             "house" : 200,
             "hotel" : 1000
         }
-    },
-    "station_rents" : [25,50,100,200],
-    "utility_rents" : [4,10]
+    ]
 }

@@ -1,14 +1,15 @@
-namespace Model2{
+namespace Model{
 public class Card
 {
-    public string name;
-    public string description;
+    private string name;
+    private string description;
 
     public Card(string name, string description)
     {
         this.name = name;
         this.description = description;
     }
+
     public string GetName()
     {
         return name;

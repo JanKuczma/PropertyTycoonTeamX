@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class for a deck of cards
 /// </summary>
-namespace Model2{
+namespace Model{
 public class CardStack
 {
     private List<Card> cards;
@@ -31,6 +31,14 @@ public class CardStack
             var i = cards[k];
             cards[k] = cards[n];
             cards[n] = i;
+        }
+    }
+
+    public void PrintCards()
+    {
+        foreach (var card in cards)
+        {
+            Console.WriteLine(card.ToString());
         }
     }
 }

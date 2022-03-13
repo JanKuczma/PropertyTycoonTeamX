@@ -6,13 +6,26 @@ public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=
 namespace View{
 public class PropertySquare : Square
 {
-    int _group;
+    Group _group;
     string _price;
-    public void setGroup(int group)
+
+    public static PropertySquare Create(Transform parent, int position, string name,string price,Group group)
+    {
+        PropertySquare square = Instantiate(Asset.Board(SqType.PROPERTY),parent).GetComponent<PropertySquare>();
+        square.transform.localScale = new Vector3(1,1,1);
+        square.transform.localPosition = Square.generateCoordinates(position);
+        square.transform.localRotation = getRotation(position);
+        square.setName(name);
+        square.assignSpots();
+        square.setPrice(price);
+        square.setGroup(group);
+        return square;
+    }
+    public void setGroup(Group group)
     {
         _group = group;
         Color color;
-        if ( ColorUtility.TryParseHtmlString("#"+group.ToString("X")+"FF", out color))
+        if ( ColorUtility.TryParseHtmlString("#"+((int)group).ToString("X")+"FF", out color))
         { GetComponent<Renderer>().materials[1].SetColor("_Color",color); }
     }
     

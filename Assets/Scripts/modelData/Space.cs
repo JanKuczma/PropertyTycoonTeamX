@@ -4,17 +4,17 @@
 /// All spaces on the board will be an object of this class.
 /// Methods need filling in and thinking about with some testing, this is just a rough outline.
 /// </summary>
-namespace Model{
+namespace Model2{
 public abstract class Space
 {
+    public SqType type;
     public int position;
     public string name;
-    public SqType type;
-
-    public abstract class PurchasableSpace : Space
+    public abstract class Purchasable : Space
     {
         public Player owner;
         public int cost;
+        public int[] rents;
         public abstract void collectRent(Player player);
 
         public override string ToString()
@@ -23,17 +23,56 @@ public abstract class Space
         }
     }
 
-    public class Property : PurchasableSpace
+    public class Go : Space
     {
-        int noOfHouses;
+        public int amount;
+        public Go(int position, string name, int amount = 200)
+        {
+            this.position = position;
+            this.name = name;
+            this.amount = amount;
+            this.type = SqType.GO;
+        }
+    }
+
+    public class VisitJail : Space
+    {
+        public VisitJail(int position, string name)
+        {
+            this.position = position;
+            this.name = name;
+            this.type = SqType.JAILVISIT;
+        }
+    }
+
+    public class GoToJail : Space
+    {
+        public GoToJail(int position, string name)
+        {
+            this.position = position;
+            this.name = name;
+            this.type = SqType.GOTOJAIL;
+        }
+    }
+
+    public class Property : Purchasable
+    {
+        public int noOfHouses;
+        public Group group;
+        public int house_cost;
+        public int hotel_cost;
         
-        public Property(int position, string name, int cost)
+        public Property(int position, string name, int cost, Group group, int[] rents, int house_cost, int hotel_cost)
         {
             this.position = position;
             this.name = name;
             this.cost = cost;
             this.noOfHouses = 0;
+            this.rents = rents;
             this.type = SqType.PROPERTY;
+            this.group = group;
+            this.house_cost = house_cost;
+            this.hotel_cost = hotel_cost;
         }
         override public void collectRent(Player player)
         {
@@ -46,14 +85,15 @@ public abstract class Space
         //add property methods
     }
 
-    public class Utility : PurchasableSpace
+    public class Utility : Purchasable
     {
-        public Utility(int position, string name, int cost)
+        public Utility(int position, string name, int cost, int[] rents)
         {
             this.position = position;
             this.name = name;
             this.cost = cost;
             this.type = SqType.UTILITY;
+            this.rents = rents;
         }
         override public void collectRent(Player player)
         {
@@ -66,15 +106,16 @@ public abstract class Space
         //add utility methods
     }
 
-    public class Station : PurchasableSpace
+    public class Station : Purchasable
     {
-        public Station(int position, string name, int cost)
+        public Station(int position, string name, int cost, int[] rents)
         {
             this.position = position;
             this.name = name;
             this.cost = cost;
             this.owner = null;
             this.type = SqType.STATION;
+            this.rents = rents;
         }
         override public void collectRent(Player player)
         {
@@ -85,16 +126,16 @@ public abstract class Space
             // }
         }
     }
-    
+
     public class Tax : Space
     {
         public int amount;
-        public Tax(int position, string name, SqType type, int amount)
+        public Tax(int position, string name, int amount)
         {
             this.position = position;
             this.name = name;
             this.amount = amount;
-            this.type = type;
+            this.type = SqType.TAX;
         }
         
         //Something like
@@ -110,15 +151,36 @@ public abstract class Space
         }
     }
 
+    public class PotLuck : Space
+    {
+        public PotLuck(int position, string name)
+        {
+            this.position = position;
+            this.name = name;
+            this.type = SqType.POTLUCK;
+        }
+    }
+
+    public class Chance : Space
+    {
+        public Chance(int position, string name)
+        {
+            this.position = position;
+            this.name = name;
+            this.type = SqType.CHANCE;
+        }
+    }
+
     public class FreeParking : Space
     {
-        private int collectedFines;
+        public int collectedFines;
         
         public FreeParking(int position, string name)
         {
             this.position = position;
             this.name = name;
-            collectedFines = 0;
+            this.collectedFines = 0;
+            this.type = SqType.PARKING;
         }
 
         // //Something like
@@ -138,20 +200,5 @@ public abstract class Space
             return position + " " + name + " (action space)";
         }
     } 
-    
-    public class Chance : Space
-    {
-        public Chance(int position, SqType type, string name)
-        {
-            this.position = position;
-            this.name = name;
-            this.type = type;
-        }
-
-        public override string ToString()
-        {
-            return position + " " + name + " (CardStack space)";
-        }
-    }
 }
 }

@@ -15,7 +15,17 @@ public class JailSquare : CornerSquare
         cellIs = new List<int> {0,1,2,3,4,5};
         cells = new Vector3[6];
     }
-
+    public static JailSquare Create(Transform parent, int position, string name)
+    {
+        JailSquare square = Instantiate(Asset.Board(SqType.JAILVISIT),parent).GetComponent<JailSquare>();
+        square.transform.localScale = new Vector3(1,1,1);
+        square.transform.localPosition = Square.generateCoordinates(position);
+        square.transform.localRotation = getRotation(position);
+        square.setName(name);
+        square.assignSpots();
+        square.assignCells();
+        return square;
+    }
     public Vector3 peekCell(int cellI)
     {
         return cells[cellI];

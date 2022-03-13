@@ -10,7 +10,8 @@ public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
 public class temp_contr : MonoBehaviour
 {
     //game elements
-    View.Board board;
+    View.Board board_view;
+    Model2.Board board_model;
     View.DiceContainer dice;
     Dictionary<Token,View.Piece> pieces;
     Dictionary<int,Token> players;
@@ -29,48 +30,9 @@ public class temp_contr : MonoBehaviour
     void Start()
     {
         //create board and dice
-        board = View.Board.Create(transform);
+        board_model = Model2.BoardData.loadBoard(Asset.board_data_json());
+        board_view = View.Board.Create(transform,board_model);
         dice = View.DiceContainer.Create(transform);
-        board.initSquare(SqType.GO,1);
-        board.initSquare(SqType.PROPERTY,2,"THE OLD CREEK","60",((int)Group.BROWN));
-        board.initSquare(SqType.POTLUCK,3,"POT LUCK");
-        board.initSquare(SqType.PROPERTY,4,"GANGSTER PARADISE","60",((int)Group.BROWN));
-        board.initSquare(SqType.TAX,5,"INCOME TAX","100",variant:"INCOMETAX");
-        board.initSquare(SqType.STATION,6,"BRIGHTON STATION","200");
-        board.initSquare(SqType.PROPERTY,7,"THE ANGELS DELIGHT","60",((int)Group.BLUE));
-        board.initSquare(SqType.CHANCE,8,"OPPORTUNITY KNOCKS",variant:"1");
-        board.initSquare(SqType.PROPERTY,9,"POTTER AVENUE","100",((int)Group.BLUE));
-        board.initSquare(SqType.PROPERTY,10,"GRANGER DRIVE","100",((int)Group.BLUE));
-        board.initSquare(SqType.JAILVISIT,11);
-        board.initSquare(SqType.PROPERTY,12,"SKYWALKER DRIVE","140",((int)Group.PURPLE));
-        board.initSquare(SqType.UTILITY,13,"TESLA POWER CO","150",variant:"BULB");
-        board.initSquare(SqType.PROPERTY,14,"WOOKIE HOLE","140",((int)Group.PURPLE));
-        board.initSquare(SqType.PROPERTY,15,"REY LANE","160",((int)Group.PURPLE));
-        board.initSquare(SqType.STATION,16,"HOVE STATION","200");
-        board.initSquare(SqType.PROPERTY,17,"BISHOP DRIVE","180",((int)Group.ORANGE));
-        board.initSquare(SqType.POTLUCK,18,"POT LUCK");
-        board.initSquare(SqType.PROPERTY,19,"DUNHAM STREET","180",((int)Group.ORANGE));
-        board.initSquare(SqType.PROPERTY,20,"BROYLES LANE","200",((int)Group.ORANGE));
-        board.initSquare(SqType.PARKING,21);
-        board.initSquare(SqType.PROPERTY,22,"YUE FEI SQUARE","220",((int)Group.RED));
-        board.initSquare(SqType.CHANCE,23,"OPPORTUNITY KNOCKS",variant:"2");
-        board.initSquare(SqType.PROPERTY,24,"MILAN ROGUE","220",((int)Group.RED));
-        board.initSquare(SqType.PROPERTY,25,"HAN XIN GARDENS","240",((int)Group.RED));
-        board.initSquare(SqType.STATION,26,"FALMER STATION","200");
-        board.initSquare(SqType.PROPERTY,27,"SHATNER CLOSE","260",((int)Group.YELLOW));
-        board.initSquare(SqType.PROPERTY,28,"PICARD AVENUE","260",((int)Group.YELLOW));
-        board.initSquare(SqType.UTILITY,29,"EDISON WATER","150",variant:"WATER");
-        board.initSquare(SqType.PROPERTY,30,"CRUSHER CREEK","280",((int)Group.YELLOW));
-        board.initSquare(SqType.GOTOJAIL,31);
-        board.initSquare(SqType.PROPERTY,32,"SIRAT MEWS","300",((int)Group.GREEN));
-        board.initSquare(SqType.PROPERTY,33,"GENGHIS CRESCENT","300",((int)Group.GREEN));
-        board.initSquare(SqType.POTLUCK,34,"POT LUCK");
-        board.initSquare(SqType.PROPERTY,35,"IBIS CLOSE","320",((int)Group.GREEN));
-        board.initSquare(SqType.STATION,36,"PORTSLADE STATION","200");
-        board.initSquare(SqType.CHANCE,37,"OPPORTUNITY KNOCKS",variant:"3");
-        board.initSquare(SqType.PROPERTY,38,"JAMES WEBB WAY","350",((int)Group.DEEPBLUE));
-        board.initSquare(SqType.TAX,39,"SUPER TAX","100",variant:"SUPERTAX");
-        board.initSquare(SqType.PROPERTY,40,"TURING HEIGHTS","400",((int)Group.DEEPBLUE));
         //add players: player<int,token> dict, pieces<token,piece> dict
         addPlayer(Token.CAT);
         players.Add(0,Token.CAT);
@@ -160,7 +122,7 @@ public class temp_contr : MonoBehaviour
         if(state == TurnState.PIECEMOVE)
         {
             Vector3 target = pieces[current].transform.position*1.5f;
-            target[1] = board.transform.position.y+7.0f;
+            target[1] = board_view.transform.position.y+7.0f;
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
             Vector3 lookDirection = pieces[current].transform.position - Camera.main.transform.position;
             lookDirection.Normalize();
@@ -188,6 +150,6 @@ public class temp_contr : MonoBehaviour
    
     public void addPlayer(Token token)
     {
-        pieces.Add(token,View.Piece.Create(token, transform, board));
+        pieces.Add(token,View.Piece.Create(token, transform, board_view));
     }
 }

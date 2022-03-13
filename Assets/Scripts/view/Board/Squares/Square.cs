@@ -18,37 +18,6 @@ public abstract class Square : MonoBehaviour
         spots = new Vector3[6];
         spotsIs = new List<int> {0,1,2,3,4,5};
     }
-    public static Square Create(SqType type, Transform parent, int position, string name="", string price_amount="",int group = ((int)Group.BROWN),string variant="")
-    {
-        Square square = Instantiate(Asset.Board(type,variant),parent).GetComponent<Square>();
-        square.transform.localScale = new Vector3(1,1,1);
-        square.transform.localPosition = generateCoordinates(position);
-        square.transform.localRotation = getRotation(position);
-        square.setName(name);
-        square.assignSpots();
-        switch(type)
-        {
-            case SqType.PROPERTY:
-            square.GetComponent<PropertySquare>().setPrice(price_amount);
-            square.GetComponent<PropertySquare>().setGroup(group);
-            break;
-            case SqType.STATION:
-            case SqType.UTILITY:
-            square.GetComponent<UtilitySqaure>().setPrice(price_amount);
-            break;
-            case SqType.TAX:
-            square.GetComponent<TaxSqaure>().setAmount(price_amount);
-            break;
-            case SqType.GO:
-            square.GetComponent<GoSquare>().setAmount(price_amount);
-            break;
-            case SqType.JAILVISIT:
-            square.GetComponent<JailSquare>().assignCells();
-            break;
-            
-        }
-        return square;
-    }
     virtual public void setName(string name)
     {
         _name = name;
@@ -102,7 +71,7 @@ public abstract class Square : MonoBehaviour
         return spots[spotI];
     }
     /// generates square coordinates accordingly to the board center(this) postion/scale
-    private static Vector3 generateCoordinates(int position)
+    protected static Vector3 generateCoordinates(int position)
     {
         float displacement = .0080f;
         displacement =  position < 11 ? 1*displacement :
@@ -122,7 +91,7 @@ public abstract class Square : MonoBehaviour
     }
 
     /// generates rotation depending on the which side the square is (fornt,left,top,right)
-    private static Quaternion getRotation(int position)
+    protected static Quaternion getRotation(int position)
     {
         return  position > 30 ? Quaternion.Euler(0,-90,0) :
                 position > 20 ? Quaternion.Euler(0,180,0) :
