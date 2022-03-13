@@ -5,31 +5,7 @@
     <projectFile>UnitTests/UnitTests.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Menu/MainMenu without text.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Menu/PlayerSelect blank.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Menu/PlayerSelect blank.png.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scenes/SelectPlayers.unity" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scenes/SelectPlayers.unity.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/Monopoly Bold SDF.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/Monopoly Bold SDF.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/Monopoly Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/Monopoly Bold.ttf.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Excel Sheets/BoardDataFormatted.xlsx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Excel Sheets/BoardDataFormatted.xlsx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Excel Sheets/PropertyTycoonCardData.xlsx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Excel Sheets/PropertyTycoonCardData.xlsx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/MainMenu.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Menu/MenuBG.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Menu/MenuBG.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Menu/MainMenu without text.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/dice/dice.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Prefabs/dice/dice.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PrototypeClasses/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PrototypeClasses/Board.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PrototypeClasses/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PrototypeClasses/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/New TMP Color Gradient.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/New TMP Color Gradient.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
-    </list>
+    <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -207,7 +183,7 @@
       <workItem from="1646487975685" duration="67000" />
       <workItem from="1646661456050" duration="459000" />
       <workItem from="1646915459756" duration="5295000" />
-      <workItem from="1646997410465" duration="10222000" />
+      <workItem from="1646997410465" duration="10697000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>
