@@ -5,7 +5,9 @@
     <projectFile>UnitTests/UnitTests.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="" />
+    <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +35,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/3f/d0b624f0/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/DiceCatch.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/25/bb7d0422/CursorMode.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/7a/f0391f66/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -184,6 +187,7 @@
       <workItem from="1646661456050" duration="459000" />
       <workItem from="1646915459756" duration="5295000" />
       <workItem from="1646997410465" duration="10697000" />
+      <workItem from="1647166306926" duration="1332000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>
