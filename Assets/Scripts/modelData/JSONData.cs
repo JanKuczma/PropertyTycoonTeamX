@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-namespace Model2{
+namespace Model{
 public static class JSONData
 {
     public static void saveCardStack(CardStack cards,string filename = "custom_cardstack.json")

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class for a deck of cards
 /// </summary>
-namespace Model2{
+namespace Model{
 [System.Serializable]
 public class CardStack
 {

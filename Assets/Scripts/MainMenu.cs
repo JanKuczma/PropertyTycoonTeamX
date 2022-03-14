@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using View;
-using Piece = Model.Piece;
 using TMPro;
 
 public class MainMenu : MonoBehaviour

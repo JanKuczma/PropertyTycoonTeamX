@@ -1,4 +1,4 @@
-namespace Model{
+namespace PrototypeModel{
 public class Card
 {
     private string name;

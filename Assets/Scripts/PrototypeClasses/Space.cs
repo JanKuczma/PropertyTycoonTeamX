@@ -4,7 +4,7 @@
 /// All spaces on the board will be an object of this class.
 /// Methods need filling in and thinking about with some testing, this is just a rough outline.
 /// </summary>
-namespace Model{
+namespace PrototypeModel{
 public abstract class Space
 {
     private int position;

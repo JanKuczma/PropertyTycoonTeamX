@@ -11,9 +11,9 @@ public class temp_contr : MonoBehaviour
 {
     //game elements
     View.Board board_view;
-    Model2.Board board_model;
-    Model2.CardStack opportunity_knocks;
-    Model2.CardStack potluck;
+    Model.Board board_model;
+    Model.CardStack opportunity_knocks;
+    Model.CardStack potluck;
     View.DiceContainer dice;
     Dictionary<Token,View.Piece> pieces;
     Dictionary<int,Token> players;
@@ -32,9 +32,9 @@ public class temp_contr : MonoBehaviour
     void Start()
     {
         //load data
-        board_model = Model2.JSONData.loadBoard(Asset.board_data_json());
-        opportunity_knocks = Model2.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
-        potluck = Model2.JSONData.loadCardStack(Asset.potluck_data_json());
+        board_model = Model.JSONData.loadBoard(Asset.board_data_json());
+        opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
+        potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
         //create board with card stacks and dice
         board_view = View.Board.Create(transform,board_model);
         dice = View.DiceContainer.Create(transform);
@@ -159,7 +159,7 @@ public class temp_contr : MonoBehaviour
         pieces.Add(token,View.Piece.Create(token, transform, board_view));
     }
 
-    public static void performCardAction(Model2.Card card, Model2.Player player)
+    public static void performCardAction(Model.Card card, Model.Player player)
     {
         switch(card.action)
         {

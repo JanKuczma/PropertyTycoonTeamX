@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-namespace Model{
+namespace PrototypeModel{
 public class Bank
 {
     private int cash;

@@ -1,4 +1,4 @@
-namespace Model2{
+namespace Model{
 public class Board
 {
     public Space[] spaces;

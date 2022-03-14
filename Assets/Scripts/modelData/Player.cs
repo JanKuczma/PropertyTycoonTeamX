@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Model2{
+namespace Model{
 public class Player
 {
     public bool isHuman;

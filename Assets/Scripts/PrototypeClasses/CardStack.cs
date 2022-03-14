@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Class for a deck of cards
 /// </summary>
-namespace Model{
+namespace PrototypeModel{
 public class CardStack
 {
     private List<Card> cards;

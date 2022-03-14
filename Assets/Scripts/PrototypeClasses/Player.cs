@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Model{
+namespace PrototypeModel{
 public class Player
 {
     private string name;

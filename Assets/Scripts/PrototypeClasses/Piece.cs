@@ -1,4 +1,4 @@
-namespace Model{
+namespace PrototypeModel{
 public class Piece
 {
     private string name;

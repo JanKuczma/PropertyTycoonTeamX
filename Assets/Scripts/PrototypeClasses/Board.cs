@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 //using OfficeOpenXml.Sparkline;
 
-namespace Model {
+namespace PrototypeModel {
 
 public class Board
 {
