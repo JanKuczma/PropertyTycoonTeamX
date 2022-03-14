@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace View{
 public class ParkingSquare : CornerSquare
 {
-    public override void setName(string free="")
+    public static ParkingSquare Create(Transform parent, int position, string name)
     {
-        if(free.Equals("")) free = "FREE";
-        _first = free;
-        GetComponentsInChildren<TextMeshPro>()[0].SetText(free);
+        ParkingSquare square = Instantiate(Asset.Board(SqType.PARKING),parent).GetComponent<ParkingSquare>();
+        square.transform.localScale = new Vector3(1,1,1);
+        square.transform.localPosition = Square.generateCoordinates(position);
+        square.transform.localRotation = getRotation(position);
+        square.setName(name);
+        square.assignSpots();
+        return square;
+    }
+    public override void setName(string name)
+    {
+        GetComponentsInChildren<TextMeshPro>()[0].SetText("FREE");
+        GetComponentsInChildren<TextMeshPro>()[1].SetText("PARKING");
     }
 
-    public void setVisiting(string parking="")
-    {
-        if(parking.Equals("")) parking = "PARKING";
-        _sceond = parking;
-        GetComponentsInChildren<TextMeshPro>()[1].SetText(parking);
-    }
+}
 }

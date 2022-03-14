@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Square : MonoBehaviour
+namespace View {
+public abstract class Square : MonoBehaviour
 {
     string _name;
     // each square is divided into 6 areas stored in spaces
@@ -19,47 +20,6 @@ public class Square : MonoBehaviour
         spots = new Vector3[6];
         spotsIs = new List<int> {0,1,2,3,4,5};
     }
-    public static Square Create(SqType type, Transform parent, int position, string name_first="", string price_secoond="",int group = ((int)Group.BROWN))
-    {
-        Square square = Instantiate(Asset.Board(type),generateCoordinates(position),getRotation(position),parent).GetComponent<Square>();
-        square._position = position;
-        square.setName(name_first);
-        switch(type)
-        {
-            case SqType.PROPERTY:
-            square.GetComponent<PropertySquare>().setPrice(price_secoond);
-            square.GetComponent<PropertySquare>().setGroup(group);
-            break;
-            case SqType.STATION:
-            case SqType.BULB:
-            case SqType.WATER:
-            square.GetComponent<UtilitySqaure>().setPrice(price_secoond);
-            break;
-            case SqType.SUPERTAX:
-            case SqType.INCOMETAX:
-            square.GetComponent<TaxSqaure>().setAmount(price_secoond);
-            break;
-            case SqType.POTLUCK:
-            case SqType.CHANCE1:
-            case SqType.CHANCE2:
-            case SqType.CHANCE3:
-            break;
-            case SqType.GO:
-            square.GetComponent<GoSquare>().setSecond(price_secoond);
-            break;
-            case SqType.PARKING:
-            square.GetComponent<ParkingSquare>().setVisiting(price_secoond);
-            break;
-            case SqType.GOTOJAIL:
-            square.GetComponent<GoToJailSquare>().setJailText(price_secoond);
-            break;
-            case SqType.JAILVISIT:
-            square.GetComponent<JailSquare>().setVisiting(price_secoond);
-            break;
-            
-        }
-        return square;
-    }
     virtual public void setName(string name)
     {
         _name = name;
@@ -68,7 +28,7 @@ public class Square : MonoBehaviour
     // returns index of free area at random 
     public int peekSpotI()
     {
-        if(spotsIs.Count > 0) return spotsIs[Random.Range(0,spotsIs.Count)];
+        if(spotsIs.Count > 0) return spotsIs[0];
         else return -1; 
     }
 
@@ -78,7 +38,7 @@ public class Square : MonoBehaviour
         int spotIndex;
         if(spotsIs.Count > 0)
         {
-            spotIndex = spotsIs[Random.Range(0,spotsIs.Count)];
+            spotIndex = spotsIs[0];
             spotsIs.Remove(spotIndex);
             return spotIndex;
         } else {
@@ -94,13 +54,14 @@ public class Square : MonoBehaviour
     public void releaseSpotI(int spotI)
     {
         if(!spotsIs.Contains(spotI) && spotI >= 0) spotsIs.Add(spotI);
+        spotsIs.Sort();
     }
     // returns Vector3 of the next free spot, (0,0,0) if no free spots
     public Vector3 peekSpot()
     {
         if(spotsIs.Count > 0)
         {
-            int spotIndex = spotsIs[Random.Range(0,spotsIs.Count)];
+            int spotIndex = spotsIs[0];
             return spots[spotIndex];
         } else {
             return Vector3.zero;
@@ -112,7 +73,7 @@ public class Square : MonoBehaviour
         return spots[spotI];
     }
     /// generates square coordinates accordingly to the board center(this) postion/scale
-    private static Vector3 generateCoordinates(int position)
+    protected static Vector3 generateCoordinates(int position)
     {
         float displacement = 8.0f;
         displacement =  position < 11 ? 1*displacement :
@@ -139,4 +100,6 @@ public class Square : MonoBehaviour
                 position > 10 ? Quaternion.Euler(0,90,0) :
                                 Quaternion.Euler(0,0,0);
     }
+    protected abstract void assignSpots();
+}
 }

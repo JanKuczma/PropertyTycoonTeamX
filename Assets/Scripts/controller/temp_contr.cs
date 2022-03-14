@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 // enum for keeping track of the turnstate state
+// just chucking a comment in here, testing git stuff :) (RD)
 public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -9,66 +10,34 @@ public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
 public class temp_contr : MonoBehaviour
 {
     //game elements
-    Board board;
-    DiceContainer dice;
-    Dictionary<Token,Piece> pieces;
+    View.Board board_view;
+    Model.Board board_model;
+    Model.CardStack opportunity_knocks;
+    Model.CardStack potluck;
+    View.DiceContainer dice;
+    Dictionary<Token,View.Piece> pieces;
     Dictionary<int,Token> players;
     Vector3 cam_pos_top;    // top cam position
     // bits needed to run the turns
     int current_player;
     Token current;
     TurnState state;
+    List<int> no = new List<int> {0,1,2,3,4,5};
     //init lists
     void Awake()
     {
         players = new Dictionary<int, Token>();
-        pieces = new Dictionary<Token, Piece>();
+        pieces = new Dictionary<Token, View.Piece>();
     }
     void Start()
     {
-        //create board and dice
-        board = Board.Create(transform);
-        dice = DiceContainer.Create(transform);
-        board.initSquare(SqType.GO,1);
-        board.initSquare(SqType.PROPERTY,2,"THE OLD CREEK","60",((int)Group.BROWN));
-        board.initSquare(SqType.POTLUCK,3,"POT LUCK");
-        board.initSquare(SqType.PROPERTY,4,"GANGSTER PARADISE","60",((int)Group.BROWN));
-        board.initSquare(SqType.INCOMETAX,5,"INCOME TAX","100");
-        board.initSquare(SqType.STATION,6,"BRIGHTON STATION","200");
-        board.initSquare(SqType.PROPERTY,7,"THE ANGELS DELIGHT","60",((int)Group.BLUE));
-        board.initSquare(SqType.CHANCE1,8,"OPPORTUNITY KNOCKS");
-        board.initSquare(SqType.PROPERTY,9,"POTTER AVENUE","100",((int)Group.BLUE));
-        board.initSquare(SqType.PROPERTY,10,"GRANGER DRIVE","100",((int)Group.BLUE));
-        board.initSquare(SqType.JAILVISIT,11);
-        board.initSquare(SqType.PROPERTY,12,"SKYWALKER DRIVE","140",((int)Group.PURPLE));
-        board.initSquare(SqType.BULB,13,"TESLA POWER CO","150");
-        board.initSquare(SqType.PROPERTY,14,"WOOKIE HOLE","140",((int)Group.PURPLE));
-        board.initSquare(SqType.PROPERTY,15,"REY LANE","160",((int)Group.PURPLE));
-        board.initSquare(SqType.STATION,16,"HOVE STATION","200");
-        board.initSquare(SqType.PROPERTY,17,"BISHOP DRIVE","180",((int)Group.ORANGE));
-        board.initSquare(SqType.POTLUCK,18,"POT LUCK");
-        board.initSquare(SqType.PROPERTY,19,"DUNHAM STREET","180",((int)Group.ORANGE));
-        board.initSquare(SqType.PROPERTY,20,"BROYLES LANE","200",((int)Group.ORANGE));
-        board.initSquare(SqType.PARKING,21);
-        board.initSquare(SqType.PROPERTY,22,"YUE FEI SQUARE","220",((int)Group.RED));
-        board.initSquare(SqType.CHANCE2,23,"OPPORTUNITY KNOCKS");
-        board.initSquare(SqType.PROPERTY,24,"MILAN ROGUE","220",((int)Group.RED));
-        board.initSquare(SqType.PROPERTY,25,"HAN XIN GARDENS","240",((int)Group.RED));
-        board.initSquare(SqType.STATION,26,"FALMER STATION","200");
-        board.initSquare(SqType.PROPERTY,27,"SHATNER CLOSE","260",((int)Group.YELLOW));
-        board.initSquare(SqType.PROPERTY,28,"PICARD AVENUE","260",((int)Group.YELLOW));
-        board.initSquare(SqType.WATER,29,"EDISON WATER","150");
-        board.initSquare(SqType.PROPERTY,30,"CRUSHER CREEK","280",((int)Group.YELLOW));
-        board.initSquare(SqType.GOTOJAIL,31);
-        board.initSquare(SqType.PROPERTY,32,"SIRAT MEWS","300",((int)Group.GREEN));
-        board.initSquare(SqType.PROPERTY,33,"GENGHIS CRESCENT","300",((int)Group.GREEN));
-        board.initSquare(SqType.POTLUCK,34,"POT LUCK");
-        board.initSquare(SqType.PROPERTY,35,"IBIS CLOSE","320",((int)Group.GREEN));
-        board.initSquare(SqType.STATION,36,"PORTSLADE STATION","200");
-        board.initSquare(SqType.CHANCE3,37,"OPPORTUNITY KNOCKS");
-        board.initSquare(SqType.PROPERTY,38,"JAMES WEBB WAY","350",((int)Group.DEEPBLUE));
-        board.initSquare(SqType.SUPERTAX,39,"SUPER TAX","100");
-        board.initSquare(SqType.PROPERTY,40,"TURING HEIGHTS","400",((int)Group.DEEPBLUE));
+        //load data
+        board_model = Model.JSONData.loadBoard(Asset.board_data_json());
+        opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
+        potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
+        //create board with card stacks and dice
+        board_view = View.Board.Create(transform,board_model);
+        dice = View.DiceContainer.Create(transform);
         //add players: player<int,token> dict, pieces<token,piece> dict
         addPlayer(Token.CAT);
         players.Add(0,Token.CAT);
@@ -102,10 +71,6 @@ public class temp_contr : MonoBehaviour
             }
         }
         if(Input.GetKeyDown(KeyCode.Return))
-            {
-                ((PropertySquare)board.squares[1]).addHouse();
-            }
-        if(Input.GetKeyDown("r"))
         {
             StartCoroutine(pieces[current].goToJail());
             current_player = (current_player+1)%players.Count;
@@ -163,7 +128,7 @@ public class temp_contr : MonoBehaviour
         if(state == TurnState.PIECEMOVE)
         {
             Vector3 target = pieces[current].transform.position*1.5f;
-            target[1] = board.transform.position.y+7.0f;
+            target[1] = board_view.transform.position.y+7.0f;
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
             Vector3 lookDirection = pieces[current].transform.position - Camera.main.transform.position;
             lookDirection.Normalize();
@@ -177,6 +142,10 @@ public class temp_contr : MonoBehaviour
             Vector3 lookDirection = dice.position() - Camera.main.transform.position;
             lookDirection.Normalize();
             Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 3.0f * Time.deltaTime);
+            if (target.x < -50.0)
+            {
+                dice.reset();
+            }
         } else {
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,cam_pos_top,10.0f*Time.deltaTime);
             Vector3 lookDirection = -1.0f*Camera.main.transform.position;
@@ -187,6 +156,78 @@ public class temp_contr : MonoBehaviour
    
     public void addPlayer(Token token)
     {
-        pieces.Add(token,Piece.Create(token, transform, board));
+        pieces.Add(token,View.Piece.Create(token, transform, board_view));
+    }
+
+    public static void performCardAction(Model.Card card, Model.Player player)
+    {
+        switch(card.action)
+        {
+            case CardAction.PAYTOBANK:
+            //player.payCash(card.kwargs["amount"]);
+            break;
+            case CardAction.PAYTOPLAYER:
+            //player.getCash(card.kwargs["amount"]);
+            break;
+            case CardAction.MOVEFORWARDTO:
+            // int steps = (40+card.kwargs["position"]) - player.position)%40; 
+            //player.move(card.kwargs["position"]);
+            //StartCoroutine(pieces[player].move(steps));
+            break;
+            case CardAction.MOVEBACKTO:
+            // int steps = -1 * ((player.position+40 - card.kwargs["position"])%40); 
+            //player.move(card.kwargs["position"]);
+            //StartCoroutine(pieces[player].move(steps));
+            break;
+            case CardAction.MOVEBACK:
+            //player.move(card.kwargs["steps"]);
+            //StartCoroutine(pieces[player].move(-1*steps));
+            break;
+            case CardAction.GOTOJAIL:
+            //player.goToJail();
+            //StartCoroutine(pieces[player].goToJail());
+            break;
+            case CardAction.BIRTHDAY:
+            //foreach(Player p in players)
+            //{
+            //  p.payCash(card.kwargs["amont"],player)
+            //}
+            break;
+            case CardAction.OUTOFJAIL:
+            //player.outOfJailCards+=1;
+            break;
+            case CardAction.PAYORCHANCE:
+            // bool choice = *** some choice popup window ***
+            // if(choice)
+            //{
+            //  player.payCash(card.kwargs["amount"]);
+            //  board_model.parkingFees += card.kwargs["amount"];
+            //} else {
+            //  player.takeCard(opportunity_knocks.pop());
+            //}
+            break;
+            case CardAction.PAYTOPARKING:
+            //  player.payCash(card.kwargs["amount"]);
+            //  board_model.parkingFees += card.kwargs["amount"];
+            break;
+            case CardAction.REPAIRS:
+            /*
+                int total = 0;
+                foreach(Model2.Space.Purchasable space in player.owned_spaces)
+                {
+                    if(space.type == SqType.PROPERTY)
+                    {
+                        if(((Model2.Space.Property)space).noOfHouses == 5)
+                        {
+                            total += card.kwargs["hotel"];
+                        } else {
+                            total += ((Model2.Space.Property)space).noOfHouses * card.kwargs["house"];
+                        }
+                    }
+                }
+                player.payCash(total);
+            */
+            break;
+        }
     }
 }

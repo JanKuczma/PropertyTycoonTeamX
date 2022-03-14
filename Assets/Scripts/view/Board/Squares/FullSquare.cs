@@ -2,14 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+namespace View{
 public class FullSquare : Square
 {
-    new void Awake()
+    public static FullSquare Create(SqType type, Transform parent, int position, string name, string variant)
     {
-        base.Awake();
-        assignSpots();
+        FullSquare square = Instantiate(Asset.Board(type,variant),parent).GetComponent<FullSquare>();
+        square.transform.localScale = new Vector3(1,1,1);
+        square.transform.localPosition = generateCoordinates(position);
+        square.transform.localRotation = getRotation(position);
+        square.setName(name);
+        square.assignSpots();
+        return square;
     }
-        private void assignSpots()
+    override protected void assignSpots()
     {
         float offsetSmall = offsetS*transform.localScale.x;
         float offsetBig = offsetB*transform.localScale.x;
@@ -21,4 +28,5 @@ public class FullSquare : Square
         spots[4] = transform.position - transform.right*offsetSmall + transform.forward*(offsetBig + offsetSmall/2) - transform.forward*(offsetSmall/5);
         spots[5] = transform.position - transform.right*offsetSmall - transform.forward*(offsetBig + offsetSmall/2) - transform.forward*(offsetSmall/5);
     }
+}
 }
