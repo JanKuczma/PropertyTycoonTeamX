@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 ///DICE IMPLEMENTATION NEEDS REFACTORING
+namespace View{
 public class DiceContainer : MonoBehaviour
 {
     float move_speed = 20.0f;   // how fast dice is following cursor
@@ -105,5 +106,5 @@ public class DiceContainer : MonoBehaviour
     {
         return (position()-dice[0].transform.position).magnitude;
     }
-
+}
 }

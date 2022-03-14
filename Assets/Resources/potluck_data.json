@@ -1,0 +1,166 @@
+{
+    "cards": [
+        {
+            "description": "You inherit £200",
+            "action": "PAYTOPLAYER",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                200
+            ]
+        },
+        {
+            "description": "You have won 2nd prize in a beauty contest, collect £50",
+            "action": "PAYTOPLAYER",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                50
+            ]
+        },
+        {
+            "description": "You are up the creek with no paddle - go back to the Old Creek",
+            "action": "MOVEBACKTO",
+            "keys": [
+                "position"
+            ],
+            "values": [
+                2
+            ]
+        },
+        {
+            "description": "Student loan refund. Collect £20",
+            "action": "PAYTOPLAYER",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                20
+            ]
+        },
+        {
+            "description": "Bank error in your favour. Collect £200",
+            "action": "PAYTOPLAYER",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                200
+            ]
+        },
+        {
+            "description": "Pay bill for text books of £100",
+            "action": "PAYTOBANK",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                100
+            ]
+        },
+        {
+            "description": "Mega late night taxi bill pay £50",
+            "action": "PAYTOBANK",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                50
+            ]
+        },
+        {
+            "description": "Advance to go",
+            "action": "MOVEFORWARDTO",
+            "keys": [
+                "position"
+            ],
+            "values": [
+                1
+            ]
+        },
+        {
+            "description": "From sale of Bitcoin you get £50",
+            "action": "PAYTOPLAYER",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                50
+            ]
+        },
+        {
+            "description": "Bitcoin assets fall - pay off Bitcoin short fall",
+            "action": "PAYTOBANK",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                50
+            ]
+        },
+        {
+            "description": "Pay a £10 fine or take opportunity knocks",
+            "action": "PAYORCHANCE",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                10
+            ]
+        },
+        {
+            "description": "Pay insurance fee of £50",
+            "action": "PAYTOPARKING",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                50
+            ]
+        },
+        {
+            "description": "Savings bond matures, collect £100",
+            "action": "PAYTOPLAYER",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                100
+            ]
+        },
+        {
+            "description": "Go to jail. Do not pass GO, do not collect £200",
+            "action": "GOTOJAIL",
+            "keys": [],
+            "values": []
+        },
+        {
+            "description": "Received interest on shares of £25",
+            "action": "PAYTOPLAYER",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                25
+            ]
+        },
+        {
+            "description": "It's your birthday. Collect £10 from each player",
+            "action": "BIRTHDAY",
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                10
+            ]
+        },
+        {
+            "description": "Get out of jail free",
+            "action": "OUTOFJAIL",
+            "keys": [],
+            "values": []
+        }
+    ]
+}

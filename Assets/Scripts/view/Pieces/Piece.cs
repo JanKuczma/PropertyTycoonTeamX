@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace View{
 public class Piece : MonoBehaviour
 {
     const float SPEED = 6f;    // const movement speed
@@ -227,4 +228,5 @@ public class Piece : MonoBehaviour
         return mid_positions;
         
     }
+}
 }

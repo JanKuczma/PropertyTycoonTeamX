@@ -3,18 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+namespace View{
 public class GoSquare : CornerSquare
 {
-    public override void setName(string amount="")
+    public static GoSquare Create(Transform parent, int position, string name, string amount)
     {
-        if(amount.Equals("")) amount = "200";
-        _first = "COLLECT £"+amount+" ";
-        GetComponentsInChildren<TextMeshPro>()[0].SetText(_first+_sceond);
+        GoSquare square = Instantiate(Asset.Board(SqType.GO),parent).GetComponent<GoSquare>();
+        square.transform.localScale = new Vector3(1,1,1);
+        square.transform.localPosition = Square.generateCoordinates(position);
+        square.transform.localRotation = getRotation(position);
+        square.setName(name);
+        square.assignSpots();
+        square.setAmount(amount);
+        return square;
     }
-    public void setSecond(string second = "")
+    public override void setName(string name="")
     {
-        if(second.Equals("")) second = "SALARY AS YOU PASS";
-        _sceond = second;
-        GetComponentsInChildren<TextMeshPro>()[0].SetText(_first+_sceond);
+        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT £200 SALARY AS YOU PASS");
     }
+    public void setAmount(string amount = "200")
+    {
+        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT £"+amount+" SALARY AS YOU PASS");
+    }
+}
 }

@@ -3,23 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=0xeb882c, RED=0xdb2428, YELLOW=0xFFF005, GREEN=0x13a857, DEEPBLUE=0x0066a4}
+namespace View{
 public class PropertySquare : Square
 {
-    new void Awake()
-    {
-        base.Awake();
-        assignSpots();
-        assignHousesSpots();
-    }
-    int _group;
+    Group _group;
     string _price;
     List<GameObject> houses = new List<GameObject>();
     Vector3[] houses_spots = new Vector3[5];
-    public void setGroup(int group)
+
+    public static PropertySquare Create(Transform parent, int position, string name,string price,Group group)
+    {
+        PropertySquare square = Instantiate(Asset.Board(SqType.PROPERTY),parent).GetComponent<PropertySquare>();
+        square.transform.localScale = new Vector3(1,1,1);
+        square.transform.localPosition = Square.generateCoordinates(position);
+        square.transform.localRotation = getRotation(position);
+        square.setName(name);
+        square.assignSpots();
+        square.setPrice(price);
+        square.setGroup(group);
+        return square;
+    }
+    public void setGroup(Group group)
     {
         _group = group;
         Color color;
-        if ( ColorUtility.TryParseHtmlString("#"+group.ToString("X")+"FF", out color))
+        if ( ColorUtility.TryParseHtmlString("#"+((int)group).ToString("X")+"FF", out color))
         { GetComponent<Renderer>().materials[1].SetColor("_Color",color); }
     }
     
@@ -72,7 +80,7 @@ public class PropertySquare : Square
             }
         }
     }
-    private void assignSpots()
+    override protected void assignSpots()
     {
         float offsetSmall = offsetS*transform.localScale.x;
         float offsetBig = offsetB*transform.localScale.x;
@@ -94,4 +102,5 @@ public class PropertySquare : Square
         houses_spots[4] = transform.forward*(-1);
     }
     
+}
 }
