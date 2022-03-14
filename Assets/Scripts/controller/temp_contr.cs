@@ -12,6 +12,8 @@ public class temp_contr : MonoBehaviour
     //game elements
     View.Board board_view;
     Model2.Board board_model;
+    Model2.CardStack opportunity_knocks;
+    Model2.CardStack potluck;
     View.DiceContainer dice;
     Dictionary<Token,View.Piece> pieces;
     Dictionary<int,Token> players;
@@ -29,8 +31,11 @@ public class temp_contr : MonoBehaviour
     }
     void Start()
     {
-        //create board and dice
-        board_model = Model2.BoardData.loadBoard(Asset.board_data_json());
+        //load data
+        board_model = Model2.JSONData.loadBoard(Asset.board_data_json());
+        opportunity_knocks = Model2.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
+        potluck = Model2.JSONData.loadCardStack(Asset.potluck_data_json());
+        //create board with card stacks and dice
         board_view = View.Board.Create(transform,board_model);
         dice = View.DiceContainer.Create(transform);
         //add players: player<int,token> dict, pieces<token,piece> dict

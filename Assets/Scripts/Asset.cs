@@ -38,6 +38,8 @@ public static class Asset
     static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
     static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
     static TextAsset classic_board_json = Resources.Load<TextAsset>("board_data");
+    static TextAsset potluck_json = Resources.Load<TextAsset>("potluck_data");
+    static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("opportunity_knocks_data");
 
 
     public static GameObject Board(SqType type,string variant = "")
@@ -86,5 +88,15 @@ public static class Asset
     public static string board_data_json()
     {
         return classic_board_json.ToString();
+    }
+
+    public static string potluck_data_json()
+    {
+        return potluck_json.ToString();
+    }
+
+    public static string opportunity_knocks_data_json()
+    {
+        return opportunity_knocks_json.ToString();
     }
 }

@@ -1,27 +1,24 @@
+using System.Collections.Generic;
+using UnityEngine;
+public enum CardAction {PAYTOBANK,PAYTOPLAYER,MOVEFORWARDTO,MOVEBACKTO,MOVEBACK,PAYTOPARKING,BIRTHDAY,GOTOJAIL,OUTOFJAIL,PAYORCHANCE,REPAIRS}
 namespace Model2{
+[System.Serializable]
 public class Card
 {
-    public string name;
     public string description;
+    public CardAction action;
+    public Dictionary<string,int> kwargs = new Dictionary<string, int>();
 
-    public Card(string name, string description)
+    public Card(string description, CardAction action, Dictionary<string,int> kwargs = null)
     {
-        this.name = name;
         this.description = description;
-    }
-    public string GetName()
-    {
-        return name;
+        this.action = action;
+        this.kwargs = kwargs;
     }
 
     public string GetDescription()
     {
         return description;
-    }
-
-    public override string ToString()
-    {
-        return name + " " + description;
     }
 }
 }

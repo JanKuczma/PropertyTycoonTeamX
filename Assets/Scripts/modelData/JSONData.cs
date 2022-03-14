@@ -1,7 +1,27 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 namespace Model2{
-public static class BoardData
+public static class JSONData
 {
+    public static void saveCardStack(CardStack cards,string filename = "custom_cardstack.json")
+    {
+        string cards_json = JsonUtility.ToJson(stackToData(cards),true);
+        //System.IO.File.WriteAllText(Application.persistentDataPath + filename+".json",cards_json);
+        System.IO.File.WriteAllText(filename,cards_json);
+    }
+    public static CardStack loadCardStack(string json_format)
+    {
+
+        StackData cards = JsonUtility.FromJson<StackData>(json_format);
+        return dataToStack(cards);
+    }
+    public static CardStack loadCardStackFromFile(string file_name)
+    {
+        //CardStack cards = JsonUtility.FromJson<CardStack>(System.IO.File.ReadAllText(Application.persistentDataPath + file_path +".json"));
+        StackData cards = JsonUtility.FromJson<StackData>(System.IO.File.ReadAllText(file_name));
+        return dataToStack(cards);
+    }
     public static Board loadBoard(string json_format)
     {
         BoardD boardData = JsonUtility.FromJson<BoardD>(json_format);
@@ -58,7 +78,7 @@ public static class BoardData
     public static Board loadBoardFromFile(string filename = "custom_board")
     {
         string json_format = System.IO.File.ReadAllText(Application.persistentDataPath + filename+".json");
-        return BoardData.loadBoard(json_format);
+        return JSONData.loadBoard(json_format);
     }
     [System.Serializable]
     private class BoardD
@@ -110,6 +130,66 @@ public static class BoardData
             break;
         }
         return spData;
+    }
+
+    [System.Serializable]
+    private class StackData
+    {
+        public List<CardData> cards = new List<CardData>();
+    }
+
+    [System.Serializable]
+    private class CardData
+    {
+        public string description;
+        public CardAction action;
+
+        public List<string> keys;
+        public List<int> values;
+    }
+
+    private static CardData cardToData(Card card)
+    {
+        CardData cardData = new CardData();
+        cardData.description = card.description;
+        cardData.action = card.action;
+        if(card.kwargs != null)
+        {
+            cardData.keys = card.kwargs.Keys.ToList();
+            cardData.values = card.kwargs.Values.ToList();
+        }
+        return cardData;
+    }
+
+    private static StackData stackToData(CardStack stack)
+    {
+        StackData stackData = new StackData();
+        foreach(Card card in stack.cards)
+        {
+            stackData.cards.Add(cardToData(card));
+        }
+        return stackData;
+    }
+    private static Card dataToCard(CardData data)
+    {
+        Dictionary<string,int> dict = new Dictionary<string, int>();
+        for(int i = 0 ; i > data.keys.Count ;i++)
+        {
+            dict.Add(data.keys[i],data.values[i]);
+        }
+        Card card = new Card(data.description,data.action,dict);
+        
+        return card;
+    }
+
+    private static CardStack dataToStack(StackData data)
+    {
+        CardStack stack = new CardStack();
+        foreach(CardData cdata in data.cards)
+        {
+            stack.cards.Add(dataToCard(cdata));
+        }
+        return stack;
     }
 }
 }

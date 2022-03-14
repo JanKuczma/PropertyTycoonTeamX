@@ -1,0 +1,160 @@
+{
+    "cards": [
+        {
+            "description": "Bank pays you divided of £50",
+            "action": 1,
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                50
+            ]
+        },
+        {
+            "description": "You have won a lip sync battle. Collect £100",
+            "action": 1,
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                100
+            ]
+        },
+        {
+            "description": "Advance to Turing Heights",
+            "action": 2,
+            "keys": [
+                "position"
+            ],
+            "values": [
+                40
+            ]
+        },
+        {
+            "description": "Advance to Han Xin Gardens. If you pass GO, collect £200",
+            "action": 2,
+            "keys": [
+                "position"
+            ],
+            "values": [
+                25
+            ]
+        },
+        {
+            "description": "Fined £15 for speeding",
+            "action": 5,
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                15
+            ]
+        },
+        {
+            "description": "Pay university fees of £150",
+            "action": 0,
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                150
+            ]
+        },
+        {
+            "description": "Loan matures, collect £150",
+            "action": 1,
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                150
+            ]
+        },
+        {
+            "description": "Take a trip to Hove station. If you pass GO collect £200",
+            "action": 2,
+            "keys": [
+                "position"
+            ],
+            "values": [
+                16
+            ]
+        },
+        {
+            "description": "You are assessed for repairs, £40/house, £115/hotel",
+            "action": 10,
+            "keys": [
+                "house",
+                "hotel"
+            ],
+            "values": [
+                40,
+                115
+            ]
+        },
+        {
+            "description": "Advance to go",
+            "action": 2,
+            "keys": [
+                "position"
+            ],
+            "values": [
+                1
+            ]
+        },
+        {
+            "description": "You are assessed for repairs, £25/house, £100/hotel",
+            "action": 10,
+            "keys": [
+                "house",
+                "hotel"
+            ],
+            "values": [
+                25,
+                100
+            ]
+        },
+        {
+            "description": "Go back 3 spaces",
+            "action": 4,
+            "keys": [
+                "steps"
+            ],
+            "values": [
+                3
+            ]
+        },
+        {
+            "description": "Advance to Skywalker Drive. If you pass GO collect £200",
+            "action": 2,
+            "keys": [
+                "position"
+            ],
+            "values": [
+                12
+            ]
+        },
+        {
+            "description": "Go to jail. Do not pass GO, do not collect £200",
+            "action": 7,
+            "keys": [],
+            "values": []
+        },
+        {
+            "description": "Drunk in charge of a hoverboard. Fine £30",
+            "action": 5,
+            "keys": [
+                "amount"
+            ],
+            "values": [
+                30
+            ]
+        },
+        {
+            "description": "Get out of jail free",
+            "action": 8,
+            "keys": [],
+            "values": []
+        }
+    ]
+}

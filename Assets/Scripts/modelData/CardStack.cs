@@ -5,9 +5,10 @@ using System.Collections.Generic;
 /// Class for a deck of cards
 /// </summary>
 namespace Model2{
+[System.Serializable]
 public class CardStack
 {
-    private List<Card> cards;
+    public List<Card> cards;
 
     public CardStack()
     {
