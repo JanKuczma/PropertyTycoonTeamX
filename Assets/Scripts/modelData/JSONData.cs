@@ -4,29 +4,64 @@ using System.Linq;
 namespace Model{
 public static class JSONData
 {
+    [System.Serializable]
+    private class BoardWrapper
+    {
+    [SerializeField] public SpaceWrapper[] spaces = new SpaceWrapper[40];
+    }
+
+    [System.Serializable]
+    private class SpaceWrapper
+    {
+        public int position;
+        public string name;
+        public string type_action;
+        public int cost_amount;
+        public string group;
+        public int[] rents;
+        public int house_cost;
+        public int hotel_cost;
+    }
+
+    [System.Serializable]
+    private class CardStackWrapper
+    {
+        public List<CardWrapper> cards = new List<CardWrapper>();
+    }
+
+    [System.Serializable]
+    private class CardWrapper
+    {
+        public string description;
+        public string action;
+
+        public List<string> keys;
+        public List<int> values;
+    }
+
     public static void saveCardStack(CardStack cards,string filename = "custom_cardstack.json")
     {
-        string cards_json = JsonUtility.ToJson(stackToData(cards),true);
+        string cards_json = JsonUtility.ToJson(stackToWrapper(cards),true);
         //System.IO.File.WriteAllText(Application.persistentDataPath + filename+".json",cards_json);
         System.IO.File.WriteAllText(filename,cards_json);
     }
     public static CardStack loadCardStack(string json_format)
     {
 
-        StackData cards = JsonUtility.FromJson<StackData>(json_format);
-        return dataToStack(cards);
+        CardStackWrapper cards = JsonUtility.FromJson<CardStackWrapper>(json_format);
+        return wrapperToStack(cards);
     }
     public static CardStack loadCardStackFromFile(string file_name)
     {
         //CardStack cards = JsonUtility.FromJson<CardStack>(System.IO.File.ReadAllText(Application.persistentDataPath + file_path +".json"));
-        StackData cards = JsonUtility.FromJson<StackData>(System.IO.File.ReadAllText(file_name));
-        return dataToStack(cards);
+        CardStackWrapper cards = JsonUtility.FromJson<CardStackWrapper>(System.IO.File.ReadAllText(file_name));
+        return wrapperToStack(cards);
     }
     public static Board loadBoard(string json_format)
     {
-        BoardD boardData = JsonUtility.FromJson<BoardD>(json_format);
+        BoardWrapper boardData = JsonUtility.FromJson<BoardWrapper>(json_format);
         Board board = new Board();
-        foreach(SpaceData sD in boardData.spaces)
+        foreach(SpaceWrapper sD in boardData.spaces)
         {
             SqType type = (SqType)System.Enum.Parse(typeof(SqType),sD.type_action);
             switch(type)
@@ -56,10 +91,10 @@ public static class JSONData
                 board.spaces[sD.position-1] = new Space.FreeParking(sD.position,sD.name);
                 break;
                 case SqType.GOTOJAIL:
-                board.spaces[sD.position-1] = new Space.FreeParking(sD.position,sD.name);
+                board.spaces[sD.position-1] = new Space.GoToJail(sD.position,sD.name);
                 break;
                 case SqType.JAILVISIT:
-                board.spaces[sD.position-1] = new Space.FreeParking(sD.position,sD.name);
+                board.spaces[sD.position-1] = new Space.VisitJail(sD.position,sD.name);
                 break;
             }
         }
@@ -68,10 +103,10 @@ public static class JSONData
 
     public static void saveBoard(Board board,string filename = "custom_board")
     {
-        BoardD boardData = new BoardD();
+        BoardWrapper boardData = new BoardWrapper();
         foreach(Space sp in board.spaces)
         {
-            boardData.spaces[sp.position-1] = spaceToData(sp);
+            boardData.spaces[sp.position-1] = spaceToWrapper(sp);
         }
         //System.IO.File.WriteAllText(Application.persistentDataPath + filename+".json",JsonUtility.ToJson(boardData,true));
         System.IO.File.WriteAllText(filename+".json",JsonUtility.ToJson(boardData,true));
@@ -82,28 +117,10 @@ public static class JSONData
         string json_format = System.IO.File.ReadAllText(Application.persistentDataPath + filename+".json");
         return JSONData.loadBoard(json_format);
     }
-    [System.Serializable]
-    private class BoardD
-    {
-        [SerializeField] public SpaceData[] spaces = new SpaceData[40];
-    }
 
-    [System.Serializable]
-    private class SpaceData
+    private static SpaceWrapper spaceToWrapper(Space space)
     {
-        public int position;
-        public string name;
-        public string type_action;
-        public int cost_amount;
-        public string group;
-        public int[] rents;
-        public int house_cost;
-        public int hotel_cost;
-    }
-
-    private static SpaceData spaceToData(Space space)
-    {
-        SpaceData spData = new SpaceData();
+        SpaceWrapper spData = new SpaceWrapper();
         spData.position = space.position;
         spData.name = space.name;
         spData.type_action = space.type.ToString();
@@ -134,25 +151,9 @@ public static class JSONData
         return spData;
     }
 
-    [System.Serializable]
-    private class StackData
+    private static CardWrapper cardToWrapper(Card card)
     {
-        public List<CardData> cards = new List<CardData>();
-    }
-
-    [System.Serializable]
-    private class CardData
-    {
-        public string description;
-        public string action;
-
-        public List<string> keys;
-        public List<int> values;
-    }
-
-    private static CardData cardToData(Card card)
-    {
-        CardData cardData = new CardData();
+        CardWrapper cardData = new CardWrapper();
         cardData.description = card.description;
         cardData.action = card.action.ToString();
         if(card.kwargs != null)
@@ -163,16 +164,16 @@ public static class JSONData
         return cardData;
     }
 
-    private static StackData stackToData(CardStack stack)
+    private static CardStackWrapper stackToWrapper(CardStack stack)
     {
-        StackData stackData = new StackData();
+        CardStackWrapper stackData = new CardStackWrapper();
         foreach(Card card in stack.cards)
         {
-            stackData.cards.Add(cardToData(card));
+            stackData.cards.Add(cardToWrapper(card));
         }
         return stackData;
     }
-    private static Card dataToCard(CardData data)
+    private static Card wrapperToCard(CardWrapper data)
     {
         Dictionary<string,int> dict = new Dictionary<string, int>();
         for(int i = 0 ; i > data.keys.Count ;i++)
@@ -184,12 +185,12 @@ public static class JSONData
         return card;
     }
 
-    private static CardStack dataToStack(StackData data)
+    private static CardStack wrapperToStack(CardStackWrapper data)
     {
         CardStack stack = new CardStack();
-        foreach(CardData cdata in data.cards)
+        foreach(CardWrapper cdata in data.cards)
         {
-            stack.cards.Add(dataToCard(cdata));
+            stack.cards.Add(wrapperToCard(cdata));
         }
         return stack;
     }

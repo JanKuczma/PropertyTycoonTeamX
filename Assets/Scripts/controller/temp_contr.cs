@@ -190,7 +190,12 @@ public class temp_contr : MonoBehaviour
             case CardAction.BIRTHDAY:
             //foreach(Player p in players)
             //{
-            //  p.payCash(card.kwargs["amont"],player)
+            //  if(p.cash < card.kwargs["amont"])
+            //  {
+            //      *** p player is unable to pay ***
+            //  } else {
+            //      p.payCash(card.kwargs["amont"],player)  
+            //  }
             //}
             break;
             case CardAction.OUTOFJAIL:
