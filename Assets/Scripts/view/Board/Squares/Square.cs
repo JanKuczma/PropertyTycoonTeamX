@@ -10,9 +10,11 @@ public abstract class Square : MonoBehaviour
     // each square is divided into 6 areas stored in spaces
     public Vector3[] spots;
     public List<int> spotsIs;
+    protected int _position;
     // offsets used for spot arrangement
-    protected const float offsetS = 0.6f;
-    protected const float offsetB = 0.8f;
+    protected const float offsetS = 0.38f;
+    protected const float offsetB = 0.56f;
+
     protected virtual void Awake()
     {
         spots = new Vector3[6];
@@ -73,21 +75,21 @@ public abstract class Square : MonoBehaviour
     /// generates square coordinates accordingly to the board center(this) postion/scale
     protected static Vector3 generateCoordinates(int position)
     {
-        float displacement = .0080f;
+        float displacement = 8.0f;
         displacement =  position < 11 ? 1*displacement :
                         position < 21 ? displacement :
                         position < 21 ? -1*displacement :
                         displacement;
-        displacement = displacement - (.0016f*((position-1)%10));
+        displacement = displacement - (1.6f*((position-1)%10));
 
-        return  position == 1 ? new Vector3(-.0085f,0,.0085f) :
-                position < 11 ? new Vector3(-displacement,0,.0085f) :
-                position == 11 ? new Vector3(.0085f,0,.0085f) :
-                position < 21 ? new Vector3(.0085f,0,displacement) :
-                position == 21 ? new Vector3(.0085f,0,-.0085f) :
-                position < 31 ? new Vector3(displacement,0,-.0085f) :
-                position == 31 ? new Vector3(-.0085f,0,-.0085f) :
-                new Vector3(-.0085f,0,-displacement);
+        return  position == 1 ? new Vector3(-8.5f,0,8.5f) :
+                position < 11 ? new Vector3(-displacement,0,8.5f) :
+                position == 11 ? new Vector3(8.5f,0,8.5f) :
+                position < 21 ? new Vector3(8.5f,0,displacement) :
+                position == 21 ? new Vector3(8.5f,0,-8.5f) :
+                position < 31 ? new Vector3(displacement,0,-8.5f) :
+                position == 31 ? new Vector3(-8.5f,0,-8.5f) :
+                new Vector3(-8.5f,0,-displacement);
     }
 
     /// generates rotation depending on the which side the square is (fornt,left,top,right)

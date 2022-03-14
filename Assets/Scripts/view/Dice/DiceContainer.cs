@@ -41,6 +41,7 @@ public class DiceContainer : MonoBehaviour
             d.roll((transform.position - previous_frame_pos)/Time.deltaTime);
         }
         start_roll = true;
+        GetComponent<BoxCollider>().enabled = false;
         enabled = false;    // disable the container
     }
 
@@ -67,6 +68,7 @@ public class DiceContainer : MonoBehaviour
             d.reset();
         }
         start_roll = false;
+        GetComponent<BoxCollider>().enabled = true;
         enabled = true;
     }
 
@@ -84,12 +86,11 @@ public class DiceContainer : MonoBehaviour
     /// returns true if at least one dice is rolling
     public bool areRolling()
     {
-        List<bool> tmp = new List<bool>();
         foreach(Dice d in dice)
         {
-            tmp.Add(d.isRolling());
+            if(d.isRolling()) return true;
         }
-        return tmp.Contains(true);
+        return false;
     }
 
     public Vector3 position()

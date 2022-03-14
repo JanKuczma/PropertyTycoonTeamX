@@ -26,6 +26,9 @@ public static class Asset
     static GameObject Chance1Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(1)");
     static GameObject Chance2Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(2)");
     static GameObject Chance3Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(3)");
+    //house and hotel
+    static GameObject HousePrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/House");
+    static GameObject HotelPrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/Hotel");
     //pieces
     static GameObject CatPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Cat");
     static GameObject BootPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Boot");
@@ -37,6 +40,7 @@ public static class Asset
     //cursors
     static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
     static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
+    //board and card data
     static TextAsset classic_board_json = Resources.Load<TextAsset>("board_data");
     static TextAsset potluck_json = Resources.Load<TextAsset>("potluck_data");
     static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("opportunity_knocks_data");
@@ -98,5 +102,15 @@ public static class Asset
     public static string opportunity_knocks_data_json()
     {
         return opportunity_knocks_json.ToString();
+    }
+
+        public static GameObject House()
+    {
+        return HousePrefab;
+    }
+
+    public static GameObject Hotel()
+    {
+        return HotelPrefab;
     }
 }

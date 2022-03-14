@@ -14,6 +14,8 @@ public class JailSquare : CornerSquare
         base.Awake();
         cellIs = new List<int> {0,1,2,3,4,5};
         cells = new Vector3[6];
+        assignCells();
+        assignSpots();
     }
     public static JailSquare Create(Transform parent, int position, string name)
     {
@@ -49,7 +51,7 @@ public class JailSquare : CornerSquare
             return -1;
         }
     }
-    public void assignCells()
+    private void assignCells()
     {
         float offsetSmall = offsetS*(transform.localScale.x);
         float offsetBig = offsetB*(transform.localScale.x);
