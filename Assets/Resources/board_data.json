@@ -3,9 +3,9 @@
         {
             "position": 1,
             "name": "GO",
-            "type_action": 0,
+            "type_action": "GO",
             "cost_amount": 200,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -13,9 +13,9 @@
         {
             "position": 2,
             "name": "THE OLD CREEK",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 60,
-            "group": 8801336,
+            "group": "BROWN",
             "rents": [
                 2,
                 10,
@@ -30,9 +30,9 @@
         {
             "position": 3,
             "name": "POT LUCK",
-            "type_action": 7,
+            "type_action": "POTLUCK",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -40,9 +40,9 @@
         {
             "position": 4,
             "name": "GANGSTER PARADISE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 60,
-            "group": 8801336,
+            "group": "BROWN",
             "rents": [
                 4,
                 20,
@@ -57,9 +57,9 @@
         {
             "position": 5,
             "name": "INCOME TAX",
-            "type_action": 8,
+            "type_action": "TAX",
             "cost_amount": 100,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -67,9 +67,9 @@
         {
             "position": 6,
             "name": "BRIGHTON STATION",
-            "type_action": 5,
+            "type_action": "STATION",
             "cost_amount": 200,
-            "group": 0,
+            "group": "",
             "rents": [
                 25,
                 50,
@@ -82,9 +82,9 @@
         {
             "position": 7,
             "name": "THE ANGELS DELIGHT",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 60,
-            "group": 11263472,
+            "group": "BLUE",
             "rents": [
                 6,
                 30,
@@ -99,9 +99,9 @@
         {
             "position": 8,
             "name": "OPPORTUNITY KNOCKS",
-            "type_action": 9,
+            "type_action": "CHANCE",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -109,9 +109,9 @@
         {
             "position": 9,
             "name": "POTTER AVENUE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 100,
-            "group": 11263472,
+            "group": "BLUE",
             "rents": [
                 6,
                 30,
@@ -126,9 +126,9 @@
         {
             "position": 10,
             "name": "GRANGER DRIVE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 100,
-            "group": 11263472,
+            "group": "BLUE",
             "rents": [
                 8,
                 40,
@@ -143,9 +143,9 @@
         {
             "position": 11,
             "name": "JUST VISITING",
-            "type_action": 1,
+            "type_action": "JAILVISIT",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -153,9 +153,9 @@
         {
             "position": 12,
             "name": "SKYWALKER DRIVE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 140,
-            "group": 12925060,
+            "group": "PURPLE",
             "rents": [
                 10,
                 50,
@@ -170,9 +170,9 @@
         {
             "position": 13,
             "name": "TESLA POWER CO",
-            "type_action": 6,
+            "type_action": "UTILITY",
             "cost_amount": 150,
-            "group": 0,
+            "group": "",
             "rents": [
                 4,
                 10
@@ -183,9 +183,9 @@
         {
             "position": 14,
             "name": "WOOKIE HOLE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 140,
-            "group": 12925060,
+            "group": "PURPLE",
             "rents": [
                 10,
                 50,
@@ -200,9 +200,9 @@
         {
             "position": 15,
             "name": "REY LANE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 160,
-            "group": 12925060,
+            "group": "PURPLE",
             "rents": [
                 12,
                 60,
@@ -217,9 +217,9 @@
         {
             "position": 16,
             "name": "HOVE STATION",
-            "type_action": 5,
+            "type_action": "STATION",
             "cost_amount": 200,
-            "group": 0,
+            "group": "",
             "rents": [
                 25,
                 50,
@@ -232,9 +232,9 @@
         {
             "position": 17,
             "name": "BISHOP DRIVE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 180,
-            "group": 15435820,
+            "group": "ORANGE",
             "rents": [
                 14,
                 70,
@@ -249,9 +249,9 @@
         {
             "position": 18,
             "name": "POT LUCK",
-            "type_action": 7,
+            "type_action": "POTLUCK",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -259,9 +259,9 @@
         {
             "position": 19,
             "name": "DUNHAM STREET",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 180,
-            "group": 15435820,
+            "group": "ORANGE",
             "rents": [
                 14,
                 70,
@@ -276,9 +276,9 @@
         {
             "position": 20,
             "name": "BROYLES LANE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 200,
-            "group": 15435820,
+            "group": "ORANGE",
             "rents": [
                 16,
                 80,
@@ -293,9 +293,9 @@
         {
             "position": 21,
             "name": "FREE PARKING",
-            "type_action": 2,
+            "type_action": "PARKING",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -303,9 +303,9 @@
         {
             "position": 22,
             "name": "YUE FEI SQUARE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 220,
-            "group": 16773125,
+            "group": "YELLOW",
             "rents": [
                 18,
                 90,
@@ -320,9 +320,9 @@
         {
             "position": 23,
             "name": "OPPORTUNITY KNOCKS",
-            "type_action": 9,
+            "type_action": "CHANCE",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -330,9 +330,9 @@
         {
             "position": 24,
             "name": "MILAN ROGUE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 220,
-            "group": 16773125,
+            "group": "YELLOW",
             "rents": [
                 18,
                 90,
@@ -347,9 +347,9 @@
         {
             "position": 25,
             "name": "HAN XIN GARDENS",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 240,
-            "group": 16773125,
+            "group": "YELLOW",
             "rents": [
                 20,
                 100,
@@ -364,9 +364,9 @@
         {
             "position": 26,
             "name": "FALMER STATION",
-            "type_action": 5,
+            "type_action": "STATION",
             "cost_amount": 200,
-            "group": 0,
+            "group": "",
             "rents": [
                 25,
                 50,
@@ -379,9 +379,9 @@
         {
             "position": 27,
             "name": "SHATNER CLOSE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 260,
-            "group": 16773125,
+            "group": "RED",
             "rents": [
                 22,
                 110,
@@ -396,9 +396,9 @@
         {
             "position": 28,
             "name": "PICARD AVENUE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 260,
-            "group": 16773125,
+            "group": "RED",
             "rents": [
                 22,
                 110,
@@ -413,9 +413,9 @@
         {
             "position": 29,
             "name": "EDISON WATER",
-            "type_action": 6,
+            "type_action": "UTILITY",
             "cost_amount": 150,
-            "group": 0,
+            "group": "",
             "rents": [
                 4,
                 10
@@ -426,9 +426,9 @@
         {
             "position": 30,
             "name": "CRUSHER CREEK",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 280,
-            "group": 16773125,
+            "group": "RED",
             "rents": [
                 22,
                 110,
@@ -443,9 +443,9 @@
         {
             "position": 31,
             "name": "GO TO JAIL",
-            "type_action": 3,
+            "type_action": "GOTOJAIL",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -453,9 +453,9 @@
         {
             "position": 32,
             "name": "SIRAT MEWS",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 300,
-            "group": 1288279,
+            "group": "GREEN",
             "rents": [
                 26,
                 130,
@@ -470,9 +470,9 @@
         {
             "position": 33,
             "name": "GENGHIS CRESCENT",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 300,
-            "group": 1288279,
+            "group": "GREEN",
             "rents": [
                 26,
                 130,
@@ -487,9 +487,9 @@
         {
             "position": 34,
             "name": "POT LUCK",
-            "type_action": 7,
+            "type_action": "POTLUCK",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -497,9 +497,9 @@
         {
             "position": 35,
             "name": "IBIS CLOSE",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 320,
-            "group": 1288279,
+            "group": "GREEN",
             "rents": [
                 28,
                 150,
@@ -514,9 +514,9 @@
         {
             "position": 36,
             "name": "PORTSLADE STATION",
-            "type_action": 5,
+            "type_action": "STATION",
             "cost_amount": 200,
-            "group": 0,
+            "group": "",
             "rents": [
                 25,
                 50,
@@ -529,9 +529,9 @@
         {
             "position": 37,
             "name": "OPPORTUNITY KNOCKS",
-            "type_action": 9,
+            "type_action": "CHANCE",
             "cost_amount": 0,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -539,9 +539,9 @@
         {
             "position": 38,
             "name": "JAMES WEBB WAY",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 350,
-            "group": 26276,
+            "group": "DEEPBLUE",
             "rents": [
                 35,
                 175,
@@ -556,9 +556,9 @@
         {
             "position": 39,
             "name": "SUPER TAX",
-            "type_action": 8,
+            "type_action": "TAX",
             "cost_amount": 100,
-            "group": 0,
+            "group": "",
             "rents": [],
             "house_cost": 0,
             "hotel_cost": 0
@@ -566,9 +566,9 @@
         {
             "position": 40,
             "name": "TURING HEIGHTS",
-            "type_action": 4,
+            "type_action": "PROPERTY",
             "cost_amount": 400,
-            "group": 26276,
+            "group": "DEEPBLUE",
             "rents": [
                 50,
                 200,

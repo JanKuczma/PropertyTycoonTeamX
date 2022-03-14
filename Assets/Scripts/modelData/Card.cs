@@ -15,10 +15,5 @@ public class Card
         this.action = action;
         this.kwargs = kwargs;
     }
-
-    public string GetDescription()
-    {
-        return description;
-    }
 }
 }

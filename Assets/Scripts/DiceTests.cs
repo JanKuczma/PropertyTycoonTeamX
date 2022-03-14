@@ -8,7 +8,8 @@ public class DiceTests : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*Model2.Space[] spaces = new Model2.Space[40];
+        /*
+        Model2.Space[] spaces = new Model2.Space[40];
         spaces[0] = new Model2.Space.Go(1,"GO",200);
         int[] rents = {2,10,30,90,160,250};
         spaces[1] = new Model2.Space.Property(2,"THE OLD CREEK",60,Group.BROWN,rents,50,250);
@@ -67,7 +68,8 @@ public class DiceTests : MonoBehaviour
         int[] rents17 = {50,200,600,1400,1700,2000};
         spaces[39] =new Model2.Space.Property(40,"TURING HEIGHTS",400,Group.DEEPBLUE,rents17,200,1000);
         Model2.Board tmp = new Model2.Board(spaces);
-        Model2.BoardData.saveBoard(tmp);*/
+        Model2.JSONData.saveBoard(tmp);
+        */
         /*
         Model2.CardStack potlucks = new Model2.CardStack();
         Dictionary<string,int> k = new Dictionary<string, int>();

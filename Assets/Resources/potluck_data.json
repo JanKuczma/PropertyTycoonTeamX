@@ -2,7 +2,7 @@
     "cards": [
         {
             "description": "You inherit £200",
-            "action": 1,
+            "action": "PAYTOPLAYER",
             "keys": [
                 "amount"
             ],
@@ -12,7 +12,7 @@
         },
         {
             "description": "You have won 2nd prize in a beauty contest, collect £50",
-            "action": 1,
+            "action": "PAYTOPLAYER",
             "keys": [
                 "amount"
             ],
@@ -22,7 +22,7 @@
         },
         {
             "description": "You are up the creek with no paddle - go back to the Old Creek",
-            "action": 3,
+            "action": "MOVEBACKTO",
             "keys": [
                 "position"
             ],
@@ -32,7 +32,7 @@
         },
         {
             "description": "Student loan refund. Collect £20",
-            "action": 1,
+            "action": "PAYTOPLAYER",
             "keys": [
                 "amount"
             ],
@@ -42,7 +42,7 @@
         },
         {
             "description": "Bank error in your favour. Collect £200",
-            "action": 1,
+            "action": "PAYTOPLAYER",
             "keys": [
                 "amount"
             ],
@@ -52,7 +52,7 @@
         },
         {
             "description": "Pay bill for text books of £100",
-            "action": 0,
+            "action": "PAYTOBANK",
             "keys": [
                 "amount"
             ],
@@ -62,7 +62,7 @@
         },
         {
             "description": "Mega late night taxi bill pay £50",
-            "action": 0,
+            "action": "PAYTOBANK",
             "keys": [
                 "amount"
             ],
@@ -72,7 +72,7 @@
         },
         {
             "description": "Advance to go",
-            "action": 2,
+            "action": "MOVEFORWARDTO",
             "keys": [
                 "position"
             ],
@@ -82,7 +82,7 @@
         },
         {
             "description": "From sale of Bitcoin you get £50",
-            "action": 1,
+            "action": "PAYTOPLAYER",
             "keys": [
                 "amount"
             ],
@@ -92,7 +92,7 @@
         },
         {
             "description": "Bitcoin assets fall - pay off Bitcoin short fall",
-            "action": 0,
+            "action": "PAYTOBANK",
             "keys": [
                 "amount"
             ],
@@ -102,7 +102,7 @@
         },
         {
             "description": "Pay a £10 fine or take opportunity knocks",
-            "action": 9,
+            "action": "PAYORCHANCE",
             "keys": [
                 "amount"
             ],
@@ -112,7 +112,7 @@
         },
         {
             "description": "Pay insurance fee of £50",
-            "action": 5,
+            "action": "PAYTOPARKING",
             "keys": [
                 "amount"
             ],
@@ -122,7 +122,7 @@
         },
         {
             "description": "Savings bond matures, collect £100",
-            "action": 1,
+            "action": "PAYTOPLAYER",
             "keys": [
                 "amount"
             ],
@@ -132,13 +132,13 @@
         },
         {
             "description": "Go to jail. Do not pass GO, do not collect £200",
-            "action": 7,
+            "action": "GOTOJAIL",
             "keys": [],
             "values": []
         },
         {
             "description": "Received interest on shares of £25",
-            "action": 1,
+            "action": "PAYTOPLAYER",
             "keys": [
                 "amount"
             ],
@@ -148,7 +148,7 @@
         },
         {
             "description": "It's your birthday. Collect £10 from each player",
-            "action": 6,
+            "action": "BIRTHDAY",
             "keys": [
                 "amount"
             ],
@@ -158,7 +158,7 @@
         },
         {
             "description": "Get out of jail free",
-            "action": 8,
+            "action": "OUTOFJAIL",
             "keys": [],
             "values": []
         }

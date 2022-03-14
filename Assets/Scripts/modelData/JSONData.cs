@@ -28,10 +28,11 @@ public static class JSONData
         Board board = new Board();
         foreach(SpaceData sD in boardData.spaces)
         {
-            switch(sD.type_action)
+            SqType type = (SqType)System.Enum.Parse(typeof(SqType),sD.type_action);
+            switch(type)
             {
                 case SqType.PROPERTY:
-                board.spaces[sD.position-1] = new Space.Property(sD.position,sD.name,sD.cost_amount,sD.group,sD.rents,sD.house_cost,sD.hotel_cost);
+                board.spaces[sD.position-1] = new Space.Property(sD.position,sD.name,sD.cost_amount,(Group)System.Enum.Parse(typeof(Group),sD.group),sD.rents,sD.house_cost,sD.hotel_cost);
                 break;
                 case SqType.STATION:
                 board.spaces[sD.position-1] = new Space.Station(sD.position,sD.name,sD.cost_amount,sD.rents);
@@ -72,7 +73,8 @@ public static class JSONData
         {
             boardData.spaces[sp.position-1] = spaceToData(sp);
         }
-        System.IO.File.WriteAllText(Application.persistentDataPath + filename+".json",JsonUtility.ToJson(boardData,true));
+        //System.IO.File.WriteAllText(Application.persistentDataPath + filename+".json",JsonUtility.ToJson(boardData,true));
+        System.IO.File.WriteAllText(filename+".json",JsonUtility.ToJson(boardData,true));
     }
 
     public static Board loadBoardFromFile(string filename = "custom_board")
@@ -91,9 +93,9 @@ public static class JSONData
     {
         public int position;
         public string name;
-        public SqType type_action;
+        public string type_action;
         public int cost_amount;
-        public Group group;
+        public string group;
         public int[] rents;
         public int house_cost;
         public int hotel_cost;
@@ -104,12 +106,12 @@ public static class JSONData
         SpaceData spData = new SpaceData();
         spData.position = space.position;
         spData.name = space.name;
-        spData.type_action = space.type;
+        spData.type_action = space.type.ToString();
         switch(space.type)
         {
             case SqType.PROPERTY:
             spData.cost_amount = ((Space.Property)space).cost;
-            spData.group = ((Space.Property)space).group;
+            spData.group = ((Space.Property)space).group.ToString();
             spData.rents = ((Space.Property)space).rents;
             spData.house_cost = ((Space.Property)space).house_cost;
             spData.hotel_cost = ((Space.Property)space).hotel_cost;
@@ -142,7 +144,7 @@ public static class JSONData
     private class CardData
     {
         public string description;
-        public CardAction action;
+        public string action;
 
         public List<string> keys;
         public List<int> values;
@@ -152,7 +154,7 @@ public static class JSONData
     {
         CardData cardData = new CardData();
         cardData.description = card.description;
-        cardData.action = card.action;
+        cardData.action = card.action.ToString();
         if(card.kwargs != null)
         {
             cardData.keys = card.kwargs.Keys.ToList();
@@ -177,7 +179,7 @@ public static class JSONData
         {
             dict.Add(data.keys[i],data.values[i]);
         }
-        Card card = new Card(data.description,data.action,dict);
+        Card card = new Card(data.description,(CardAction)System.Enum.Parse(typeof(CardAction),data.action),dict);
         
         return card;
     }

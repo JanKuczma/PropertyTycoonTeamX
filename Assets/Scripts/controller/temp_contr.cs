@@ -158,4 +158,76 @@ public class temp_contr : MonoBehaviour
     {
         pieces.Add(token,View.Piece.Create(token, transform, board_view));
     }
+
+    public static void performCardAction(Model2.Card card, Model2.Player player)
+    {
+        switch(card.action)
+        {
+            case CardAction.PAYTOBANK:
+            //player.payCash(card.kwargs["amount"]);
+            break;
+            case CardAction.PAYTOPLAYER:
+            //player.getCash(card.kwargs["amount"]);
+            break;
+            case CardAction.MOVEFORWARDTO:
+            // int steps = (40+card.kwargs["position"]) - player.position)%40; 
+            //player.move(card.kwargs["position"]);
+            //StartCoroutine(pieces[player].move(steps));
+            break;
+            case CardAction.MOVEBACKTO:
+            // int steps = -1 * ((player.position+40 - card.kwargs["position"])%40); 
+            //player.move(card.kwargs["position"]);
+            //StartCoroutine(pieces[player].move(steps));
+            break;
+            case CardAction.MOVEBACK:
+            //player.move(card.kwargs["steps"]);
+            //StartCoroutine(pieces[player].move(-1*steps));
+            break;
+            case CardAction.GOTOJAIL:
+            //player.goToJail();
+            //StartCoroutine(pieces[player].goToJail());
+            break;
+            case CardAction.BIRTHDAY:
+            //foreach(Player p in players)
+            //{
+            //  p.payCash(card.kwargs["amont"],player)
+            //}
+            break;
+            case CardAction.OUTOFJAIL:
+            //player.outOfJailCards+=1;
+            break;
+            case CardAction.PAYORCHANCE:
+            // bool choice = *** some choice popup window ***
+            // if(choice)
+            //{
+            //  player.payCash(card.kwargs["amount"]);
+            //  board_model.parkingFees += card.kwargs["amount"];
+            //} else {
+            //  player.takeCard(opportunity_knocks.pop());
+            //}
+            break;
+            case CardAction.PAYTOPARKING:
+            //  player.payCash(card.kwargs["amount"]);
+            //  board_model.parkingFees += card.kwargs["amount"];
+            break;
+            case CardAction.REPAIRS:
+            /*
+                int total = 0;
+                foreach(Model2.Space.Purchasable space in player.owned_spaces)
+                {
+                    if(space.type == SqType.PROPERTY)
+                    {
+                        if(((Model2.Space.Property)space).noOfHouses == 5)
+                        {
+                            total += card.kwargs["hotel"];
+                        } else {
+                            total += ((Model2.Space.Property)space).noOfHouses * card.kwargs["house"];
+                        }
+                    }
+                }
+                player.payCash(total);
+            */
+            break;
+        }
+    }
 }
