@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
 public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
@@ -16,17 +19,24 @@ public class temp_contr : MonoBehaviour
     Model.CardStack potluck;
     View.DiceContainer dice;
     Dictionary<Token,View.Piece> pieces;
-    Dictionary<int,Token> players;
+    Dictionary<int,Token> players; //main list of players (order of dictionary relates to player order, not the Key)
+    Dictionary<int, Token> players_ordered; //uses players and player_throws to create ordered dict of <player_index, Token>
+    Dictionary<int, int> player_throws; //holds throw values when deciding player order
     Vector3 cam_pos_top;    // top cam position
     // bits needed to run the turns
     int current_player;
     Token current;
     TurnState state;
+    bool ordering_phase = true; //set to false after player order has been decided
     List<int> no = new List<int> {0,1,2,3,4,5};
     //init lists
     void Awake()
     {
         players = new Dictionary<int, Token>();
+        if (ordering_phase)
+        {
+            player_throws = new Dictionary<int, int>();    
+        }
         pieces = new Dictionary<Token, View.Piece>();
     }
     void Start()
@@ -82,7 +92,8 @@ public class temp_contr : MonoBehaviour
     {
         if(state == TurnState.BEGIN)
         {
-            if(dice.start_roll) {
+            if(dice.start_roll) 
+            {
                 state = TurnState.DICEROLL;
             }
         }
@@ -95,9 +106,53 @@ public class temp_contr : MonoBehaviour
                 {                               // reset the dice
                     dice.reset();
                     state = TurnState.BEGIN;
-                } else {                        // else start moving piece and change the turn state
+                } else if (!ordering_phase)     // if not in the ordering phase of the game, move Token and continue with game
+                {
+                    // else start moving piece and change the turn state
                     StartCoroutine(pieces[current].move(steps));
                     state = TurnState.PIECEMOVE;
+                }
+                else                            // if still in ordering phase, continue with ordering logic
+                {
+                    Debug.Log("Player " + current_player + " rolled a " + steps);
+                    if (player_throws.ContainsValue(steps))             // force re-roll if player has already rolled the same number
+                    {
+                        Debug.Log("Someone has already rolled this number. Please roll again!");
+                        dice.reset();
+                        state = TurnState.BEGIN;
+                    } else {
+                        player_throws.Add(current_player,steps);        // log value that player rolled
+                        state = TurnState.END;                          // update turn state so that it becomes next player's turn
+                    if (current_player == players.Count - 1)            // check whether every player has rolled the dice
+                    {
+                        players_ordered = new Dictionary<int, Token>(); // initialise dictionary for players ordered by their roll values
+                        var player_throws_sorted =
+                            from entry in player_throws orderby entry.Value descending select entry;    // this line sorts the dictionary in descending order by each pair's Value
+                        Dictionary<int,int> sorted_dict = player_throws_sorted.ToDictionary(pair => pair.Key, pair => pair.Value); // casts output from previous line as a Dictionary
+                        
+                        int i = 0;                                      // counter for next for each loop
+                        foreach (var player_index in sorted_dict.Keys)
+                        {
+                            players_ordered.Add(i,players[player_index]); // adds each player to a dictionary in order of roll value in format: <int new_player_index, Token player_token> (NOTE: player is given new index number which informs controller of player order)
+                            i++;
+                        }
+
+                        foreach (var entry in players)
+                        {
+                            Debug.Log("Key: " + entry.Key + " || Token: " + entry.Value); // prints original list of players and their selected token
+                        }
+                        
+                        players.Clear();                // clears original Dict of <player_index, Token>
+                        players = players_ordered;      // replace original Dict, same format but just reordered
+                        
+                        foreach (var entry in players)
+                        {
+                            Debug.Log("Key: " + entry.Key + " || Token: " + entry.Value); // prints new list of players and their selected Token
+                        }
+                        ordering_phase = false;         // player order has now been initialised so the ordering_phase is over
+                        current_player = -1;             // game starts with player first on ordered list
+                    }
+                    }
                 }
             }
         }
