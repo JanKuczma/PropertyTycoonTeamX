@@ -15,9 +15,7 @@ public class MainMenu : MonoBehaviour
     
     //This is info to be collected from the PlayerSelect menu
     public int numPlayers = 2;
-    private Dictionary<string, Tuple<Token, bool>> playerInfo = new Dictionary<string, Tuple<Token, bool>>();
-    
-    
+    public Dictionary<string, Tuple<Token, bool>> playerInfo = new Dictionary<string, Tuple<Token, bool>>();
     
     public void GoToPlayerSelect()
     {
@@ -153,6 +151,7 @@ public class MainMenu : MonoBehaviour
                 Debug.LogError("Players cannot have the same name");
                 playerInfo.Clear();
                 nameErrorFound = false;
+                return;
             }
 
             if (pieceErrorFound)
@@ -160,6 +159,7 @@ public class MainMenu : MonoBehaviour
                 Debug.LogError("Players cannot use the same piece");
                 playerInfo.Clear();
                 pieceErrorFound = false;
+                return;
             }
         }
         
@@ -177,7 +177,11 @@ public class MainMenu : MonoBehaviour
                 Debug.Log(key + " is a human and is playing as the " + playerInfo[key].Item1);
             }
         }
-        //SceneManager.LoadScene(2);
+        foreach(KeyValuePair<string, Tuple<Token, bool>> entry in playerInfo)
+        {
+            GameObject.Find("PersistentObject").GetComponent<PermObject>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2));
+        }
+        SceneManager.LoadScene(2);
     }
 
     public void QuitGame()

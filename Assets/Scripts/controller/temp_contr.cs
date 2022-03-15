@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -7,6 +5,7 @@ using System.Linq;
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
 public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
+public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
 */
@@ -18,178 +17,176 @@ public class temp_contr : MonoBehaviour
     Model.CardStack opportunity_knocks;
     Model.CardStack potluck;
     View.DiceContainer dice;
-    Dictionary<Token,View.Piece> pieces;
-    Dictionary<int,Token> players; //main list of players (order of dictionary relates to player order, not the Key)
-    Dictionary<int, Token> players_ordered; //uses players and player_throws to create ordered dict of <player_index, Token>
-    Dictionary<int, int> player_throws; //holds throw values when deciding player order
+    Dictionary<Model.Player,View.Piece> pieces; // dict for Piece objects where the keys values are references to Model.Player obj
+    //players
+    List<Model.Player> players;     // players list in some random order, it'll be ordered in GameState.ORDERINGPHASE
+    Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order *JK: also for other stuff (for Utility Sqpace - get as much money as u throw X 4)
+    int current_player;         // incremented every turn, holds the index of the current player (ordered in List players)
+    // bits needed to manage game and turns
+    TurnState turnState;
+    GameState gameState;
+    //other
     Vector3 cam_pos_top;    // top cam position
-    // bits needed to run the turns
-    int current_player;
-    Token current;
-    TurnState state;
-    bool ordering_phase = true; //set to false after player order has been decided
-    List<int> no = new List<int> {0,1,2,3,4,5};
-    //init lists
     void Awake()
     {
-        players = new Dictionary<int, Token>();
-        if (ordering_phase)
-        {
-            player_throws = new Dictionary<int, int>();    
-        }
-        pieces = new Dictionary<Token, View.Piece>();
+        players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
+        player_throws = new Dictionary<Model.Player, int>();    
+        pieces = new Dictionary<Model.Player, View.Piece>();
     }
     void Start()
     {
-        //load data
+        //load data (to be changed for XLSX in near future)
         board_model = Model.JSONData.loadBoard(Asset.board_data_json());
         opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
         potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
         //create board with card stacks and dice
         board_view = View.Board.Create(transform,board_model);
         dice = View.DiceContainer.Create(transform);
-        //add players: player<int,token> dict, pieces<token,piece> dict
-        addPlayer(Token.CAT);
-        players.Add(0,Token.CAT);
-        addPlayer(Token.SHIP);
-        players.Add(1,Token.SHIP);
-        addPlayer(Token.BOOT);
-        players.Add(2,Token.BOOT);
-        addPlayer(Token.IRON);
-        players.Add(3,Token.IRON);
-        addPlayer(Token.HATSTAND);
-        players.Add(4,Token.HATSTAND);
-        addPlayer(Token.SMARTPHONE);
-        players.Add(5,Token.SMARTPHONE);
-        current_player = 0;
-        current = players[current_player];
+        //craete pieces
+        foreach(Model.Player player in players)
+        {
+            pieces.Add(player,View.Piece.Create(player.token,transform,board_view));
+        }
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
-        //set current turn state to DICEROLL
-        state = TurnState.BEGIN;
+        //set current turn state to DICEROLL and gameState to ORDERINGPHASE (subject to change if we want to continue game from a saved game)
+        gameState = GameState.ORDERINGPHASE;
+        turnState = TurnState.BEGIN;
+        current_player = 0;
     }
 
     void Update()
     {
         // temp code for speeding up piece movement
-        if(state == TurnState.PIECEMOVE)
+        if(turnState == TurnState.PIECEMOVE)
         {
             if(Input.GetKeyDown(KeyCode.Space))
             {
-                pieces[current].speedUp();
+                pieces[players[current_player]].speedUp();
             }
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            StartCoroutine(pieces[current].goToJail());
+            StartCoroutine(pieces[players[current_player]].goToJail());
             current_player = (current_player+1)%players.Count;
-            current = players[current_player];
         }
     }
 
     void FixedUpdate()
     {
-        if(state == TurnState.BEGIN)
+        if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
-            if(dice.start_roll) 
+            if(dice.start_roll)     // this bit is so camera knows when to follow dice
             {
-                state = TurnState.DICEROLL;
+                turnState = TurnState.DICEROLL;
             }
-        }
-        if(state == TurnState.DICEROLL) // turn begins
-        {
-            if(!dice.areRolling())  // if dice are not rolling anymore
+            if(!dice.areRolling())  //when dice stopped rolling
             {
                 int steps = dice.get_result();  // get the result
                 if(steps < 0)                   // if result is negative (dice are stuck)
-                {                               // reset the dice
+                {                                // reset the dice
+                    Debug.Log("Dice stuck. Please roll again!");
                     dice.reset();
-                    state = TurnState.BEGIN;
-                } else if (!ordering_phase)     // if not in the ordering phase of the game, move Token and continue with game
-                {
-                    // else start moving piece and change the turn state
-                    StartCoroutine(pieces[current].move(steps));
-                    state = TurnState.PIECEMOVE;
-                }
-                else                            // if still in ordering phase, continue with ordering logic
-                {
+                } else {    // if not in the ordering phase of the game, move Token and continue with game
                     Debug.Log("Player " + current_player + " rolled a " + steps);
                     if (player_throws.ContainsValue(steps))             // force re-roll if player has already rolled the same number
                     {
-                        Debug.Log("Someone has already rolled this number. Please roll again!");
+                        Debug.Log("Someone has already rolled "+ steps +". Please roll again!");
                         dice.reset();
-                        state = TurnState.BEGIN;
                     } else {
-                        player_throws.Add(current_player,steps);        // log value that player rolled
-                        state = TurnState.END;                          // update turn state so that it becomes next player's turn
-                    if (current_player == players.Count - 1)            // check whether every player has rolled the dice
-                    {
-                        players_ordered = new Dictionary<int, Token>(); // initialise dictionary for players ordered by their roll values
-                        var player_throws_sorted =
-                            from entry in player_throws orderby entry.Value descending select entry;    // this line sorts the dictionary in descending order by each pair's Value
-                        Dictionary<int,int> sorted_dict = player_throws_sorted.ToDictionary(pair => pair.Key, pair => pair.Value); // casts output from previous line as a Dictionary
-                        
-                        int i = 0;                                      // counter for next for each loop
-                        foreach (var player_index in sorted_dict.Keys)
+                        player_throws.Add(players[current_player],steps);        // log value that player rolled
+                        dice.reset();                   // reset dice
+                        current_player = current_player+1;       // update turn state so that it becomes next player's turn
+                        if (current_player == players.Count)            // check whether every player has rolled the dice
                         {
-                            players_ordered.Add(i,players[player_index]); // adds each player to a dictionary in order of roll value in format: <int new_player_index, Token player_token> (NOTE: player is given new index number which informs controller of player order)
-                            i++;
-                        }
+                            var player_throws_sorted =
+                                from entry in player_throws orderby entry.Value descending select entry;    // this line sorts the dictionary in descending order by each pair's Value
+                            Dictionary<Model.Player,int> sorted_dict = player_throws_sorted.ToDictionary(pair => pair.Key, pair => pair.Value); // casts output from previous line as a Dictionary
+                            Debug.Log("**BEFORE ORDERING**"); 
+                            for (int i = 0; i < players.Count; i++)
+                            {
+                                Debug.Log("Key: " + i + " || Token: " + players[i].token.ToString()); // prints new list of players and their selected Token
+                            }
 
-                        foreach (var entry in players)
-                        {
-                            Debug.Log("Key: " + entry.Key + " || Token: " + entry.Value); // prints original list of players and their selected token
+                            players = sorted_dict.Keys.ToList<Model.Player>();
+
+                            Debug.Log("**AFTER ORDERING**"); 
+                            for (int i = 0; i < players.Count; i++)
+                            {
+                                Debug.Log("after Key: " + i + " || Token: " + players[i].token.ToString()); // prints new list of players and their selected Token
+                            }
+
+                            current_player = 0;             // game starts with player first on ordered list
+                            turnState = TurnState.BEGIN;
+                            gameState = GameState.PLAYERTURN;
                         }
-                        
-                        players.Clear();                // clears original Dict of <player_index, Token>
-                        players = players_ordered;      // replace original Dict, same format but just reordered
-                        
-                        foreach (var entry in players)
-                        {
-                            Debug.Log("Key: " + entry.Key + " || Token: " + entry.Value); // prints new list of players and their selected Token
-                        }
-                        ordering_phase = false;         // player order has now been initialised so the ordering_phase is over
-                        current_player = -1;             // game starts with player first on ordered list
                     }
+                }
+                turnState = TurnState.BEGIN;    // this bit is so camera comes back to top position
+            }
+        }
+        if(gameState == GameState.PLAYERTURN)
+        {
+            if(turnState == TurnState.BEGIN)
+            {
+                if(dice.start_roll) 
+                {
+                    turnState = TurnState.DICEROLL;
+                }
+            }
+            if(turnState == TurnState.DICEROLL) // turn begins
+            {
+                if(!dice.areRolling())  // if dice are not rolling anymore
+                {
+                    int steps = dice.get_result();  // get the result
+                    if(steps < 0)                   // if result is negative (dice are stuck)
+                    {                               // reset the dice
+                        dice.reset();
+                        turnState = TurnState.BEGIN;
+                    } else     // if not in the ordering phase of the game, move Token and continue with game
+                    {
+                        // else start moving piece and change the turn state
+                        StartCoroutine(pieces[players[current_player]].move(steps));
+                        turnState = TurnState.PIECEMOVE;
                     }
                 }
             }
-        }
-        else if(state == TurnState.PIECEMOVE)
-        {
-            if(!pieces[current].isMoving)   //if piece is not moving anymore
+            else if(turnState == TurnState.PIECEMOVE)
             {
-                state = TurnState.ACTION;   // change turn state to action
+                if(!pieces[players[current_player]].isMoving)   //if piece is not moving anymore
+                {
+                    turnState = TurnState.ACTION;   // change turn state to action
+                }
+            }
+            else if(turnState == TurnState.ACTION)  // ACTION state (buy property, pay rent etc...)
+            {
+                turnState = TurnState.END;
+            }
+            else if(turnState == TurnState.END)     // END state, when player finished his turn
+            {
+                dice.reset();                   // reset dice
+                current_player = (current_player+1)%players.Count;
+                turnState = TurnState.BEGIN;     // change state to initial state
             }
         }
-        else if(state == TurnState.ACTION)  // ACTION state (buy property, pay rent etc...)
-        {
-            state = TurnState.END;
-        }
-        else if(state == TurnState.END)     // END state, when player finished his turn
-        {
-            dice.reset();                   // reset dice
-            current_player = (current_player+1)%players.Count;
-            current = players[current_player];
-            state = TurnState.BEGIN;     // change state to initial state
-        }
+        
     }
 
     //temp code for camera movement
      void LateUpdate()
     {
         // simply if the current piece is moving move camera towards it, else move camera towards top position
-        if(state == TurnState.PIECEMOVE)
+        if(turnState == TurnState.PIECEMOVE)
         {
-            Vector3 target = pieces[current].transform.position*1.5f;
+            Vector3 target = pieces[players[current_player]].transform.position*1.5f;
             target[1] = board_view.transform.position.y+7.0f;
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
-            Vector3 lookDirection = pieces[current].transform.position - Camera.main.transform.position;
+            Vector3 lookDirection = pieces[players[current_player]].transform.position - Camera.main.transform.position;
             lookDirection.Normalize();
             Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 3.0f * Time.deltaTime);
         }
-        else if(state == TurnState.DICEROLL)
+        else if(turnState == TurnState.DICEROLL)
         {
             Vector3 target = dice.position();
             target[1] = (dice.transform.localScale.x + dice.av_distance())/Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2));//Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2)) depends only on fieldview angle so it is pretty much constatnt, could be set as constract in terms of optimisation
@@ -207,11 +204,6 @@ public class temp_contr : MonoBehaviour
             lookDirection.Normalize();
             Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 4.0f * Time.deltaTime);
         }
-    }
-   
-    public void addPlayer(Token token)
-    {
-        pieces.Add(token,View.Piece.Create(token, transform, board_view));
     }
 
     public static void performCardAction(Model.Card card, Model.Player player)

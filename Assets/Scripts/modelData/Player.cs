@@ -14,10 +14,11 @@ public class Player
     public Player(string name,Token token,bool isHuman,int start_money = 1500)
     {
         this.name = name;
-        this.owned_spaces = new List<Space.Purchasable>();
+        this.token = token;
+        this.isHuman = isHuman;
         this.cash = start_money;
         this.getOutOfJailCardsNo = 0;
-        this.isHuman = isHuman;
+        this.owned_spaces = new List<Space.Purchasable>();
     }
 
 
