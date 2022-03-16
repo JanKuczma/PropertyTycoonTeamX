@@ -10,6 +10,7 @@ public class PropertySquare : Square
     string _price;
     List<GameObject> houses = new List<GameObject>();
     Vector3[] houses_spots = new Vector3[5];
+    public GameObject ribbon;
 
     public static PropertySquare Create(Transform parent, int position, string name,string price,Group group)
     {
@@ -79,6 +80,18 @@ public class PropertySquare : Square
                 house.transform.localRotation = getRotation(_position);
             }
         }
+    }
+
+    public void showRibbon(Color color)
+    {
+        ribbon.SetActive(true);
+        color.a = 150f/255f;
+        ribbon.GetComponent<Renderer>().material.SetColor("_Color",color);
+    }
+
+    public void removeRibbon()
+    {
+        ribbon.SetActive(false);
     }
     override protected void assignSpots()
     {

@@ -7,6 +7,7 @@ namespace View{
 public class UtilitySquare : FullSquare
 {
     string _price;
+    public GameObject ribbon;
 
     new public static UtilitySquare Create(SqType type, Transform parent, int position, string name,string price)
     {
@@ -23,6 +24,18 @@ public class UtilitySquare : FullSquare
     {
         _price = price;
         GetComponentsInChildren<TextMeshPro>()[1].SetText("£"+price);
+    }
+
+    public void showRibbon(Color color)
+    {
+        ribbon.SetActive(true);
+        color.a = 150f/255f;
+        ribbon.GetComponent<Renderer>().material.SetColor("_Color",color);
+    }
+
+    public void removeRibbon()
+    {
+        ribbon.SetActive(false);
     }
 }
 }

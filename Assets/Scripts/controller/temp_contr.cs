@@ -71,7 +71,9 @@ public class temp_contr : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            hud.set_current_player_tab(players[current_player]);
+            board_view.squares[1].GetComponent<View.PropertySquare>().showRibbon(Color.blue);
+            board_view.squares[1].GetComponent<View.PropertySquare>().showRibbon(Color.red);
+            board_view.squares[5].GetComponent<View.UtilitySquare>().showRibbon(Color.magenta);
         }
     }
 
