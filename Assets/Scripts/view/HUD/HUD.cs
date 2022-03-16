@@ -5,26 +5,14 @@ using System.Linq;
 
 public class HUD : MonoBehaviour
 {
-    Color[] colors = {Color.blue,Color.red,Color.green,Color.yellow,Color.cyan,Color.magenta};
     Dictionary<Model.Player,PlayerTab> player_tabs = new Dictionary<Model.Player,PlayerTab>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Create_player_tabs(List<Model.Player> players)
     {
         int interval = 1920 / (players.Count+1);
         for(int i = 0; i < players.Count; i++)
         {
-            player_tabs.Add(players[i],PlayerTab.Create(transform,players[i].name,players[i].token,colors[i]));
+            player_tabs.Add(players[i],PlayerTab.Create(transform,players[i].name,players[i].token,players[i].color));
             player_tabs[players[i]].GetComponent<RectTransform>().anchoredPosition = new Vector2((i+1)*interval-960,-550);
         }
     }

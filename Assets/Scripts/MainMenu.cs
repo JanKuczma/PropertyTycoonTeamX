@@ -17,6 +17,8 @@ public class MainMenu : MonoBehaviour
     public int numPlayers = 2;
     public Dictionary<string, Tuple<Token, bool>> playerInfo = new Dictionary<string, Tuple<Token, bool>>();
     
+    Color[] player_colors = {Color.blue,Color.red,Color.green,Color.yellow,Color.cyan,Color.magenta};
+    
     public void GoToPlayerSelect()
     {
         SceneManager.LoadScene(1);
@@ -177,9 +179,11 @@ public class MainMenu : MonoBehaviour
                 Debug.Log(key + " is a human and is playing as the " + playerInfo[key].Item1);
             }
         }
+        int e = 0; // to iterate over player_colors
         foreach(KeyValuePair<string, Tuple<Token, bool>> entry in playerInfo)
         {
-            GameObject.Find("PersistentObject").GetComponent<PermObject>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2));
+            GameObject.Find("PersistentObject").GetComponent<PermObject>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,player_colors[e]));
+            e++;
         }
         SceneManager.LoadScene(2);
     }
