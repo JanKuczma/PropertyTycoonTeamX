@@ -25,6 +25,8 @@ public class temp_contr : MonoBehaviour
     // bits needed to manage game and turns
     TurnState turnState;
     GameState gameState;
+    //HUD
+    public HUD hud; 
     //other
     Vector3 cam_pos_top;    // top cam position
     void Awake()
@@ -32,6 +34,7 @@ public class temp_contr : MonoBehaviour
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
+        hud.Create_player_tabs(players);
     }
     void Start()
     {
@@ -68,8 +71,7 @@ public class temp_contr : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            StartCoroutine(pieces[players[current_player]].goToJail());
-            current_player = (current_player+1)%players.Count;
+            hud.set_current_player_tab(players[current_player]);
         }
     }
 
@@ -77,6 +79,7 @@ public class temp_contr : MonoBehaviour
     {
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
+            hud.set_current_player_tab(players[current_player]);
             if(dice.start_roll)     // this bit is so camera knows when to follow dice
             {
                 turnState = TurnState.DICEROLL;
@@ -118,6 +121,7 @@ public class temp_contr : MonoBehaviour
                             }
 
                             current_player = 0;             // game starts with player first on ordered list
+                            hud.sort_tabs(players);
                             turnState = TurnState.BEGIN;
                             gameState = GameState.PLAYERTURN;
                         }
@@ -130,6 +134,7 @@ public class temp_contr : MonoBehaviour
         {
             if(turnState == TurnState.BEGIN)
             {
+                hud.set_current_player_tab(players[current_player]);
                 if(dice.start_roll) 
                 {
                     turnState = TurnState.DICEROLL;
