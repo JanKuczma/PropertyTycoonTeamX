@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 /// enum types
@@ -53,6 +54,8 @@ public static class Asset
     static Sprite hatstandIMG = Resources.Load<Sprite>("tokenIMGs/hatstandIMG");
     //HUD components
     static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab");
+    //Pop Ups
+    public static GameObject okPopup = Resources.Load<GameObject>("Prefabs/HUD/PopUps/okPopup");
 
 
     public static GameObject Board(SqType type,string variant = "")
@@ -138,4 +141,5 @@ public static class Asset
     {
         return playerTabPrefab;
     }
+
 }

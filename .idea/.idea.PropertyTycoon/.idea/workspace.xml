@@ -7,8 +7,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SelectPlayers.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SelectPlayers.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Menu/PlayerSelect blank.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Menu/PlayerSelect blank.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/HUD/PopupWindow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/HUD/PopupWindow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Prefabs/Menu.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Asset.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Asset.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/controller/temp_contr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/controller/temp_contr.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/view/HUD/HUD.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/view/HUD/HUD.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +198,10 @@
       <workItem from="1646997410465" duration="10697000" />
       <workItem from="1647166306926" duration="1332000" />
       <workItem from="1647346764357" duration="471000" />
-      <workItem from="1647350535632" duration="10017000" />
+      <workItem from="1647350535632" duration="10887000" />
+      <workItem from="1647428068665" duration="1049000" />
+      <workItem from="1647518091877" duration="604000" />
+      <workItem from="1647525040453" duration="5287000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>
