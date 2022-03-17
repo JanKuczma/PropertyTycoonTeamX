@@ -75,6 +75,11 @@ public class temp_contr : MonoBehaviour
             board_view.squares[1].GetComponent<View.PropertySquare>().showRibbon(Color.red);
             board_view.squares[5].GetComponent<View.UtilitySquare>().showRibbon(Color.magenta);
         }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            view.HUD.OkPopUp.Create(hud.transform, "testing");
+        }
     }
 
     void FixedUpdate()
