@@ -207,7 +207,7 @@ public class temp_contr : MonoBehaviour
             }
         } else {
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,cam_pos_top,10.0f*Time.deltaTime);
-            Vector3 lookDirection = -1.0f*Camera.main.transform.position;
+            Vector3 lookDirection = -1.0f*Camera.main.transform.position + Vector3.down*6; // 6 is how much camera is rotated down direction xD
             lookDirection.Normalize();
             Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 4.0f * Time.deltaTime);
         }
