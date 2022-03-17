@@ -41,9 +41,18 @@ public static class Asset
     static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
     static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
     //board and card data
-    static TextAsset classic_board_json = Resources.Load<TextAsset>("board_data");
-    static TextAsset potluck_json = Resources.Load<TextAsset>("potluck_data");
-    static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("opportunity_knocks_data");
+    static TextAsset classic_board_json = Resources.Load<TextAsset>("GameData/board_data");
+    static TextAsset potluck_json = Resources.Load<TextAsset>("GameData/potluck_data");
+    static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameData/opportunity_knocks_data");
+    //token IMGs
+    static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
+    static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
+    static Sprite bootIMG = Resources.Load<Sprite>("tokenIMGs/bootIMG");
+    static Sprite boatIMG = Resources.Load<Sprite>("tokenIMGs/boatIMG");
+    static Sprite smartphoneIMG = Resources.Load<Sprite>("tokenIMGs/phoneIMG");
+    static Sprite hatstandIMG = Resources.Load<Sprite>("tokenIMGs/hatstandIMG");
+    //HUD components
+    static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab");
 
 
     public static GameObject Board(SqType type,string variant = "")
@@ -112,5 +121,21 @@ public static class Asset
     public static GameObject Hotel()
     {
         return HotelPrefab;
+    }
+
+    public static Sprite TokenIMG(Token token)
+    {
+        return  token == Token.CAT ? catIMG :
+                token == Token.SHIP ? boatIMG :
+                token == Token.IRON ? ironIMG :
+                token == Token.SMARTPHONE ? smartphoneIMG :
+                token == Token.HATSTAND ? hatstandIMG :
+                token == Token.BOOT ? bootIMG :
+                null;
+    }
+
+    public static GameObject playerTab()
+    {
+        return playerTabPrefab;
     }
 }
