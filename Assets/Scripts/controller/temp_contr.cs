@@ -26,7 +26,7 @@ public class temp_contr : MonoBehaviour
     TurnState turnState;
     GameState gameState;
     //HUD
-    public HUD hud; 
+    public View.HUD hud; 
     //other
     Vector3 cam_pos_top;    // top cam position
     bool tabs_set;
@@ -36,7 +36,6 @@ public class temp_contr : MonoBehaviour
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
-        hud.Create_player_tabs(players);
         tabs_set = false;
     }
     void Start()
@@ -48,6 +47,8 @@ public class temp_contr : MonoBehaviour
         //create board with card stacks and dice
         board_view = View.Board.Create(transform,board_model);
         dice = View.DiceContainer.Create(transform);
+        //create playerTabs
+        hud.Create_player_tabs(players,board_model);
         //craete pieces
         foreach(Model.Player player in players)
         {

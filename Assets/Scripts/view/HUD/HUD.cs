@@ -5,16 +5,34 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
 
+namespace View
+{
 public class HUD : MonoBehaviour
 {
     Dictionary<Model.Player,PlayerTab> player_tabs = new Dictionary<Model.Player,PlayerTab>();
+    Dictionary<int,PurchasableCard> propertyCards = new Dictionary<int, PurchasableCard>();
 
-    public void Create_player_tabs(List<Model.Player> players)
+    public void Create_player_tabs(List<Model.Player> players,Model.Board board)
     {
+        foreach(Model.Space space in board.spaces)
+        {
+            switch(space.type)
+            {
+                case SqType.PROPERTY:
+                propertyCards.Add(space.position, PropertyCard.Create((Model.Space.Property)space,FindObjectOfType<Canvas>().transform));
+                break;
+                case SqType.UTILITY:
+                propertyCards.Add(space.position, UtilityCard.Create((Model.Space.Utility)space,FindObjectOfType<Canvas>().transform));
+                break;
+                case SqType.STATION:
+                propertyCards.Add(space.position, StationCard.Create((Model.Space.Station)space,FindObjectOfType<Canvas>().transform));
+                break;
+            }
+        }
         float interval = (-140*GetComponentInParent<RectTransform>().sizeDelta.x/1920)*(players.Count-1);
         for(int i = 0; i < players.Count; i++)
         {
-            player_tabs.Add(players[i],PlayerTab.Create(transform,players[i].name,players[i].token,players[i].color));
+            player_tabs.Add(players[i],PlayerTab.Create(transform,players[i].color,players[i].name,players[i].token,"1500",propertyCards));
             player_tabs[players[i]].GetComponent<RectTransform>().anchoredPosition = new Vector2(interval,-650*GetComponentInParent<RectTransform>().sizeDelta.x/1920);
             interval += (280*GetComponentInParent<RectTransform>().sizeDelta.x/1920);
         }
@@ -34,14 +52,15 @@ public class HUD : MonoBehaviour
     {
         foreach(PlayerTab tab in player_tabs.Values)
         {
-            tab.hide(GetComponentInParent<RectTransform>().sizeDelta.y);
+            StartCoroutine(tab.hide(GetComponentInParent<RectTransform>().sizeDelta.y));
         }
     }
 
     public void set_current_player_tab(Model.Player player)
     {
         hide_tabs();
-        player_tabs[player].halfPopUp(GetComponentInParent<RectTransform>().sizeDelta.y);
+        StartCoroutine(player_tabs[player].halfPopUp(GetComponentInParent<RectTransform>().sizeDelta.y));
     }
 
+}
 }

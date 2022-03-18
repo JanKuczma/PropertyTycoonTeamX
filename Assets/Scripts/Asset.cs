@@ -52,8 +52,14 @@ public static class Asset
     static Sprite boatIMG = Resources.Load<Sprite>("tokenIMGs/boatIMG");
     static Sprite smartphoneIMG = Resources.Load<Sprite>("tokenIMGs/phoneIMG");
     static Sprite hatstandIMG = Resources.Load<Sprite>("tokenIMGs/hatstandIMG");
+    //property cards
+    public static GameObject PropertyCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/PropertyCard");
+    static GameObject WaterCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/WaterCard");
+    static GameObject BulbCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/BulbCard");
+    public static GameObject StationCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/StationCard");
+
     //HUD components
-    static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab");
+    static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
     //Pop Ups
     public static GameObject okPopup = Resources.Load<GameObject>("Prefabs/HUD/PopUps/okPopup");
 
@@ -76,6 +82,11 @@ public static class Asset
     public static GameObject Board()
     {
         return BoardPrefab;
+    }
+
+    public static GameObject UtilityCard(string variant)
+    {
+        return variant == "TESLA POWER CO" ? BulbCard : WaterCard;
     }
 
     public static GameObject Piece(Token token)
