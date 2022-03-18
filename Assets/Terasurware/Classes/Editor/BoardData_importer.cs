@@ -8,8 +8,8 @@ using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 
 public class BoardData_importer : AssetPostprocessor {
-	private static readonly string filePath = "Assets/Excels/BoardData.xlsx";
-	private static readonly string exportPath = "Assets/Excels/BoardData.asset";
+	private static readonly string filePath = "Assets/Resources/Excels/BoardData.xlsx";
+	private static readonly string exportPath = "Assets/Resources/BoardData.asset";
 	private static readonly string[] sheetNames = { "Sheet1", };
 	
 	static void OnPostprocessAllAssets (string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
