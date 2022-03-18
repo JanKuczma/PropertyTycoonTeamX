@@ -29,12 +29,15 @@ public class temp_contr : MonoBehaviour
     public HUD hud; 
     //other
     Vector3 cam_pos_top;    // top cam position
+    bool tabs_set;
+
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
         hud.Create_player_tabs(players);
+        tabs_set = false;
     }
     void Start()
     {
@@ -78,7 +81,7 @@ public class temp_contr : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            view.HUD.OkPopUp.Create(hud.transform, "testing");
+            View.OkPopUp.Create(hud.transform, "testing");
         }
     }
 
@@ -86,7 +89,11 @@ public class temp_contr : MonoBehaviour
     {
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
-            hud.set_current_player_tab(players[current_player]);
+            if(!tabs_set)
+            {
+                hud.set_current_player_tab(players[current_player]);
+                tabs_set = true;
+            }
             if(dice.start_roll)     // this bit is so camera knows when to follow dice
             {
                 turnState = TurnState.DICEROLL;
@@ -108,6 +115,7 @@ public class temp_contr : MonoBehaviour
                         player_throws.Add(players[current_player],steps);        // log value that player rolled
                         dice.reset();                   // reset dice
                         current_player = current_player+1;       // update turn state so that it becomes next player's turn
+                        tabs_set = false;
                         if (current_player == players.Count)            // check whether every player has rolled the dice
                         {
                             var player_throws_sorted =
@@ -141,7 +149,11 @@ public class temp_contr : MonoBehaviour
         {
             if(turnState == TurnState.BEGIN)
             {
-                hud.set_current_player_tab(players[current_player]);
+                if(!tabs_set)
+                {
+                    hud.set_current_player_tab(players[current_player]);
+                    tabs_set = true;
+                }
                 if(dice.start_roll) 
                 {
                     turnState = TurnState.DICEROLL;
@@ -179,6 +191,7 @@ public class temp_contr : MonoBehaviour
             {
                 dice.reset();                   // reset dice
                 current_player = (current_player+1)%players.Count;
+                tabs_set = false;
                 turnState = TurnState.BEGIN;     // change state to initial state
             }
         }
