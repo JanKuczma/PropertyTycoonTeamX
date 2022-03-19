@@ -8,8 +8,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
+    - target: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_VerticalAlignment
       value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7331567393390165115, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_Pivot.x
@@ -97,7 +105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8587866900529127800, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_Name
-      value: goPass
+      value: corner
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}

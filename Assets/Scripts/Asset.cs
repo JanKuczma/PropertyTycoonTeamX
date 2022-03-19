@@ -52,6 +52,13 @@ public static class Asset
     static Sprite boatIMG = Resources.Load<Sprite>("tokenIMGs/boatIMG");
     static Sprite smartphoneIMG = Resources.Load<Sprite>("tokenIMGs/phoneIMG");
     static Sprite hatstandIMG = Resources.Load<Sprite>("tokenIMGs/hatstandIMG");
+    //token spriteSheets
+    static Sprite[] catAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/cat");
+    static Sprite[] ironAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/iron");
+    static Sprite[] bootAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/boot");
+    static Sprite[] shipAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/ship");
+    static Sprite[] phoneAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/phone");
+    static Sprite[] standAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/stand");
     //property cards
     public static GameObject PropertyCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/PropertyCard");
     static GameObject WaterCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/WaterCard");
@@ -145,6 +152,17 @@ public static class Asset
                 token == Token.SMARTPHONE ? smartphoneIMG :
                 token == Token.HATSTAND ? hatstandIMG :
                 token == Token.BOOT ? bootIMG :
+                null;
+    }
+
+    public static Sprite[] TokenAnim(Token token)
+    {
+        return  token == Token.CAT ? catAnim :
+                token == Token.SHIP ? shipAnim :
+                token == Token.IRON ? ironAnim :
+                token == Token.SMARTPHONE ? phoneAnim :
+                token == Token.HATSTAND ? standAnim :
+                token == Token.BOOT ? bootAnim :
                 null;
     }
 

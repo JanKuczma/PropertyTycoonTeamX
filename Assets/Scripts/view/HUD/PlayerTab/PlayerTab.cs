@@ -11,9 +11,12 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     Color color;
     public Text player_name;
     public Image token;
+    Token tokes_enum;
     public PropertyGrid propertyGrid;
     bool active;
     Coroutine popUpCoruotine = null;
+    Coroutine tokenCoroutine = null;
+    float _FrameRate = 25f;
      
      public void OnPointerEnter(PointerEventData eventData)
      {
@@ -55,6 +58,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void setToken(Token token)
     {
+        this.tokes_enum = token;
         this.token.sprite = Asset.TokenIMG(token);
     }
 
@@ -77,6 +81,8 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public IEnumerator hide(float height)
     {
+        if(tokenCoroutine != null){ StopCoroutine(tokenCoroutine); tokenCoroutine = null;}
+        token.sprite = Asset.TokenIMG(tokes_enum);
         setColor(this.color,100);
         active = false;
         float timeOfTravel = 1f;
@@ -93,6 +99,8 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         active = true;
         float timeOfTravel = 1f;
         float currentTime = 0f;
+        if(tokenCoroutine == null)
+        { tokenCoroutine = StartCoroutine(playAnim(Asset.TokenAnim(tokes_enum))); }
         while (currentTime <= timeOfTravel) { 
             currentTime += Time.deltaTime; 
             GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(GetComponent<RectTransform>().anchoredPosition,new Vector2(GetComponent<RectTransform>().anchoredPosition.x,-580*height/1080), currentTime/timeOfTravel); 
@@ -107,6 +115,23 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             {
                 this.propertyGrid.propertyToggles.getValue(entry.Key).group.color = ((PropertyCard)entry.Value).group.color;
             }
+        }
+    }
+
+    IEnumerator playAnim(Sprite[] tokenSheet)
+    {
+        int index = 0;
+        float frame_time = Time.deltaTime;
+        while(active)
+        {
+            if(frame_time >= 1/_FrameRate)
+            {
+                token.sprite = tokenSheet[index];
+                index = (index+1)%tokenSheet.Length;
+                frame_time = 0;
+            }
+            frame_time += Time.deltaTime;
+            yield return null;
         }
     }
 }

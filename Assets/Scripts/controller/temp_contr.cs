@@ -30,6 +30,7 @@ public class temp_contr : MonoBehaviour
     //other
     Vector3 cam_pos_top;    // top cam position
     bool tabs_set;
+    public GameObject invisibleWall;
 
     void Awake()
     {
@@ -37,6 +38,7 @@ public class temp_contr : MonoBehaviour
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
         tabs_set = false;
+        invisibleWall.SetActive(false);
     }
     void Start()
     {
@@ -97,6 +99,7 @@ public class temp_contr : MonoBehaviour
             }
             if(dice.start_roll)     // this bit is so camera knows when to follow dice
             {
+                invisibleWall.SetActive(true);
                 turnState = TurnState.DICEROLL;
             }
             if(!dice.areRolling())  //when dice stopped rolling
@@ -107,6 +110,7 @@ public class temp_contr : MonoBehaviour
                     Debug.Log("Dice stuck. Please roll again!");
                     dice.reset();
                 } else {    // if not in the ordering phase of the game, move Token and continue with game
+                    invisibleWall.SetActive(false);
                     Debug.Log("Player " + current_player + " rolled a " + steps);
                     if (player_throws.ContainsValue(steps))             // force re-roll if player has already rolled the same number
                     {
@@ -158,12 +162,14 @@ public class temp_contr : MonoBehaviour
                 if(dice.start_roll) 
                 {
                     turnState = TurnState.DICEROLL;
+                    invisibleWall.SetActive(true);
                 }
             }
             if(turnState == TurnState.DICEROLL) // turn begins
             {
                 if(!dice.areRolling())  // if dice are not rolling anymore
                 {
+                    invisibleWall.SetActive(false);
                     int steps = dice.get_result();  // get the result
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
