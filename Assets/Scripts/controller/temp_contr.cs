@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using View;
+using Space = Model.Space;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
@@ -22,9 +24,11 @@ public class temp_contr : MonoBehaviour
     List<Model.Player> players;     // players list in some random order, it'll be ordered in GameState.ORDERINGPHASE
     Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order *JK: also for other stuff (for Utility Sqpace - get as much money as u throw X 4)
     int current_player;         // incremented every turn, holds the index of the current player (ordered in List players)
+    int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     // bits needed to manage game and turns
     TurnState turnState;
     GameState gameState;
+    bool double_rolled = false; // use this to keep track of whether player just rolled a double
     //HUD
     public View.HUD hud; 
     //other
@@ -100,7 +104,98 @@ public class temp_contr : MonoBehaviour
     {
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
-            if(!tabs_set)
+            decidePlayerOrder();
+        }
+        if(gameState == GameState.PLAYERTURN)
+        {
+            if(turnState == TurnState.BEGIN)
+            {
+                if(!tabs_set)
+                {
+                    hud.set_current_player_tab(players[current_player]);
+                    tabs_set = true;
+                }
+                if(dice.start_roll) 
+                {
+                    turnState = TurnState.DICEROLL;
+                    invisibleWall.SetActive(true);
+                }
+            }
+            if(turnState == TurnState.DICEROLL) // turn begins
+            {
+                if(!dice.areRolling())  // if dice are not rolling anymore
+                {
+                    invisibleWall.SetActive(false);
+                    int steps = dice.get_result();  // get the result
+                    double_rolled = dice.is_double(); // return whether double was rolled
+                    if(steps < 0)                   // if result is negative (dice are stuck)
+                    {                               // reset the dice
+                        dice.reset();
+                        turnState = TurnState.BEGIN;
+                    } else     // if not in the ordering phase of the game, move Token and continue with game
+                    {
+                        // else start moving piece and change the turn state
+                        StartCoroutine(pieces[players[current_player]].move(steps));
+                        turnState = TurnState.PIECEMOVE;
+                    }
+                }
+            }
+            else if(turnState == TurnState.PIECEMOVE)
+            {
+                if(!pieces[players[current_player]].isMoving)   //if piece is not moving anymore
+                {
+                    turnState = TurnState.ACTION;   // change turn state to action
+                }
+            }
+            else if(turnState == TurnState.ACTION)  // ACTION state (buy property, pay rent etc...)
+            {
+                PerformAction();
+                turnState = TurnState.END;
+            }
+            else if(turnState == TurnState.END)     // END state, when player finished his turn
+            {
+                dice.reset();                   // reset dice
+                if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
+                {
+                    View.OkPopUp.Create(hud.transform, players[current_player].name + "rolled a double, have another turn!");
+                    double_count++;
+                    double_rolled = false;      // reset double check
+                    if (double_count == 3)      // if 3 doubles in a row, send player to jail and update current player
+                    {
+                        View.OkPopUp.Create(hud.transform, "Three doubles in a row? You must be cheating… go to jail!");
+                        // send player to jail
+                        nextPlayer();
+                    }
+                }
+                else
+                {
+                    nextPlayer();
+                }
+                tabs_set = false;
+                turnState = TurnState.BEGIN;     // change state to initial state
+            }
+        }
+        
+    }
+
+    //temp code for camera movement
+     void LateUpdate()
+    {
+        if(turnState == TurnState.PIECEMOVE)
+        {
+            moveCameraTowardsPiece(pieces[players[current_player]]);
+        }
+        else if(turnState == TurnState.DICEROLL)
+        {
+            moveCameraTowardsDice(dice);
+        } else {
+            moveCameraTopView();
+        }
+    }
+
+     public void decidePlayerOrder()
+     {
+         if(!tabs_set)
             {
                 hud.set_current_player_tab(players[current_player]);
                 tabs_set = true;
@@ -157,79 +252,93 @@ public class temp_contr : MonoBehaviour
                 }
                 turnState = TurnState.BEGIN;    // this bit is so camera comes back to top position
             }
-        }
-        if(gameState == GameState.PLAYERTURN)
-        {
-            if(turnState == TurnState.BEGIN)
-            {
-                if(!tabs_set)
-                {
-                    hud.set_current_player_tab(players[current_player]);
-                    tabs_set = true;
-                }
-                if(dice.start_roll) 
-                {
-                    turnState = TurnState.DICEROLL;
-                    invisibleWall.SetActive(true);
-                }
-            }
-            if(turnState == TurnState.DICEROLL) // turn begins
-            {
-                if(!dice.areRolling())  // if dice are not rolling anymore
-                {
-                    invisibleWall.SetActive(false);
-                    int steps = dice.get_result();  // get the result
-                    if(steps < 0)                   // if result is negative (dice are stuck)
-                    {                               // reset the dice
-                        dice.reset();
-                        turnState = TurnState.BEGIN;
-                    } else     // if not in the ordering phase of the game, move Token and continue with game
-                    {
-                        // else start moving piece and change the turn state
-                        StartCoroutine(pieces[players[current_player]].move(steps));
-                        turnState = TurnState.PIECEMOVE;
-                    }
-                }
-            }
-            else if(turnState == TurnState.PIECEMOVE)
-            {
-                if(!pieces[players[current_player]].isMoving)   //if piece is not moving anymore
-                {
-                    turnState = TurnState.ACTION;   // change turn state to action
-                }
-            }
-            else if(turnState == TurnState.ACTION)  // ACTION state (buy property, pay rent etc...)
-            {
-                turnState = TurnState.END;
-            }
-            else if(turnState == TurnState.END)     // END state, when player finished his turn
-            {
-                dice.reset();                   // reset dice
-                current_player = (current_player+1)%players.Count;
-                tabs_set = false;
-                turnState = TurnState.BEGIN;     // change state to initial state
-            }
-        }
-        
-    }
+     }
 
-    //temp code for camera movement
-     void LateUpdate()
+     void nextPlayer()
+     {
+         double_rolled = false;  // reset double check
+         double_count = 0;       // reset double count
+         current_player = (current_player + 1) % players.Count;
+         View.OkPopUp.Create(hud.transform, players[current_player].name + ", it's your turn!");
+     }
+     
+    void PerformAction()
     {
-        if(turnState == TurnState.PIECEMOVE)
+        Debug.Log("here");
+        int current_square = pieces[players[current_player]].GetCurrentSquare();    // get location of current player piece on board
+        Debug.Log("current square integer: " + current_square);
+        Space current_space = board_model.spaces[current_square];                   // get Space from location on board
+        Debug.Log("current space: " + current_space.name);
+        SqType current_space_type = current_space.type;                             // get SqType from Space
+        Debug.Log("current space type: " + current_space_type.GetType().ToString());
+
+        if (current_space_type == SqType.CHANCE)                                    // first two if statements check whether square is a "take a card" square
         {
-            moveCameraTowardsPiece(pieces[players[current_player]]);
+            Model.Card card_taken = opportunity_knocks.cards[0];
+            performCardAction(card_taken, players[current_player]);                 // if so, call performCardAction()
         }
-        else if(turnState == TurnState.DICEROLL)
+
+        if (current_space_type == SqType.POTLUCK)
         {
-            moveCameraTowardsDice(dice);
-        } else {
-            moveCameraTopView();
+            Model.Card card_taken = potluck.cards[0];
+            performCardAction(card_taken, players[current_player]);                 // NOTE: currently when a card is taken, it is not placed at the bottom nor is the deck reshuffled
+        }
+
+        switch (current_space_type)
+        {
+            case SqType.GO:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "passed GO, collect £200!");
+                //give player £200
+                //update in player info that this player has passed GO
+                break;
+            }
+            case SqType.JAILVISIT:
+            {
+                
+                break;
+            }
+            case SqType.PARKING:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "landed on Free Parking. Collect all those juicy fines!");
+                //reset FREE PARKING balance to zero
+                //give player whatever the balance in FREE PARKING
+                break;
+            }
+            case SqType.GOTOJAIL:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "broke the law! They must go straight to jail!");
+                //player token is moved to JAIL square
+                //player hud icon is updated
+                //jail cell animation on board
+                break;
+            }
+            case SqType.PROPERTY:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + " do you wish to purchase this property?");    // new pop up prefabs needed for this popup
+                break;
+            }
+            case SqType.STATION:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "do you wish to purchase this station?");      // new pop up prefabs needed for this popup
+                break;
+            }
+            case SqType.UTILITY:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "do you wish to purchase this utility company?");      // new pop up prefabs needed for this popup
+                break;
+            }
+            case SqType.TAX:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "misfiled their tax returns, pay HMRC a SUPER TAX!");
+                break;
+            }
         }
     }
-
-    public static void performCardAction(Model.Card card, Model.Player player)
+    
+    public void performCardAction(Model.Card card, Model.Player player)
     {
+        OkPopUp.Create(hud.transform, players[current_player].name + " take a card!");
         switch(card.action)
         {
             case CardAction.PAYTOBANK:
