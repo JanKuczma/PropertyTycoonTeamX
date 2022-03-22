@@ -20,6 +20,7 @@ public class PropertySquare : Square
         square.transform.localRotation = getRotation(position);
         square.setName(name);
         square.assignSpots();
+        square.assignHousesSpots();
         square.setPrice(price);
         square.setGroup(group);
         return square;

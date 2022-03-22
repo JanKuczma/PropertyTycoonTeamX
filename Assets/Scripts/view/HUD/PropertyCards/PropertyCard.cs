@@ -17,10 +17,12 @@ public class PropertyCard : PurchasableCard
     public Text houseCost;
     public Text hotelCost;
     public Text note;
+    [SerializeField] public Image[] housesIMGs;
 
     public static PropertyCard Create(Model.Space.Property space,Transform parent)
     {
         PropertyCard card = Instantiate(Asset.PropertyCard,parent).GetComponent<PropertyCard>();
+        card.property = space;
         card.propertyName.text = space.name;
         Color color;
         if ( ColorUtility.TryParseHtmlString("#"+((int)space.group).ToString("X")+"FF", out color))
@@ -35,10 +37,20 @@ public class PropertyCard : PurchasableCard
         card.houseCost.text = "Housecost "+space.house_cost.ToString()+"Q each";
         card.hotelCost.text = "Hotel cost "+(space.hotel_cost-(4*space.house_cost)).ToString()+"Q each plus 4 houses";
         card.note.text = "If a player owns ALL the Lots of any Color-Group, the renst is Doubled on Unimproved Lots in that Group.";
-        card.mortgage.text = "";
         card.mortgage.text = (space.cost/2).ToString()+"Q";
         card.gameObject.SetActive(false);
         return card;
+    }
+
+    public void showHouse(int noOfHouses)
+    {
+        if(noOfHouses==0) {return;}
+        if(noOfHouses==5) { housesIMGs[noOfHouses-1].gameObject.SetActive(true); return;}
+        for(int i = 0; i < noOfHouses-1; i++)
+        {
+            housesIMGs[i].gameObject.SetActive(true);
+        }
+        
     }
 }   
 }

@@ -5,9 +5,11 @@ using UnityEngine.UI;
  using UnityEngine.EventSystems;
 namespace View
 {
-public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     // Start is called before the first frame update
+    public Model.Player player;
+    public Dictionary<int,PurchasableCard> propertyCards;
     Color color;
     public Text player_name;
     public Image token;
@@ -17,6 +19,11 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     Coroutine popUpCoruotine = null;
     Coroutine tokenCoroutine = null;
     float _FrameRate = 25f;
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards);
+    }
      
      public void OnPointerEnter(PointerEventData eventData)
      {
@@ -41,12 +48,14 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         }
     }
 
-    public static PlayerTab Create(Transform parent,Color color,string name,Token token,string money,Dictionary<int,PurchasableCard> propertyCards)
+    public static PlayerTab Create(Transform parent,Model.Player player,Dictionary<int,PurchasableCard> propertyCards)
     {
         PlayerTab tab = Instantiate(Asset.playerTab(),parent).GetComponent<PlayerTab>();
-        tab.setName(name);
-        tab.setColor(color);
-        tab.setToken(token);
+        tab.player = player;
+        tab.propertyCards = propertyCards;
+        tab.setName(player.name);
+        tab.setColor(player.color);
+        tab.setToken(player.token);
         tab.active = false;
         tab.setUpPropertyGrid(propertyCards);
         return tab;

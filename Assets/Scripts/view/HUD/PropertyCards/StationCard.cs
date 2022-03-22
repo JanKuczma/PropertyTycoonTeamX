@@ -17,13 +17,14 @@ public class StationCard : PurchasableCard
     {
         StationCard card = Instantiate(Asset.StationCard,parent).GetComponent<StationCard>();
         card.propertyName.text = space.name;
+        card.property = space;
+        card.price.text = "PRICE "+space.cost.ToString() + "Q";
         card.oneStationRent.text = space.rents[0].ToString()+"Q";
         card.twoStationsRent.text = space.rents[1].ToString()+"Q";
         card.threeStationsRent.text = space.rents[2].ToString()+"Q";
         card.fourStationsRent.text = space.rents[3].ToString()+"Q";
         card.mortgage.text = (space.cost/2).ToString()+"Q";
         card.gameObject.SetActive(false);
-        card.price.text = "PRICE "+space.cost.ToString() + "Q";
         return card;
     }
 }   

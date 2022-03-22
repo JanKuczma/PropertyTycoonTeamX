@@ -32,7 +32,7 @@ public class HUD : MonoBehaviour
         float interval = (-140*GetComponentInParent<RectTransform>().sizeDelta.x/1920)*(players.Count-1);
         for(int i = 0; i < players.Count; i++)
         {
-            player_tabs.Add(players[i],PlayerTab.Create(transform,players[i].color,players[i].name,players[i].token,"1500",propertyCards));
+            player_tabs.Add(players[i],PlayerTab.Create(transform,players[i],propertyCards));
             player_tabs[players[i]].GetComponent<RectTransform>().anchoredPosition = new Vector2(interval,-650*GetComponentInParent<RectTransform>().sizeDelta.x/1920);
             interval += (280*GetComponentInParent<RectTransform>().sizeDelta.x/1920);
         }

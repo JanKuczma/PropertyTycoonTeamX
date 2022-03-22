@@ -31,6 +31,14 @@ public class DictionaryWrapper<TK,TV>
         }
         return Values[Keys.IndexOf(key)];
     }
+    public void setValue(TK key, TV value){
+        if(!Keys.Contains(key))
+        {
+            Debug.LogException(new System.Exception("No Key in Dictionary exception"));
+            return;
+        }
+        Values[Keys.IndexOf(key)] = value;
+    }
 
     public void remove(TK key)
     {
@@ -42,6 +50,15 @@ public class DictionaryWrapper<TK,TV>
     int ind = Keys.IndexOf(key);
     Keys.Remove(key);
     Values.RemoveAt(ind);
+    }
+    public Dictionary<TK,TV> toDict()
+    {
+        Dictionary<TK,TV> dict = new Dictionary<TK, TV>();
+        for(int i = 0; i < Keys.Count; i++)
+        {
+            dict.Add(Keys[i],Values[i]);
+        }
+        return dict;
     }
 }
 }
