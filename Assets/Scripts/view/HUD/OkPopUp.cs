@@ -22,7 +22,6 @@ namespace View
         public void closePopup()
         {
             Destroy(this.gameObject);
-            Debug.Log("hey");
         }
     }
 }

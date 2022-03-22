@@ -86,11 +86,18 @@ public class DiceContainer : MonoBehaviour
 
     public bool is_double()
     {
+        int i = 0;
         int[] dice_values = new int[2];
         foreach (Dice d in dice)
         {
-            dice_values.Append(d.get_value());
+            Debug.Log(d.get_value());
+            dice_values[i] = d.get_value();
+            i++;
         }
+        
+        Debug.Log(dice_values[0]);
+        Debug.Log(dice_values[1]);
+        Debug.Log(dice_values[0] == dice_values[1]);
 
         return (dice_values[0] == dice_values[1]);
     }

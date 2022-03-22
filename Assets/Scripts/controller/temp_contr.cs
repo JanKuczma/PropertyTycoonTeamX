@@ -94,63 +94,7 @@ public class temp_contr : MonoBehaviour
     {
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
-            if(!tabs_set)
-            {
-                hud.set_current_player_tab(players[current_player]);
-                tabs_set = true;
-            }
-            if(dice.start_roll)     // this bit is so camera knows when to follow dice
-            {
-                invisibleWall.SetActive(true);
-                turnState = TurnState.DICEROLL;
-            }
-            if(!dice.areRolling())  //when dice stopped rolling
-            {
-                int steps = dice.get_result();  // get the result
-                if(steps < 0)                   // if result is negative (dice are stuck)
-                {                                // reset the dice
-                    Debug.Log("Dice stuck. Please roll again!");
-                    dice.reset();
-                } else {    // if not in the ordering phase of the game, move Token and continue with game
-                    invisibleWall.SetActive(false);
-                    Debug.Log("Player " + current_player + " rolled a " + steps);
-                    if (player_throws.ContainsValue(steps))             // force re-roll if player has already rolled the same number
-                    {
-                        Debug.Log("Someone has already rolled "+ steps +". Please roll again!");
-                        dice.reset();
-                    } else {
-                        player_throws.Add(players[current_player],steps);        // log value that player rolled
-                        dice.reset();                   // reset dice
-                        current_player = current_player+1;       // update turn state so that it becomes next player's turn
-                        tabs_set = false;
-                        if (current_player == players.Count)            // check whether every player has rolled the dice
-                        {
-                            var player_throws_sorted =
-                                from entry in player_throws orderby entry.Value descending select entry;    // this line sorts the dictionary in descending order by each pair's Value
-                            Dictionary<Model.Player,int> sorted_dict = player_throws_sorted.ToDictionary(pair => pair.Key, pair => pair.Value); // casts output from previous line as a Dictionary
-                            Debug.Log("**BEFORE ORDERING**"); 
-                            for (int i = 0; i < players.Count; i++)
-                            {
-                                Debug.Log("Key: " + i + " || Token: " + players[i].token.ToString()); // prints new list of players and their selected Token
-                            }
-
-                            players = sorted_dict.Keys.ToList<Model.Player>();
-
-                            Debug.Log("**AFTER ORDERING**"); 
-                            for (int i = 0; i < players.Count; i++)
-                            {
-                                Debug.Log("after Key: " + i + " || Token: " + players[i].token.ToString()); // prints new list of players and their selected Token
-                            }
-
-                            current_player = 0;             // game starts with player first on ordered list
-                            hud.sort_tabs(players);
-                            turnState = TurnState.BEGIN;
-                            gameState = GameState.PLAYERTURN;
-                        }
-                    }
-                }
-                turnState = TurnState.BEGIN;    // this bit is so camera comes back to top position
-            }
+            decidePlayerOrder();
         }
         if(gameState == GameState.PLAYERTURN)
         {
@@ -209,17 +153,12 @@ public class temp_contr : MonoBehaviour
                     {
                         View.OkPopUp.Create(hud.transform, "Three doubles in a row? You must be cheating… go to jail!");
                         // send player to jail
-                        double_rolled = false;  // reset double check
-                        double_count = 0;       // reset double count
-                        current_player = (current_player + 1) % players.Count;
-                        View.OkPopUp.Create(hud.transform, players[current_player].name + ", it's your turn!");
+                        nextPlayer();
                     }
                 }
                 else
                 {
-                    current_player = (current_player + 1) % players.Count;
-                    double_count = 0;       // reset double count
-                    View.OkPopUp.Create(hud.transform, players[current_player].name + ", it's your turn!");
+                    nextPlayer();
                 }
                 tabs_set = false;
                 turnState = TurnState.BEGIN;     // change state to initial state
@@ -260,6 +199,75 @@ public class temp_contr : MonoBehaviour
             Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 4.0f * Time.deltaTime);
         }
     }
+
+     public void decidePlayerOrder()
+     {
+         if(!tabs_set)
+            {
+                hud.set_current_player_tab(players[current_player]);
+                tabs_set = true;
+            }
+            if(dice.start_roll)     // this bit is so camera knows when to follow dice
+            {
+                invisibleWall.SetActive(true);
+                turnState = TurnState.DICEROLL;
+            }
+            if(!dice.areRolling())  //when dice stopped rolling
+            {
+                int steps = dice.get_result();  // get the result
+                if(steps < 0)                   // if result is negative (dice are stuck)
+                {                                // reset the dice
+                    Debug.Log("Dice stuck. Please roll again!");
+                    dice.reset();
+                } else {    // if not in the ordering phase of the game, move Token and continue with game
+                    invisibleWall.SetActive(false);
+                    Debug.Log("Player " + current_player + " rolled a " + steps);
+                    if (player_throws.ContainsValue(steps))             // force re-roll if player has already rolled the same number
+                    {
+                        Debug.Log("Someone has already rolled "+ steps +". Please roll again!");
+                        dice.reset();
+                    } else {
+                        player_throws.Add(players[current_player],steps);        // log value that player rolled
+                        dice.reset();                   // reset dice
+                        current_player = current_player+1;       // update turn state so that it becomes next player's turn
+                        tabs_set = false;
+                        if (current_player == players.Count)            // check whether every player has rolled the dice
+                        {
+                            var player_throws_sorted =
+                                from entry in player_throws orderby entry.Value descending select entry;    // this line sorts the dictionary in descending order by each pair's Value
+                            Dictionary<Model.Player,int> sorted_dict = player_throws_sorted.ToDictionary(pair => pair.Key, pair => pair.Value); // casts output from previous line as a Dictionary
+                            Debug.Log("**BEFORE ORDERING**"); 
+                            for (int i = 0; i < players.Count; i++)
+                            {
+                                Debug.Log("Key: " + i + " || Token: " + players[i].token.ToString()); // prints new list of players and their selected Token
+                            }
+
+                            players = sorted_dict.Keys.ToList<Model.Player>();
+
+                            Debug.Log("**AFTER ORDERING**"); 
+                            for (int i = 0; i < players.Count; i++)
+                            {
+                                Debug.Log("after Key: " + i + " || Token: " + players[i].token.ToString()); // prints new list of players and their selected Token
+                            }
+
+                            current_player = 0;             // game starts with player first on ordered list
+                            hud.sort_tabs(players);
+                            turnState = TurnState.BEGIN;
+                            gameState = GameState.PLAYERTURN;
+                        }
+                    }
+                }
+                turnState = TurnState.BEGIN;    // this bit is so camera comes back to top position
+            }
+     }
+
+     void nextPlayer()
+     {
+         double_rolled = false;  // reset double check
+         double_count = 0;       // reset double count
+         current_player = (current_player + 1) % players.Count;
+         View.OkPopUp.Create(hud.transform, players[current_player].name + ", it's your turn!");
+     }
 
     public static void performCardAction(Model.Card card, Model.Player player)
     {
