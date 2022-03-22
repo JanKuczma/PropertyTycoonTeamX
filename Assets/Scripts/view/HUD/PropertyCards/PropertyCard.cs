@@ -22,22 +22,7 @@ public class PropertyCard : PurchasableCard
     public static PropertyCard Create(Model.Space.Property space,Transform parent)
     {
         PropertyCard card = Instantiate(Asset.PropertyCard,parent).GetComponent<PropertyCard>();
-        card.property = space;
-        card.propertyName.text = space.name;
-        Color color;
-        if ( ColorUtility.TryParseHtmlString("#"+((int)space.group).ToString("X")+"FF", out color))
-        { card.group.color = color; }
-        card.price.text = "PRICE "+space.cost.ToString() + "Q";
-        card.rent.text = "Rent " + space.rents[0].ToString()+"Q";
-        card.oneHouseRent.text = space.rents[1].ToString()+"Q";
-        card.twoHousesRent.text = space.rents[2].ToString()+"Q";
-        card.threeHousesRent.text = space.rents[3].ToString()+"Q";
-        card.fourHousesRent.text = space.rents[4].ToString()+"Q";
-        card.hotelRent.text = space.rents[5].ToString()+"Q";
-        card.houseCost.text = "Housecost "+space.house_cost.ToString()+"Q each";
-        card.hotelCost.text = "Hotel cost "+(space.hotel_cost-(4*space.house_cost)).ToString()+"Q each plus 4 houses";
-        card.note.text = "If a player owns ALL the Lots of any Color-Group, the renst is Doubled on Unimproved Lots in that Group.";
-        card.mortgage.text = (space.cost/2).ToString()+"Q";
+        card.setUpCard(space);
         card.gameObject.SetActive(false);
         return card;
     }
@@ -51,6 +36,43 @@ public class PropertyCard : PurchasableCard
             housesIMGs[i].gameObject.SetActive(true);
         }
         
+    }
+
+    public void setUpCard(Model.Space.Property space)
+    {
+        this.property = space;
+        this.propertyName.text = space.name;
+        Color color;
+        if ( ColorUtility.TryParseHtmlString("#"+((int)space.group).ToString("X")+"FF", out color))
+        { this.group.color = color; }
+        this.price.text = "PRICE "+space.cost.ToString() + "Q";
+        this.rent.text = "Rent " + space.rents[0].ToString()+"Q";
+        this.oneHouseRent.text = space.rents[1].ToString()+"Q";
+        this.twoHousesRent.text = space.rents[2].ToString()+"Q";
+        this.threeHousesRent.text = space.rents[3].ToString()+"Q";
+        this.fourHousesRent.text = space.rents[4].ToString()+"Q";
+        this.hotelRent.text = space.rents[5].ToString()+"Q";
+        this.houseCost.text = "Housecost "+space.house_cost.ToString()+"Q each";
+        this.hotelCost.text = "Hotel cost "+(space.hotel_cost-(4*space.house_cost)).ToString()+"Q each plus 4 houses";
+        this.note.text = "If a player owns ALL the Lots of any Color-Group, the renst is Doubled on Unimproved Lots in that Group.";
+        this.mortgage.text = (space.cost/2).ToString()+"Q";
+    }
+    public void setUpCard(PropertyCard card)
+    {
+        this.property = card.property;
+        this.propertyName.text = card.propertyName.text;
+        this.group.color = card.group.color;
+        this.price.text = card.price.text;
+        this.rent.text = card.rent.text;
+        this.oneHouseRent.text = card.oneHouseRent.text;
+        this.twoHousesRent.text = card.twoHousesRent.text;
+        this.threeHousesRent.text = card.threeHousesRent.text;
+        this.fourHousesRent.text = card.fourHousesRent.text;
+        this.hotelRent.text = card.hotelRent.text;
+        this.houseCost.text = card.houseCost.text;
+        this.hotelCost.text = card.hotelCost.text;
+        this.note.text = card.note.text;
+        this.mortgage.text = card.mortgage.text;
     }
 }   
 }
