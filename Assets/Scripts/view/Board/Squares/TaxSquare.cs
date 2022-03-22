@@ -21,7 +21,7 @@ public class TaxSquare : FullSquare
     public void setAmount(string amount)
     {
         _amount = amount;
-        GetComponentsInChildren<TextMeshPro>()[1].SetText("PAY £"+amount);
+        GetComponentsInChildren<TextMeshPro>()[1].SetText("PAY "+amount+"Q");
     }
 }
 }

@@ -1,0 +1,948 @@
+fileFormatVersion: 2
+guid: 13a969b4b7e3f034fa97604f31b272f5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4750651203034271755
+    second: iron_0
+  - first:
+      213: 1216698196264918829
+    second: iron_1
+  - first:
+      213: -8675770273868967379
+    second: iron_2
+  - first:
+      213: -6306482627759850813
+    second: iron_3
+  - first:
+      213: 8226248545731137778
+    second: iron_4
+  - first:
+      213: 2114946747282504503
+    second: iron_5
+  - first:
+      213: 2134840068954662044
+    second: iron_6
+  - first:
+      213: -3941285087793611580
+    second: iron_7
+  - first:
+      213: -440236388301698258
+    second: iron_8
+  - first:
+      213: -205356359230897316
+    second: iron_9
+  - first:
+      213: 1201252133762444907
+    second: iron_10
+  - first:
+      213: 7472774477733827091
+    second: iron_11
+  - first:
+      213: -4861914012481634039
+    second: iron_12
+  - first:
+      213: 5983027628437903793
+    second: iron_13
+  - first:
+      213: 6653960511273854867
+    second: iron_14
+  - first:
+      213: 4337818056200525596
+    second: iron_15
+  - first:
+      213: 6110918936874258303
+    second: iron_16
+  - first:
+      213: 6124356110379715557
+    second: iron_17
+  - first:
+      213: 3545166702895551449
+    second: iron_18
+  - first:
+      213: 5514331973926593061
+    second: iron_19
+  - first:
+      213: 4471966376950938295
+    second: iron_20
+  - first:
+      213: 7348995860205736932
+    second: iron_21
+  - first:
+      213: -3419746494591953455
+    second: iron_22
+  - first:
+      213: -3374328963153955928
+    second: iron_23
+  - first:
+      213: 2114389723275521860
+    second: iron_24
+  - first:
+      213: -1206145938874311424
+    second: iron_25
+  - first:
+      213: 913771076303851688
+    second: iron_26
+  - first:
+      213: 5811410510263846325
+    second: iron_27
+  - first:
+      213: -2696151441553500233
+    second: iron_28
+  - first:
+      213: 281295962201881623
+    second: iron_29
+  - first:
+      213: -7717897497764259119
+    second: iron_30
+  - first:
+      213: -7258486525454968109
+    second: iron_31
+  - first:
+      213: 5666742932989802955
+    second: iron_32
+  - first:
+      213: -2210009619852645006
+    second: iron_33
+  - first:
+      213: 6162669701942591029
+    second: iron_34
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: iron_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2832
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b00d3a06914bde140800000000000000
+      internalID: 4750651203034271755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_1
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 2832
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2f9a3b209492e010800000000000000
+      internalID: 1216698196264918829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_2
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2832
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d229521f6e8799780800000000000000
+      internalID: -8675770273868967379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_3
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 2832
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cab336967fda78a0800000000000000
+      internalID: -6306482627759850813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_4
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 2832
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f0d062c771892270800000000000000
+      internalID: 8226248545731137778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2360
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73b34a67cdcc95d10800000000000000
+      internalID: 2114946747282504503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_6
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 2360
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c94205a5bb970ad10800000000000000
+      internalID: 2134840068954662044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_7
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2360
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cc748f281ebd49c0800000000000000
+      internalID: -3941285087793611580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_8
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 2360
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b831a5657f3e9f0800000000000000
+      internalID: -440236388301698258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_9
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 2360
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c53cca3ba7d662df0800000000000000
+      internalID: -205356359230897316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1888
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6e279e7374bba010800000000000000
+      internalID: 1201252133762444907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_11
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 1888
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3121ee78bc0a4b760800000000000000
+      internalID: 7472774477733827091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_12
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 1888
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 901c98517f2078cb0800000000000000
+      internalID: -4861914012481634039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_13
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 1888
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b9936abdebf70350800000000000000
+      internalID: 5983027628437903793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_14
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 1888
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39764ffa4dd975c50800000000000000
+      internalID: 6653960511273854867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1416
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c179b141a86033c30800000000000000
+      internalID: 4337818056200525596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_16
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 1416
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7f099365685ec450800000000000000
+      internalID: 6110918936874258303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_17
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 1416
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5eb0d252f651ef450800000000000000
+      internalID: 6124356110379715557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_18
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 1416
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d3d1ab4556f23130800000000000000
+      internalID: 3545166702895551449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_19
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 1416
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 522297fc6b7d68c40800000000000000
+      internalID: 5514331973926593061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 944
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bab6a1f9bd9f0e30800000000000000
+      internalID: 4471966376950938295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_21
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 944
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e311675cc0ecf560800000000000000
+      internalID: 7348995860205736932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_22
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 944
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d595f78eae9a80d0800000000000000
+      internalID: -3419746494591953455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_23
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 944
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a375eb9fa9fb21d0800000000000000
+      internalID: -3374328963153955928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_24
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 944
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44fe2943042d75d10800000000000000
+      internalID: 2114389723275521860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 472
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00ddd16b8a8e24fe0800000000000000
+      internalID: -1206145938874311424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_26
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 472
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a01e19d3fd5eac00800000000000000
+      internalID: 913771076303851688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_27
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 472
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b58f34a11746a050800000000000000
+      internalID: 5811410510263846325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_28
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 472
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b7db897c88559ad0800000000000000
+      internalID: -2696151441553500233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_29
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 472
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71c7bcfef2d57e300800000000000000
+      internalID: 281295962201881623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1da92e0fd1584e490800000000000000
+      internalID: -7717897497764259119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_31
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3da1c4356fca44b90800000000000000
+      internalID: -7258486525454968109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_32
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 0
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc9ff428ca054ae40800000000000000
+      internalID: 5666742932989802955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_33
+      rect:
+        serializedVersion: 2
+        x: 2100
+        y: 0
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27dac7ab5f77451e0800000000000000
+      internalID: -2210009619852645006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iron_34
+      rect:
+        serializedVersion: 2
+        x: 2800
+        y: 0
+        width: 700
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53eb9545173368550800000000000000
+      internalID: 6162669701942591029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: c93eab0a7be3e3a4f93491588625df59
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

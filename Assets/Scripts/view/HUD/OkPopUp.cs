@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace view.HUD
+namespace View
 {
     public class OkPopUp : MonoBehaviour
     {

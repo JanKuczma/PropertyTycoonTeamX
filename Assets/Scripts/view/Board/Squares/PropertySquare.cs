@@ -35,7 +35,7 @@ public class PropertySquare : Square
     public void setPrice(string price)
     {
         _price = price;
-        GetComponentsInChildren<TextMeshPro>()[1].SetText("£"+price);
+        GetComponentsInChildren<TextMeshPro>()[1].SetText(price+"Q");
     }
 
     public void addHouse()

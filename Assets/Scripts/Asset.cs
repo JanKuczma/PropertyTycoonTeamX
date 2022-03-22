@@ -42,9 +42,9 @@ public static class Asset
     static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
     static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
     //board and card data
-    static TextAsset classic_board_json = Resources.Load<TextAsset>("GameData/board_data");
-    static TextAsset potluck_json = Resources.Load<TextAsset>("GameData/potluck_data");
-    static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameData/opportunity_knocks_data");
+    static TextAsset classic_board_json = Resources.Load<TextAsset>("GameDataJSON/board_data");
+    static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
+    static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
     //token IMGs
     static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
     static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
@@ -52,8 +52,21 @@ public static class Asset
     static Sprite boatIMG = Resources.Load<Sprite>("tokenIMGs/boatIMG");
     static Sprite smartphoneIMG = Resources.Load<Sprite>("tokenIMGs/phoneIMG");
     static Sprite hatstandIMG = Resources.Load<Sprite>("tokenIMGs/hatstandIMG");
+    //token spriteSheets
+    static Sprite[] catAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/cat");
+    static Sprite[] ironAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/iron");
+    static Sprite[] bootAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/boot");
+    static Sprite[] shipAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/ship");
+    static Sprite[] phoneAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/phone");
+    static Sprite[] standAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/stand");
+    //property cards
+    public static GameObject PropertyCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/PropertyCard");
+    static GameObject WaterCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/WaterCard");
+    static GameObject BulbCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/BulbCard");
+    public static GameObject StationCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/StationCard");
+
     //HUD components
-    static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab");
+    static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
     //Pop Ups
     public static GameObject okPopup = Resources.Load<GameObject>("Prefabs/HUD/PopUps/okPopup");
 
@@ -76,6 +89,11 @@ public static class Asset
     public static GameObject Board()
     {
         return BoardPrefab;
+    }
+
+    public static GameObject UtilityCard(string variant)
+    {
+        return variant == "TESLA POWER CO" ? BulbCard : WaterCard;
     }
 
     public static GameObject Piece(Token token)
@@ -134,6 +152,17 @@ public static class Asset
                 token == Token.SMARTPHONE ? smartphoneIMG :
                 token == Token.HATSTAND ? hatstandIMG :
                 token == Token.BOOT ? bootIMG :
+                null;
+    }
+
+    public static Sprite[] TokenAnim(Token token)
+    {
+        return  token == Token.CAT ? catAnim :
+                token == Token.SHIP ? shipAnim :
+                token == Token.IRON ? ironAnim :
+                token == Token.SMARTPHONE ? phoneAnim :
+                token == Token.HATSTAND ? standAnim :
+                token == Token.BOOT ? bootAnim :
                 null;
     }
 

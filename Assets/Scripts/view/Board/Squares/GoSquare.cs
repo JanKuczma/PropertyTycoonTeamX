@@ -19,11 +19,11 @@ public class GoSquare : CornerSquare
     }
     public override void setName(string name="")
     {
-        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT £200 SALARY AS YOU PASS");
+        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT 200Q SALARY AS YOU PASS");
     }
     public void setAmount(string amount = "200")
     {
-        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT £"+amount+" SALARY AS YOU PASS");
+        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT "+amount+"Q SALARY AS YOU PASS");
     }
 }
 }

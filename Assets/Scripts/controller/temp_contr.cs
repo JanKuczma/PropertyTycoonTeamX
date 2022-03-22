@@ -26,15 +26,19 @@ public class temp_contr : MonoBehaviour
     TurnState turnState;
     GameState gameState;
     //HUD
-    public HUD hud; 
+    public View.HUD hud; 
     //other
     Vector3 cam_pos_top;    // top cam position
+    bool tabs_set;
+    public GameObject invisibleWall;
+
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
-        hud.Create_player_tabs(players);
+        tabs_set = false;
+        invisibleWall.SetActive(false);
     }
     void Start()
     {
@@ -45,6 +49,8 @@ public class temp_contr : MonoBehaviour
         //create board with card stacks and dice
         board_view = View.Board.Create(transform,board_model);
         dice = View.DiceContainer.Create(transform);
+        //create playerTabs
+        hud.Create_player_tabs(players,board_model);
         //craete pieces
         foreach(Model.Player player in players)
         {
@@ -78,7 +84,7 @@ public class temp_contr : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            view.HUD.OkPopUp.Create(hud.transform, "testing");
+            View.OkPopUp.Create(hud.transform, "testing");
         }
     }
 
@@ -86,9 +92,14 @@ public class temp_contr : MonoBehaviour
     {
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
-            hud.set_current_player_tab(players[current_player]);
+            if(!tabs_set)
+            {
+                hud.set_current_player_tab(players[current_player]);
+                tabs_set = true;
+            }
             if(dice.start_roll)     // this bit is so camera knows when to follow dice
             {
+                invisibleWall.SetActive(true);
                 turnState = TurnState.DICEROLL;
             }
             if(!dice.areRolling())  //when dice stopped rolling
@@ -99,6 +110,7 @@ public class temp_contr : MonoBehaviour
                     Debug.Log("Dice stuck. Please roll again!");
                     dice.reset();
                 } else {    // if not in the ordering phase of the game, move Token and continue with game
+                    invisibleWall.SetActive(false);
                     Debug.Log("Player " + current_player + " rolled a " + steps);
                     if (player_throws.ContainsValue(steps))             // force re-roll if player has already rolled the same number
                     {
@@ -108,6 +120,7 @@ public class temp_contr : MonoBehaviour
                         player_throws.Add(players[current_player],steps);        // log value that player rolled
                         dice.reset();                   // reset dice
                         current_player = current_player+1;       // update turn state so that it becomes next player's turn
+                        tabs_set = false;
                         if (current_player == players.Count)            // check whether every player has rolled the dice
                         {
                             var player_throws_sorted =
@@ -141,16 +154,22 @@ public class temp_contr : MonoBehaviour
         {
             if(turnState == TurnState.BEGIN)
             {
-                hud.set_current_player_tab(players[current_player]);
+                if(!tabs_set)
+                {
+                    hud.set_current_player_tab(players[current_player]);
+                    tabs_set = true;
+                }
                 if(dice.start_roll) 
                 {
                     turnState = TurnState.DICEROLL;
+                    invisibleWall.SetActive(true);
                 }
             }
             if(turnState == TurnState.DICEROLL) // turn begins
             {
                 if(!dice.areRolling())  // if dice are not rolling anymore
                 {
+                    invisibleWall.SetActive(false);
                     int steps = dice.get_result();  // get the result
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
@@ -179,6 +198,7 @@ public class temp_contr : MonoBehaviour
             {
                 dice.reset();                   // reset dice
                 current_player = (current_player+1)%players.Count;
+                tabs_set = false;
                 turnState = TurnState.BEGIN;     // change state to initial state
             }
         }
