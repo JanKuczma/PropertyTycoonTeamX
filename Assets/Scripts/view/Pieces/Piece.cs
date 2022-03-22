@@ -193,6 +193,11 @@ public class Piece : MonoBehaviour
         isMoving = false;
     }
 
+    public int GetCurrentSquare()
+    {
+        return currentSquare;
+    }
+    
     /// speeds up piece movement
     public void speedUp(int x = 2)
     {

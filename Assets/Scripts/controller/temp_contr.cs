@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using View;
+using Space = Model.Space;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
@@ -139,6 +141,7 @@ public class temp_contr : MonoBehaviour
             }
             else if(turnState == TurnState.ACTION)  // ACTION state (buy property, pay rent etc...)
             {
+                PerformAction();
                 turnState = TurnState.END;
             }
             else if(turnState == TurnState.END)     // END state, when player finished his turn
@@ -268,9 +271,84 @@ public class temp_contr : MonoBehaviour
          current_player = (current_player + 1) % players.Count;
          View.OkPopUp.Create(hud.transform, players[current_player].name + ", it's your turn!");
      }
-
-    public static void performCardAction(Model.Card card, Model.Player player)
+     
+    void PerformAction()
     {
+        Debug.Log("here");
+        int current_square = pieces[players[current_player]].GetCurrentSquare();    // get location of current player piece on board
+        Debug.Log("current square integer: " + current_square);
+        Space current_space = board_model.spaces[current_square];                   // get Space from location on board
+        Debug.Log("current space: " + current_space.name);
+        SqType current_space_type = current_space.type;                             // get SqType from Space
+        Debug.Log("current space type: " + current_space_type.GetType().ToString());
+
+        if (current_space_type == SqType.CHANCE)                                    // first two if statements check whether square is a "take a card" square
+        {
+            Model.Card card_taken = opportunity_knocks.cards[0];
+            performCardAction(card_taken, players[current_player]);                 // if so, call performCardAction()
+        }
+
+        if (current_space_type == SqType.POTLUCK)
+        {
+            Model.Card card_taken = potluck.cards[0];
+            performCardAction(card_taken, players[current_player]);                 // NOTE: currently when a card is taken, it is not placed at the bottom nor is the deck reshuffled
+        }
+
+        switch (current_space_type)
+        {
+            case SqType.GO:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "passed GO, collect £200!");
+                //give player £200
+                //update in player info that this player has passed GO
+                break;
+            }
+            case SqType.JAILVISIT:
+            {
+                
+                break;
+            }
+            case SqType.PARKING:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "landed on Free Parking. Collect all those juicy fines!");
+                //reset FREE PARKING balance to zero
+                //give player whatever the balance in FREE PARKING
+                break;
+            }
+            case SqType.GOTOJAIL:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "broke the law! They must go straight to jail!");
+                //player token is moved to JAIL square
+                //player hud icon is updated
+                //jail cell animation on board
+                break;
+            }
+            case SqType.PROPERTY:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + " do you wish to purchase this property?");    // new pop up prefabs needed for this popup
+                break;
+            }
+            case SqType.STATION:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "do you wish to purchase this station?");      // new pop up prefabs needed for this popup
+                break;
+            }
+            case SqType.UTILITY:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "do you wish to purchase this utility company?");      // new pop up prefabs needed for this popup
+                break;
+            }
+            case SqType.TAX:
+            {
+                OkPopUp.Create(hud.transform, players[current_player].name + "misfiled their tax returns, pay HMRC a SUPER TAX!");
+                break;
+            }
+        }
+    }
+    
+    public void performCardAction(Model.Card card, Model.Player player)
+    {
+        OkPopUp.Create(hud.transform, players[current_player].name + " take a card!");
         switch(card.action)
         {
             case CardAction.PAYTOBANK:
