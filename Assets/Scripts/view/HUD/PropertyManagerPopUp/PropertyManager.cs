@@ -9,10 +9,12 @@ namespace View
     {
     // Start is called before the first frame update
     [SerializeField] public DictionaryWrapper<int,PurchasableCard> cards;
+    public Text ownedByText;
 
     public static PropertyManager Create(Transform parent, Model.Player player, Dictionary<int,PurchasableCard> propertyCards)
     {
         PropertyManager manager = Instantiate(Asset.propertyManager(),parent).GetComponent<PropertyManager>();
+        manager.ownedByText.text = "Propierties owned by " + player.name;
         manager.setUpCards(player,propertyCards);
         return manager;
     }
@@ -21,8 +23,7 @@ namespace View
     {
         foreach(KeyValuePair<int, PurchasableCard> entry in propertyCards)
         {
-            if(player.owned_spaces.Contains(entry.Value.property))
-            //if(!player.owned_spaces.Contains(entry.Value.property))
+            if(!player.owned_spaces.Contains(entry.Value.property))
             {
                 cards.getValue(entry.Key).gameObject.SetActive(false);
             } else {
