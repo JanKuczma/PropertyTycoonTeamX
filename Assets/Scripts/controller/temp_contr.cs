@@ -22,9 +22,11 @@ public class temp_contr : MonoBehaviour
     List<Model.Player> players;     // players list in some random order, it'll be ordered in GameState.ORDERINGPHASE
     Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order *JK: also for other stuff (for Utility Sqpace - get as much money as u throw X 4)
     int current_player;         // incremented every turn, holds the index of the current player (ordered in List players)
+    int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     // bits needed to manage game and turns
     TurnState turnState;
     GameState gameState;
+    bool double_rolled = false; // use this to keep track of whether player just rolled a double
     //HUD
     public View.HUD hud; 
     //other
@@ -171,6 +173,7 @@ public class temp_contr : MonoBehaviour
                 {
                     invisibleWall.SetActive(false);
                     int steps = dice.get_result();  // get the result
+                    double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
                         dice.reset();
@@ -197,7 +200,27 @@ public class temp_contr : MonoBehaviour
             else if(turnState == TurnState.END)     // END state, when player finished his turn
             {
                 dice.reset();                   // reset dice
-                current_player = (current_player+1)%players.Count;
+                if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
+                {
+                    View.OkPopUp.Create(hud.transform, players[current_player].name + "rolled a double, have another turn!");
+                    double_count++;
+                    double_rolled = false;      // reset double check
+                    if (double_count == 3)      // if 3 doubles in a row, send player to jail and update current player
+                    {
+                        View.OkPopUp.Create(hud.transform, "Three doubles in a row? You must be cheating… go to jail!");
+                        // send player to jail
+                        double_rolled = false;  // reset double check
+                        double_count = 0;       // reset double count
+                        current_player = (current_player + 1) % players.Count;
+                        View.OkPopUp.Create(hud.transform, players[current_player].name + ", it's your turn!");
+                    }
+                }
+                else
+                {
+                    current_player = (current_player + 1) % players.Count;
+                    double_count = 0;       // reset double count
+                    View.OkPopUp.Create(hud.transform, players[current_player].name + ", it's your turn!");
+                }
                 tabs_set = false;
                 turnState = TurnState.BEGIN;     // change state to initial state
             }
