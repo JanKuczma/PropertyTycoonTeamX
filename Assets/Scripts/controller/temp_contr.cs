@@ -90,6 +90,14 @@ public class temp_contr : MonoBehaviour
         {
             View.OkPopUp.Create(hud.transform, "testing");
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ((View.PropertySquare)board_view.squares[1]).addHouse();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ((View.PropertySquare)board_view.squares[1]).removeHouse();
+        }
     }
 
     void FixedUpdate()
@@ -173,33 +181,15 @@ public class temp_contr : MonoBehaviour
     //temp code for camera movement
      void LateUpdate()
     {
-        // simply if the current piece is moving move camera towards it, else move camera towards top position
         if(turnState == TurnState.PIECEMOVE)
         {
-            Vector3 target = pieces[players[current_player]].transform.position*1.5f;
-            target[1] = board_view.transform.position.y+7.0f;
-            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
-            Vector3 lookDirection = pieces[players[current_player]].transform.position - Camera.main.transform.position;
-            lookDirection.Normalize();
-            Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 3.0f * Time.deltaTime);
+            moveCameraTowardsPiece(pieces[players[current_player]]);
         }
         else if(turnState == TurnState.DICEROLL)
         {
-            Vector3 target = dice.position();
-            target[1] = (dice.transform.localScale.x + dice.av_distance())/Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2));//Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2)) depends only on fieldview angle so it is pretty much constatnt, could be set as constract in terms of optimisation
-            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,target,8.0f*Time.deltaTime);
-            Vector3 lookDirection = dice.position() - Camera.main.transform.position;
-            lookDirection.Normalize();
-            Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 3.0f * Time.deltaTime);
-            if (target.x < -50.0)
-            {
-                dice.reset();
-            }
+            moveCameraTowardsDice(dice);
         } else {
-            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position,cam_pos_top,10.0f*Time.deltaTime);
-            Vector3 lookDirection = -1.0f*Camera.main.transform.position + Vector3.down*6; // 6 is how much camera is rotated down direction xD
-            lookDirection.Normalize();
-            Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection), 4.0f * Time.deltaTime);
+            moveCameraTopView();
         }
     }
 
@@ -423,4 +413,44 @@ public class temp_contr : MonoBehaviour
             break;
         }
     }
+    //Camera movement
+    public void moveCameraLeft()
+    {
+        float new_x = cam_pos_top.z;
+        float new_z = cam_pos_top.x*(-1);
+        cam_pos_top = new Vector3(new_x,cam_pos_top.y,new_z);
+    }
+    public void moveCameraRight()
+    {
+        float new_z = cam_pos_top.x;
+        float new_x = cam_pos_top.z*(-1);
+        cam_pos_top = new Vector3(new_x,cam_pos_top.y,new_z);
+    }
+    public void moveCameraTowardsPiece(View.Piece piece)
+    {
+        Vector3 target = piece.transform.position*1.5f;
+        target[1] = board_view.transform.position.y+7.0f;
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.deltaTime*2f);
+        Vector3 lookDirection = piece.transform.position - Camera.main.transform.position;
+        lookDirection.Normalize();
+        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.deltaTime);
+    }
+    public void moveCameraTowardsDice(View.DiceContainer diceContainer)
+    {
+        Vector3 target = diceContainer.position();
+        //Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2)) depends only on fieldview angle so it is pretty much constatnt, could be set as constant in terms of optimisation
+        target[1] = (diceContainer.transform.localScale.x + diceContainer.av_distance())/Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2));
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.deltaTime*2f);
+        Vector3 lookDirection = diceContainer.position() - Camera.main.transform.position;
+        lookDirection.Normalize();
+        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.deltaTime);
+    }
+    public void moveCameraTopView()
+    {
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,cam_pos_top,Time.deltaTime*3f);
+        Vector3 lookDirection = -1.0f*Camera.main.transform.position + Vector3.down*6; // 6 is how much camera is rotated down direction xD
+        lookDirection.Normalize();
+        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.deltaTime);
+    }
+        
 }
