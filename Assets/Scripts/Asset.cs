@@ -67,9 +67,11 @@ public static class Asset
 
     //HUD components
     static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
-    static GameObject PropertyManagerPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/PropertyManagerPopUp");
     //Pop Ups
+    static GameObject PropertyManagerPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/PropertyManagerPopUp");
     public static GameObject okPopup = Resources.Load<GameObject>("Prefabs/HUD/PopUps/okPopup");
+    public static GameObject ManageUtilityPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManageUtilityPopUp");
+    public static GameObject ManagePropertyPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManagePropertyPopUp");
 
 
     public static GameObject Board(SqType type,string variant = "")

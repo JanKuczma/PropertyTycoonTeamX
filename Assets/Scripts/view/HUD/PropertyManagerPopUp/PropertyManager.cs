@@ -36,12 +36,15 @@ namespace View
                     ((PropertyCard)(cards.getValue(entry.Key))).setUpCard((PropertyCard)entry.Value);
                     //((PropertyCard)(cards.getValue(entry.Key))).showHouse(((Model.Space.Property)(cards.getValue(entry.Key).property)).noOfHouses);
                     ((PropertyCard)(cards.getValue(entry.Key))).showHouse(Random.Range(0,6));
+                    cards.getValue(entry.Key).gameObject.AddComponent<ManagePropertyController>();
                     break;
                     case SqType.STATION:
                     ((StationCard)(cards.getValue(entry.Key))).setUpCard((StationCard)entry.Value);
+                    cards.getValue(entry.Key).gameObject.AddComponent<ManageUtilityController>();
                     break;
                     case SqType.UTILITY:
                     ((UtilityCard)(cards.getValue(entry.Key))).setUpCard((UtilityCard)entry.Value);
+                    cards.getValue(entry.Key).gameObject.AddComponent<ManageUtilityController>();
                     break;
                 }
             }
