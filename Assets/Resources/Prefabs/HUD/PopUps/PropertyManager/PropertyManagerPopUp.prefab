@@ -390,7 +390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5569775867419733939
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2436,6 +2436,7 @@ MonoBehaviour:
     - {fileID: 5169641361818785340}
     - {fileID: 3384679474323871740}
   ownedByText: {fileID: 260846981668830508}
+  GoBunkruptBtn: {fileID: 6667267050987755463}
 --- !u!1001 &6137716141240975424
 PrefabInstance:
   m_ObjectHideFlags: 0

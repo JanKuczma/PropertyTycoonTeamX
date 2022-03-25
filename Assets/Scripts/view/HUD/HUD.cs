@@ -12,6 +12,7 @@ public class HUD : MonoBehaviour
     public Button FinishTurnButton;
     // current PopUp, in future can be changed to queue/stack of PopUps
     public OkPopUp currentPopUp = null;
+    public PropertyManager currentManager = null;
 
     public void Create_player_tabs(List<Model.Player> players,Model.Board board)
     {

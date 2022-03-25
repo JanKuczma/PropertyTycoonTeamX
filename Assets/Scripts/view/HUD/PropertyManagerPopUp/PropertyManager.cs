@@ -12,6 +12,7 @@ namespace View
 
     Model.Player player;
     public Text ownedByText;
+    public Button GoBunkruptBtn; 
 
     public static PropertyManager Create(Transform parent, Model.Player player, Dictionary<int,PurchasableCard> propertyCards,bool canManage)
     {
