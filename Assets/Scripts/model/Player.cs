@@ -29,5 +29,30 @@ public class Player
     {
         this.cash += cash;
     }
+
+    public bool PayCash(int amount, Player player = null)
+    {
+        if(amount > this.cash) { return false; }
+        if(player == null) { this.cash -= amount; return true; }
+        player.ReceiveCash(amount);
+        this.cash -= amount;
+        return true;
+    }
+
+    public bool SellProperty(Space.Purchasable property)
+    {
+        //if property.isMortgaged then: no pasa nada, return false;
+        owned_spaces.Remove(property);
+        ReceiveCash(property.cost);
+        return true; 
+    }
+
+    public bool BuyProperty(Space.Purchasable property)
+    {
+        //if property.cost > this.cash: no pasa nada, return false;
+        owned_spaces.Add(property);
+        PayCash(property.cost);
+        return true; 
+    }
 }
 }

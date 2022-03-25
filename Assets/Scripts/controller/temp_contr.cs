@@ -150,6 +150,7 @@ public class temp_contr : MonoBehaviour
             }
             else if(turnState == TurnState.PERFORMACTION)  // ACTION state (buy property, pay rent etc...)
             {
+                // when PopUp is closed the `trunState` is changed to MANAGEPROPERTIES
                 if(hud.currentPopUp == null)
                 {
                     turnState = TurnState.MANAGEPROPERTIES;
@@ -158,6 +159,7 @@ public class temp_contr : MonoBehaviour
             else if(turnState == TurnState.MANAGEPROPERTIES)  // (manage your properties, check other players' properties)
             {
                 hud.FinishTurnButton.gameObject.SetActive(true);
+                // when player presses FINISH TURN button the `turnState` is changed to END
             }
             else if(turnState == TurnState.END)     // END state, when player finished his turn
             {
