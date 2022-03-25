@@ -46,4 +46,9 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+    void OnDestroy()
+    {
+        FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();
+    }
 }

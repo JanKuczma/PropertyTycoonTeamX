@@ -88,7 +88,7 @@ public class temp_contr : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            View.OkPopUp.Create(hud.transform, Asset.okPopup,"testing");
+            View.OptionPopUp.Create(hud.transform, Asset.okPopup,"testing");
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -167,12 +167,12 @@ public class temp_contr : MonoBehaviour
                 dice.reset();                   // reset dice
                 if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
                 {
-                    View.OkPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "rolled a double, have another turn!");
+                    View.OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "rolled a double, have another turn!");
                     double_count++;
                     double_rolled = false;      // reset double check
                     if (double_count == 3)      // if 3 doubles in a row, send player to jail and update current player
                     {
-                        View.OkPopUp.Create(hud.transform, Asset.okPopup,"Three doubles in a row? You must be cheating… go to jail!");
+                        View.OptionPopUp.Create(hud.transform, Asset.okPopup,"Three doubles in a row? You must be cheating… go to jail!");
                         // send player to jail
                         nextPlayer();
                     }
@@ -217,6 +217,7 @@ public class temp_contr : MonoBehaviour
             }
             if(!dice.areRolling())  //when dice stopped rolling
             {
+                invisibleWall.SetActive(false);
                 int steps = dice.get_result();  // get the result
                 if(steps < 0)                   // if result is negative (dice are stuck)
                 {                                // reset the dice
@@ -269,7 +270,7 @@ public class temp_contr : MonoBehaviour
          double_rolled = false;  // reset double check
          double_count = 0;       // reset double count
          current_player = (current_player + 1) % players.Count;
-         View.OkPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + ", it's your turn!");
+         View.OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + ", it's your turn!");
      }
      
     void PerformAction()
@@ -298,7 +299,7 @@ public class temp_contr : MonoBehaviour
         {
             case SqType.GO:
             {
-                hud.currentPopUp = OkPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "passed GO, collect £200!");
+                hud.currentPopUp = OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "passed GO, collect £200!");
                 //give player £200
                 //update in player info that this player has passed GO
                 break;
@@ -310,14 +311,14 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.PARKING:
             {
-                hud.currentPopUp = OkPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "landed on Free Parking. Collect all those juicy fines!");
+                hud.currentPopUp = OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "landed on Free Parking. Collect all those juicy fines!");
                 //reset FREE PARKING balance to zero
                 //give player whatever the balance in FREE PARKING
                 break;
             }
             case SqType.GOTOJAIL:
             {
-                hud.currentPopUp = OkPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "broke the law! They must go straight to jail!");
+                hud.currentPopUp = OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "broke the law! They must go straight to jail!");
                 //player token is moved to JAIL square
                 //player hud icon is updated
                 //jail cell animation on board
@@ -325,7 +326,8 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.PROPERTY:
             {
-                hud.currentPopUp = OkPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + " do you wish to purchase this property?");    // new pop up prefabs needed for this popup
+                hud.currentPopUp = OptionPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + " do you wish to purchase this property?",
+                                                        players[current_player],(Space.Purchasable)current_space,board_view.squares[current_square]);
                 PurchasableCard c = PropertyCard.Create((Model.Space.Property)current_space,hud.currentPopUp.transform);
                 c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                 c.gameObject.SetActive(true);
@@ -333,7 +335,8 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.STATION:
             {
-                hud.currentPopUp = OkPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + "do you wish to purchase this station?");      // new pop up prefabs needed for this popup
+                hud.currentPopUp = OptionPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + "do you wish to purchase this station?",
+                                                        players[current_player],(Space.Purchasable)current_space,board_view.squares[current_square]);
                 PurchasableCard c = StationCard.Create((Model.Space.Station)current_space,hud.currentPopUp.transform);
                 c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                 c.gameObject.SetActive(true);
@@ -341,7 +344,8 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.UTILITY:
             {
-                hud.currentPopUp = OkPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + "do you wish to purchase this utility company?");      // new pop up prefabs needed for this popup
+                hud.currentPopUp = OptionPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + "do you wish to purchase this utility company?",
+                                                        players[current_player],(Space.Purchasable)current_space,board_view.squares[current_square]);
                 PurchasableCard c = UtilityCard.Create((Model.Space.Utility)current_space,hud.currentPopUp.transform);
                 c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                 c.gameObject.SetActive(true);
@@ -349,7 +353,7 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.TAX:
             {
-                hud.currentPopUp = OkPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "misfiled their tax returns, pay HMRC a SUPER TAX!");
+                hud.currentPopUp = OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + "misfiled their tax returns, pay HMRC a SUPER TAX!");
                 break;
             }
         }
@@ -357,7 +361,7 @@ public class temp_contr : MonoBehaviour
     
     public void performCardAction(Model.Card card, Model.Player player)
     {
-        OkPopUp.Create(hud.transform, Asset.okPopup,players[current_player].name + " take a card!");
+        OptionPopUp.Create(hud.transform, Asset.okPopup,players[current_player].name + " take a card!");
         switch(card.action)
         {
             case CardAction.PAYTOBANK:

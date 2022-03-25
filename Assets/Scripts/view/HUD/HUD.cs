@@ -11,7 +11,7 @@ public class HUD : MonoBehaviour
     Dictionary<int,PurchasableCard> propertyCards = new Dictionary<int, PurchasableCard>();
     public Button FinishTurnButton;
     // current PopUp, in future can be changed to queue/stack of PopUps
-    public OkPopUp currentPopUp = null;
+    public OptionPopUp currentPopUp = null;
     public PropertyManager currentManager = null;
 
     public void Create_player_tabs(List<Model.Player> players,Model.Board board)
@@ -64,5 +64,12 @@ public class HUD : MonoBehaviour
         StartCoroutine(player_tabs[player].halfPopUp(GetComponentInParent<RectTransform>().sizeDelta.y));
     }
 
+    public void UpdatePlayersTabInfo()
+    {
+        foreach(KeyValuePair<Model.Player,View.PlayerTab> entry in player_tabs)
+        {
+            entry.Value.setMoney(entry.Key.cash);
+        }
+    }
 }
 }
