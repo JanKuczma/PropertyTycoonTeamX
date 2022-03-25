@@ -15,14 +15,14 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Image token;
     Token tokes_enum;
     public PropertyGrid propertyGrid;
-    bool active;
+    public bool currentPlayer;
     Coroutine popUpCoruotine = null;
     Coroutine tokenCoroutine = null;
     float _FrameRate = 25f;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards);
+        PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards,currentPlayer);
     }
      
      public void OnPointerEnter(PointerEventData eventData)
@@ -40,7 +40,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         {
             StopCoroutine(popUpCoruotine);
         }
-        if(active)
+        if(currentPlayer)
         {
             popUpCoruotine = StartCoroutine(halfPopUp(FindObjectOfType<Canvas>().GetComponent<RectTransform>().sizeDelta.y));
         } else {
@@ -56,7 +56,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         tab.setName(player.name);
         tab.setColor(player.color);
         tab.setToken(player.token);
-        tab.active = false;
+        tab.currentPlayer = false;
         tab.setUpPropertyGrid(propertyCards);
         return tab;
     }
@@ -93,7 +93,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if(tokenCoroutine != null){ StopCoroutine(tokenCoroutine); tokenCoroutine = null;}
         token.sprite = Asset.TokenIMG(tokes_enum);
         setColor(this.color,100);
-        active = false;
+        currentPlayer = false;
         float timeOfTravel = 1f;
         float currentTime = 0f;
         while (currentTime <= timeOfTravel) { 
@@ -105,7 +105,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public IEnumerator halfPopUp(float height)
     {
         setColor(this.color,200);
-        active = true;
+        currentPlayer = true;
         float timeOfTravel = 1f;
         float currentTime = 0f;
         if(tokenCoroutine == null)
@@ -131,7 +131,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         int index = 0;
         float frame_time = Time.deltaTime;
-        while(active)
+        while(currentPlayer)
         {
             if(frame_time >= 1/_FrameRate)
             {
