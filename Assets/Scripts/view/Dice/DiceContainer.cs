@@ -32,7 +32,12 @@ public class DiceContainer : MonoBehaviour
     {   // when dragging keep recalculating velocity and move towards cursor
         previous_frame_pos = transform.position;
         Vector3 targetPos = getTargetPos();
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, move_speed * Time.deltaTime);
+        if(transform.position.y < 1.5f || Mathf.Abs(transform.position.x) > 18.3f || Mathf.Abs(transform.position.z) > 10.5f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position,Vector3.up*10.0f,move_speed * Time.deltaTime);
+        } else {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, move_speed * Time.deltaTime);
+        }
     }
     void OnMouseUp()
     {   // on mouse button release change cursor to 'poiniting hand'

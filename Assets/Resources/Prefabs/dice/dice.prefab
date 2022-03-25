@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1053633488498520872}
   - component: {fileID: 3994198433657102061}
   - component: {fileID: 4933356070665815840}
-  - component: {fileID: -309014383460145841}
+  - component: {fileID: -3342972001973283803}
   m_Layer: 0
   m_Name: dice
   m_TagString: Untagged
@@ -125,7 +125,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.52, y: 0.52, z: 0.52}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-309014383460145841
+--- !u!54 &-3342972001973283803
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
