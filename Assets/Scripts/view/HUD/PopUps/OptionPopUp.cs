@@ -38,6 +38,7 @@ namespace View
             } else {
                 player.PayCash(space.cost);
                 player.owned_spaces.Add(space);
+                space.owner = player;
                 if(square is PropertySquare)
                 {
                     ((PropertySquare)(square)).showRibbon(player.color);
@@ -52,7 +53,7 @@ namespace View
         }
         public void dontBuyPropertyOption()
         {
-            Debug.Log("Property not bought");
+            MessagePopUp.Create("*Auction system to be developed*",transform.parent);
             closePopup();
         }
 

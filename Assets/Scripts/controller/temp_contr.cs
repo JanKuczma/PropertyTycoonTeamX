@@ -14,8 +14,8 @@ public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 public class temp_contr : MonoBehaviour
 {
     //game elements
-    View.Board board_view;
-    Model.Board board_model;
+    public View.Board board_view;
+    public Model.Board board_model;
     Model.CardStack opportunity_knocks;
     Model.CardStack potluck;
     View.DiceContainer dice;

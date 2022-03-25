@@ -559,3 +559,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9447dcef5d3095044ab13c2c879b8147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mortgageBtnText: {fileID: 7651599208615948888}
