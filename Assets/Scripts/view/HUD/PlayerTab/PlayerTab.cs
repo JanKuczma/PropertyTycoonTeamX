@@ -12,6 +12,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Dictionary<int,PurchasableCard> propertyCards;
     Color color;
     public Text player_name;
+    public Text player_money;
     public Image token;
     Token tokes_enum;
     public PropertyGrid propertyGrid;
@@ -56,6 +57,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         tab.setName(player.name);
         tab.setColor(player.color);
         tab.setToken(player.token);
+        tab.setMoney(player.cash);
         tab.currentPlayer = false;
         tab.setUpPropertyGrid(propertyCards);
         return tab;
@@ -63,6 +65,10 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void setName(string name)
     {
         this.player_name.text = name;
+    }
+    public void setMoney(int money)
+    {
+        this.player_money.text = money.ToString() + "Q";
     }
 
     public void setToken(Token token)

@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ManageUtilityPropertyPopUpController : MonoBehaviour
 {
     Model.Player owner;
     Model.Space.Purchasable property;
+    public Text mortgageBtnText;
     void Awake()
     {
         owner = transform.parent.GetComponent<View.PurchasableCard>().property.owner;
         property = transform.parent.GetComponent<View.PurchasableCard>().property;
+        if(property.isMortgaged)
+        {
+            mortgageBtnText.text = "Pay Off Mortgage";
+        }
     }
     public void buyHouseOption()
     {
@@ -32,7 +38,12 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
     public void mortgagePropertyOption()
     {
         Debug.Log(property.name);
-        Debug.Log("Property mortgaged!");
+        if(property.isMortgaged)
+        {
+            Debug.Log("Mortgage paid off!");
+        } else {
+            Debug.Log("Property mortgaged!");
+        }
         Destroy(gameObject);
     }
 }
