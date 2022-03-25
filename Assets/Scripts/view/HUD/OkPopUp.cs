@@ -7,9 +7,9 @@ namespace View
     {
         public Text message;
 
-        public static OkPopUp Create(Transform parent, string msg)
+        public static OkPopUp Create(Transform parent, GameObject popUpType,string msg)
         {
-            OkPopUp popUp = Instantiate(Asset.okPopup, parent).GetComponent<OkPopUp>();
+            OkPopUp popUp = Instantiate(popUpType, parent).GetComponent<OkPopUp>();
             popUp.SetMessage(msg);
             return popUp;
         }
@@ -22,6 +22,17 @@ namespace View
         public void closePopup()
         {
             Destroy(this.gameObject);
+        }
+
+        public void buyPropertyOption()
+        {
+            Debug.Log("Property bought");
+            closePopup();
+        }
+        public void dontBuyPropertyOption()
+        {
+            Debug.Log("Property not bought");
+            closePopup();
         }
     }
 }

@@ -27,8 +27,7 @@ namespace View
     {
         foreach(KeyValuePair<int, PurchasableCard> entry in propertyCards)
         {
-            if(Random.Range(0,2) == 1)
-            //if(!player.owned_spaces.Contains(entry.Value.property))
+            if(!player.owned_spaces.Contains(entry.Value.property))
             {
                 cards.getValue(entry.Key).gameObject.SetActive(false);
             } else {
@@ -38,8 +37,7 @@ namespace View
                 {
                     case SqType.PROPERTY:
                     ((PropertyCard)(cards.getValue(entry.Key))).setUpCard((PropertyCard)entry.Value);
-                    //((PropertyCard)(cards.getValue(entry.Key))).showHouse(((Model.Space.Property)(cards.getValue(entry.Key).property)).noOfHouses);
-                    ((PropertyCard)(cards.getValue(entry.Key))).showHouse(Random.Range(0,6));
+                    ((PropertyCard)(cards.getValue(entry.Key))).showHouse(((Model.Space.Property)(cards.getValue(entry.Key).property)).noOfHouses);
                     if(canManage)
                     {
                         cards.getValue(entry.Key).gameObject.AddComponent<ManagePropertyController>();
