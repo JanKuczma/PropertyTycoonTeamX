@@ -57,6 +57,26 @@ namespace View
             closePopup();
         }
 
+        public void goToJailOption()
+        {
+            player.in_jail += 2;
+            FindObjectOfType<HUD>().jail_bars.gameObject.SetActive(true);
+            StartCoroutine(FindObjectOfType<temp_contr>().pieces[player].goToJail());
+            MessagePopUp.Create("You go to Jail!",transform.parent);
+            closePopup();
+        }
+        public void jailCardOption()
+        {
+            if(player.getOutOfJailCardsNo == 0)
+            {
+                MessagePopUp.Create("You have no \"Break out of Jail\" cards",transform);
+            } else {
+                player.getOutOfJailCardsNo -= 1;
+                MessagePopUp.Create("You go free!",transform.parent);
+                closePopup();
+            }
+        }
+
         void OnDestroy()
         {
             FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();

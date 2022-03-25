@@ -134,10 +134,11 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
         FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();
     }
 
+/*
 
+    // private methods to clean up the code
 
-
-    // private methods
+*/
     List<Model.Space.Property> allPropertiesInGroup(Group group)
     {
         List<Model.Space.Property> spacesInGroup = new List<Model.Space.Property>();

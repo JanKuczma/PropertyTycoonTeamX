@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour
     // current PopUp, in future can be changed to queue/stack of PopUps
     public OptionPopUp currentPopUp = null;
     public PropertyManager currentManager = null;
+    public Image jail_bars;
 
     public void Create_player_tabs(List<Model.Player> players,Model.Board board)
     {

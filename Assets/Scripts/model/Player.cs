@@ -11,6 +11,8 @@ public class Player
     public int cash;
     public int getOutOfJailCardsNo;
     public Color color;
+    public bool allowed_to_buy;
+    public int in_jail;
     public List<Space.Purchasable> owned_spaces;
 
     public Player(string name,Token token,bool isHuman,Color color,int start_money = 1500)
@@ -21,6 +23,8 @@ public class Player
         this.cash = start_money;
         this.color = color;
         this.getOutOfJailCardsNo = 0;
+        this.allowed_to_buy = false;
+        this.in_jail = 0;
         this.owned_spaces = new List<Space.Purchasable>();
     }
 
