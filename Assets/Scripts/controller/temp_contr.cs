@@ -372,6 +372,7 @@ public class temp_contr : MonoBehaviour
                 else if(((Space.Property)(current_space)).owner != null)
                 {
                     MessagePopUp.Create("*Pay rent to be developed*",hud.transform);
+                    //if(players[current_player].totalValueOfAssets < *whatever is the rent amount*) { *GoSquare bankrupt* }
                 } else {
                     MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
                 }
@@ -390,6 +391,7 @@ public class temp_contr : MonoBehaviour
                 else if(((Space.Station)(current_space)).owner != null)
                 {
                     MessagePopUp.Create("*Pay rent to be developed*",hud.transform);
+                    //if(players[current_player].totalValueOfAssets < *whatever is the rent amount*) { *GoSquare bankrupt* }
                 } else {
                     MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
                 }
@@ -408,6 +410,7 @@ public class temp_contr : MonoBehaviour
                 else if(((Space.Utility)(current_space)).owner != null)
                 {
                     MessagePopUp.Create("*Pay rent to be developed*",hud.transform);
+                    //if(players[current_player].totalValueOfAssets < *whatever is the rent amount*) { *GoSquare bankrupt* }
                 } else {
                     MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
                 }
@@ -416,6 +419,7 @@ public class temp_contr : MonoBehaviour
             case SqType.TAX:
             {
                 hud.currentPopUp = OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + " misfiled their tax returns, pay HMRC a SUPER TAX!");
+                //if(players[current_player].totalValueOfAssets < *whatever is the tax amount*) { *GoSquare bankrupt* }
                 break;
             }
         }
@@ -427,9 +431,11 @@ public class temp_contr : MonoBehaviour
         switch(card.action)
         {
             case CardAction.PAYTOBANK:
+            //if(players[current_player].totalValueOfAssets < *whatever is the amount*) { *GoSquare bankrupt* }
             //player.payCash(card.kwargs["amount"]);
             break;
             case CardAction.PAYTOPLAYER:
+            //if(players[current_player].totalValueOfAssets < *whatever is the amount*) { *GoSquare bankrupt* }
             //player.getCash(card.kwargs["amount"]);
             break;
             case CardAction.MOVEFORWARDTO:
@@ -453,9 +459,7 @@ public class temp_contr : MonoBehaviour
             case CardAction.BIRTHDAY:
             //foreach(Player p in players)
             //{
-            //  if(p.cash < card.kwargs["amont"])
-            //  {
-            //      *** p player is unable to pay ***
+            //  if(players[p].totalValueOfAssets < *whatever is the amount*) { *GoSquare bankrupt* }
             //  } else {
             //      p.payCash(card.kwargs["amont"],player)  
             //  }
@@ -475,6 +479,7 @@ public class temp_contr : MonoBehaviour
             //}
             break;
             case CardAction.PAYTOPARKING:
+            //  if(players[current_player].totalValueOfAssets < *whatever is the amount*) { *Go bankrupt* }
             //  player.payCash(card.kwargs["amount"]);
             //  board_model.parkingFees += card.kwargs["amount"];
             break;
@@ -493,6 +498,7 @@ public class temp_contr : MonoBehaviour
                         }
                     }
                 }
+                //  if(players[current_player].totalValueOfAssets < *whatever is the amount*) { *Go bankrupt* }
                 player.payCash(total);
             */
             break;

@@ -12,7 +12,6 @@ namespace View
 
     Model.Player player;
     public Text ownedByText;
-    public Button GoBunkruptBtn; 
 
     public static PropertyManager Create(Transform parent, Model.Player player, Dictionary<int,PurchasableCard> propertyCards,bool canManage)
     {
@@ -60,12 +59,6 @@ namespace View
                 }
             }
         }
-    }
-
-    public void GoBankrupt()
-    {
-        Debug.Log("Player " + player.name + " goes bankrupt!");
-        Destroy(this.gameObject);
     }
 
     public void destroy()

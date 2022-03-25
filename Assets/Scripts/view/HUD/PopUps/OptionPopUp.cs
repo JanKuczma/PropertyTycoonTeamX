@@ -69,7 +69,7 @@ namespace View
         {
             if(player.getOutOfJailCardsNo == 0)
             {
-                MessagePopUp.Create("You have no \"Break out of Jail\" cards",transform);
+                MessagePopUp.Create("You have no \"Break out of Jail\" cards!",transform);
             } else {
                 player.getOutOfJailCardsNo -= 1;
                 MessagePopUp.Create("You go free!",transform.parent);

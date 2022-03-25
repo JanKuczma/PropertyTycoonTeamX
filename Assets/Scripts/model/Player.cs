@@ -58,5 +58,30 @@ public class Player
         PayCash(property.cost);
         return true; 
     }
+
+    public int totalValueOfAssets()
+    {
+        int total = 0;
+        foreach(Space.Purchasable space in owned_spaces)
+        {
+            if(space is Space.Property)
+            {
+                if(((Space.Property)(space)).noOfHouses == 5)
+                {
+                    total += ((Space.Property)(space)).hotel_cost + 4*((Space.Property)(space)).house_cost;
+                } else {
+                    total += ((Space.Property)(space)).noOfHouses*((Space.Property)(space)).house_cost;
+                }
+            }
+            if(space.isMortgaged)
+            {
+                total += space.cost/2;
+            } else {
+                total += space.cost;
+            }
+        }
+        total += this.cash;
+        return 0;
+    }
 }
 }

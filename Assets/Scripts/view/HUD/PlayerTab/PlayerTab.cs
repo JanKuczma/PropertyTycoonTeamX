@@ -25,7 +25,6 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         if(transform.parent.GetComponent<HUD>().currentManager != null) { Destroy(transform.parent.GetComponent<HUD>().currentManager.gameObject); }
         transform.parent.GetComponent<HUD>().currentManager = PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards,currentPlayer).GetComponent<PropertyManager>();
-        if(currentPlayer) { transform.parent.GetComponent<HUD>().currentManager.GoBunkruptBtn.gameObject.SetActive(true); }
     }
      
      public void OnPointerEnter(PointerEventData eventData)
