@@ -1,9 +1,7 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using UnityEditor;
-using UnityEditor.UIElements;
+using UnityEngine.UI;
 
 namespace View
 {
@@ -11,6 +9,8 @@ public class HUD : MonoBehaviour
 {
     Dictionary<Model.Player,PlayerTab> player_tabs = new Dictionary<Model.Player,PlayerTab>();
     Dictionary<int,PurchasableCard> propertyCards = new Dictionary<int, PurchasableCard>();
+    public Button FinishTurnButton;
+    public OkPopUp currentPopUp = null;
 
     public void Create_player_tabs(List<Model.Player> players,Model.Board board)
     {

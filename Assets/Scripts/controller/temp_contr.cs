@@ -6,7 +6,7 @@ using Space = Model.Space;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, ACTION, END}
+public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, PERFORMACTION,MANAGEPROPERTIES,END}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -144,16 +144,24 @@ public class temp_contr : MonoBehaviour
             {
                 if(!pieces[players[current_player]].isMoving)   //if piece is not moving anymore
                 {
-                    turnState = TurnState.ACTION;   // change turn state to action
+                    turnState = TurnState.PERFORMACTION;   // change turn state to action
+                    PerformAction();
                 }
             }
-            else if(turnState == TurnState.ACTION)  // ACTION state (buy property, pay rent etc...)
+            else if(turnState == TurnState.PERFORMACTION)  // ACTION state (buy property, pay rent etc...)
             {
-                PerformAction();
-                turnState = TurnState.END;
+                if(hud.currentPopUp == null)
+                {
+                    turnState = TurnState.MANAGEPROPERTIES;
+                }
+            }
+            else if(turnState == TurnState.MANAGEPROPERTIES)  // (manage your properties, check other players' properties)
+            {
+                hud.FinishTurnButton.gameObject.SetActive(true);
             }
             else if(turnState == TurnState.END)     // END state, when player finished his turn
             {
+                hud.FinishTurnButton.gameObject.SetActive(false);
                 dice.reset();                   // reset dice
                 if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
                 {
@@ -288,7 +296,7 @@ public class temp_contr : MonoBehaviour
         {
             case SqType.GO:
             {
-                OkPopUp.Create(hud.transform, players[current_player].name + "passed GO, collect £200!");
+                hud.currentPopUp = OkPopUp.Create(hud.transform, players[current_player].name + "passed GO, collect £200!");
                 //give player £200
                 //update in player info that this player has passed GO
                 break;
@@ -300,14 +308,14 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.PARKING:
             {
-                OkPopUp.Create(hud.transform, players[current_player].name + "landed on Free Parking. Collect all those juicy fines!");
+                hud.currentPopUp = OkPopUp.Create(hud.transform, players[current_player].name + "landed on Free Parking. Collect all those juicy fines!");
                 //reset FREE PARKING balance to zero
                 //give player whatever the balance in FREE PARKING
                 break;
             }
             case SqType.GOTOJAIL:
             {
-                OkPopUp.Create(hud.transform, players[current_player].name + "broke the law! They must go straight to jail!");
+                hud.currentPopUp = OkPopUp.Create(hud.transform, players[current_player].name + "broke the law! They must go straight to jail!");
                 //player token is moved to JAIL square
                 //player hud icon is updated
                 //jail cell animation on board
@@ -315,22 +323,22 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.PROPERTY:
             {
-                OkPopUp.Create(hud.transform, players[current_player].name + " do you wish to purchase this property?");    // new pop up prefabs needed for this popup
+                hud.currentPopUp = OkPopUp.Create(hud.transform, players[current_player].name + " do you wish to purchase this property?");    // new pop up prefabs needed for this popup
                 break;
             }
             case SqType.STATION:
             {
-                OkPopUp.Create(hud.transform, players[current_player].name + "do you wish to purchase this station?");      // new pop up prefabs needed for this popup
+                hud.currentPopUp = OkPopUp.Create(hud.transform, players[current_player].name + "do you wish to purchase this station?");      // new pop up prefabs needed for this popup
                 break;
             }
             case SqType.UTILITY:
             {
-                OkPopUp.Create(hud.transform, players[current_player].name + "do you wish to purchase this utility company?");      // new pop up prefabs needed for this popup
+                hud.currentPopUp = OkPopUp.Create(hud.transform, players[current_player].name + "do you wish to purchase this utility company?");      // new pop up prefabs needed for this popup
                 break;
             }
             case SqType.TAX:
             {
-                OkPopUp.Create(hud.transform, players[current_player].name + "misfiled their tax returns, pay HMRC a SUPER TAX!");
+                hud.currentPopUp = OkPopUp.Create(hud.transform, players[current_player].name + "misfiled their tax returns, pay HMRC a SUPER TAX!");
                 break;
             }
         }
@@ -412,6 +420,11 @@ public class temp_contr : MonoBehaviour
             */
             break;
         }
+    }
+
+    public void finishTurn()
+    {
+        turnState = TurnState.END;
     }
     //Camera movement
     public void moveCameraLeft()
