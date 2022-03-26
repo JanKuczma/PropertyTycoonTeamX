@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System.Linq;
 using View;
@@ -6,7 +7,7 @@ using Space = Model.Space;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,DICEROLL, PIECEMOVE, PERFORMACTION,MANAGEPROPERTIES,END}
+public enum TurnState {BEGIN,DICEROLL,DICEROLL_UTILITY_RENT, PIECEMOVE, PERFORMACTION,MANAGEPROPERTIES,END}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -238,7 +239,7 @@ public class temp_contr : MonoBehaviour
         {
             moveCameraTowardsPiece(pieces[players[current_player]]);
         }
-        else if(turnState == TurnState.DICEROLL)
+        else if(turnState == TurnState.DICEROLL || turnState == TurnState.DICEROLL_UTILITY_RENT)
         {
             moveCameraTowardsDice(dice);
         } else {
@@ -433,10 +434,11 @@ public class temp_contr : MonoBehaviour
                     {
 
                     } else {
-                        int dice_result = 1; // dice result to be developed
-                        int rent_amount = board_model.calc_rent(((Space.Utility)(current_space)),players[current_player],dice_result);
-                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This company is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
-                        hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Utility)(current_space)).owner,players[current_player]));
+                        int rent_times = board_model.calc_rent(((Space.Utility)(current_space)),players[current_player]);
+                        MessagePopUp.Create("This company is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_times+" times the value shown on the dice!",hud.transform);
+                        MessagePopUp temp_popUp = MessagePopUp.Create("Roll the dice! ",hud.transform);
+                        temp_popUp.GetComponent<RectTransform>().anchoredPosition = new Vector2(650,0);
+                        StartCoroutine(payUtilityRentCoroutine(rent_times,((Space.Utility)(current_space)).owner));
                     }
                 } else {
                     MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
@@ -545,6 +547,43 @@ public class temp_contr : MonoBehaviour
             */
             //player.payCash(total);
             break;
+        }
+
+    }
+
+    IEnumerator payUtilityRentCoroutine(int rent_times,Model.Player owner)
+    {
+        bool successful = false;
+        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"");
+        hud.current_main_PopUp.gameObject.SetActive(false);
+        dice.reset();
+        while(!successful)
+        {
+            if(dice.start_roll) 
+            {
+                turnState = TurnState.DICEROLL_UTILITY_RENT;
+                invisibleWall.SetActive(true);
+            } else {
+                yield return null;
+            }
+            if(!dice.areRolling())  // if dice are not rolling anymore
+            {
+                invisibleWall.SetActive(false);
+                int dice_result = dice.get_result();  // get the result
+                if(dice_result < 0)                   // if result is negative (dice are stuck)
+                {                               // reset the dice
+                    dice.reset();
+                    MessagePopUp.Create("Dice stuck. Please roll again!",hud.transform,2);
+                    turnState = TurnState.PERFORMACTION;
+                } else {
+                    Destroy(hud.current_main_PopUp.gameObject);
+                    hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"You have to pay "+ rent_times*dice_result+" !",amount:rent_times*dice_result);
+                    hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(owner,players[current_player]));
+                    turnState = TurnState.PERFORMACTION;
+                    successful = true;
+                }
+            }
+            yield return null;
         }
 
     }

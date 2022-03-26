@@ -55,13 +55,13 @@ public class Board
             return space.rents[space.noOfHouses]; // otherwise just return rent shon on the card
         }
     }
-    public int calc_rent(Space.Utility space, Player player, int dice_result)
+    public int calc_rent(Space.Utility space, Player player)
     {
         if(ownedUtilities(player).Count == allUtilities().Count)
         {
-            return dice_result * space.rents[1];    // 10 times dice result
+            return space.rents[1];    // 10 times dice result
         } else {
-            return dice_result * space.rents[0];    // 4 times dice result
+            return space.rents[0];    // 4 times dice result
         }
     }
     public int calc_rent(Space.Station space, Player player)
