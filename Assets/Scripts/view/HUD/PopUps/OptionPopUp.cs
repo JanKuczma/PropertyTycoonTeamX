@@ -9,15 +9,18 @@ namespace View
         Model.Player player;
         Model.Space.Purchasable space;
         View.Square square;
+        int amount;
         public Image optional_image;
+        public Button OkBtn;
 
-        public static OptionPopUp Create(Transform parent, GameObject popUpType,string msg, Model.Player player = null, Model.Space.Purchasable space = null, View.Square square = null)
+        public static OptionPopUp Create(Transform parent, GameObject popUpType,string msg, Model.Player player = null, Model.Space.Purchasable space = null, View.Square square = null, int amount = 0)
         {
             OptionPopUp popUp = Instantiate(popUpType, parent).GetComponent<OptionPopUp>();
             popUp.SetMessage(msg);
             popUp.player = player;
             popUp.space = space;
             popUp.square  = square;
+            popUp.amount = amount;
             return popUp;
         }
         
@@ -68,6 +71,23 @@ namespace View
             closePopup();
         }
 
+        public void okPayRent(Model.Player owner,Model.Player payer)
+    {
+        if(payer.totalValueOfAssets() < this.amount)
+        {
+            MessagePopUp.Create("You're broke. You're bankrupt",transform.parent);
+            owner.ReceiveCash(amount);
+            closePopup();
+        }
+        else if(payer.cash < this.amount)
+        {
+            MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform);
+        } else {
+            payer.PayCash(amount,owner);
+            closePopup();
+        }
+    }
+
 /*
 
     // Land on GO TO JAIL options
@@ -92,6 +112,7 @@ namespace View
                 closePopup();
             }
         }
+
 /*
 
     // Land on TAKE CARD options
@@ -103,10 +124,30 @@ namespace View
         MessagePopUp.Create("You took card",transform.parent);
         closePopup();
     }
-    public void payOption()
+    public void optionalPayOption()
     {
-        MessagePopUp.Create("You decided to pay",transform.parent);
-        closePopup();
+        if(player.cash < this.amount)
+        {
+            MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform);
+        } else {
+            player.PayCash(amount);
+            closePopup();
+        }
+    }
+    public void okPayBank()
+    {
+        if(player.totalValueOfAssets() < this.amount)
+        {
+            MessagePopUp.Create("You're broke. You're bankrupt",transform.parent);
+            closePopup();
+        }
+        else if(player.cash < this.amount)
+        {
+            MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform);
+        } else {
+            player.PayCash(amount);
+            closePopup();
+        }
     }
     }
 }

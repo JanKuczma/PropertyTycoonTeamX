@@ -81,7 +81,7 @@ public class Player
             }
         }
         total += this.cash;
-        return 0;
+        return total;
     }
 }
 }

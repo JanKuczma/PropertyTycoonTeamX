@@ -16,7 +16,7 @@ public abstract class Space
         public int cost;
         public int[] rents;
         public bool isMortgaged;
-        public abstract void collectRent(Player player);
+        public abstract int rentAmount();
 
         public override string ToString()
         {
@@ -76,14 +76,11 @@ public abstract class Space
             this.hotel_cost = hotel_cost;
             this.isMortgaged = false;
         }
-        override public void collectRent(Player player)
+        override public int rentAmount()
         {
-            //something like 
-            // if (owner)
-            // {
-            //     player.payRent(owner);
-            // }
+            return 0;
         }
+        
         //add property methods
     }
 
@@ -98,13 +95,9 @@ public abstract class Space
             this.rents = rents;
             this.isMortgaged = false;
         }
-        override public void collectRent(Player player)
+        override public int rentAmount()
         {
-            //something like 
-            // if (owner)
-            // {
-            //     player.payRent(owner);
-            // }
+            return 0;
         }
         //add utility methods
     }
@@ -121,13 +114,9 @@ public abstract class Space
             this.rents = rents;
             this.isMortgaged = false;
         }
-        override public void collectRent(Player player)
+        override public int rentAmount()
         {
-            //something like 
-            // if (owner)
-            // {
-            //     player.payRent(owner);
-            // }
+            return 0;
         }
     }
 

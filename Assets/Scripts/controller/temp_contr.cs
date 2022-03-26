@@ -89,7 +89,8 @@ public class temp_contr : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            View.OptionPopUp.Create(hud.transform, Asset.okPopup,"testing");
+            hud.current_main_PopUp = View.OptionPopUp.Create(hud.transform, Asset.okPopup,"testing");
+            hud.current_main_PopUp.OkBtn.onClick.AddListener(hud.current_main_PopUp.closePopup);
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -125,6 +126,7 @@ public class temp_contr : MonoBehaviour
                     if(hud.current_main_PopUp == null)
                     {
                         hud.current_main_PopUp = OptionPopUp.Create(hud.transform, Asset.okPopup,"You have to stay in jail for "+players[current_player].in_jail +" more rounds");
+                        hud.current_main_PopUp.OkBtn.onClick.AddListener(hud.current_main_PopUp.closePopup);
                         players[current_player].in_jail -= 1;
                         turnState = TurnState.PERFORMACTION;
                     }
@@ -135,6 +137,7 @@ public class temp_contr : MonoBehaviour
                     if(hud.current_main_PopUp == null)
                     {
                         hud.current_main_PopUp = OptionPopUp.Create(hud.transform, Asset.okPopup,"You are leaving the jail! You can roll dice in the next round!",players[current_player]);
+                        hud.current_main_PopUp.OkBtn.onClick.AddListener(hud.current_main_PopUp.closePopup);
                         StartCoroutine(pieces[players[current_player]].leaveJail());
                         players[current_player].in_jail -= 1;
                         turnState = TurnState.PERFORMACTION;
@@ -278,20 +281,7 @@ public class temp_contr : MonoBehaviour
                             var player_throws_sorted =
                                 from entry in player_throws orderby entry.Value descending select entry;    // this line sorts the dictionary in descending order by each pair's Value
                             Dictionary<Model.Player,int> sorted_dict = player_throws_sorted.ToDictionary(pair => pair.Key, pair => pair.Value); // casts output from previous line as a Dictionary
-                            Debug.Log("**BEFORE ORDERING**"); 
-                            for (int i = 0; i < players.Count; i++)
-                            {
-                                Debug.Log("Key: " + i + " || Token: " + players[i].token.ToString()); // prints new list of players and their selected Token
-                            }
-
                             players = sorted_dict.Keys.ToList<Model.Player>();
-
-                            Debug.Log("**AFTER ORDERING**"); 
-                            for (int i = 0; i < players.Count; i++)
-                            {
-                                Debug.Log("after Key: " + i + " || Token: " + players[i].token.ToString()); // prints new list of players and their selected Token
-                            }
-
                             current_player = 0;             // game starts with player first on ordered list
                             hud.sort_tabs(players);
                             turnState = TurnState.BEGIN;
@@ -348,6 +338,7 @@ public class temp_contr : MonoBehaviour
             case SqType.PARKING:
             {
                 hud.current_main_PopUp = OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + " landed on Free Parking. Collect all those juicy fines!");
+                hud.current_main_PopUp.OkBtn.onClick.AddListener(hud.current_main_PopUp.closePopup);
                 //reset FREE PARKING balance to zero
                 //give player whatever the balance in FREE PARKING
                 break;
@@ -370,10 +361,20 @@ public class temp_contr : MonoBehaviour
                     c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                     c.gameObject.SetActive(true);
                 }
+                else if(((Space.Property)(current_space)).owner == players[current_player])
+                {
+                    
+                }
                 else if(((Space.Property)(current_space)).owner != null)
                 {
-                    MessagePopUp.Create("*Pay rent to be developed*",hud.transform);
-                    //if(players[current_player].totalValueOfAssets < *whatever is the rent amount*) { *GoSquare bankrupt* }
+                    if(((Space.Property)(current_space)).isMortgaged)
+                    {
+
+                    } else {
+                        int rent_amount = 10; //needs to be developed
+                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This property is owned by " + ((Space.Property)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
+                        hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Property)(current_space)).owner,players[current_player]));
+                    }
                 } else {
                     MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
                 }
@@ -389,10 +390,20 @@ public class temp_contr : MonoBehaviour
                     c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                     c.gameObject.SetActive(true);
                 }
+                else if(((Space.Station)(current_space)).owner == players[current_player])
+                {
+                    
+                }
                 else if(((Space.Station)(current_space)).owner != null)
                 {
-                    MessagePopUp.Create("*Pay rent to be developed*",hud.transform);
-                    //if(players[current_player].totalValueOfAssets < *whatever is the rent amount*) { *GoSquare bankrupt* }
+                    if(((Space.Station)(current_space)).isMortgaged)
+                    {
+
+                    } else {
+                        int rent_amount = 10; //needs to be developed
+                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This property is owned by " + ((Space.Station)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
+                        hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Station)(current_space)).owner,players[current_player]));
+                    }
                 } else {
                     MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
                 }
@@ -408,18 +419,29 @@ public class temp_contr : MonoBehaviour
                     c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                     c.gameObject.SetActive(true);
                 }
+                else if(((Space.Utility)(current_space)).owner == players[current_player])
+                {
+                    
+                }
                 else if(((Space.Utility)(current_space)).owner != null)
                 {
-                    MessagePopUp.Create("*Pay rent to be developed*",hud.transform);
-                    //if(players[current_player].totalValueOfAssets < *whatever is the rent amount*) { *GoSquare bankrupt* }
+                    if(((Space.Utility)(current_space)).isMortgaged)
+                    {
+
+                    } else {
+                        int rent_amount = 10; //needs to be developed
+                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This property is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
+                        hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Utility)(current_space)).owner,players[current_player]));
+                    }
                 } else {
-                    MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform,3);
+                    MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
                 }
                 break;
             }
             case SqType.TAX:
             {
                 hud.current_main_PopUp = OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + " misfiled their tax returns, pay HMRC a SUPER TAX!");
+                hud.current_main_PopUp.OkBtn.onClick.AddListener(hud.current_main_PopUp.closePopup);
                 //if(players[current_player].totalValueOfAssets < *whatever is the tax amount*) { *GoSquare bankrupt* }
                 break;
             }
@@ -449,85 +471,77 @@ public class temp_contr : MonoBehaviour
             }
         }
         hud.current_main_PopUp.optional_image.sprite = card_image;
-        if(hud.current_main_PopUp == null)
+        switch(card.action)
         {
-            switch(card.action)
+            case CardAction.PAYTOBANK:
+            //player.payCash(card.kwargs["amount"]);
+            break;
+            case CardAction.PAYTOPLAYER:
+            //player.getCash(card.kwargs["amount"]);
+            break;
+            case CardAction.MOVEFORWARDTO:
+            // int steps = (40+card.kwargs["position"]) - player.position)%40; 
+            //player.move(card.kwargs["position"]);
+            //StartCoroutine(pieces[player].move(steps));
+            break;
+            case CardAction.MOVEBACKTO:
+            // int steps = -1 * ((player.position+40 - card.kwargs["position"])%40); 
+            //player.move(card.kwargs["position"]);
+            //StartCoroutine(pieces[player].move(steps));
+            break;
+            case CardAction.MOVEBACK:
+            //player.move(card.kwargs["steps"]);
+            //StartCoroutine(pieces[player].move(-1*steps));
+            break;
+            case CardAction.GOTOJAIL:
+            //player.goToJail();
+            //StartCoroutine(pieces[player].goToJail());
+            break;
+            case CardAction.BIRTHDAY:
+            //foreach(Player p in players)
+            //{
+            //  } else {
+            //      p.payCash(card.kwargs["amont"],player)  
+            //  }
+            //}
+            break;
+            case CardAction.OUTOFJAIL:
+            //player.outOfJailCards+=1;
+            break;
+            case CardAction.PAYORCHANCE:                        //this has to be implemented in method in OptionPopUp.cs (two different options)
+            // bool choice = *** some choice popup window ***
+            // if(choice)
+            //{
+            //  player.payCash(card.kwargs["amount"]);
+            //  board_model.parkingFees += card.kwargs["amount"];
+            //} else {
+            //  player.takeCard(opportunity_knocks.pop());
+            //}
+            break;
+            case CardAction.PAYTOPARKING:
+            //  player.payCash(card.kwargs["amount"]);
+            //  board_model.parkingFees += card.kwargs["amount"];
+            break;
+            case CardAction.REPAIRS:
+            /*
+            int total = 0;
+            foreach(Model2.Space.Purchasable space in player.owned_spaces)
             {
-                case CardAction.PAYTOBANK:
-                //if(players[current_player].totalValueOfAssets < *whatever is the amount*) { *GoSquare bankrupt* }
-                //player.payCash(card.kwargs["amount"]);
-                break;
-                case CardAction.PAYTOPLAYER:
-                //if(players[current_player].totalValueOfAssets < *whatever is the amount*) { *GoSquare bankrupt* }
-                //player.getCash(card.kwargs["amount"]);
-                break;
-                case CardAction.MOVEFORWARDTO:
-                // int steps = (40+card.kwargs["position"]) - player.position)%40; 
-                //player.move(card.kwargs["position"]);
-                //StartCoroutine(pieces[player].move(steps));
-                break;
-                case CardAction.MOVEBACKTO:
-                // int steps = -1 * ((player.position+40 - card.kwargs["position"])%40); 
-                //player.move(card.kwargs["position"]);
-                //StartCoroutine(pieces[player].move(steps));
-                break;
-                case CardAction.MOVEBACK:
-                //player.move(card.kwargs["steps"]);
-                //StartCoroutine(pieces[player].move(-1*steps));
-                break;
-                case CardAction.GOTOJAIL:
-                //player.goToJail();
-                //StartCoroutine(pieces[player].goToJail());
-                break;
-                case CardAction.BIRTHDAY:
-                //foreach(Player p in players)
-                //{
-                //  if(players[p].totalValueOfAssets < *whatever is the amount*) { *GoSquare bankrupt* }
-                //  } else {
-                //      p.payCash(card.kwargs["amont"],player)  
-                //  }
-                //}
-                break;
-                case CardAction.OUTOFJAIL:
-                //player.outOfJailCards+=1;
-                break;
-                case CardAction.PAYORCHANCE:                        //this has to be implemented in method in OptionPopUp.cs (two different options)
-                // bool choice = *** some choice popup window ***
-                // if(choice)
-                //{
-                //  player.payCash(card.kwargs["amount"]);
-                //  board_model.parkingFees += card.kwargs["amount"];
-                //} else {
-                //  player.takeCard(opportunity_knocks.pop());
-                //}
-                break;
-                case CardAction.PAYTOPARKING:
-                //  if(players[current_player].totalValueOfAssets < *whatever is the amount*) { *Go bankrupt* }
-                //  player.payCash(card.kwargs["amount"]);
-                //  board_model.parkingFees += card.kwargs["amount"];
-                break;
-                case CardAction.REPAIRS:
-                /*
-                    int total = 0;
-                    foreach(Model2.Space.Purchasable space in player.owned_spaces)
+                if(space.type == SqType.PROPERTY)
+                {
+                    if(((Model2.Space.Property)space).noOfHouses == 5)
                     {
-                        if(space.type == SqType.PROPERTY)
-                        {
-                            if(((Model2.Space.Property)space).noOfHouses == 5)
-                            {
-                                total += card.kwargs["hotel"];
-                            } else {
-                                total += ((Model2.Space.Property)space).noOfHouses * card.kwargs["house"];
-                            }
-                        }
+                        total += card.kwargs["hotel"];
+                    } else {
+                        total += ((Model2.Space.Property)space).noOfHouses * card.kwargs["house"];
                     }
-                    //  if(players[current_player].totalValueOfAssets < *whatever is the amount*) { *Go bankrupt* }
-                    player.payCash(total);
-                */
-                break;
+                }
             }
-
+            */
+            //player.payCash(total);
+            break;
         }
+
     }
 
     public void sendPieceToJail()
