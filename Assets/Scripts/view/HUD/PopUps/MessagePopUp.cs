@@ -7,15 +7,17 @@ using UnityEngine.EventSystems;
 public class MessagePopUp : MonoBehaviour, IPointerClickHandler
 {
     public Text message;
-    void Awake()
-    {
-        StartCoroutine(closeAfterTime());
-    }
+    int display_time;
 
-    public static MessagePopUp Create(string message, Transform parent)
+    void Start()
+    {
+        StartCoroutine(closeAfterTime(display_time));
+    }
+    public static MessagePopUp Create(string message, Transform parent,int display_time = 5)
     {
         MessagePopUp popUp = Instantiate(Asset.MessagePopUpPrefab,parent).GetComponent<MessagePopUp>();
         popUp.message.text = message;
+        popUp.display_time = display_time;
         return popUp;
     }
 
@@ -24,9 +26,9 @@ public class MessagePopUp : MonoBehaviour, IPointerClickHandler
         Destroy(gameObject);
     }
 
-    public IEnumerator closeAfterTime()
+    public IEnumerator closeAfterTime(int display_time)
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(display_time);
         Destroy(gameObject);
         yield return null;
     }
