@@ -100,6 +100,10 @@ public class temp_contr : MonoBehaviour
         {
             ((View.PropertySquare)board_view.squares[1]).removeHouse();
         }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.Log("totval " + players[current_player].totalValueOfAssets());
+        }
     }
 
     void FixedUpdate()
@@ -371,7 +375,7 @@ public class temp_contr : MonoBehaviour
                     {
 
                     } else {
-                        int rent_amount = 10; //needs to be developed
+                        int rent_amount = board_model.calc_rent(((Space.Property)(current_space)),players[current_player]);
                         hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This property is owned by " + ((Space.Property)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
                         hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Property)(current_space)).owner,players[current_player]));
                     }
@@ -400,8 +404,8 @@ public class temp_contr : MonoBehaviour
                     {
 
                     } else {
-                        int rent_amount = 10; //needs to be developed
-                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This property is owned by " + ((Space.Station)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
+                        int rent_amount = board_model.calc_rent(((Space.Station)(current_space)),players[current_player]);
+                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This station is owned by " + ((Space.Station)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
                         hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Station)(current_space)).owner,players[current_player]));
                     }
                 } else {
@@ -429,8 +433,9 @@ public class temp_contr : MonoBehaviour
                     {
 
                     } else {
-                        int rent_amount = 10; //needs to be developed
-                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This property is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
+                        int dice_result = 1; // dice result to be developed
+                        int rent_amount = board_model.calc_rent(((Space.Utility)(current_space)),players[current_player],dice_result);
+                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This company is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
                         hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Utility)(current_space)).owner,players[current_player]));
                     }
                 } else {

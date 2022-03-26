@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace View
 {
@@ -75,7 +77,7 @@ namespace View
     {
         if(payer.totalValueOfAssets() < this.amount)
         {
-            MessagePopUp.Create("You're broke. You're bankrupt",transform.parent);
+            MessagePopUp.Create("You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",transform.parent);
             owner.ReceiveCash(amount);
             closePopup();
         }
@@ -149,5 +151,11 @@ namespace View
             closePopup();
         }
     }
+
+/*
+    //private methods
+*/
+
+
     }
 }

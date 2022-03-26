@@ -19,7 +19,7 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
     }
     public void buyHouseOption()
     {
-        if(allPropertiesInGroup(((Model.Space.Property)(this.property)).group).Count != ownedPropertiesInGroup(((Model.Space.Property)(this.property)).group).Count)
+        if(FindObjectOfType<temp_contr>().board_model.allPropertiesInGroup(((Model.Space.Property)(this.property)).group).Count != FindObjectOfType<temp_contr>().board_model.ownedPropertiesInGroup(((Model.Space.Property)(this.property)).group,owner).Count)
         {
             MessagePopUp.Create("You need to own all the properties of this colour first!",transform);
         }
@@ -47,6 +47,7 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
             }
             ((Model.Space.Property)(property)).noOfHouses += 1;
             transform.parent.GetComponent<View.PropertyCard>().showHouse(((Model.Space.Property)(property)).noOfHouses);
+            ((View.PropertySquare)(FindObjectOfType<temp_contr>().board_view.squares[property.position-1])).addHouse();
             MessagePopUp.Create("House bought!",transform.parent);
             Destroy(gameObject);
         }
@@ -69,6 +70,7 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
             }
             ((Model.Space.Property)(property)).noOfHouses -= 1;
             transform.parent.GetComponent<View.PropertyCard>().showHouse(((Model.Space.Property)(property)).noOfHouses);
+            ((View.PropertySquare)(FindObjectOfType<temp_contr>().board_view.squares[property.position-1])).removeHouse();
             MessagePopUp.Create("House sold!",transform.parent);
             Destroy(gameObject);
         }
@@ -137,42 +139,11 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
 /*
 
     // private methods to clean up the code
-
 */
-    List<Model.Space.Property> allPropertiesInGroup(Group group)
-    {
-        List<Model.Space.Property> spacesInGroup = new List<Model.Space.Property>();
-        foreach(Model.Space space in FindObjectOfType<temp_contr>().board_model.spaces)
-        {
-            if(space is Model.Space.Property)
-            {
-                if(((Model.Space.Property)(space)).group == group)
-                {
-                    spacesInGroup.Add(((Model.Space.Property)(space)));
-                }
-            }
-        }
-        return spacesInGroup;
-    }
-    List<Model.Space.Property> ownedPropertiesInGroup(Group group)
-    {
-        List<Model.Space.Property> spacesInGroup = new List<Model.Space.Property>();
-        foreach(Model.Space.Purchasable space in owner.owned_spaces)
-        {
-            if(space is Model.Space.Property)
-            {
-                if(((Model.Space.Property)(space)).group == group)
-                {
-                    spacesInGroup.Add(((Model.Space.Property)(space)));
-                }
-            }
-        }
-        return spacesInGroup;
-    }
 
     bool differenceInHousesLevelBuyingOK(Group group, int houses)
     {
-        foreach(Model.Space.Property prop in ownedPropertiesInGroup(group))
+        foreach(Model.Space.Property prop in FindObjectOfType<temp_contr>().board_model.ownedPropertiesInGroup(group,owner))
         {
             if(prop.noOfHouses < houses) { return false; }
         }
@@ -180,7 +151,7 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
     }
     bool differenceInHousesLevelSellingOK(Group group, int houses)
     {
-        foreach(Model.Space.Property prop in ownedPropertiesInGroup(group))
+        foreach(Model.Space.Property prop in FindObjectOfType<temp_contr>().board_model.ownedPropertiesInGroup(group,owner))
         {
             if(prop.noOfHouses > houses) { return false; }
         }
@@ -188,7 +159,7 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
     }
     bool differenceInHousesLevelSellingPropertyOK(Group group)
     {
-        foreach(Model.Space.Property prop in ownedPropertiesInGroup(group))
+        foreach(Model.Space.Property prop in FindObjectOfType<temp_contr>().board_model.ownedPropertiesInGroup(group,owner))
         {
             if(prop.noOfHouses != 0) { return false; }
         }
