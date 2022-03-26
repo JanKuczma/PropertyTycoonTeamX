@@ -36,11 +36,6 @@ public class Piece : MonoBehaviour
     /// if negative value then moves backwards
     public IEnumerator move(int steps)
     {
-        // this "if" stops another dice roll while object is in move
-        if(isMoving)
-        {
-            yield break;
-        }
         isMoving = true;
         //if value is negative then moves bakckwards
         int iterator;
@@ -133,10 +128,6 @@ public class Piece : MonoBehaviour
     public IEnumerator goToJail()
     {
         // this "if" stops another dice roll while object is in move
-        if(isMoving)
-        {
-            yield break;
-        }
         isMoving = true;
         // free the current area
         _board.squares[currentSquare].releaseSpotI(currentSpot);
@@ -164,10 +155,6 @@ public class Piece : MonoBehaviour
     public IEnumerator leaveJail()
     {
         // this "if" stops another dice roll while object is in move
-        if(isMoving)
-        {
-            yield break;
-        }
         isMoving = true;
         // free the current area
         _board.jail.releaseCellI(currentSpot);

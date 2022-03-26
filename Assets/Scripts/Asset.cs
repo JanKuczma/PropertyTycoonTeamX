@@ -45,6 +45,9 @@ public static class Asset
     static TextAsset classic_board_json = Resources.Load<TextAsset>("GameDataJSON/board_data");
     static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
     static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
+    //chance/oppknocks card IMGs
+    public static Sprite opportunity_knocks_IMG = Resources.Load<Sprite>("Textures/Communitychestcard");
+    public static Sprite chance_IMG = Resources.Load<Sprite>("Textures/chancecard");
     //token IMGs
     static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
     static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
@@ -75,6 +78,8 @@ public static class Asset
     static GameObject PropertyManagerPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/PropertyManagerPopUp");
     public static GameObject ManageUtilityPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManageUtilityPopUp");
     public static GameObject ManagePropertyPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManagePropertyPopUp");
+    public static GameObject CardActionPopUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionPopUp");
+    public static GameObject CardActionPopWithOptionsUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionWithOptionsPopUp");
 
 
     public static GameObject Board(SqType type,string variant = "")

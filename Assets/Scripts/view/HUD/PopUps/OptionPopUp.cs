@@ -9,6 +9,7 @@ namespace View
         Model.Player player;
         Model.Space.Purchasable space;
         View.Square square;
+        public Image optional_image;
 
         public static OptionPopUp Create(Transform parent, GameObject popUpType,string msg, Model.Player player = null, Model.Space.Purchasable space = null, View.Square square = null)
         {
@@ -29,6 +30,16 @@ namespace View
         {
             Destroy(this.gameObject);
         }
+        void OnDestroy()
+        {
+            FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();
+        }
+
+/*
+
+    // Land on property options
+
+*/
 
         public void buyPropertyOption()
         {
@@ -57,11 +68,16 @@ namespace View
             closePopup();
         }
 
+/*
+
+    // Land on GO TO JAIL options
+
+*/
         public void goToJailOption()
         {
             player.in_jail += 2;
             FindObjectOfType<HUD>().jail_bars.gameObject.SetActive(true);
-            StartCoroutine(FindObjectOfType<temp_contr>().pieces[player].goToJail());
+            FindObjectOfType<temp_contr>().sendPieceToJail();
             MessagePopUp.Create("You go to Jail!",transform.parent);
             closePopup();
         }
@@ -76,10 +92,21 @@ namespace View
                 closePopup();
             }
         }
+/*
 
-        void OnDestroy()
-        {
-            FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();
-        }
+    // Land on TAKE CARD options
+
+*/
+
+    public void takeCardOption()
+    {
+        MessagePopUp.Create("You took card",transform.parent);
+        closePopup();
+    }
+    public void payOption()
+    {
+        MessagePopUp.Create("You decided to pay",transform.parent);
+        closePopup();
+    }
     }
 }
