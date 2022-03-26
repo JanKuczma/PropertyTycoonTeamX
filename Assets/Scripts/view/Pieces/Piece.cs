@@ -152,6 +152,33 @@ public class Piece : MonoBehaviour
         var_speed = SPEED;
         isMoving = false;
     }
+    public IEnumerator goToVisitJail()
+    {
+        // this "if" stops another dice roll while object is in move
+        isMoving = true;
+        // free the current area
+        _board.squares[currentSquare].releaseSpotI(currentSpot);
+        currentSquare = 10; // jail square
+        currentSpot = _board.squares[currentSpot].popSpotI();
+        Vector3 target = _board.jail.peekSpot(currentSpot);
+        // the target height is the same as current piece height
+        target[1] = transform.position.y;
+        // create control point and build the path along curve
+        Vector3 control = target + new Vector3(0.0f,3.0f, 0);
+        List<Vector3> path = BezierCurve(transform.position,control,target);
+        int counter = 0;
+        // while piece is not on the target square and not finished rotating
+        while(counter < path.Count && rotate(Vector3.right))
+        {
+            if(moveTo(path[counter])) // move to next point on the path
+            {
+                counter++;      // if already there increment the path point index
+            }
+            yield return null;
+        }
+        var_speed = SPEED;
+        isMoving = false;
+    }
     public IEnumerator leaveJail()
     {
         // this "if" stops another dice roll while object is in move

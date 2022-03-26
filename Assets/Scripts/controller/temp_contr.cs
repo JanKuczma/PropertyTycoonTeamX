@@ -124,7 +124,7 @@ public class temp_contr : MonoBehaviour
                     hud.set_current_player_tab(players[current_player]);
                     tabs_set = true;
                 }
-                if(players[current_player].in_jail > 1)
+                if(players[current_player].in_jail > 1) // check if a bad boy
                 {
                     hud.jail_bars.gameObject.SetActive(true);
                     dice.gameObject.SetActive(false);
@@ -136,7 +136,7 @@ public class temp_contr : MonoBehaviour
                         turnState = TurnState.PERFORMACTION;
                     }
                 }
-                else if(players[current_player].in_jail == 1)
+                else if(players[current_player].in_jail == 1)   // check if resocialized
                 {
                     dice.gameObject.SetActive(false);
                     if(hud.current_main_PopUp == null)
@@ -162,16 +162,31 @@ public class temp_contr : MonoBehaviour
                     int steps = dice.get_result();  // get the result
                     passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
                     double_rolled = dice.is_double(); // return whether double was rolled
-                    if(steps < 0)                   // if result is negative (dice are stuck)
-                    {                               // reset the dice
-                        dice.reset();
-                        MessagePopUp.Create("Dice stuck. Please roll again!",hud.transform,2);
-                        turnState = TurnState.BEGIN;
-                    } else
+                    if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
                     {
-                        // else start moving piece and change the turn state
-                        StartCoroutine(pieces[players[current_player]].move(steps));
-                        turnState = TurnState.PIECEMOVE;
+                        double_count++;
+                        if (double_count >= 3)      // if 3 doubles in a row, send player straight to jail or let them use the card
+                        {
+                            hud.current_main_PopUp = View.OptionPopUp.Create(hud.transform, Asset.GoToJailPopUpPrefab, double_count+" doubles in a row? You must be cheating… go to jail!",players[current_player]);
+                            double_rolled = false;      // reset double check so it won't have another turn
+                        } else {
+                            MessagePopUp tmp_popUp = MessagePopUp.Create(players[current_player].name + " rolled a double, they will have another turn!",hud.transform,2);
+                            tmp_popUp.GetComponent<RectTransform>().anchoredPosition = new Vector2(650,0);
+                        }
+                    }
+                    if(players[current_player].in_jail == 0 && double_count < 3) // if a good boy (not in jail in general and not rolled 3 if used card)
+                    {
+                        if(steps < 0)                   // if result is negative (dice are stuck)
+                        {                               // reset the dice
+                            dice.reset();
+                            MessagePopUp.Create("Dice stuck. Please roll again!",hud.transform,2);
+                            turnState = TurnState.BEGIN;
+                        } else
+                        {
+                            // else start moving piece and change the turn state
+                            StartCoroutine(pieces[players[current_player]].move(steps));
+                            turnState = TurnState.PIECEMOVE;
+                        }
                     }
                 }
             }
@@ -208,22 +223,16 @@ public class temp_contr : MonoBehaviour
             else if(turnState == TurnState.END)     // END state, when player finished his turn
             {
                 hud.FinishTurnButton.gameObject.SetActive(false);
-                dice.reset();                   // reset dice
-                if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
+                if(double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
                 {
-                    MessagePopUp.Create(players[current_player].name + " rolled a double, have another turn!",hud.transform,3);
-                    double_count++;
+                    MessagePopUp.Create(players[current_player].name + " rolled a double, they have another turn!",hud.transform,3);
                     double_rolled = false;      // reset double check
-                    if (double_count == 3)      // if 3 doubles in a row, send player to jail and update current player
-                    {
-                        hud.current_main_PopUp = View.OptionPopUp.Create(hud.transform, Asset.GoToJailPopUpPrefab,"Three doubles in a row? You must be cheating… go to jail!",players[current_player]);
-                        // send player to jail
-                        nextPlayer();
-                    }
+                    dice.reset();
                 }
                 else
                 {
                     nextPlayer();
+                    dice.reset();
                 }
                 tabs_set = false;
                 turnState = TurnState.BEGIN;     // change state to initial state
@@ -305,6 +314,7 @@ public class temp_contr : MonoBehaviour
          dice.gameObject.SetActive(true);
          hud.jail_bars.gameObject.SetActive(false); // reset jail bars to not active
          current_player = (current_player + 1) % players.Count;
+         dice.gameObject.SetActive(true);
      }
      
     void PerformAction()
@@ -449,6 +459,7 @@ public class temp_contr : MonoBehaviour
             {
                 hud.current_main_PopUp = OptionPopUp.Create(hud.transform, Asset.okPopup, players[current_player].name + " misfiled their tax returns, pay HMRC a SUPER TAX!");
                 hud.current_main_PopUp.OkBtn.onClick.AddListener(hud.current_main_PopUp.closePopup);
+                
                 //if(players[current_player].totalValueOfAssets < *whatever is the tax amount*) { *GoSquare bankrupt* }
                 break;
             }
@@ -591,6 +602,11 @@ public class temp_contr : MonoBehaviour
     public void sendPieceToJail()
     {
         StartCoroutine(pieces[players[current_player]].goToJail());
+    }
+
+    public void sendPieceToVisitJail()
+    {
+        StartCoroutine(pieces[players[current_player]].goToVisitJail());
     }
 
     public void finishTurn()
