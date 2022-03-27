@@ -12,17 +12,19 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Dictionary<int,PurchasableCard> propertyCards;
     Color color;
     public Text player_name;
+    public Text player_money;
     public Image token;
     Token tokes_enum;
     public PropertyGrid propertyGrid;
-    bool active;
+    public bool currentPlayer;
     Coroutine popUpCoruotine = null;
     Coroutine tokenCoroutine = null;
     float _FrameRate = 25f;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards);
+        if(transform.parent.GetComponent<HUD>().currentManager != null) { Destroy(transform.parent.GetComponent<HUD>().currentManager.gameObject); }
+        transform.parent.GetComponent<HUD>().currentManager = PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards,currentPlayer).GetComponent<PropertyManager>();
     }
      
      public void OnPointerEnter(PointerEventData eventData)
@@ -40,7 +42,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         {
             StopCoroutine(popUpCoruotine);
         }
-        if(active)
+        if(currentPlayer)
         {
             popUpCoruotine = StartCoroutine(halfPopUp(FindObjectOfType<Canvas>().GetComponent<RectTransform>().sizeDelta.y));
         } else {
@@ -56,13 +58,18 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         tab.setName(player.name);
         tab.setColor(player.color);
         tab.setToken(player.token);
-        tab.active = false;
+        tab.setMoney(player.cash);
+        tab.currentPlayer = false;
         tab.setUpPropertyGrid(propertyCards);
         return tab;
     }
     public void setName(string name)
     {
         this.player_name.text = name;
+    }
+    public void setMoney(int money)
+    {
+        this.player_money.text = money.ToString() + "Q";
     }
 
     public void setToken(Token token)
@@ -93,7 +100,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if(tokenCoroutine != null){ StopCoroutine(tokenCoroutine); tokenCoroutine = null;}
         token.sprite = Asset.TokenIMG(tokes_enum);
         setColor(this.color,100);
-        active = false;
+        currentPlayer = false;
         float timeOfTravel = 1f;
         float currentTime = 0f;
         while (currentTime <= timeOfTravel) { 
@@ -105,7 +112,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public IEnumerator halfPopUp(float height)
     {
         setColor(this.color,200);
-        active = true;
+        currentPlayer = true;
         float timeOfTravel = 1f;
         float currentTime = 0f;
         if(tokenCoroutine == null)
@@ -131,7 +138,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         int index = 0;
         float frame_time = Time.deltaTime;
-        while(active)
+        while(currentPlayer)
         {
             if(frame_time >= 1/_FrameRate)
             {

@@ -1,9 +1,7 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using UnityEditor;
-using UnityEditor.UIElements;
+using UnityEngine.UI;
 
 namespace View
 {
@@ -11,6 +9,11 @@ public class HUD : MonoBehaviour
 {
     Dictionary<Model.Player,PlayerTab> player_tabs = new Dictionary<Model.Player,PlayerTab>();
     Dictionary<int,PurchasableCard> propertyCards = new Dictionary<int, PurchasableCard>();
+    public Button FinishTurnButton;
+    // current PopUp, in future can be changed to queue/stack of PopUps
+    public OptionPopUp current_main_PopUp = null;
+    public PropertyManager currentManager = null;
+    public Image jail_bars;
 
     public void Create_player_tabs(List<Model.Player> players,Model.Board board)
     {
@@ -62,5 +65,12 @@ public class HUD : MonoBehaviour
         StartCoroutine(player_tabs[player].halfPopUp(GetComponentInParent<RectTransform>().sizeDelta.y));
     }
 
+    public void UpdatePlayersTabInfo()
+    {
+        foreach(KeyValuePair<Model.Player,View.PlayerTab> entry in player_tabs)
+        {
+            entry.Value.setMoney(entry.Key.cash);
+        }
+    }
 }
 }

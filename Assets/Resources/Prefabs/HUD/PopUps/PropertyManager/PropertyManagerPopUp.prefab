@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 5327075470161985699}
   - component: {fileID: 5940094442054122940}
   m_Layer: 5
-  m_Name: Button
+  m_Name: OkButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2189,7 +2189,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1287546890249169638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d921ece82128c4ea993c1926b74e0e, type: 3}
+  m_Script: {fileID: 11500000, guid: 87f5f93645ebf174ea2e0093f8f132f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cards:
