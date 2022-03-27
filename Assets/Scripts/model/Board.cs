@@ -66,7 +66,7 @@ public class Board
     }
     public int calc_rent(Space.Station space, Player player)
     {
-        return space.rents[ownedStations(player).Count-1]; // depending how many stations player has
+        return space.rents[ownedStations(player).Count]; // depending how many stations player has
     }
 
 
