@@ -14,13 +14,13 @@ public class ManagableCard : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         if(canManage && PopUp == null){
             PopUp = View.ManagePurchasable.Create(transform,GetComponent<View.PurchasableCard>().property);
         }
-        GetComponent<RectTransform>().SetAsFirstSibling();
+        GetComponent<RectTransform>().SetAsLastSibling();
         EventSystem.current.SetSelectedGameObject(gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GetComponent<RectTransform>().SetAsFirstSibling();
+        GetComponent<RectTransform>().SetAsLastSibling();
         if(PopUp == null) { transform.localScale = transform.localScale*2; }
         isPointerOver = true;
     }
