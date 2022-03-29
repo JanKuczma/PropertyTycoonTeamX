@@ -275,20 +275,7 @@ public abstract class Space
         {
             this.position = position;
             this.name = name;
-            this.collectedFines = 0;
             this.type = SqType.PARKING;
-        }
-
-        // //Something like
-        // public void dispenseFunds(ref Player p)
-        // {
-        //     p.collectMoney(collectedFines);
-        //     collectedFines = 0;
-        // }
-
-        public void addFine(int fine)
-        {
-            collectedFines += fine;
         }
         
         public override string ToString()

@@ -7,9 +7,11 @@ public class Board
     public Space[] spaces;
     //public CardStack OpportunityKnocks;
     //public CardStack PotLuck;
+    public int parkingFees;
     public Board()
     {
         spaces = new Space[40];
+        parkingFees = 0;
     }
     public Board(Space[] spaces)
     {

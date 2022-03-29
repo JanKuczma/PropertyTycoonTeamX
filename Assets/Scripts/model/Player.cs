@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Model{
 public enum Decision_outcome { SUCCESSFUL, NOT_ENOUGH_MONEY, NOT_ENOUGH_ASSETS,
                                 NOT_ALL_PROPERTIES_IN_GROUP,DIFFERENCE_IN_HOUSES,NO_HOUSES,MAX_HOUSES,
-                                NO_JAIL_CARDS, GO_TO_JAIL, OTHER }
+                                GO_TO_JAIL, NONE }
 public class Player
 {
     public bool isHuman;
@@ -31,16 +31,20 @@ public class Player
         this.owned_spaces = new List<Space.Purchasable>();
     }
 
-
+    public void go_to_jail()
+    {
+        this.in_jail = 2;
+    }
     public void ReceiveCash(int cash)
     {
         this.cash += cash;
     }
 
-    public Decision_outcome PayCash(int amount, Player recipient = null)
+    public Decision_outcome PayCash(int amount, Player recipient = null, Board board = null)
     {
         if(totalValueOfAssets() < amount) { return Decision_outcome.NOT_ENOUGH_ASSETS; }
         if(amount > this.cash) { return Decision_outcome.NOT_ENOUGH_MONEY; }
+        if(board != null) { this.cash -= amount; board.parkingFees+=amount; return Decision_outcome.SUCCESSFUL; }
         if(recipient == null) { this.cash -= amount; return Decision_outcome.SUCCESSFUL; }
         recipient.ReceiveCash(amount);
         this.cash -= amount;

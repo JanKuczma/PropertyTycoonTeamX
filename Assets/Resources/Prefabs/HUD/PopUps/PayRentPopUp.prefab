@@ -412,4 +412,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: {fileID: 7080326856118344584}
   optional_image: {fileID: 0}
-  OkBtn: {fileID: 2148193905986131791}
+  btn1: {fileID: 2148193905986131791}
+  btn2: {fileID: 0}
+  btn3: {fileID: 0}
