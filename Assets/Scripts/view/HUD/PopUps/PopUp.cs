@@ -34,6 +34,15 @@ namespace View
             return popUp;
          }
 
+         public static PopUp InJail(Transform parent, temp_contr controller)
+         {
+            PopUp popUp = Instantiate(Asset.InJailPopUpPrefab, parent).GetComponent<PopUp>();
+            popUp.SetMessage("Stay in Jail or try to break out by rolling a double!");
+            popUp.btn1.onClick.AddListener(() => popUp.stayInJailOption(controller));
+            popUp.btn2.onClick.AddListener(() => popUp.rollInJailOption(controller));
+            return popUp;
+         }
+
         public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board)
         {
             PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
@@ -142,6 +151,22 @@ namespace View
                 break;
             }
         }
+/*
+
+    //while in jail
+
+*/
+    public void stayInJailOption(temp_contr controller)
+    {
+        MessagePopUp.Create(transform.parent, "You are staying in Jail!",3);
+        controller.stayInJail();
+        closePopup();
+    }
+    public void rollInJailOption(temp_contr controller)
+    {
+        controller.tryBreakOut();
+        closePopup();
+    }
 
 /*
 
