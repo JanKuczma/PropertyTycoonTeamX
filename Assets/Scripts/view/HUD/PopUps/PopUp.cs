@@ -149,6 +149,9 @@ namespace View
                 case Model.Decision_outcome.NOT_ENOUGH_MONEY:
                     MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
                 break;
+                case Model.Decision_outcome.SUCCESSFUL:
+                    MessagePopUp.Create(transform, "Rent paid!",2);
+                break;
             }
         }
 /*
