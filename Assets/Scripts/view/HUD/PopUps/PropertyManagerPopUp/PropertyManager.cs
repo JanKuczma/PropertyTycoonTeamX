@@ -30,12 +30,19 @@ namespace View
             {
                 cards.getValue(entry.Key).gameObject.SetActive(false);
             } else {
+                if(canManage) { cards.getValue(entry.Key).gameObject.AddComponent<ManagableCard>(); }
+                
                 cards.getValue(entry.Key).gameObject.SetActive(true);
-                ((PropertyCard)(cards.getValue(entry.Key))).setUpCard((PropertyCard)entry.Value);
                 //change color or whatever
                 if(entry.Value.property.type == SqType.PROPERTY)
                 {
+                    ((PropertyCard)(cards.getValue(entry.Key))).setUpCard((PropertyCard)entry.Value);
                     ((PropertyCard)(cards.getValue(entry.Key))).showHouse(((Model.Space.Property)(cards.getValue(entry.Key).property)).noOfHouses);
+                } 
+                else if (entry.Value.property.type == SqType.UTILITY) {
+                    ((UtilityCard)(cards.getValue(entry.Key))).setUpCard((UtilityCard)entry.Value);
+                } else {
+                    ((StationCard)(cards.getValue(entry.Key))).setUpCard((StationCard)entry.Value);
                 }
             }
         }

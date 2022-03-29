@@ -63,7 +63,19 @@ namespace View
             popUp.SetMessage(player.name + ", do you wish to purchase this property?");
             popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space), player, square));
             popUp.btn2.onClick.AddListener(popUp.dontBuyPropertyOption);
-            PurchasableCard c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+            PurchasableCard c = null;
+            switch(space.type)
+            {
+                case SqType.PROPERTY:
+                c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+                break;
+                case SqType.STATION:
+                c = StationCard.Create((Model.Space.Station)space,popUp.transform);
+                break;
+                case SqType.UTILITY:
+                c = UtilityCard.Create((Model.Space.Utility)space,popUp.transform);
+                break;
+            }
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
             return popUp;
