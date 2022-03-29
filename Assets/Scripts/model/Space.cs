@@ -16,12 +16,31 @@ public abstract class Space
         public int cost;
         public int[] rents;
         public bool isMortgaged;
-        public abstract int rentAmount();
 
         public override string ToString()
         {
             return position + " " + name + " £" + cost;
         }
+        public abstract int rent_amount(Board board);
+        public Decision_outcome mortgage()
+        {
+            owner.ReceiveCash(cost/2);
+            isMortgaged = true;
+            return Decision_outcome.SUCCESSFUL;
+        }
+
+        public Decision_outcome pay_off_mortgage()
+        {
+            if(owner.cash < cost/2)
+            {
+                return Decision_outcome.NOT_ENOUGH_MONEY;
+            } else {
+                owner.PayCash(cost/2);
+                isMortgaged = false;
+                return Decision_outcome.SUCCESSFUL;
+            }
+        }
+
     }
 
     public class Go : Space
@@ -76,12 +95,91 @@ public abstract class Space
             this.hotel_cost = hotel_cost;
             this.isMortgaged = false;
         }
-        override public int rentAmount()
+        //add property methods
+
+        override public int rent_amount(Board board)
         {
-            return 0;
+            if(board.ownedPropertiesInGroup(this.group,owner).Count == board.allPropertiesInGroup(group).Count)
+            {
+                //check if all houses are level 0
+                int temp_no_houses = 0;
+                foreach(Space.Property property in board.ownedPropertiesInGroup(group,owner))
+                {
+                    temp_no_houses += property.noOfHouses;
+                }
+                if(temp_no_houses == 0)
+                {
+                    return rents[0]*2; // doubled rent
+                } else {
+                    return rents[noOfHouses]; // it is not doubled if some properties have been developed
+                }
+            } else {
+                return rents[noOfHouses]; // otherwise just return rent shon on the card
+            }
         }
         
-        //add property methods
+        public Decision_outcome buyHouse(Board board)
+        {
+            if(board.allPropertiesInGroup(this.group).Count != board.ownedPropertiesInGroup(this.group,this.owner).Count)
+            {
+                return Decision_outcome.NOT_ALL_PROPERTIES_IN_GROUP;
+            }
+            else if(this.differenceInHouses(board) == 1)
+            {
+                return Decision_outcome.DIFFERENCE_IN_HOUSES;
+            } 
+            else if(noOfHouses == 5)
+            {
+                return Decision_outcome.MAX_HOUSES;
+            }
+            else if(house_cost > owner.cash)
+            {
+                return Decision_outcome.NOT_ENOUGH_MONEY;
+            }
+            else if(noOfHouses == 4 && hotel_cost > owner.cash)
+            {
+                return Decision_outcome.NOT_ENOUGH_MONEY;
+            } else {
+                if(noOfHouses == 4)
+                {
+                    owner.PayCash(hotel_cost);
+                } else {
+                    owner.PayCash(house_cost);
+                }
+                noOfHouses += 1;
+                return Decision_outcome.SUCCESSFUL;
+            }
+        }
+
+        public Decision_outcome sellHouse(Board board)
+        {
+            if(differenceInHouses(board) == -1)
+            {
+                return Decision_outcome.DIFFERENCE_IN_HOUSES;
+            } 
+            else if(noOfHouses == 0)
+            {
+                return Decision_outcome.NO_HOUSES;
+            } else {
+                if(noOfHouses == 5)
+                {
+                    owner.ReceiveCash(hotel_cost);
+                } else {
+                    owner.ReceiveCash(house_cost);
+                }
+                noOfHouses -= 1;
+                return Decision_outcome.SUCCESSFUL;
+            }
+        }
+        public int differenceInHouses(Board board)
+        {
+            foreach(Model.Space.Property prop in board.ownedPropertiesInGroup(group,owner))
+            {
+                if(prop.noOfHouses != noOfHouses) { return noOfHouses - prop.noOfHouses; }
+            }
+            return 0;
+        }
+
     }
 
     public class Utility : Purchasable
@@ -95,11 +193,16 @@ public abstract class Space
             this.rents = rents;
             this.isMortgaged = false;
         }
-        override public int rentAmount()
+            //add utility methods
+        public override int rent_amount(Board board)
         {
-            return 0;
+            if(board.ownedUtilities(owner).Count == board.allUtilities().Count)
+            {
+                return rents[1];    // 10 times dice result
+            } else {
+                return rents[0];    // 4 times dice result
+            }
         }
-        //add utility methods
     }
 
     public class Station : Purchasable
@@ -114,9 +217,9 @@ public abstract class Space
             this.rents = rents;
             this.isMortgaged = false;
         }
-        override public int rentAmount()
+        override public int rent_amount(Board board)
         {
-            return 0;
+            return rents[board.ownedStations(owner).Count]; // depending how many stations player has
         }
     }
 
@@ -172,20 +275,7 @@ public abstract class Space
         {
             this.position = position;
             this.name = name;
-            this.collectedFines = 0;
             this.type = SqType.PARKING;
-        }
-
-        // //Something like
-        // public void dispenseFunds(ref Player p)
-        // {
-        //     p.collectMoney(collectedFines);
-        //     collectedFines = 0;
-        // }
-
-        public void addFine(int fine)
-        {
-            collectedFines += fine;
         }
         
         public override string ToString()

@@ -623,3 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: {fileID: 1055326376473668221}
+  optional_image: {fileID: 0}
+  btn1: {fileID: 1521894214555859463}
+  btn2: {fileID: 3224081465888312877}
+  btn3: {fileID: 0}

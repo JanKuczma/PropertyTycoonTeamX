@@ -219,6 +219,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 283183234018407140, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1708101128269521749, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
       propertyPath: m_Text
       value: PAY
@@ -323,6 +327,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: payOption
       objectReference: {fileID: 0}
+    - target: {fileID: 8024299019113200606, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
+      propertyPath: btn2
+      value: 
+      objectReference: {fileID: 7067591802116452877}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
 --- !u!224 &1130221593020932007 stripped

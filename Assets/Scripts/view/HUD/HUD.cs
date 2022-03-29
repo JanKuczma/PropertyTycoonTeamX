@@ -11,7 +11,7 @@ public class HUD : MonoBehaviour
     Dictionary<int,PurchasableCard> propertyCards = new Dictionary<int, PurchasableCard>();
     public Button FinishTurnButton;
     // current PopUp, in future can be changed to queue/stack of PopUps
-    public OptionPopUp current_main_PopUp = null;
+    public PopUp current_main_PopUp = null;
     public PropertyManager currentManager = null;
     public Image jail_bars;
 

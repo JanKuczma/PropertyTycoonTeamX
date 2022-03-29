@@ -7,9 +7,11 @@ public class Board
     public Space[] spaces;
     //public CardStack OpportunityKnocks;
     //public CardStack PotLuck;
+    public int parkingFees;
     public Board()
     {
         spaces = new Space[40];
+        parkingFees = 0;
     }
     public Board(Space[] spaces)
     {
@@ -32,41 +34,6 @@ public class Board
     public void savePotLuckData()
     {
 
-    }
-
-    public int calc_rent(Space.Property space, Player player)
-    {
-        
-        if(ownedPropertiesInGroup(space.group,player).Count == allPropertiesInGroup(space.group).Count)
-        {
-            //check if all houses are level 0
-            int temp_no_houses = 0;
-            foreach(Space.Property property in ownedPropertiesInGroup(space.group,player))
-            {
-                temp_no_houses += property.noOfHouses;
-            }
-            if(temp_no_houses == 0)
-            {
-                return space.rents[0]*2; // doubled rent
-            } else {
-                return space.rents[space.noOfHouses]; // it is not doubled if some properties have been developed
-            }
-        } else {
-            return space.rents[space.noOfHouses]; // otherwise just return rent shon on the card
-        }
-    }
-    public int calc_rent(Space.Utility space, Player player)
-    {
-        if(ownedUtilities(player).Count == allUtilities().Count)
-        {
-            return space.rents[1];    // 10 times dice result
-        } else {
-            return space.rents[0];    // 4 times dice result
-        }
-    }
-    public int calc_rent(Space.Station space, Player player)
-    {
-        return space.rents[ownedStations(player).Count]; // depending how many stations player has
     }
 
 

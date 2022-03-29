@@ -13,11 +13,15 @@ public class MessagePopUp : MonoBehaviour, IPointerClickHandler
     {
         StartCoroutine(closeAfterTime(display_time));
     }
-    public static MessagePopUp Create(string message, Transform parent,int display_time = 5)
+    public static MessagePopUp Create(Transform parent, string message, int display_time = 5, bool side=false)
     {
         MessagePopUp popUp = Instantiate(Asset.MessagePopUpPrefab,parent).GetComponent<MessagePopUp>();
         popUp.message.text = message;
         popUp.display_time = display_time;
+        if(side)
+        {
+            popUp.GetComponent<RectTransform>().anchoredPosition = new Vector2(650,0);
+        }
         return popUp;
     }
 
