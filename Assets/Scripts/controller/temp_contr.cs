@@ -42,7 +42,7 @@ public class temp_contr : MonoBehaviour
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
-        foreach(Model.Player player in players) { player.allowed_to_buy = true; }
+        //foreach(Model.Player player in players) { player.allowed_to_buy = true; }
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
         tabs_set = false;
