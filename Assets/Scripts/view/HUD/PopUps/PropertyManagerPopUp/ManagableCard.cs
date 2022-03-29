@@ -32,7 +32,7 @@ public class ManagableCard : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public void OnDeselect(BaseEventData eventData)
     {
-        if(!isPointerOver)
+        if(!isPointerOver && PopUp.gameObject != null)
         {
             transform.localScale = transform.localScale*.5f;
             Destroy(PopUp.gameObject);
