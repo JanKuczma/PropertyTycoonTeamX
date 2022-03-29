@@ -40,7 +40,16 @@ namespace View
             int rent_amount = space.rent_amount(board);
             popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
             popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner)));
-            PurchasableCard c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+            PurchasableCard c = null;
+            switch(space.type)
+            {
+                case SqType.PROPERTY:
+                c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+                break;
+                case SqType.STATION:
+                c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+                break;
+            }
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
             return popUp;
