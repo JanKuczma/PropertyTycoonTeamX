@@ -3,25 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ManagableCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+public class ManagableCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDeselectHandler
 {
     View.ManagePurchasable PopUp;
+    public bool canManage = false;
     bool isPointerOver = false;
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        PopUp = View.ManagePurchasable.Create(transform,GetComponent<View.PurchasableCard>().property);
-        isPointerOver = true;
+        if(canManage && PopUp == null){
+            PopUp = View.ManagePurchasable.Create(transform,GetComponent<View.PurchasableCard>().property);
+        }
+        GetComponent<RectTransform>().SetAsFirstSibling();
+        EventSystem.current.SetSelectedGameObject(gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.localScale = transform.localScale*2;
+        GetComponent<RectTransform>().SetAsFirstSibling();
+        if(PopUp == null) { transform.localScale = transform.localScale*2; }
         isPointerOver = true;
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.localScale = transform.localScale*.5f;
+        if(PopUp == null) { transform.localScale = transform.localScale*.5f; }
         isPointerOver = false;
     }
 
@@ -29,7 +34,8 @@ public class ManagableCard : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if(!isPointerOver)
         {
-            Destroy(gameObject);
+            transform.localScale = transform.localScale*.5f;
+            Destroy(PopUp.gameObject);
         }
     }
 

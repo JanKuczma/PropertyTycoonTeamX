@@ -19,18 +19,28 @@ public class ManagePurchasable : MonoBehaviour
         if(property is Model.Space.Property)
             {
                 PopUp = Instantiate(Asset.ManagePropertyPopUpPrefab,parent).GetComponent<ManagePurchasable>();
-                if(property.isMortgaged) { PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Pay Off Mortgage"; } else { PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Mortgage"; }
                 temp_contr controller = FindObjectOfType<temp_contr>(); 
-                PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.mortgage(),property));
                 PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model),controller.board_view.squares[property.position-1]));
                 PopUp.buyHouseBtn.onClick.AddListener(() => PopUp.buyHouseOption(((Model.Space.Property)(property)).buyHouse(controller.board_model) ,(Model.Space.Property)property,((View.PropertySquare)(controller.board_view.squares[property.position-1]))));
                 PopUp.sellHouseBtn.onClick.AddListener(() => PopUp.sellHouseOption(((Model.Space.Property)(property)).sellHouse(controller.board_model) ,(Model.Space.Property)property,((View.PropertySquare)(controller.board_view.squares[property.position-1]))));
+                if(property.isMortgaged) {
+                    PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.pay_off_mortgage(),property));
+                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Pay Off Mortgage";
+                } else {
+                    PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.mortgage(),property));
+                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Mortgage";
+                }
             } else {
                 PopUp = Instantiate(Asset.ManageUtilityPopUpPrefab,parent).GetComponent<ManagePurchasable>();
-                if(property.isMortgaged) { PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Pay Off Mortgage"; } else { PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Mortgage"; }
                 temp_contr controller = FindObjectOfType<temp_contr>(); 
-                PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.mortgage(),property));
                 PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model),((View.UtilitySquare)(controller.board_view.squares[property.position-1]))));
+                if(property.isMortgaged) {
+                    PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.pay_off_mortgage(),property));
+                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Pay Off Mortgage";
+                } else {
+                    PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.mortgage(),property));
+                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Mortgage";
+                }
             }
         return PopUp;
     }
@@ -92,22 +102,17 @@ public class ManagePurchasable : MonoBehaviour
             break;
         }
     }
-    public void mortgagePropertyOption(Model.Decision_outcome desicision, Model.Space.Purchasable property)
+    public void mortgagePropertyOption(Model.Decision_outcome decision, Model.Space.Purchasable property)
     {
-        if(property.isMortgaged)
-        {
-            switch (desicision)
+            switch (decision)
             {
                 case Model.Decision_outcome.NOT_ENOUGH_MONEY:
                     MessagePopUp.Create(transform.parent, "You have not enough money! Sell or mortgage your properties to get some cash!");
                 break;
                 case Model.Decision_outcome.SUCCESSFUL:
-                    MessagePopUp.Create(transform.parent, "Property paid off!");
+                    if(property.isMortgaged) { MessagePopUp.Create(transform.parent, "Property mortgaged!"); } else { MessagePopUp.Create(transform.parent, "Property paid off!"); }
                 break;
             }
-        } else {
-            MessagePopUp.Create(transform.parent, "Property mortgaged!");
-        }
         Destroy(gameObject);
     }
 
