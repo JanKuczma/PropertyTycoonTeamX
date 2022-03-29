@@ -5,12 +5,10 @@ using UnityEngine.UI;
 
 public class ManageUtilityPropertyPopUpController : MonoBehaviour
 {
-    Model.Player owner;
     Model.Space.Purchasable property;
     public Text mortgageBtnText;
     void Awake()
     {
-        owner = transform.parent.GetComponent<View.PurchasableCard>().property.owner;
         property = transform.parent.GetComponent<View.PurchasableCard>().property;
         if(property.isMortgaged)
         {
@@ -19,114 +17,77 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
     }
     public void buyHouseOption()
     {
-        if(FindObjectOfType<temp_contr>().board_model.allPropertiesInGroup(((Model.Space.Property)(this.property)).group).Count != FindObjectOfType<temp_contr>().board_model.ownedPropertiesInGroup(((Model.Space.Property)(this.property)).group,owner).Count)
+        switch(((Model.Space.Property)(property)).buyHouse(FindObjectOfType<temp_contr>().board_model))
         {
-            MessagePopUp.Create("You need to own all the properties of this colour first!",transform);
-        }
-        else if(!differenceInHousesLevelBuyingOK(((Model.Space.Property)(this.property)).group,((Model.Space.Property)(this.property)).noOfHouses))
-        {
-            MessagePopUp.Create("The difference in number of houses on properties of the same colour cannot be bigger than one! Develop other properties of this colour!",transform);
-        } 
-        else if(((Model.Space.Property)(this.property)).noOfHouses == 5)
-        {
-            MessagePopUp.Create("Maximum number of houses reached!",transform);
-        }
-        else if(((Model.Space.Property)(this.property)).house_cost > owner.cash)
-        {
-            MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform);
-        }
-        else if(((Model.Space.Property)(this.property)).noOfHouses == 4 && ((Model.Space.Property)(this.property)).hotel_cost > owner.cash)
-        {
-            MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform);
-        } else {
-            if(((Model.Space.Property)(this.property)).noOfHouses == 4)
-            {
-                owner.PayCash(((Model.Space.Property)(property)).hotel_cost);
-            } else {
-                owner.PayCash(((Model.Space.Property)(property)).house_cost);
-            }
-            ((Model.Space.Property)(property)).noOfHouses += 1;
-            transform.parent.GetComponent<View.PropertyCard>().showHouse(((Model.Space.Property)(property)).noOfHouses);
-            ((View.PropertySquare)(FindObjectOfType<temp_contr>().board_view.squares[property.position-1])).addHouse();
-            MessagePopUp.Create("House bought!",transform.parent);
-            Destroy(gameObject);
+            case Model.Decision_outcome.NOT_ALL_PROPERTIES_IN_GROUP:
+                MessagePopUp.Create("You need to own all the properties of this colour first!",transform);
+            break;
+            case Model.Decision_outcome.DIFFERENCE_IN_HOUSES:
+                MessagePopUp.Create("The difference in number of houses on properties of the same colour cannot be bigger than one! Develop other properties of this colour!",transform);
+            break;
+            case Model.Decision_outcome.MAX_HOUSES:
+                MessagePopUp.Create("Maximum number of houses reached!",transform);
+            break;
+            case Model.Decision_outcome.NOT_ENOUGH_MONEY:
+                MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform);
+            break;
+            case Model.Decision_outcome.SUCCESSFUL:
+                transform.parent.GetComponent<View.PropertyCard>().showHouse(((Model.Space.Property)(property)).noOfHouses);
+                ((View.PropertySquare)(FindObjectOfType<temp_contr>().board_view.squares[property.position-1])).addHouse();
+                MessagePopUp.Create("House bought!",transform.parent);
+                Destroy(gameObject);
+            break;
         }
     }
     public void sellHouseOption()
     {
-        if(!differenceInHousesLevelSellingOK(((Model.Space.Property)(this.property)).group,((Model.Space.Property)(this.property)).noOfHouses))
+        switch(((Model.Space.Property)(property)).sellHouse(FindObjectOfType<temp_contr>().board_model))
         {
-            MessagePopUp.Create("The difference in number of houses on properties of the same colour cannot be bigger than one! Sell houses on other properties of this colour first!",transform);
-        } 
-        else if(((Model.Space.Property)(this.property)).noOfHouses == 0)
-        {
-            MessagePopUp.Create("There are no more houses to sell!",transform);
-        } else {
-            if(((Model.Space.Property)(property)).noOfHouses == 5)
-            {
-                owner.ReceiveCash(((Model.Space.Property)(property)).hotel_cost);
-            } else {
-                owner.ReceiveCash(((Model.Space.Property)(property)).house_cost);
-            }
-            ((Model.Space.Property)(property)).noOfHouses -= 1;
-            transform.parent.GetComponent<View.PropertyCard>().showHouse(((Model.Space.Property)(property)).noOfHouses);
-            ((View.PropertySquare)(FindObjectOfType<temp_contr>().board_view.squares[property.position-1])).removeHouse();
-            MessagePopUp.Create("House sold!",transform.parent);
-            Destroy(gameObject);
+            case Model.Decision_outcome.DIFFERENCE_IN_HOUSES:
+                MessagePopUp.Create("The difference in number of houses on properties of the same colour cannot be bigger than one! Sell houses on other properties of this colour first!",transform);
+            break;
+            case Model.Decision_outcome.NO_HOUSES:
+                MessagePopUp.Create("There are no more houses to sell!",transform);
+            break;
+            case Model.Decision_outcome.SUCCESSFUL:
+                transform.parent.GetComponent<View.PropertyCard>().showHouse(((Model.Space.Property)(property)).noOfHouses);
+                ((View.PropertySquare)(FindObjectOfType<temp_contr>().board_view.squares[property.position-1])).removeHouse();
+                MessagePopUp.Create("House sold!",transform.parent);
+                Destroy(gameObject);
+            break;
         }
     }
     public void sellPropertyOption()
     {
-        if(property is Model.Space.Property)
+        switch(property.owner.SellProperty(property,FindObjectOfType<temp_contr>().board_model))
         {
-            if(!differenceInHousesLevelSellingPropertyOK(((Model.Space.Property)(this.property)).group))
-            {
+            case Model.Decision_outcome.DIFFERENCE_IN_HOUSES:
                 MessagePopUp.Create("First sell all the houses on the properties of this colour!",transform);
-            } else {
-                if(property.isMortgaged)
-                {
-                    owner.ReceiveCash(property.cost/2);
-                    property.isMortgaged = false;
-                } else { owner.ReceiveCash(property.cost); }
-                owner.owned_spaces.Remove(property);
-                property.owner = null;
+            break;
+            case Model.Decision_outcome.SUCCESSFUL:
                 ((View.PropertySquare)(FindObjectOfType<temp_contr>().board_view.squares[property.position-1])).removeRibbon();
                 transform.parent.gameObject.SetActive(false);
                 MessagePopUp.Create("Property sold!",transform.parent.parent);
                 Destroy(gameObject);
-            }
-        }
-        else {
-            if(property.isMortgaged)
-            {
-                owner.ReceiveCash(property.cost/2);
-                property.isMortgaged = false;
-            } else { owner.ReceiveCash(property.cost); }
-            owner.owned_spaces.Remove(property);
-            property.owner = null;
-            ((View.UtilitySquare)(FindObjectOfType<temp_contr>().board_view.squares[property.position-1])).removeRibbon();
-            transform.parent.gameObject.SetActive(false);
-            MessagePopUp.Create("Property sold!",transform.parent.parent);
-            Destroy(gameObject);
+            break;
         }
     }
     public void mortgagePropertyOption()
     {
-        Debug.Log(property.name);
         if(property.isMortgaged)
         {
-            if(owner.cash < property.cost/2)
+            switch (property.pay_off_mortgage())
             {
-                MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform.parent);
-            } else {
-                MessagePopUp.Create("Property paid off!",transform.parent);
-                owner.PayCash(property.cost/2);
-                property.isMortgaged = false;
+                case Model.Decision_outcome.NOT_ENOUGH_MONEY:
+                    MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform.parent);
+                break;
+                case Model.Decision_outcome.SUCCESSFUL:
+                    MessagePopUp.Create("Property paid off!",transform.parent);
+                break;
             }
         } else {
+            property.mortgage();
             MessagePopUp.Create("Property mortgaged!",transform.parent);
-            owner.ReceiveCash(property.cost/2);
-            property.isMortgaged = true;
         }
         Destroy(gameObject);
     }
@@ -134,35 +95,5 @@ public class ManageUtilityPropertyPopUpController : MonoBehaviour
     void OnDestroy()
     {
         FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();
-    }
-
-/*
-
-    // private methods to clean up the code
-*/
-
-    bool differenceInHousesLevelBuyingOK(Group group, int houses)
-    {
-        foreach(Model.Space.Property prop in FindObjectOfType<temp_contr>().board_model.ownedPropertiesInGroup(group,owner))
-        {
-            if(prop.noOfHouses < houses) { return false; }
-        }
-        return true;
-    }
-    bool differenceInHousesLevelSellingOK(Group group, int houses)
-    {
-        foreach(Model.Space.Property prop in FindObjectOfType<temp_contr>().board_model.ownedPropertiesInGroup(group,owner))
-        {
-            if(prop.noOfHouses > houses) { return false; }
-        }
-        return true;
-    }
-    bool differenceInHousesLevelSellingPropertyOK(Group group)
-    {
-        foreach(Model.Space.Property prop in FindObjectOfType<temp_contr>().board_model.ownedPropertiesInGroup(group,owner))
-        {
-            if(prop.noOfHouses != 0) { return false; }
-        }
-        return true;
     }
 }

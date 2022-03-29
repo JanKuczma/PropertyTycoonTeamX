@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Model{
+public enum Decision_outcome { SUCCESSFUL, NOT_ENOUGH_MONEY, NOT_ENOUGH_ASSETS,
+                                NOT_ALL_PROPERTIES_IN_GROUP,DIFFERENCE_IN_HOUSES,NO_HOUSES,MAX_HOUSES,
+                                NO_JAIL_CARDS, GO_TO_JAIL, OTHER }
 public class Player
 {
     public bool isHuman;
@@ -34,29 +37,57 @@ public class Player
         this.cash += cash;
     }
 
-    public bool PayCash(int amount, Player player = null)
+    public Decision_outcome PayCash(int amount, Player recipient = null)
     {
-        if(amount > this.cash) { return false; }
-        if(player == null) { this.cash -= amount; return true; }
-        player.ReceiveCash(amount);
+        if(totalValueOfAssets() < amount) { return Decision_outcome.NOT_ENOUGH_ASSETS; }
+        if(amount > this.cash) { return Decision_outcome.NOT_ENOUGH_MONEY; }
+        if(recipient == null) { this.cash -= amount; return Decision_outcome.SUCCESSFUL; }
+        recipient.ReceiveCash(amount);
         this.cash -= amount;
-        return true;
+        return Decision_outcome.SUCCESSFUL;
     }
 
-    public bool SellProperty(Space.Purchasable property)
+    public Decision_outcome SellProperty(Space.Purchasable property, Board board)
     {
-        //if property.isMortgaged then: no pasa nada, return false;
-        owned_spaces.Remove(property);
-        ReceiveCash(property.cost);
-        return true; 
+        if(property is Model.Space.Property)
+        {
+            if(((Space.Property)(property)).differenceInHouses(board) != 0)
+            {
+                return Decision_outcome.DIFFERENCE_IN_HOUSES;
+            } else {
+                if(property.isMortgaged)
+                {
+                    ReceiveCash(property.cost/2);
+                    property.isMortgaged = false;
+                } else { ReceiveCash(property.cost); }
+                owned_spaces.Remove(property);
+                property.owner = null;
+                return Decision_outcome.SUCCESSFUL;
+            }
+        }
+        else {
+            if(property.isMortgaged)
+            {
+                ReceiveCash(property.cost/2);
+                property.isMortgaged = false;
+            } else { ReceiveCash(property.cost); }
+            owned_spaces.Remove(property);
+            property.owner = null;
+            return Decision_outcome.SUCCESSFUL;
+        } 
     }
 
-    public bool BuyProperty(Space.Purchasable property)
+    public Decision_outcome BuyProperty(Space.Purchasable property)
     {
-        //if property.cost > this.cash: no pasa nada, return false;
-        owned_spaces.Add(property);
-        PayCash(property.cost);
-        return true; 
+        if(cash < property.cost)
+            {
+                return Decision_outcome.NOT_ENOUGH_MONEY;
+            } else {
+                PayCash(property.cost);
+                owned_spaces.Add(property);
+                property.owner = this;
+                return Decision_outcome.SUCCESSFUL;
+            } 
     }
 
     public int totalValueOfAssets()

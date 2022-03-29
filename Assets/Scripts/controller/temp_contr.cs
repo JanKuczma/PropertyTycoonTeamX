@@ -28,9 +28,10 @@ public class temp_contr : MonoBehaviour
     // bits needed to manage game and turns
     TurnState turnState;
     GameState gameState;
-    bool double_rolled = false; // use this to keep track of whether player just rolled a double
-    int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
+    public bool double_rolled = false; // use this to keep track of whether player just rolled a double
+    public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
+    public Model.Decision_outcome jail_decision = Model.Decision_outcome.OTHER;
     //HUD
     public View.HUD hud; 
     //other
@@ -167,8 +168,24 @@ public class temp_contr : MonoBehaviour
                         double_count++;
                         if (double_count >= 3)      // if 3 doubles in a row, send player straight to jail or let them use the card
                         {
-                            hud.current_main_PopUp = View.OptionPopUp.Create(hud.transform, Asset.GoToJailPopUpPrefab, double_count+" doubles in a row? You must be cheating… go to jail!",players[current_player]);
-                            double_rolled = false;      // reset double check so it won't have another turn
+                            if(hud.current_main_PopUp != null)
+                            {
+                                hud.current_main_PopUp = View.OptionPopUp.Create(hud.transform, Asset.GoToJailPopUpPrefab, double_count+" doubles in a row? You must be cheating… go to jail!",players[current_player]);
+                            }
+                            switch(jail_decision)
+                            {
+                                case Model.Decision_outcome.GO_TO_JAIL:
+                                    turnState = TurnState.MANAGEPROPERTIES;
+                                    jail_decision = Model.Decision_outcome.OTHER;
+                                    double_rolled = false;      // reset double check so it won't have another turn
+                                break;
+                                case Model.Decision_outcome.SUCCESSFUL:
+                                    double_count -= 2;
+                                    jail_decision = Model.Decision_outcome.OTHER;
+                                break;
+                                case Model.Decision_outcome.OTHER:
+                                break;
+                            }
                         } else {
                             MessagePopUp tmp_popUp = MessagePopUp.Create(players[current_player].name + " rolled a double, they will have another turn!",hud.transform,2);
                             tmp_popUp.GetComponent<RectTransform>().anchoredPosition = new Vector2(650,0);
@@ -371,7 +388,7 @@ public class temp_contr : MonoBehaviour
                 if(((Space.Property)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
                     hud.current_main_PopUp = OptionPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + " do you wish to purchase this property?",
-                                                            players[current_player],(Space.Purchasable)current_space,board_view.squares[current_square]);
+                                                            players[current_player],(Space.Purchasable)current_space);
                     PurchasableCard c = PropertyCard.Create((Model.Space.Property)current_space,hud.current_main_PopUp.transform);
                     c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                     c.gameObject.SetActive(true);
@@ -386,9 +403,8 @@ public class temp_contr : MonoBehaviour
                     {
 
                     } else {
-                        int rent_amount = board_model.calc_rent(((Space.Property)(current_space)),players[current_player]);
-                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This property is owned by " + ((Space.Property)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
-                        hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Property)(current_space)).owner,players[current_player]));
+                        int rent_amount = ((Space.Property)current_space).rent_amount(board_model);
+                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.PayRentPopUpPrefab,"This property is owned by " + ((Space.Property)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!");
                     }
                 } else {
                     MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
@@ -400,7 +416,7 @@ public class temp_contr : MonoBehaviour
                 if(((Space.Station)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
                     hud.current_main_PopUp = OptionPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + " do you wish to purchase this station?",
-                                                            players[current_player],(Space.Purchasable)current_space,board_view.squares[current_square]);
+                                                            players[current_player],(Space.Purchasable)current_space);
                     PurchasableCard c = StationCard.Create((Model.Space.Station)current_space,hud.current_main_PopUp.transform);
                     c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                     c.gameObject.SetActive(true);
@@ -415,9 +431,8 @@ public class temp_contr : MonoBehaviour
                     {
 
                     } else {
-                        int rent_amount = board_model.calc_rent(((Space.Station)(current_space)),players[current_player]);
-                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This station is owned by " + ((Space.Station)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!",amount:rent_amount);
-                        hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(((Space.Station)(current_space)).owner,players[current_player]));
+                        int rent_amount = ((Space.Station)(current_space)).rent_amount(board_model);
+                        hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"This station is owned by " + ((Space.Station)(current_space)).owner.name+"! You have to pay "+ rent_amount+"!");
                     }
                 } else {
                     MessagePopUp.Create("You have to complete one circuit of the board by passing the GO to buy a property!",hud.transform);
@@ -429,7 +444,7 @@ public class temp_contr : MonoBehaviour
                 if(((Space.Utility)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
                     hud.current_main_PopUp = OptionPopUp.Create(hud.transform, Asset.BuyPropertyPopup, players[current_player].name + " do you wish to purchase this utility company?",
-                                                            players[current_player],(Space.Purchasable)current_space,board_view.squares[current_square]);
+                                                            players[current_player],(Space.Purchasable)current_space);
                     PurchasableCard c = UtilityCard.Create((Model.Space.Utility)current_space,hud.current_main_PopUp.transform);
                     c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
                     c.gameObject.SetActive(true);
@@ -444,7 +459,7 @@ public class temp_contr : MonoBehaviour
                     {
 
                     } else {
-                        int rent_times = board_model.calc_rent(((Space.Utility)(current_space)),players[current_player]);
+                        int rent_times = ((Space.Utility)(current_space)).rent_amount(board_model);
                         MessagePopUp.Create("This company is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_times+" times the value shown on the dice!",hud.transform);
                         MessagePopUp temp_popUp = MessagePopUp.Create("Roll the dice! ",hud.transform);
                         temp_popUp.GetComponent<RectTransform>().anchoredPosition = new Vector2(650,0);
@@ -588,8 +603,7 @@ public class temp_contr : MonoBehaviour
                     turnState = TurnState.PERFORMACTION;
                 } else {
                     Destroy(hud.current_main_PopUp.gameObject);
-                    hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.okPopup,"You have to pay "+ rent_times*dice_result+" !",amount:rent_times*dice_result);
-                    hud.current_main_PopUp.OkBtn.onClick.AddListener(() => hud.current_main_PopUp.okPayRent(owner,players[current_player]));
+                    hud.current_main_PopUp = OptionPopUp.Create(hud.transform,Asset.PayRentPopUpPrefab,"You have to pay "+ rent_times*dice_result+" !");
                     turnState = TurnState.PERFORMACTION;
                     successful = true;
                 }

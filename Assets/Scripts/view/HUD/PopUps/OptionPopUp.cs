@@ -10,18 +10,20 @@ namespace View
         public Text message;
         Model.Player player;
         Model.Space.Purchasable space;
-        View.Square square;
-        int amount;
+        Model.Board board_model;
+        View.Board board_view;
         public Image optional_image;
         public Button OkBtn;
+        int amount;
 
-        public static OptionPopUp Create(Transform parent, GameObject popUpType,string msg, Model.Player player = null, Model.Space.Purchasable space = null, View.Square square = null, int amount = 0)
+        public static OptionPopUp Create(Transform parent, GameObject popUpType,string msg, Model.Player player = null, Model.Space.Purchasable space = null, int amount = 0)
         {
             OptionPopUp popUp = Instantiate(popUpType, parent).GetComponent<OptionPopUp>();
             popUp.SetMessage(msg);
             popUp.player = player;
             popUp.space = space;
-            popUp.square  = square;
+            popUp.board_model = FindObjectOfType<temp_contr>().board_model;
+            popUp.board_view = FindObjectOfType<temp_contr>().board_view;
             popUp.amount = amount;
             return popUp;
         }
@@ -48,23 +50,23 @@ namespace View
 
         public void buyPropertyOption()
         {
-            if(player.cash < space.cost)
+            switch(player.BuyProperty(space))
             {
-                MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform,2);
-            } else {
-                player.PayCash(space.cost);
-                player.owned_spaces.Add(space);
-                space.owner = player;
-                if(square is PropertySquare)
-                {
-                    ((PropertySquare)(square)).showRibbon(player.color);
-                }
-                else if(square is UtilitySquare)
-                {
-                    ((UtilitySquare)(square)).showRibbon(player.color);
-                }
-                MessagePopUp.Create("Property purchased!",transform.parent,2);
-                closePopup();
+                case Model.Decision_outcome.NOT_ENOUGH_MONEY:
+                    MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform,2);
+                break;
+                case Model.Decision_outcome.SUCCESSFUL:
+                    if(board_view.squares[space.position-1] is PropertySquare)
+                    {
+                        ((PropertySquare)(board_view.squares[space.position-1])).showRibbon(player.color);
+                    }
+                    else if(board_view.squares[space.position-1] is UtilitySquare)
+                    {
+                        ((UtilitySquare)(board_view.squares[space.position-1])).showRibbon(player.color);
+                    }
+                    MessagePopUp.Create("Property purchased!",transform.parent,2);
+                    closePopup();
+                break;
             }
         }
         public void dontBuyPropertyOption()
@@ -73,22 +75,19 @@ namespace View
             closePopup();
         }
 
-        public void okPayRent(Model.Player owner,Model.Player payer)
-    {
-        if(payer.totalValueOfAssets() < this.amount)
+        public void PayRentOption()
         {
-            MessagePopUp.Create("You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",transform.parent,3);
-            owner.ReceiveCash(amount);
-            closePopup();
+            switch(player.PayCash(space.rent_amount(board_model),space.owner))
+            {
+                case Model.Decision_outcome.NOT_ENOUGH_ASSETS:
+                    MessagePopUp.Create("You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",transform.parent,3);
+                    closePopup();
+                break;
+                case Model.Decision_outcome.NOT_ENOUGH_MONEY:
+                    MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform,2);
+                break;
+            }
         }
-        else if(payer.cash < this.amount)
-        {
-            MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform,2);
-        } else {
-            payer.PayCash(amount,owner);
-            closePopup();
-        }
-    }
 
 /*
 
@@ -140,34 +139,31 @@ namespace View
     }
     public void optionalPayOption()
     {
-        if(player.cash < this.amount)
+        switch(player.PayCash(amount))
         {
-            MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform,2);
-        } else {
-            player.PayCash(amount);
-            closePopup();
+            case Model.Decision_outcome.NOT_ENOUGH_MONEY:
+                MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform,2);
+            break;
+            case Model.Decision_outcome.SUCCESSFUL:
+                closePopup();
+            break;
         }
     }
     public void okPayBank()
     {
-        if(player.totalValueOfAssets() < this.amount)
+        switch(player.PayCash(amount))
         {
-            MessagePopUp.Create("You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",transform.parent,3);
-            closePopup();
-        }
-        else if(player.cash < this.amount)
-        {
-            MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform,2);
-        } else {
-            player.PayCash(amount);
-            closePopup();
+            case Model.Decision_outcome.NOT_ENOUGH_MONEY:
+                MessagePopUp.Create("You have not enough money! Sell or mortgage your properties to get some cash!",transform,2);
+            break;
+            case Model.Decision_outcome.NOT_ENOUGH_ASSETS:
+                MessagePopUp.Create("You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",transform.parent,3);
+                closePopup();
+            break;
+            case Model.Decision_outcome.SUCCESSFUL:
+                closePopup();
+            break;
         }
     }
-
-/*
-    //private methods
-*/
-
-
     }
 }
