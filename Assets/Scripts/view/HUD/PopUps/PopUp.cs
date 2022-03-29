@@ -56,7 +56,7 @@ namespace View
                 c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
                 break;
                 case SqType.STATION:
-                c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+                c = StationCard.Create((Model.Space.Station)space,popUp.transform);
                 break;
             }
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
