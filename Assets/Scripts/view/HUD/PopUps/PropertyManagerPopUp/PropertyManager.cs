@@ -31,31 +31,11 @@ namespace View
                 cards.getValue(entry.Key).gameObject.SetActive(false);
             } else {
                 cards.getValue(entry.Key).gameObject.SetActive(true);
+                ((PropertyCard)(cards.getValue(entry.Key))).setUpCard((PropertyCard)entry.Value);
                 //change color or whatever
-                switch(entry.Value.property.type)
+                if(entry.Value.property.type == SqType.PROPERTY)
                 {
-                    case SqType.PROPERTY:
-                    ((PropertyCard)(cards.getValue(entry.Key))).setUpCard((PropertyCard)entry.Value);
                     ((PropertyCard)(cards.getValue(entry.Key))).showHouse(((Model.Space.Property)(cards.getValue(entry.Key).property)).noOfHouses);
-                    if(canManage)
-                    {
-                        cards.getValue(entry.Key).gameObject.AddComponent<ManagePropertyController>();
-                    }
-                    break;
-                    case SqType.STATION:
-                    ((StationCard)(cards.getValue(entry.Key))).setUpCard((StationCard)entry.Value);
-                    if(canManage)
-                    {
-                        cards.getValue(entry.Key).gameObject.AddComponent<ManageUtilityController>();
-                    }
-                    break;
-                    case SqType.UTILITY:
-                    ((UtilityCard)(cards.getValue(entry.Key))).setUpCard((UtilityCard)entry.Value);
-                    if(canManage)
-                    {
-                        cards.getValue(entry.Key).gameObject.AddComponent<ManageUtilityController>();
-                    }
-                    break;
                 }
             }
         }

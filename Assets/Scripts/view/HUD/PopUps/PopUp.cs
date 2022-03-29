@@ -59,7 +59,7 @@ namespace View
 
         public static PopUp BuyProperty(Transform parent, Model.Player player, Model.Space.Purchasable space, View.Square square)
         {
-            PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
+            PopUp popUp = Instantiate(Asset.BuyPropertyPopup, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + ", do you wish to purchase this property?");
             popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space), player, square));
             popUp.btn2.onClick.AddListener(popUp.dontBuyPropertyOption);
@@ -71,7 +71,7 @@ namespace View
 
         public static PopUp GoToJail(Transform parent, Model.Player player, temp_contr controller, string msg = null)
         {
-            PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
+            PopUp popUp = Instantiate(Asset.GoToJailPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + " broke the law! They must go straight to jail!");
             if(msg != null) { popUp.SendMessage(msg); }
             popUp.btn1.onClick.AddListener(() => popUp.goToJailOption(player, controller));

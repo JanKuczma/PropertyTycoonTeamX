@@ -591,6 +591,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8838803355704617040, guid: b677a611fc5562846a95129e0b79130f, type: 3}
+      propertyPath: sellBtn
+      value: 
+      objectReference: {fileID: 5736923198729881596}
+    - target: {fileID: 8838803355704617040, guid: b677a611fc5562846a95129e0b79130f, type: 3}
+      propertyPath: buyHouseBtn
+      value: 
+      objectReference: {fileID: 8983541574050905362}
+    - target: {fileID: 8838803355704617040, guid: b677a611fc5562846a95129e0b79130f, type: 3}
+      propertyPath: sellHouseBtn
+      value: 
+      objectReference: {fileID: 1417364438426586234}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b677a611fc5562846a95129e0b79130f, type: 3}
 --- !u!224 &2369000653508472970 stripped
@@ -606,6 +618,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9447dcef5d3095044ab13c2c879b8147, type: 3}
+  m_Script: {fileID: 11500000, guid: eb0b669edcff0c044a88d40329613a0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1417364438426586234 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7901162649422340580, guid: b677a611fc5562846a95129e0b79130f, type: 3}
+  m_PrefabInstance: {fileID: 9083176484165070238}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
