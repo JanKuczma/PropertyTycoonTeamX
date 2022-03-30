@@ -428,46 +428,60 @@ public class temp_contr : MonoBehaviour
             case CardAction.PAYTOBANK:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"])));
+                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.PAYTOPLAYER:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => player.ReceiveCash(card.kwargs["amount"]));
+                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.MOVEFORWARDTO:
                 steps = ((40+card.kwargs["position"]) - pieces[player].GetCurrentSquare())%40; 
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
-                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { turnState = TurnState.PIECEMOVE; });
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.MOVEBACKTO:
                 steps = -1 * ((pieces[player].GetCurrentSquare()+40 - card.kwargs["position"])%40); 
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
-                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { turnState = TurnState.PIECEMOVE; });
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.MOVEBACK:
                 steps = card.kwargs["steps"];
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
-                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { turnState = TurnState.PIECEMOVE; });
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.GOTOJAIL:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this); });      
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this); });      
             break;
             case CardAction.BIRTHDAY:
+                string absent_names = "";
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
-            //foreach(Player p in players)
-            //{
-            //  } else {
-            //      p.payCash(card.kwargs["amont"],player)  
-            //  }
-            //}
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
+                    hud.current_main_PopUp.closePopup();
+                    foreach(Model.Player p in players)
+                    {
+                        if(p != player)
+                        {
+                            Model.Decision_outcome outcome = p.PayCash(card.kwargs["amount"],player);
+                            if(outcome == Model.Decision_outcome.NOT_ENOUGH_MONEY || outcome == Model.Decision_outcome.NOT_ENOUGH_ASSETS)
+                            {
+                                absent_names += p.name + " ";
+                            }
+                        }
+                    }
+                    if(absent_names != "")
+                    {
+                        PopUp.OK(hud.transform,absent_names + "didn't come to you birthday party!");
+                    }
+                });
             break;
             case CardAction.OUTOFJAIL:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {player.getOutOfJailCardsNo+=1;});
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {hud.current_main_PopUp.closePopup(); player.getOutOfJailCardsNo+=1;});
             break;
             case CardAction.PAYORCHANCE:                        //this has to be implemented in method in OptionPopUp.cs (two different options)
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
@@ -484,26 +498,24 @@ public class temp_contr : MonoBehaviour
             case CardAction.PAYTOPARKING:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => player.PayCash(card.kwargs["amount"],board:board_model));
-            //  player.payCash(card.kwargs["amount"]);
-            //  board_model.parkingFees += card.kwargs["amount"];
+                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.REPAIRS:
-            /*
-            int total = 0;
-            foreach(Model2.Space.Purchasable space in player.owned_spaces)
-            {
-                if(space.type == SqType.PROPERTY)
+                int total = 0;
+                foreach(Model.Space.Purchasable space in player.owned_spaces)
                 {
-                    if(((Model2.Space.Property)space).noOfHouses == 5)
+                    if(space.type == SqType.PROPERTY)
                     {
-                        total += card.kwargs["hotel"];
-                    } else {
-                        total += ((Model2.Space.Property)space).noOfHouses * card.kwargs["house"];
+                        if(((Model.Space.Property)space).noOfHouses == 5)
+                        {
+                            total += card.kwargs["hotel"];
+                        } else {
+                            total += ((Model.Space.Property)space).noOfHouses * card.kwargs["house"];
+                        }
                     }
                 }
-            }
-            */
-            //player.payCash(total);
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(total)));
             break;
         }
 
