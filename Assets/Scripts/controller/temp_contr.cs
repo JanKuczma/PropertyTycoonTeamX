@@ -63,7 +63,9 @@ public class temp_contr : MonoBehaviour
         foreach(Model.Player player in players)
         {
             pieces.Add(player,View.Piece.Create(player.token,transform,board_view));
+            player.allowed_to_buy = true;
         }
+            players[0].cash = 0;
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
@@ -449,7 +451,7 @@ public class temp_contr : MonoBehaviour
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.MOVEBACK:
-                steps = card.kwargs["steps"];
+                steps = -1*card.kwargs["steps"];
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
@@ -606,7 +608,13 @@ public class temp_contr : MonoBehaviour
         Model.Player highest_bidder = null;
         List<Model.Player> bidders = new List<Model.Player>();
         int current_bidder = 0;
-        foreach(Model.Player p in players) { if(p != player) { bidders.Add(p); } }
+        foreach(Model.Player p in players) { if(p != player) { bidders.Add(p);  } }
+        if(bidders.Count == 0)
+        {
+            hud.current_main_PopUp.closePopup();
+            MessagePopUp.Create(hud.transform,"Nobody bought this property!",3);
+            yield break;
+        }
         hud.current_main_PopUp = PopUp.Auction(hud.transform,current_space);
         hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
         hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
@@ -710,6 +718,8 @@ public class temp_contr : MonoBehaviour
         dice.gameObject.SetActive(true);
         hud.jail_bars.gameObject.SetActive(false); // reset jail bars to not active
         current_player = (current_player) % players.Count;
+        dice.reset();
+        tabs_set = false;
         turnState = TurnState.BEGIN;
     }
     //Camera movement

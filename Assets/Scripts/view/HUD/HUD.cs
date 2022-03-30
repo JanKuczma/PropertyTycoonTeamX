@@ -76,6 +76,7 @@ public class HUD : MonoBehaviour
     public void RemovePlayerTab(Model.Player player)
     {
         Destroy(player_tabs[player].gameObject);
+        player_tabs.Remove(player);
     }
 }
 }
