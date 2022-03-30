@@ -258,7 +258,8 @@ namespace View
                 MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
             } else {
                 player.PayCash(50,board:controller.board_model);
-                MessagePopUp.Create(transform.parent, "You go free!",3);
+                MessagePopUp.Create(transform.parent,"You go to visit the jail... outside!",3);
+                controller.sendPieceToVisitJail();
                 closePopup();
             }
         }
