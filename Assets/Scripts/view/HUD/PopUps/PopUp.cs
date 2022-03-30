@@ -110,6 +110,15 @@ namespace View
             return popUp;
         }
 
+        public static PopUp ResetDice(Transform parent, DiceContainer dice, string message)
+        {
+            PopUp popUp = Instantiate(Asset.OkPopUpPrefab, parent).GetComponent<PopUp>();
+            popUp.btn1.onClick.AddListener(dice.reset);
+            popUp.btn1.onClick.AddListener(popUp.closePopup);
+            popUp.SetMessage(message);
+            return popUp;
+        }
+
 
         public void buyPropertyOption(Model.Decision_outcome decision, Model.Player player, View.Square square)
         {
