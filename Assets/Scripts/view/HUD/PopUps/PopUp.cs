@@ -263,11 +263,5 @@ namespace View
             break;
         }
     }
-
-    public void TakeCardOption(temp_contr controller,Model.Player player)
-    {
-        controller.performCardAction(controller.opportunity_knocks.cards[0], player, SqType.CHANCE);
-        closePopup();
-    }
     }
 }

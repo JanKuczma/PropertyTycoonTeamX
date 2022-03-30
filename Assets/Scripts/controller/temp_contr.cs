@@ -422,7 +422,6 @@ public class temp_contr : MonoBehaviour
     
     public void performCardAction(Model.Card card, Model.Player player,SqType card_type)
     {
-        hud.current_main_PopUp = PopUp.OK(hud.transform, card.description);
         switch(card.action)
         {
             case CardAction.PAYTOBANK:
@@ -484,16 +483,13 @@ public class temp_contr : MonoBehaviour
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {hud.current_main_PopUp.closePopup(); player.getOutOfJailCardsNo+=1;});
             break;
             case CardAction.PAYORCHANCE:                        //this has to be implemented in method in OptionPopUp.cs (two different options)
-                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
-            // bool choice = *** some choice popup window ***
-            // if(choice)
-            //{
-            //  player.payCash(card.kwargs["amount"]);
-            //  board_model.parkingFees += card.kwargs["amount"];
-            //} else {
-            //  player.takeCard(opportunity_knocks.pop());
-            //}
+                hud.current_main_PopUp = PopUp.CardWithOption(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"],board:board_model)));
+                hud.current_main_PopUp.btn2.onClick.AddListener(delegate {
+                    hud.current_main_PopUp.closePopup(); 
+                    Model.Card new_card = opportunity_knocks.PopCard();
+                    performCardAction(new_card, player,SqType.CHANCE);
+                    });
             break;
             case CardAction.PAYTOPARKING:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
