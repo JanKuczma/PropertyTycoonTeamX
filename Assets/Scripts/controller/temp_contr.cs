@@ -63,9 +63,7 @@ public class temp_contr : MonoBehaviour
         foreach(Model.Player player in players)
         {
             pieces.Add(player,View.Piece.Create(player.token,transform,board_view));
-            player.allowed_to_buy = true;
         }
-            players[0].cash = 0;
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
