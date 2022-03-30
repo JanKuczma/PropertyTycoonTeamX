@@ -219,7 +219,8 @@ public abstract class Space
         }
         override public int rent_amount(Board board)
         {
-            return rents[board.ownedStations(owner).Count]; // depending how many stations player has
+            if (board.ownedStations(owner).Count == 0) { return 0; }
+            return rents[board.ownedStations(owner).Count-1]; // depending how many stations player has
         }
     }
 

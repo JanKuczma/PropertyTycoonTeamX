@@ -143,14 +143,15 @@ namespace View
             switch(decision)
             {
                 case Model.Decision_outcome.NOT_ENOUGH_ASSETS:
-                    MessagePopUp.Create(transform,"You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",3);
+                    MessagePopUp.Create(transform.parent,"You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",3);
                     closePopup();
                 break;
                 case Model.Decision_outcome.NOT_ENOUGH_MONEY:
                     MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
                 break;
                 case Model.Decision_outcome.SUCCESSFUL:
-                    MessagePopUp.Create(transform, "Rent paid!",2);
+                    MessagePopUp.Create(transform.parent, "Rent paid!",2);
+                    closePopup();
                 break;
             }
         }
