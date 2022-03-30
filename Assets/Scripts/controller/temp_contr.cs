@@ -7,7 +7,7 @@ using Space = Model.Space;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,DICEROLL,DICE_ROLL_EXTRA, PIECEMOVE, JAIL_PIECE_MOVE, PERFORM_ACTION,MANAGE_PROPERTIES,END}
+public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, JAIL_PIECE_MOVE, PERFORM_ACTION,MANAGE_PROPERTIES,END}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -31,7 +31,7 @@ public class temp_contr : MonoBehaviour
     public bool double_rolled = false; // use this to keep track of whether player just rolled a double
     public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
-    public Model.Decision_outcome jail_decision = Model.Decision_outcome.NONE;
+    int steps; // to pass dice result between states
     //HUD
     public View.HUD hud; 
     //other
@@ -82,24 +82,6 @@ public class temp_contr : MonoBehaviour
                 pieces[players[current_player]].speedUp();
             }
         }
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            board_view.squares[1].GetComponent<View.PropertySquare>().showRibbon(Color.blue);
-            board_view.squares[1].GetComponent<View.PropertySquare>().showRibbon(Color.red);
-            board_view.squares[5].GetComponent<View.UtilitySquare>().showRibbon(Color.magenta);
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            ((View.PropertySquare)board_view.squares[1]).addHouse();
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            ((View.PropertySquare)board_view.squares[1]).removeHouse();
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.Log("totval " + players[current_player].totalValueOfAssets());
-        }
     }
 
     void FixedUpdate()
@@ -134,11 +116,19 @@ public class temp_contr : MonoBehaviour
                     {
                         hud.current_main_PopUp = PopUp.OK(hud.transform,"You are leaving the jail! You can roll dice in the next round!");
                         StartCoroutine(pieces[players[current_player]].leaveJail());
-                        players[current_player].in_jail -= 1;
+                        hud.jail_bars.gameObject.SetActive(false);
+                        players[current_player].in_jail = 0;
                         turnState = TurnState.MANAGE_PROPERTIES;
                     }
                 }
-                else if(dice.start_roll) 
+                else  
+                {
+                    turnState = TurnState.PRE_DICE_ROLL;
+                }
+            }
+            else if(turnState == TurnState.PRE_DICE_ROLL)
+            {
+                if(dice.start_roll)
                 {
                     turnState = TurnState.DICEROLL;
                     invisibleWall.SetActive(true);
@@ -149,49 +139,49 @@ public class temp_contr : MonoBehaviour
                 if(!dice.areRolling())  // if dice are not rolling anymore
                 {
                     invisibleWall.SetActive(false);
-                    int steps = dice.get_result();  // get the result
-                    passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
+                    steps = dice.get_result();  // get the result
                     double_rolled = dice.is_double(); // return whether double was rolled
+                    if(steps < 0)                   // if result is negative (dice are stuck)
+                    {                               // reset the dice
+                        dice.reset();
+                        MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
+                        turnState = TurnState.PRE_DICE_ROLL;
+                        return;
+                    }
                     if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
                     {
                         double_count++;
-                        if (double_count >= 3)      // if 3 doubles in a row, send player straight to jail or let them use the card
-                        {
-                            if(hud.current_main_PopUp == null)
-                            {
-                                hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this, double_count+" doubles in a row? You must be cheating… go to jail!");
-                            }
-                            switch(jail_decision)
-                            {
-                                case Model.Decision_outcome.GO_TO_JAIL:
-                                    turnState = TurnState.MANAGE_PROPERTIES;
-                                    jail_decision = Model.Decision_outcome.NONE;
-                                    double_rolled = false;      // reset double check so it won't have another turn
-                                break;
-                                case Model.Decision_outcome.SUCCESSFUL:
-                                    double_count = 2;
-                                    jail_decision = Model.Decision_outcome.NONE;
-                                break;
-                                case Model.Decision_outcome.NONE:
-                                break;
-                            }
-                        } else {
-                            MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform,players[current_player].name + " rolled a double, they will have another turn!",2,true);
-                        }
+                        turnState = TurnState.CHECK_DOUBLE_ROLL;
+                    } else {
+                        turnState = TurnState.MOVE_THE_PIECE;
                     }
-                    if(players[current_player].in_jail == 0 && double_count < 3) // if a good boy (not in jail in general and not rolled 3 if used card)
+                }
+            }
+            else if(turnState == TurnState.CHECK_DOUBLE_ROLL)
+            {
+                if (double_count >= 3)      // if 3 doubles in a row, send player straight to jail or let them use the card
+                {
+                    hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this, double_count+" doubles in a row? You must be cheating… go to jail!");
+                } else {
+                    MessagePopUp.Create(hud.transform,players[current_player].name + " rolled a double, they will have another turn!",2,true);
+                }
+                turnState = TurnState.MOVE_THE_PIECE;
+                
+            }
+            else if(turnState == TurnState.MOVE_THE_PIECE)
+            {
+                if(hud.current_main_PopUp == null)
+                {
+                    if(players[current_player].in_jail == 0) // if a good boy (not in jail in general and not rolled 3 if used card)
                     {
-                        if(steps < 0)                   // if result is negative (dice are stuck)
-                        {                               // reset the dice
-                            dice.reset();
-                            MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                            turnState = TurnState.BEGIN;
-                        } else
-                        {
-                            // else start moving piece and change the turn state
-                            StartCoroutine(pieces[players[current_player]].move(steps));
-                            turnState = TurnState.PIECEMOVE;
-                        }
+                        // start moving piece and change the turn state
+                        passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
+                        StartCoroutine(pieces[players[current_player]].move(steps));
+                        turnState = TurnState.PIECEMOVE;
+                    } else {
+                        double_count = 0;
+                        double_rolled = false;
+                        turnState = TurnState.MANAGE_PROPERTIES;
                     }
                 }
             }
@@ -205,7 +195,7 @@ public class temp_contr : MonoBehaviour
                         players[current_player].allowed_to_buy = true;
                         players[current_player].ReceiveCash(((Model.Space.Go)(board_model.spaces[0])).amount);
                         hud.UpdatePlayersTabInfo();
-                        MessagePopUp temp_popUp = MessagePopUp.Create(hud.transform, "You passed GO! You receive "+((Model.Space.Go)(board_model.spaces[0])).amount+ "Q in cash!",3,true);
+                        MessagePopUp.Create(hud.transform, "You passed GO! You receive "+((Model.Space.Go)(board_model.spaces[0])).amount+ "Q in cash!",3,true);
                         passed_go = false;
                     }
                     PerformAction();
@@ -239,7 +229,6 @@ public class temp_contr : MonoBehaviour
                     dice.reset();
                 }
                 tabs_set = false;
-                jail_decision = Model.Decision_outcome.NONE; // reset jail decision
                 turnState = TurnState.BEGIN;     // change state to initial state
             }
         }
@@ -585,22 +574,36 @@ public class temp_contr : MonoBehaviour
             yield return null;
         }
     }
-
+    /*
+    case Model.Decision_outcome.GO_TO_JAIL:
+        jail_decision = Model.Decision_outcome.NONE;
+        turnState = TurnState.MANAGE_PROPERTIES;
+        double_rolled = false;      // reset double check so it won't have another turn
+    break;
+    case Model.Decision_outcome.SUCCESSFUL:
+        double_count = 2;
+        jail_decision = Model.Decision_outcome.NONE;
+    break;
+    case Model.Decision_outcome.NONE:
+    break;
+    */
     public void sendPieceToJail()
     {
         StartCoroutine(pieces[players[current_player]].goToJail());
-        jail_decision = Model.Decision_outcome.GO_TO_JAIL;
+        turnState = TurnState.MANAGE_PROPERTIES;
+        double_rolled = false;      // reset double check so it won't have another turn
     }
 
     public void sendPieceToVisitJail()
     {
         StartCoroutine(pieces[players[current_player]].goToVisitJail());
-        jail_decision = Model.Decision_outcome.GO_TO_JAIL;
+        turnState = TurnState.MANAGE_PROPERTIES;
+        double_rolled = false;      // reset double check so it won't have another turn
     }
 
     public void sendPieceFree()
     {
-        jail_decision = Model.Decision_outcome.SUCCESSFUL;
+        
     }
 
     public void tryBreakOut()
@@ -610,6 +613,7 @@ public class temp_contr : MonoBehaviour
 
     public void stayInJail()
     {
+        players[current_player].in_jail -= 1;
         turnState = TurnState.MANAGE_PROPERTIES;
     }
 

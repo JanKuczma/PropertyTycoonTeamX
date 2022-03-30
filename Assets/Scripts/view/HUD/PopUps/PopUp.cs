@@ -103,7 +103,7 @@ namespace View
         {
             PopUp popUp = Instantiate(Asset.GoToJailPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + " broke the law! They must go straight to jail!");
-            if(msg != null) { popUp.SendMessage(msg); }
+            if(msg != null) { popUp.SetMessage(msg); }
             popUp.btn1.onClick.AddListener(() => popUp.goToJailOption(player, controller));
             popUp.btn2.onClick.AddListener(() => popUp.jailCardOption(player, controller));
             popUp.btn3.onClick.AddListener(() => popUp.jailPay50Option(player, controller));
