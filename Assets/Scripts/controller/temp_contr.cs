@@ -348,6 +348,10 @@ public class temp_contr : MonoBehaviour
             case SqType.PARKING:
             {
                 hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " landed on Free Parking. Collect all those juicy fines!");
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
+                    players[current_player].ReceiveCash(board_model.parkingFees);
+                    board_model.parkingFees = 0;
+                });
                 //reset FREE PARKING balance to zero
                 //give player whatever the balance in FREE PARKING
                 break;
@@ -413,8 +417,7 @@ public class temp_contr : MonoBehaviour
             case SqType.TAX:
             {
                 hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " misfiled their tax returns, pay HMRC a SUPER TAX!");
-                
-                //if(players[current_player].totalValueOfAssets < *whatever is the tax amount*) { *GoSquare bankrupt* }
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(players[current_player].PayCash(((Model.Space.Tax)(current_space)).amount)));
                 break;
             }
         }
