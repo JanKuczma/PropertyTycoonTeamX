@@ -7,7 +7,7 @@ using Space = Model.Space;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, JAIL_PIECE_MOVE, PERFORM_ACTION,MANAGE_PROPERTIES,END}
+public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, AUCTION, MANAGE_PROPERTIES,END}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -38,7 +38,6 @@ public class temp_contr : MonoBehaviour
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
     bool tabs_set;
-
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
@@ -369,7 +368,7 @@ public class temp_contr : MonoBehaviour
             {
                 if(((Space.Purchasable)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
-                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square]);
+                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square],this);
                 }
                 else if(((Space.Purchasable)(current_space)).owner == players[current_player])
                 {
@@ -392,7 +391,7 @@ public class temp_contr : MonoBehaviour
             {
                 if(((Space.Purchasable)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
-                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square]);
+                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square],this);
                 }
                 else if(((Space.Purchasable)(current_space)).owner == players[current_player])
                 {
@@ -438,13 +437,13 @@ public class temp_contr : MonoBehaviour
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.MOVEFORWARDTO:
-                steps = ((40+card.kwargs["position"]) - pieces[player].GetCurrentSquare())%40; 
+                steps = ((39+card.kwargs["position"]) - pieces[player].GetCurrentSquare())%40; 
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.MOVEBACKTO:
-                steps = -1 * ((pieces[player].GetCurrentSquare()+40 - card.kwargs["position"])%40); 
+                steps = -1 * ((pieces[player].GetCurrentSquare()+41 - card.kwargs["position"])%40); 
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
@@ -485,7 +484,7 @@ public class temp_contr : MonoBehaviour
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {hud.current_main_PopUp.closePopup(); player.getOutOfJailCardsNo+=1;});
             break;
-            case CardAction.PAYORCHANCE:                        //this has to be implemented in method in OptionPopUp.cs (two different options)
+            case CardAction.PAYORCHANCE:
                 hud.current_main_PopUp = PopUp.CardWithOption(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"],board:board_model)));
                 hud.current_main_PopUp.btn2.onClick.AddListener(delegate {
@@ -600,19 +599,60 @@ public class temp_contr : MonoBehaviour
             yield return null;
         }
     }
-    /*
-    case Model.Decision_outcome.GO_TO_JAIL:
-        jail_decision = Model.Decision_outcome.NONE;
-        turnState = TurnState.MANAGE_PROPERTIES;
-        double_rolled = false;      // reset double check so it won't have another turn
-    break;
-    case Model.Decision_outcome.SUCCESSFUL:
-        double_count = 2;
-        jail_decision = Model.Decision_outcome.NONE;
-    break;
-    case Model.Decision_outcome.NONE:
-    break;
-    */
+
+    IEnumerator auctionCoroutine(Model.Player player,Space.Purchasable current_space)
+    {
+        int highest_bid = current_space.cost-10;
+        Model.Player highest_bidder = null;
+        List<Model.Player> bidders = new List<Model.Player>();
+        int current_bidder = 0;
+        foreach(Model.Player p in players) { if(p != player) { bidders.Add(p); } }
+        hud.current_main_PopUp = PopUp.Auction(hud.transform,current_space);
+        hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
+        hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
+            if(bidders[current_bidder].cash < highest_bid+10)
+            {
+                MessagePopUp.Create(hud.current_main_PopUp.transform,"You have not enough money!",2);
+            } else {
+                highest_bid = highest_bid+10;
+                highest_bidder = bidders[current_bidder];
+                current_bidder = (current_bidder+1)%bidders.Count;
+                hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
+            }
+
+        });
+        hud.current_main_PopUp.btn2.onClick.AddListener(delegate {
+            bidders.RemoveAt(current_bidder);
+            if(bidders.Count > 0)
+            {
+                current_bidder = (current_bidder)%bidders.Count;
+                hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
+            }
+        });
+        while((highest_bidder == null || !(highest_bidder != null && bidders.Count == 1)) && bidders.Count > 0)
+        {
+            Debug.Log("highest: "+ highest_bid);
+            yield return null;
+        }
+        if(highest_bidder == null)
+        {
+            hud.current_main_PopUp.closePopup();
+            MessagePopUp.Create(hud.transform,"Nobody bought this property!",3);
+        } else {
+            highest_bidder.BuyProperty(current_space,highest_bid);
+            View.Square square = board_view.squares[current_space.position-1];
+            if(square is PropertySquare)
+            {
+                (((View.PropertySquare)square)).showRibbon(highest_bidder.color);
+            }
+            else if(square is UtilitySquare)
+            {
+                ((View.UtilitySquare)(square)).showRibbon(highest_bidder.color);
+            }
+            hud.current_main_PopUp.closePopup();
+            MessagePopUp.Create(hud.transform,highest_bidder.name+" purchased this property for "+highest_bid+"Q!",3);
+        }
+    }
     public void sendPieceToJail()
     {
         StartCoroutine(pieces[players[current_player]].goToJail());
@@ -627,9 +667,9 @@ public class temp_contr : MonoBehaviour
         double_rolled = false;      // reset double check so it won't have another turn
     }
 
-    public void sendPieceFree()
+    public void startAuction(Model.Player player, Model.Space.Purchasable space)
     {
-        
+        StartCoroutine(auctionCoroutine(player,space));
     }
 
     public void tryBreakOut()

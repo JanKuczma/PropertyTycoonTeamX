@@ -44,6 +44,27 @@ namespace View
             return popUp;
          }
 
+         public static PopUp Auction(Transform parent,Model.Space.Purchasable space)
+         {
+            PopUp popUp = Instantiate(Asset.AuctionPopUpPrefab, parent).GetComponent<PopUp>();
+            PurchasableCard c = null;
+            switch(space.type)
+            {
+                case SqType.PROPERTY:
+                c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+                break;
+                case SqType.STATION:
+                c = StationCard.Create((Model.Space.Station)space,popUp.transform);
+                break;
+                case SqType.UTILITY:
+                c = UtilityCard.Create((Model.Space.Utility)space,popUp.transform);
+                break;
+            }
+            c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
+            c.gameObject.SetActive(true);
+            return popUp;
+         }
+
         public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board)
         {
             PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
@@ -76,12 +97,12 @@ namespace View
             return popUp;
         }
 
-        public static PopUp BuyProperty(Transform parent, Model.Player player, Model.Space.Purchasable space, View.Square square)
+        public static PopUp BuyProperty(Transform parent, Model.Player player, Model.Space.Purchasable space, View.Square square, temp_contr controller)
         {
             PopUp popUp = Instantiate(Asset.BuyPropertyPopup, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + ", do you wish to purchase this property?");
             popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space), player, square));
-            popUp.btn2.onClick.AddListener(popUp.dontBuyPropertyOption);
+            popUp.btn2.onClick.AddListener(() => popUp.dontBuyPropertyOption(player,space,controller));
             PurchasableCard c = null;
             switch(space.type)
             {
@@ -164,9 +185,9 @@ namespace View
                 break;
             }
         }
-        public void dontBuyPropertyOption()
+        public void dontBuyPropertyOption(Model.Player player, Model.Space.Purchasable space, temp_contr controller)
         {
-            MessagePopUp.Create(transform.parent, "*Auction system to be developed*");
+            controller.startAuction(player,space);
             closePopup();
         }
 
@@ -237,7 +258,6 @@ namespace View
             } else {
                 player.PayCash(50,board:controller.board_model);
                 MessagePopUp.Create(transform.parent, "You go free!",3);
-                controller.sendPieceFree();
                 closePopup();
             }
         }
