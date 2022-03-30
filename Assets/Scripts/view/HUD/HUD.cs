@@ -72,5 +72,10 @@ public class HUD : MonoBehaviour
             entry.Value.setMoney(entry.Key.cash);
         }
     }
+
+    public void RemovePlayerTab(Model.Player player)
+    {
+        Destroy(player_tabs[player].gameObject);
+    }
 }
 }

@@ -65,12 +65,12 @@ namespace View
             return popUp;
          }
 
-        public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board)
+        public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board,temp_contr controller)
         {
             PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
             int rent_amount = space.rent_amount(board);
             popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
-            popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner)));
+            popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner),controller,payer));
             PurchasableCard c = null;
             switch(space.type)
             {
@@ -85,12 +85,12 @@ namespace View
             c.gameObject.SetActive(true);
             return popUp;
         }
-        public static PopUp PayRentUtility(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board, int dice_result)
+        public static PopUp PayRentUtility(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board, int dice_result,temp_contr controller)
         {
             PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
             int rent_amount = space.rent_amount(board)*dice_result;
             popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
-            popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner)));
+            popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner),controller,payer));
             PurchasableCard c = UtilityCard.Create((Model.Space.Utility)space,popUp.transform);
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
@@ -191,14 +191,15 @@ namespace View
             closePopup();
         }
 
-        public void PayRentOption(Model.Decision_outcome decision)
+        public void PayRentOption(Model.Decision_outcome decision,temp_contr controller,Model.Player player)
         {
             switch(decision)
             {
                 case Model.Decision_outcome.NOT_ENOUGH_ASSETS:
-                    MessagePopUp.Create(transform.parent,"You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",3);
-                    closePopup();
-                break;
+                controller.hud.current_main_PopUp = PopUp.OK(controller.hud.transform,"You have no enough assets to pay it! You lost the game!");
+                controller.hud.current_main_PopUp.btn1.onClick.AddListener(() => controller.RemovePLayer(player));
+                closePopup();
+            break;
                 case Model.Decision_outcome.NOT_ENOUGH_MONEY:
                     MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
                 break;
@@ -267,7 +268,7 @@ namespace View
     // Land on TAKE CARD options
 
 */
-    public void PayOption(Model.Decision_outcome decision)
+    public void PayOption(Model.Decision_outcome decision,temp_contr controller,Model.Player player)
     {
         switch(decision)
         {
@@ -275,7 +276,8 @@ namespace View
                 MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
             break;
             case Model.Decision_outcome.NOT_ENOUGH_ASSETS:
-                MessagePopUp.Create(transform.parent, "You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",3);
+                controller.hud.current_main_PopUp = PopUp.OK(controller.hud.transform,"You have no enough assets to pay it! You lost the game!");
+                controller.hud.current_main_PopUp.btn1.onClick.AddListener(() => controller.RemovePLayer(player));
                 closePopup();
             break;
             case Model.Decision_outcome.SUCCESSFUL:

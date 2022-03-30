@@ -305,7 +305,6 @@ public class temp_contr : MonoBehaviour
      {
          double_rolled = false;  // reset double check
          double_count = 0;       // reset double count
-         dice.gameObject.SetActive(true);
          hud.jail_bars.gameObject.SetActive(false); // reset jail bars to not active
          current_player = (current_player + 1) % players.Count;
          dice.gameObject.SetActive(true);
@@ -380,7 +379,7 @@ public class temp_contr : MonoBehaviour
                     {
 
                     } else {
-                        hud.current_main_PopUp = PopUp.PayRent(hud.transform,players[current_player],(Model.Space.Purchasable)current_space,board_model);
+                        hud.current_main_PopUp = PopUp.PayRent(hud.transform,players[current_player],(Model.Space.Purchasable)current_space,board_model,this);
                     }
                 } else {
                     MessagePopUp.Create(hud.transform, "You have to complete one circuit of the board by passing the GO to buy a property!",4);
@@ -416,7 +415,7 @@ public class temp_contr : MonoBehaviour
             case SqType.TAX:
             {
                 hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " misfiled their tax returns, pay HMRC "+((Model.Space.Tax)(current_space)).amount  +"Q of "+current_space.name);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(players[current_player].PayCash(((Model.Space.Tax)(current_space)).amount)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(players[current_player].PayCash(((Model.Space.Tax)(current_space)).amount),this,players[current_player]));
                 break;
             }
         }
@@ -428,7 +427,7 @@ public class temp_contr : MonoBehaviour
         {
             case CardAction.PAYTOBANK:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"])));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"]),this,player));
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.PAYTOPLAYER:
@@ -487,7 +486,7 @@ public class temp_contr : MonoBehaviour
             break;
             case CardAction.PAYORCHANCE:
                 hud.current_main_PopUp = PopUp.CardWithOption(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"],board:board_model)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"],board:board_model),this,player));
                 hud.current_main_PopUp.btn2.onClick.AddListener(delegate {
                     hud.current_main_PopUp.closePopup(); 
                     Model.Card new_card = opportunity_knocks.PopCard();
@@ -514,7 +513,7 @@ public class temp_contr : MonoBehaviour
                     }
                 }
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(total)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(total),this,player));
             break;
         }
 
@@ -546,7 +545,7 @@ public class temp_contr : MonoBehaviour
                     turnState = TurnState.PERFORM_ACTION;
                 } else {
                     Destroy(hud.current_main_PopUp.gameObject);
-                    hud.current_main_PopUp = PopUp.PayRentUtility(hud.transform,payer,space,board,dice_result);
+                    hud.current_main_PopUp = PopUp.PayRentUtility(hud.transform,payer,space,board,dice_result,this);
                     turnState = TurnState.PERFORM_ACTION;
                     successful = true;
                 }
@@ -687,6 +686,31 @@ public class temp_contr : MonoBehaviour
     public void finishTurn()
     {
         turnState = TurnState.END;
+    }
+    public void RemovePLayer(Model.Player player)
+    {
+        foreach(Model.Space.Purchasable space in player.owned_spaces)
+        {
+            if(space is Model.Space.Property)
+            {
+                for(int i = 0; i > ((Model.Space.Property)(space)).noOfHouses; i++) { ((View.PropertySquare)(board_view.squares[space.position-1])).removeHouse(); }
+                ((View.PropertySquare)(board_view.squares[space.position-1])).removeRibbon();
+                ((Model.Space.Property)(space)).noOfHouses = 0;
+            } else {
+                ((View.UtilitySquare)(board_view.squares[space.position-1])).removeRibbon();
+            }
+            space.owner = null;
+        }
+        hud.RemovePlayerTab(player);
+        Destroy(pieces[player].gameObject);
+        players.Remove(player);
+        hud.sort_tabs(players);
+        double_rolled = false;  // reset double check
+        double_count = 0;       // reset double count
+        dice.gameObject.SetActive(true);
+        hud.jail_bars.gameObject.SetActive(false); // reset jail bars to not active
+        current_player = (current_player) % players.Count;
+        turnState = TurnState.BEGIN;
     }
     //Camera movement
     public void moveCameraLeft()
