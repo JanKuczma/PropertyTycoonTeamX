@@ -9,6 +9,7 @@ namespace Model{
 public class CardStack
 {
     public List<Card> cards;
+    int next = 0;
 
     public CardStack()
     {
@@ -33,6 +34,13 @@ public class CardStack
             cards[k] = cards[n];
             cards[n] = i;
         }
+    }
+
+    public Card PopCard()
+    {
+        Card c = cards[next];
+        next = (next+1)%cards.Count;
+        return c;   
     }
 }
 }

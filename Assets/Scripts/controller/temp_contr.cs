@@ -17,8 +17,8 @@ public class temp_contr : MonoBehaviour
     //game elements
     public View.Board board_view;
     public Model.Board board_model;
-    Model.CardStack opportunity_knocks;
-    Model.CardStack potluck;
+    public Model.CardStack opportunity_knocks;
+    public Model.CardStack potluck;
     View.DiceContainer dice;
     public Dictionary<Model.Player,View.Piece> pieces; // dict for Piece objects where the keys values are references to Model.Player obj
     //players
@@ -52,7 +52,9 @@ public class temp_contr : MonoBehaviour
         //load data (to be changed for XLSX in near future)
         board_model = Model.JSONData.loadBoard(Asset.board_data_json());
         opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
+        opportunity_knocks.ShuffleStack();
         potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
+        potluck.ShuffleStack();
         //create board with card stacks and dice
         board_view = View.Board.Create(transform,board_model);
         dice = View.DiceContainer.Create(transform);
@@ -322,14 +324,14 @@ public class temp_contr : MonoBehaviour
 
         if (current_space_type == SqType.CHANCE)                                    // first two if statements check whether square is a "take a card" square
         {
-            Model.Card card_taken = opportunity_knocks.cards[0];
+            Model.Card card_taken = opportunity_knocks.PopCard();
             performCardAction(card_taken, players[current_player],SqType.CHANCE);                 // if so, call performCardAction()
         }
 
         if (current_space_type == SqType.POTLUCK)
         {
-            Model.Card card_taken = potluck.cards[0];
-            performCardAction(card_taken, players[current_player],SqType.POTLUCK);                 // NOTE: currently when a card is taken, it is not placed at the bottom nor is the deck reshuffled
+            Model.Card card_taken = potluck.PopCard();
+            performCardAction(card_taken, players[current_player],SqType.POTLUCK);                 
         }
 
         switch (current_space_type)
@@ -400,7 +402,7 @@ public class temp_contr : MonoBehaviour
                     } else {
                         int rent_times = ((Space.Utility)(current_space)).rent_amount(board_model);
                         MessagePopUp.Create(hud.transform, "This company is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_times+" times the value shown on the dice!");
-                        MessagePopUp temp_popUp = MessagePopUp.Create(hud.transform, "Roll the dice! ", 3);
+                        MessagePopUp temp_popUp = MessagePopUp.Create(hud.transform, "Roll the dice! ", 3,true);
                         StartCoroutine(payUtilityRentCoroutine(players[current_player],(Space.Purchasable)current_space,board_model));
                     }
                 } else {
@@ -424,30 +426,38 @@ public class temp_contr : MonoBehaviour
         switch(card.action)
         {
             case CardAction.PAYTOBANK:
-            //player.payCash(card.kwargs["amount"]);
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"])));
             break;
             case CardAction.PAYTOPLAYER:
-            //player.getCash(card.kwargs["amount"]);
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => player.ReceiveCash(card.kwargs["amount"]));
             break;
             case CardAction.MOVEFORWARDTO:
-            // int steps = (40+card.kwargs["position"]) - player.position)%40; 
-            //player.move(card.kwargs["position"]);
-            //StartCoroutine(pieces[player].move(steps));
+                steps = ((40+card.kwargs["position"]) - pieces[player].GetCurrentSquare())%40; 
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.MOVEBACKTO:
-            // int steps = -1 * ((player.position+40 - card.kwargs["position"])%40); 
-            //player.move(card.kwargs["position"]);
-            //StartCoroutine(pieces[player].move(steps));
+                steps = -1 * ((pieces[player].GetCurrentSquare()+40 - card.kwargs["position"])%40); 
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.MOVEBACK:
-            //player.move(card.kwargs["steps"]);
-            //StartCoroutine(pieces[player].move(-1*steps));
+                steps = card.kwargs["steps"];
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.GOTOJAIL:
-            //player.goToJail();
-            //StartCoroutine(pieces[player].goToJail());
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this); });      
             break;
             case CardAction.BIRTHDAY:
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             //foreach(Player p in players)
             //{
             //  } else {
@@ -456,9 +466,12 @@ public class temp_contr : MonoBehaviour
             //}
             break;
             case CardAction.OUTOFJAIL:
-            //player.outOfJailCards+=1;
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {player.getOutOfJailCardsNo+=1;});
             break;
             case CardAction.PAYORCHANCE:                        //this has to be implemented in method in OptionPopUp.cs (two different options)
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             // bool choice = *** some choice popup window ***
             // if(choice)
             //{
@@ -469,6 +482,8 @@ public class temp_contr : MonoBehaviour
             //}
             break;
             case CardAction.PAYTOPARKING:
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => player.PayCash(card.kwargs["amount"],board:board_model));
             //  player.payCash(card.kwargs["amount"]);
             //  board_model.parkingFees += card.kwargs["amount"];
             break;

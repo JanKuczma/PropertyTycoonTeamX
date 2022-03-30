@@ -11,6 +11,7 @@ namespace View
         public Button btn1;
         public Button btn2;
         public Button btn3;
+        public Image optional_img;
 
         public void SetMessage(string msg)
         {
@@ -110,6 +111,37 @@ namespace View
             return popUp;
         }
 
+        public static PopUp Card(Transform parent, Model.Player player, temp_contr controller, Model.Card card, SqType card_type)
+        {
+            PopUp popup = Instantiate(Asset.CardActionPopUp,parent).GetComponent<PopUp>();
+            popup.SetMessage(card.description);
+            switch(card_type)
+            {
+                case SqType.CHANCE:
+                    popup.optional_img.sprite = Asset.chance_IMG;
+                break;
+                case SqType.POTLUCK:
+                    popup.optional_img.sprite = Asset.opportunity_knocks_IMG;
+                break;
+            }
+            return popup;
+        }
+        public static PopUp CardWithOption(Transform parent, Model.Player player, temp_contr controller, Model.Card card, SqType card_type)
+        {
+            PopUp popup = Instantiate(Asset.CardActionPopWithOptionsUp,parent).GetComponent<PopUp>();
+            popup.SetMessage(card.description);
+            switch(card_type)
+            {
+                case SqType.CHANCE:
+                    popup.optional_img.sprite = Asset.chance_IMG;
+                break;
+                case SqType.POTLUCK:
+                    popup.optional_img.sprite = Asset.opportunity_knocks_IMG;
+                break;
+            }
+            return popup;
+        }
+
 
         public void buyPropertyOption(Model.Decision_outcome decision, Model.Player player, View.Square square)
         {
@@ -203,7 +235,7 @@ namespace View
             {
                 MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
             } else {
-                player.PayCash(50);
+                player.PayCash(50,board:controller.board_model);
                 MessagePopUp.Create(transform.parent, "You go free!",3);
                 controller.sendPieceFree();
                 closePopup();
@@ -215,25 +247,7 @@ namespace View
     // Land on TAKE CARD options
 
 */
-
-    public void takeCardOption()
-    {
-        MessagePopUp.Create(transform.parent, "You took card!",2);
-        closePopup();
-    }
-    public void optionalPayOption(Model.Decision_outcome decision)
-    {
-        switch(decision)
-        {
-            case Model.Decision_outcome.NOT_ENOUGH_MONEY:
-                MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
-            break;
-            case Model.Decision_outcome.SUCCESSFUL:
-                closePopup();
-            break;
-        }
-    }
-    public void okPayBank(Model.Decision_outcome decision)
+    public void PayOption(Model.Decision_outcome decision)
     {
         switch(decision)
         {
@@ -248,6 +262,12 @@ namespace View
                 closePopup();
             break;
         }
+    }
+
+    public void TakeCardOption(temp_contr controller,Model.Player player)
+    {
+        controller.performCardAction(controller.opportunity_knocks.cards[0], player, SqType.CHANCE);
+        closePopup();
     }
     }
 }
