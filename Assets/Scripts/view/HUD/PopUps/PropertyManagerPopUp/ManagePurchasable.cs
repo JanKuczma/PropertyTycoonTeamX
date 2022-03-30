@@ -6,67 +6,46 @@ using UnityEngine.EventSystems;
 
 namespace View
 {
-public class ManagePurchasable : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDeselectHandler
+public class ManagePurchasable : MonoBehaviour
 {
-    protected ManagePurchasable PopUp;
-    bool isPointerOver = false;
-
-    PurchasableCard card;
-    Model.Board board;
-    public View.Square square;
     public Button mortgageBtn;
     public Button sellBtn;
     public Button buyHouseBtn;
     public Button sellHouseBtn;
 
-    void Start()
+    public static ManagePurchasable Create(Transform parent, Model.Space.Purchasable property)
     {
-        temp_contr controller = FindObjectOfType<temp_contr>(); 
-        card = GetComponent<PurchasableCard>();
-        board = controller.board_model;
-        square = controller.board_view.squares[card.property.position-1];
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        EventSystem.current.SetSelectedGameObject(gameObject);
-        if(PopUp == null)
-        {
-            if(card is PropertyCard)
+        ManagePurchasable PopUp;
+        if(property is Model.Space.Property)
             {
-                PopUp = Instantiate(Asset.ManagePropertyPopUpPrefab,card.transform).GetComponent<ManagePurchasable>();
-                PopUp.mortgageBtn.onClick.AddListener(() => mortgagePropertyOption(card.property.mortgage()));
-                PopUp.sellBtn.onClick.AddListener(() => sellPropertyOption(card.property.owner.SellProperty(card.property,board),(View.PropertySquare)square));
-                PopUp.buyHouseBtn.onClick.AddListener(() => buyHouseOption(card.property.owner.BuyProperty(card.property),(Model.Space.Property)card.property,(View.PropertySquare)square));
-                PopUp.sellHouseBtn.onClick.AddListener(() => sellHouseOption(card.property.owner.BuyProperty(card.property),(Model.Space.Property)card.property,(View.PropertySquare)square));
+                PopUp = Instantiate(Asset.ManagePropertyPopUpPrefab,parent).GetComponent<ManagePurchasable>();
+                temp_contr controller = FindObjectOfType<temp_contr>(); 
+                PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model),controller.board_view.squares[property.position-1]));
+                PopUp.buyHouseBtn.onClick.AddListener(() => PopUp.buyHouseOption(((Model.Space.Property)(property)).buyHouse(controller.board_model) ,(Model.Space.Property)property,((View.PropertySquare)(controller.board_view.squares[property.position-1]))));
+                PopUp.sellHouseBtn.onClick.AddListener(() => PopUp.sellHouseOption(((Model.Space.Property)(property)).sellHouse(controller.board_model) ,(Model.Space.Property)property,((View.PropertySquare)(controller.board_view.squares[property.position-1]))));
+                if(property.isMortgaged) {
+                    PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.pay_off_mortgage(),property));
+                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Pay Off Mortgage";
+                } else {
+                    PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.mortgage(),property));
+                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Mortgage";
+                }
             } else {
-                PopUp = Instantiate(Asset.ManageUtilityPopUpPrefab,card.transform).GetComponent<ManagePurchasable>();
-                PopUp.mortgageBtn.onClick.AddListener(() => mortgagePropertyOption(card.property.mortgage()));
-                PopUp.sellBtn.onClick.AddListener(() => sellPropertyOption(card.property.owner.SellProperty(card.property,board),(View.PropertySquare)square));
+                PopUp = Instantiate(Asset.ManageUtilityPopUpPrefab,parent).GetComponent<ManagePurchasable>();
+                temp_contr controller = FindObjectOfType<temp_contr>(); 
+                PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model),((View.UtilitySquare)(controller.board_view.squares[property.position-1]))));
+                if(property.isMortgaged) {
+                    PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.pay_off_mortgage(),property));
+                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Pay Off Mortgage";
+                } else {
+                    PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.mortgage(),property));
+                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Mortgage";
+                }
             }
-        }
-    }
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        transform.localScale = transform.localScale*2;
-        isPointerOver = true;
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        transform.localScale = transform.localScale*.5f;
-        isPointerOver = false;
+        return PopUp;
     }
 
-    public void OnDeselect(BaseEventData eventData)
-    {
-        if(!isPointerOver)
-        {
-            Destroy(PopUp.gameObject);
-            PopUp = null;
-        }
-    }
-
-        public void buyHouseOption(Model.Decision_outcome decision, Model.Space.Property space, View.PropertySquare square)
+    public void buyHouseOption(Model.Decision_outcome decision, Model.Space.Property space, View.PropertySquare square)
     {
         switch(decision) //((Model.Space.Property)(card.property)).buyHouse(FindObjectOfType<temp_contr>().board_model)
         {
@@ -123,22 +102,17 @@ public class ManagePurchasable : MonoBehaviour, IPointerClickHandler, IPointerEn
             break;
         }
     }
-    public void mortgagePropertyOption(Model.Decision_outcome desicision)
+    public void mortgagePropertyOption(Model.Decision_outcome decision, Model.Space.Purchasable property)
     {
-        if(card.property.isMortgaged)
-        {
-            switch (desicision)
+            switch (decision)
             {
                 case Model.Decision_outcome.NOT_ENOUGH_MONEY:
                     MessagePopUp.Create(transform.parent, "You have not enough money! Sell or mortgage your properties to get some cash!");
                 break;
                 case Model.Decision_outcome.SUCCESSFUL:
-                    MessagePopUp.Create(transform.parent, "Property paid off!");
+                    if(property.isMortgaged) { MessagePopUp.Create(transform.parent, "Property mortgaged!"); } else { MessagePopUp.Create(transform.parent, "Property paid off!"); }
                 break;
             }
-        } else {
-            MessagePopUp.Create(transform.parent, "Property mortgaged!");
-        }
         Destroy(gameObject);
     }
 

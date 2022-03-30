@@ -34,13 +34,31 @@ namespace View
             return popUp;
          }
 
+         public static PopUp InJail(Transform parent, temp_contr controller)
+         {
+            PopUp popUp = Instantiate(Asset.InJailPopUpPrefab, parent).GetComponent<PopUp>();
+            popUp.SetMessage("Stay in Jail or try to break out by rolling a double!");
+            popUp.btn1.onClick.AddListener(() => popUp.stayInJailOption(controller));
+            popUp.btn2.onClick.AddListener(() => popUp.rollInJailOption(controller));
+            return popUp;
+         }
+
         public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board)
         {
             PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
             int rent_amount = space.rent_amount(board);
             popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
             popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner)));
-            PurchasableCard c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+            PurchasableCard c = null;
+            switch(space.type)
+            {
+                case SqType.PROPERTY:
+                c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+                break;
+                case SqType.STATION:
+                c = StationCard.Create((Model.Space.Station)space,popUp.transform);
+                break;
+            }
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
             return popUp;
@@ -51,7 +69,7 @@ namespace View
             int rent_amount = space.rent_amount(board)*dice_result;
             popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
             popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner)));
-            PurchasableCard c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+            PurchasableCard c = UtilityCard.Create((Model.Space.Utility)space,popUp.transform);
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
             return popUp;
@@ -63,7 +81,19 @@ namespace View
             popUp.SetMessage(player.name + ", do you wish to purchase this property?");
             popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space), player, square));
             popUp.btn2.onClick.AddListener(popUp.dontBuyPropertyOption);
-            PurchasableCard c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+            PurchasableCard c = null;
+            switch(space.type)
+            {
+                case SqType.PROPERTY:
+                c = PropertyCard.Create((Model.Space.Property)space,popUp.transform);
+                break;
+                case SqType.STATION:
+                c = StationCard.Create((Model.Space.Station)space,popUp.transform);
+                break;
+                case SqType.UTILITY:
+                c = UtilityCard.Create((Model.Space.Utility)space,popUp.transform);
+                break;
+            }
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
             return popUp;
@@ -113,14 +143,34 @@ namespace View
             switch(decision)
             {
                 case Model.Decision_outcome.NOT_ENOUGH_ASSETS:
-                    MessagePopUp.Create(transform,"You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",3);
+                    MessagePopUp.Create(transform.parent,"You're broke. You're bankrupt\n*bankrupt mechanism to be dveloped*",3);
                     closePopup();
                 break;
                 case Model.Decision_outcome.NOT_ENOUGH_MONEY:
                     MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
                 break;
+                case Model.Decision_outcome.SUCCESSFUL:
+                    MessagePopUp.Create(transform.parent, "Rent paid!",2);
+                    closePopup();
+                break;
             }
         }
+/*
+
+    //while in jail
+
+*/
+    public void stayInJailOption(temp_contr controller)
+    {
+        MessagePopUp.Create(transform.parent, "You are staying in Jail!",3);
+        controller.stayInJail();
+        closePopup();
+    }
+    public void rollInJailOption(temp_contr controller)
+    {
+        controller.tryBreakOut();
+        closePopup();
+    }
 
 /*
 
