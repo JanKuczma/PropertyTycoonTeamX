@@ -195,7 +195,7 @@ public class temp_contr : MonoBehaviour
                     {
                         players[current_player].allowed_to_buy = true;
                         players[current_player].ReceiveCash(((Model.Space.Go)(board_model.spaces[0])).amount);
-                        hud.UpdatePlayersTabInfo();
+                        hud.UpdateInfo(this);
                         MessagePopUp.Create(hud.transform, "You passed GO! You receive "+((Model.Space.Go)(board_model.spaces[0])).amount+ "Q in cash!",3,true);
                         passed_go = false;
                     }

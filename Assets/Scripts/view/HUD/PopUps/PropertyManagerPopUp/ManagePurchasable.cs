@@ -119,7 +119,7 @@ public class ManagePurchasable : MonoBehaviour
 
     void OnDestroy()
     {
-        FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();
+        FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<temp_contr>());
     }
 }
 }

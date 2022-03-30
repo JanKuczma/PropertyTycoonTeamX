@@ -24,7 +24,7 @@ namespace View
         }
         void OnDestroy()
         {
-            FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();
+            FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<temp_contr>());
         }
 
          public static PopUp OK(Transform parent, string message)

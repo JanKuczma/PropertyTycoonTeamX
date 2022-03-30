@@ -14,6 +14,7 @@ public class HUD : MonoBehaviour
     public PopUp current_main_PopUp = null;
     public PropertyManager currentManager = null;
     public Image jail_bars;
+    public Text parking_fines;
 
     public void Create_player_tabs(List<Model.Player> players,Model.Board board)
     {
@@ -65,12 +66,13 @@ public class HUD : MonoBehaviour
         StartCoroutine(player_tabs[player].halfPopUp(GetComponentInParent<RectTransform>().sizeDelta.y));
     }
 
-    public void UpdatePlayersTabInfo()
+    public void UpdateInfo(temp_contr controller)
     {
         foreach(KeyValuePair<Model.Player,View.PlayerTab> entry in player_tabs)
         {
             entry.Value.setMoney(entry.Key.cash);
         }
+        parking_fines.text = "Parking Fines: "+controller.board_model.parkingFees+"Q";
     }
 
     public void RemovePlayerTab(Model.Player player)
