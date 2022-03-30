@@ -7,7 +7,7 @@ using Space = Model.Space;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, AUCTION, MANAGE_PROPERTIES,END}
+public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -91,7 +91,7 @@ public class temp_contr : MonoBehaviour
         {
             decidePlayerOrder();
         }
-        if(gameState == GameState.PLAYERTURN)
+        else if(gameState == GameState.PLAYERTURN)
         {
             if(turnState == TurnState.BEGIN)
             {
@@ -415,7 +415,7 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.TAX:
             {
-                hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " misfiled their tax returns, pay HMRC a SUPER TAX!");
+                hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " misfiled their tax returns, pay HMRC "+((Model.Space.Tax)(current_space)).amount  +"Q of "+current_space.name);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(players[current_player].PayCash(((Model.Space.Tax)(current_space)).amount)));
                 break;
             }
@@ -437,7 +437,8 @@ public class temp_contr : MonoBehaviour
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.MOVEFORWARDTO:
-                steps = ((39+card.kwargs["position"]) - pieces[player].GetCurrentSquare())%40; 
+                steps = ((39+card.kwargs["position"]) - pieces[player].GetCurrentSquare())%40;
+                passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
