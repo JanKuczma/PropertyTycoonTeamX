@@ -64,7 +64,9 @@ public class temp_contr : MonoBehaviour
         foreach(Model.Player player in players)
         {
             pieces.Add(player,View.Piece.Create(player.token,transform,board_view));
+            player.cash = 0;
         }
+        players[0].cash = 10000;
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
@@ -96,7 +98,7 @@ public class temp_contr : MonoBehaviour
         {
             if(turnState == TurnState.BEGIN)
             {
-                //if(players.Count == 1) { gameState = GameState.WINNERCELEBRATION; return; }
+                if(players.Count == 1) { gameState = GameState.WINNERCELEBRATION; return; }
                 if(!tabs_set)
                 {
                     MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
