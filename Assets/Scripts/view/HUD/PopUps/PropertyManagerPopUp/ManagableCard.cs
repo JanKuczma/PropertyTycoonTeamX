@@ -27,6 +27,13 @@ public class ManagableCard : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     public void OnPointerExit(PointerEventData eventData)
     {
         if(PopUp == null) { transform.localScale = transform.localScale*.5f; }
+        if(EventSystem.current.currentSelectedGameObject)
+        {
+            if(EventSystem.current.currentSelectedGameObject.GetComponent<ManagableCard>())
+            {
+                EventSystem.current.currentSelectedGameObject.GetComponent<RectTransform>().SetAsLastSibling();
+            }
+        }
         isPointerOver = false;
     }
 

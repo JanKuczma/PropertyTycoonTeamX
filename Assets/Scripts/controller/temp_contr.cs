@@ -363,8 +363,8 @@ public class temp_contr : MonoBehaviour
                     players[current_player].ReceiveCash(board_model.parkingFees);
                     board_model.parkingFees = 0;
                 });
-                //reset FREE PARKING balance to zero
                 //give player whatever the balance in FREE PARKING
+                //reset FREE PARKING balance to zero
                 break;
             }
             case SqType.GOTOJAIL:
@@ -390,7 +390,11 @@ public class temp_contr : MonoBehaviour
                 {
                     if(((Space.Purchasable)(current_space)).isMortgaged)
                     {
-
+                        MessagePopUp.Create(hud.transform, "This property is under mortgage, you don't have to pay the rent.",3);
+                    }
+                    else if(((Space.Purchasable)(current_space)).owner.in_jail > 0)
+                    {
+                        MessagePopUp.Create(hud.transform, "The owner of this property is in jail, you don't have to pay the rent.",3);
                     } else {
                         hud.current_main_PopUp = PopUp.PayRent(hud.transform,players[current_player],(Model.Space.Purchasable)current_space,board_model,this);
                     }
@@ -413,7 +417,11 @@ public class temp_contr : MonoBehaviour
                 {
                     if(((Space.Utility)(current_space)).isMortgaged)
                     {
-
+                        MessagePopUp.Create(hud.transform, "This property is under mortgage, you don't have to pay the rent.",3);
+                    }
+                    else if(((Space.Purchasable)(current_space)).owner.in_jail > 0)
+                    {
+                        MessagePopUp.Create(hud.transform, "The owner of this property is in jail, you don't have to pay the rent.",3);
                     } else {
                         int rent_times = ((Space.Utility)(current_space)).rent_amount(board_model);
                         MessagePopUp.Create(hud.transform, "This company is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_times+" times the value shown on the dice!");
