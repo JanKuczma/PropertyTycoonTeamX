@@ -237,10 +237,11 @@ public class temp_contr : MonoBehaviour
         }
         else if(gameState == GameState.WINNERCELEBRATION)
         {
-            if(hud.current_main_PopUp != null) {
-                hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player] + " won the game.");
+            if(hud.current_main_PopUp == null) {
+                Debug.Log("I'm here");
+                hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
-                    GameObject.Find("PersistentObject").GetComponent<PermObject>().players.Clear();
+                    Destroy(GameObject.Find("PersistentObject"));
                     SceneManager.LoadScene(0);
                 });
             }
