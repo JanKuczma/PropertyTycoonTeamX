@@ -84,6 +84,22 @@ public class temp_contr : MonoBehaviour
                 pieces[players[current_player]].speedUp();
             }
         }
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            ((View.PropertySquare)(board_view.squares[1])).addHouse();
+        }
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            ((View.PropertySquare)(board_view.squares[1])).removeHouse();
+        }
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            foreach(Model.Player player in players)
+            {
+                player.cash = 0;
+            }
+            players[0].cash = 10000;
+        }
     }
 
     void FixedUpdate()
@@ -158,6 +174,12 @@ public class temp_contr : MonoBehaviour
                     } else {
                         turnState = TurnState.MOVE_THE_PIECE;
                     }
+                }
+                else if(dice.belowBoard()) {
+                    dice.reset();
+                    MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
+                    turnState = TurnState.PRE_DICE_ROLL;
+                    return;
                 }
             }
             else if(turnState == TurnState.CHECK_DOUBLE_ROLL)
@@ -311,6 +333,11 @@ public class temp_contr : MonoBehaviour
                     }
                 }
                 turnState = TurnState.BEGIN;    // this bit is so camera comes back to top position
+            }
+            else if(dice.belowBoard())
+            {
+                dice.reset();
+                MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
             }
      }
 
@@ -571,6 +598,12 @@ public class temp_contr : MonoBehaviour
                     successful = true;
                 }
             }
+            else if(dice.belowBoard())
+            {
+                dice.reset();
+                MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
+                turnState = TurnState.PERFORM_ACTION;
+            }
             yield return null;
         }
     }
@@ -616,6 +649,12 @@ public class temp_contr : MonoBehaviour
                     players[current_player].in_jail -= 1;
                     turnState = TurnState.MANAGE_PROPERTIES;
                 }
+            }
+            else if(dice.belowBoard())                   // if result is negative (dice are stuck)
+            {                               // reset the dice
+                dice.reset();
+                MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
+                turnState = TurnState.PERFORM_ACTION;
             }
             yield return null;
         }
