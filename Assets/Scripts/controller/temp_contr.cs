@@ -9,10 +9,11 @@ using View;
 using Object = System.Object;
 using Space = Model.Space;
 using Timer = System.Timers.Timer;
+using UnityEngine.SceneManagement;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,DICEROLL,DICE_ROLL_EXTRA, PIECEMOVE, JAIL_PIECE_MOVE, PERFORM_ACTION,MANAGE_PROPERTIES,END}
+public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -22,13 +23,13 @@ public class temp_contr : MonoBehaviour
     //game elements
     public View.Board board_view;
     public Model.Board board_model;
-    Model.CardStack opportunity_knocks;
-    Model.CardStack potluck;
+    public Model.CardStack opportunity_knocks;
+    public Model.CardStack potluck;
     View.DiceContainer dice;
     public Dictionary<Model.Player,View.Piece> pieces; // dict for Piece objects where the keys values are references to Model.Player obj
     //players
     List<Model.Player> players;     // players list in some random order, it'll be ordered in GameState.ORDERINGPHASE
-    Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order *JK: also for other stuff (for Utility Sqpace - get as much money as u throw X 4)
+    Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order
     int current_player;         // incremented every turn, holds the index of the current player (ordered in List players)
     // bits needed to manage game and turns
     TurnState turnState;
@@ -37,14 +38,13 @@ public class temp_contr : MonoBehaviour
     public bool double_rolled = false; // use this to keep track of whether player just rolled a double
     public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
-    public Model.Decision_outcome jail_decision = Model.Decision_outcome.NONE;
+    int steps; // to pass dice result between states
     //HUD
     public View.HUD hud; 
     //other
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
     bool tabs_set;
-
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
@@ -58,7 +58,9 @@ public class temp_contr : MonoBehaviour
         //load data (to be changed for XLSX in near future)
         board_model = Model.JSONData.loadBoard(Asset.board_data_json());
         opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
+        opportunity_knocks.ShuffleStack();
         potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
+        potluck.ShuffleStack();
         //create board with card stacks and dice
         board_view = View.Board.Create(transform,board_model);
         dice = View.DiceContainer.Create(transform);
@@ -101,24 +103,6 @@ public class temp_contr : MonoBehaviour
                 pieces[players[current_player]].speedUp();
             }
         }
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            board_view.squares[1].GetComponent<View.PropertySquare>().showRibbon(Color.blue);
-            board_view.squares[1].GetComponent<View.PropertySquare>().showRibbon(Color.red);
-            board_view.squares[5].GetComponent<View.UtilitySquare>().showRibbon(Color.magenta);
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            ((View.PropertySquare)board_view.squares[1]).addHouse();
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            ((View.PropertySquare)board_view.squares[1]).removeHouse();
-        }
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.Log("totval " + players[current_player].totalValueOfAssets());
-        }
     }
 
     void FixedUpdate()
@@ -127,10 +111,11 @@ public class temp_contr : MonoBehaviour
         {
             decidePlayerOrder();
         }
-        if(gameState == GameState.PLAYERTURN)
+        else if(gameState == GameState.PLAYERTURN)
         {
             if(turnState == TurnState.BEGIN)
             {
+                //if(players.Count == 1) { gameState = GameState.WINNERCELEBRATION; return; }
                 if(!tabs_set)
                 {
                     MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
@@ -154,11 +139,19 @@ public class temp_contr : MonoBehaviour
                         hud.current_main_PopUp = PopUp.OK(hud.transform,"You are leaving the jail! You can roll dice in the next round!");
                         
                         StartCoroutine(pieces[players[current_player]].leaveJail());
-                        players[current_player].in_jail -= 1;
+                        hud.jail_bars.gameObject.SetActive(false);
+                        players[current_player].in_jail = 0;
                         turnState = TurnState.MANAGE_PROPERTIES;
                     }
                 }
-                else if(dice.start_roll) 
+                else  
+                {
+                    turnState = TurnState.PRE_DICE_ROLL;
+                }
+            }
+            else if(turnState == TurnState.PRE_DICE_ROLL)
+            {
+                if(dice.start_roll)
                 {
                     turnState = TurnState.DICEROLL;
                     invisibleWall.SetActive(true);
@@ -171,49 +164,49 @@ public class temp_contr : MonoBehaviour
                 {
                     rollTimer.Stop();
                     invisibleWall.SetActive(false);
-                    int steps = dice.get_result();  // get the result
-                    passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
+                    steps = dice.get_result();  // get the result
                     double_rolled = dice.is_double(); // return whether double was rolled
+                    if(steps < 0)                   // if result is negative (dice are stuck)
+                    {                               // reset the dice
+                        dice.reset();
+                        MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
+                        turnState = TurnState.PRE_DICE_ROLL;
+                        return;
+                    }
                     if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
                     {
                         double_count++;
-                        if (double_count >= 3)      // if 3 doubles in a row, send player straight to jail or let them use the card
-                        {
-                            if(hud.current_main_PopUp == null)
-                            {
-                                hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this, double_count+" doubles in a row? You must be cheating… go to jail!");
-                            }
-                            switch(jail_decision)
-                            {
-                                case Model.Decision_outcome.GO_TO_JAIL:
-                                    turnState = TurnState.MANAGE_PROPERTIES;
-                                    jail_decision = Model.Decision_outcome.NONE;
-                                    double_rolled = false;      // reset double check so it won't have another turn
-                                break;
-                                case Model.Decision_outcome.SUCCESSFUL:
-                                    double_count = 2;
-                                    jail_decision = Model.Decision_outcome.NONE;
-                                break;
-                                case Model.Decision_outcome.NONE:
-                                break;
-                            }
-                        } else {
-                            MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform,players[current_player].name + " rolled a double, they will have another turn!",2,true);
-                        }
+                        turnState = TurnState.CHECK_DOUBLE_ROLL;
+                    } else {
+                        turnState = TurnState.MOVE_THE_PIECE;
                     }
-                    if(players[current_player].in_jail == 0 && double_count < 3) // if a good boy (not in jail in general and not rolled 3 if used card)
+                }
+            }
+            else if(turnState == TurnState.CHECK_DOUBLE_ROLL)
+            {
+                if (double_count >= 3)      // if 3 doubles in a row, send player straight to jail or let them use the card
+                {
+                    hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this, double_count+" doubles in a row? You must be cheating… go to jail!");
+                } else {
+                    MessagePopUp.Create(hud.transform,players[current_player].name + " rolled a double, they will have another turn!",2,true);
+                }
+                turnState = TurnState.MOVE_THE_PIECE;
+                
+            }
+            else if(turnState == TurnState.MOVE_THE_PIECE)
+            {
+                if(hud.current_main_PopUp == null)
+                {
+                    if(players[current_player].in_jail == 0) // if a good boy (not in jail in general and not rolled 3 if used card)
                     {
-                        if(steps < 0)                   // if result is negative (dice are stuck)
-                        {                               // reset the dice
-                            dice.reset();
-                            MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                            turnState = TurnState.BEGIN;
-                        } else
-                        {
-                            // else start moving piece and change the turn state
-                            StartCoroutine(pieces[players[current_player]].move(steps));
-                            turnState = TurnState.PIECEMOVE;
-                        }
+                        // start moving piece and change the turn state
+                        passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
+                        StartCoroutine(pieces[players[current_player]].move(steps));
+                        turnState = TurnState.PIECEMOVE;
+                    } else {
+                        double_count = 0;
+                        double_rolled = false;
+                        turnState = TurnState.MANAGE_PROPERTIES;
                     }
                 }
             }
@@ -226,8 +219,8 @@ public class temp_contr : MonoBehaviour
                     {
                         players[current_player].allowed_to_buy = true;
                         players[current_player].ReceiveCash(((Model.Space.Go)(board_model.spaces[0])).amount);
-                        hud.UpdatePlayersTabInfo();
-                        MessagePopUp temp_popUp = MessagePopUp.Create(hud.transform, "You passed GO! You receive "+((Model.Space.Go)(board_model.spaces[0])).amount+ "Q in cash!",3,true);
+                        hud.UpdateInfo(this);
+                        MessagePopUp.Create(hud.transform, "You passed GO! You receive "+((Model.Space.Go)(board_model.spaces[0])).amount+ "Q in cash!",3,true);
                         passed_go = false;
                     }
                     PerformAction();
@@ -261,8 +254,18 @@ public class temp_contr : MonoBehaviour
                     dice.reset();
                 }
                 tabs_set = false;
-                jail_decision = Model.Decision_outcome.NONE; // reset jail decision
                 turnState = TurnState.BEGIN;     // change state to initial state
+            }
+        }
+        else if(gameState == GameState.WINNERCELEBRATION)
+        {
+            if(hud.current_main_PopUp == null) {
+                Debug.Log("I'm here");
+                hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
+                    Destroy(GameObject.Find("PersistentObject"));
+                    SceneManager.LoadScene(0);
+                });
             }
         }
         
@@ -340,7 +343,6 @@ public class temp_contr : MonoBehaviour
      {
          double_rolled = false;  // reset double check
          double_count = 0;       // reset double count
-         dice.gameObject.SetActive(true);
          hud.jail_bars.gameObject.SetActive(false); // reset jail bars to not active
          current_player = (current_player + 1) % players.Count;
          dice.gameObject.SetActive(true);
@@ -358,14 +360,14 @@ public class temp_contr : MonoBehaviour
 
         if (current_space_type == SqType.CHANCE)                                    // first two if statements check whether square is a "take a card" square
         {
-            Model.Card card_taken = opportunity_knocks.cards[0];
+            Model.Card card_taken = opportunity_knocks.PopCard();
             performCardAction(card_taken, players[current_player],SqType.CHANCE);                 // if so, call performCardAction()
         }
 
         if (current_space_type == SqType.POTLUCK)
         {
-            Model.Card card_taken = potluck.cards[0];
-            performCardAction(card_taken, players[current_player],SqType.POTLUCK);                 // NOTE: currently when a card is taken, it is not placed at the bottom nor is the deck reshuffled
+            Model.Card card_taken = potluck.PopCard();
+            performCardAction(card_taken, players[current_player],SqType.POTLUCK);                 
         }
 
         switch (current_space_type)
@@ -382,8 +384,12 @@ public class temp_contr : MonoBehaviour
             case SqType.PARKING:
             {
                 hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " landed on Free Parking. Collect all those juicy fines!");
-                //reset FREE PARKING balance to zero
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
+                    players[current_player].ReceiveCash(board_model.parkingFees);
+                    board_model.parkingFees = 0;
+                });
                 //give player whatever the balance in FREE PARKING
+                //reset FREE PARKING balance to zero
                 break;
             }
             case SqType.GOTOJAIL:
@@ -399,7 +405,7 @@ public class temp_contr : MonoBehaviour
             {
                 if(((Space.Purchasable)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
-                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square]);
+                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square],this);
                 }
                 else if(((Space.Purchasable)(current_space)).owner == players[current_player])
                 {
@@ -409,9 +415,13 @@ public class temp_contr : MonoBehaviour
                 {
                     if(((Space.Purchasable)(current_space)).isMortgaged)
                     {
-
+                        MessagePopUp.Create(hud.transform, "This property is under mortgage, you don't have to pay the rent.",3);
+                    }
+                    else if(((Space.Purchasable)(current_space)).owner.in_jail > 0)
+                    {
+                        MessagePopUp.Create(hud.transform, "The owner of this property is in jail, you don't have to pay the rent.",3);
                     } else {
-                        hud.current_main_PopUp = PopUp.PayRent(hud.transform,players[current_player],(Model.Space.Purchasable)current_space,board_model);
+                        hud.current_main_PopUp = PopUp.PayRent(hud.transform,players[current_player],(Model.Space.Purchasable)current_space,board_model,this);
                     }
                 } else {
                     MessagePopUp.Create(hud.transform, "You have to complete one circuit of the board by passing the GO to buy a property!",4);
@@ -422,7 +432,7 @@ public class temp_contr : MonoBehaviour
             {
                 if(((Space.Purchasable)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
-                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square]);
+                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square],this);
                 }
                 else if(((Space.Purchasable)(current_space)).owner == players[current_player])
                 {
@@ -432,11 +442,15 @@ public class temp_contr : MonoBehaviour
                 {
                     if(((Space.Utility)(current_space)).isMortgaged)
                     {
-
+                        MessagePopUp.Create(hud.transform, "This property is under mortgage, you don't have to pay the rent.",3);
+                    }
+                    else if(((Space.Purchasable)(current_space)).owner.in_jail > 0)
+                    {
+                        MessagePopUp.Create(hud.transform, "The owner of this property is in jail, you don't have to pay the rent.",3);
                     } else {
                         int rent_times = ((Space.Utility)(current_space)).rent_amount(board_model);
                         MessagePopUp.Create(hud.transform, "This company is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_times+" times the value shown on the dice!");
-                        MessagePopUp temp_popUp = MessagePopUp.Create(hud.transform, "Roll the dice! ", 3);
+                        MessagePopUp temp_popUp = MessagePopUp.Create(hud.transform, "Roll the dice! ", 3,true);
                         StartCoroutine(payUtilityRentCoroutine(players[current_player],(Space.Purchasable)current_space,board_model));
                     }
                 } else {
@@ -446,9 +460,8 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.TAX:
             {
-                hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " misfiled their tax returns, pay HMRC a SUPER TAX!");
-                
-                //if(players[current_player].totalValueOfAssets < *whatever is the tax amount*) { *GoSquare bankrupt* }
+                hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " misfiled their tax returns, pay HMRC "+((Model.Space.Tax)(current_space)).amount  +"Q of "+current_space.name);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(players[current_player].PayCash(((Model.Space.Tax)(current_space)).amount),this,players[current_player]));
                 break;
             }
         }
@@ -456,75 +469,97 @@ public class temp_contr : MonoBehaviour
     
     public void performCardAction(Model.Card card, Model.Player player,SqType card_type)
     {
-        hud.current_main_PopUp = PopUp.OK(hud.transform, card.description);
         switch(card.action)
         {
             case CardAction.PAYTOBANK:
-            //player.payCash(card.kwargs["amount"]);
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"]),this,player));
+                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.PAYTOPLAYER:
-            //player.getCash(card.kwargs["amount"]);
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => player.ReceiveCash(card.kwargs["amount"]));
+                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.MOVEFORWARDTO:
-            // int steps = (40+card.kwargs["position"]) - player.position)%40; 
-            //player.move(card.kwargs["position"]);
-            //StartCoroutine(pieces[player].move(steps));
+                steps = ((39+card.kwargs["position"]) - pieces[player].GetCurrentSquare())%40;
+                passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.MOVEBACKTO:
-            // int steps = -1 * ((player.position+40 - card.kwargs["position"])%40); 
-            //player.move(card.kwargs["position"]);
-            //StartCoroutine(pieces[player].move(steps));
+                steps = -1 * ((pieces[player].GetCurrentSquare()+41 - card.kwargs["position"])%40); 
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.MOVEBACK:
-            //player.move(card.kwargs["steps"]);
-            //StartCoroutine(pieces[player].move(-1*steps));
+                steps = -1*card.kwargs["steps"];
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
             break;
             case CardAction.GOTOJAIL:
-            //player.goToJail();
-            //StartCoroutine(pieces[player].goToJail());
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this); });      
             break;
             case CardAction.BIRTHDAY:
-            //foreach(Player p in players)
-            //{
-            //  } else {
-            //      p.payCash(card.kwargs["amont"],player)  
-            //  }
-            //}
+                string absent_names = "";
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
+                    hud.current_main_PopUp.closePopup();
+                    foreach(Model.Player p in players)
+                    {
+                        if(p != player)
+                        {
+                            Model.Decision_outcome outcome = p.PayCash(card.kwargs["amount"],player);
+                            if(outcome == Model.Decision_outcome.NOT_ENOUGH_MONEY || outcome == Model.Decision_outcome.NOT_ENOUGH_ASSETS)
+                            {
+                                absent_names += p.name + " ";
+                            }
+                        }
+                    }
+                    if(absent_names != "")
+                    {
+                        PopUp.OK(hud.transform,absent_names + "didn't come to you birthday party!");
+                    }
+                });
             break;
             case CardAction.OUTOFJAIL:
-            //player.outOfJailCards+=1;
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {hud.current_main_PopUp.closePopup(); player.getOutOfJailCardsNo+=1;});
             break;
-            case CardAction.PAYORCHANCE:                        //this has to be implemented in method in OptionPopUp.cs (two different options)
-            // bool choice = *** some choice popup window ***
-            // if(choice)
-            //{
-            //  player.payCash(card.kwargs["amount"]);
-            //  board_model.parkingFees += card.kwargs["amount"];
-            //} else {
-            //  player.takeCard(opportunity_knocks.pop());
-            //}
+            case CardAction.PAYORCHANCE:
+                hud.current_main_PopUp = PopUp.CardWithOption(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"],board:board_model),this,player));
+                hud.current_main_PopUp.btn2.onClick.AddListener(delegate {
+                    hud.current_main_PopUp.closePopup(); 
+                    Model.Card new_card = opportunity_knocks.PopCard();
+                    performCardAction(new_card, player,SqType.CHANCE);
+                    });
             break;
             case CardAction.PAYTOPARKING:
-            //  player.payCash(card.kwargs["amount"]);
-            //  board_model.parkingFees += card.kwargs["amount"];
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => player.PayCash(card.kwargs["amount"],board:board_model));
+                hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
             break;
             case CardAction.REPAIRS:
-            /*
-            int total = 0;
-            foreach(Model2.Space.Purchasable space in player.owned_spaces)
-            {
-                if(space.type == SqType.PROPERTY)
+                int total = 0;
+                foreach(Model.Space.Purchasable space in player.owned_spaces)
                 {
-                    if(((Model2.Space.Property)space).noOfHouses == 5)
+                    if(space.type == SqType.PROPERTY)
                     {
-                        total += card.kwargs["hotel"];
-                    } else {
-                        total += ((Model2.Space.Property)space).noOfHouses * card.kwargs["house"];
+                        if(((Model.Space.Property)space).noOfHouses == 5)
+                        {
+                            total += card.kwargs["hotel"];
+                        } else {
+                            total += ((Model.Space.Property)space).noOfHouses * card.kwargs["house"];
+                        }
                     }
                 }
-            }
-            */
-            //player.payCash(total);
+                hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(total),this,player));
             break;
         }
 
@@ -558,7 +593,7 @@ public class temp_contr : MonoBehaviour
                     turnState = TurnState.PERFORM_ACTION;
                 } else {
                     Destroy(hud.current_main_PopUp.gameObject);
-                    hud.current_main_PopUp = PopUp.PayRentUtility(hud.transform,payer,space,board,dice_result);
+                    hud.current_main_PopUp = PopUp.PayRentUtility(hud.transform,payer,space,board,dice_result,this);
                     turnState = TurnState.PERFORM_ACTION;
                     successful = true;
                 }
@@ -615,21 +650,82 @@ public class temp_contr : MonoBehaviour
         }
     }
 
+    IEnumerator auctionCoroutine(Model.Player player,Space.Purchasable current_space)
+    {
+        int highest_bid = current_space.cost-10;
+        Model.Player highest_bidder = null;
+        List<Model.Player> bidders = new List<Model.Player>();
+        int current_bidder = 0;
+        foreach(Model.Player p in players) { if(p != player) { bidders.Add(p);  } }
+        if(bidders.Count == 0)
+        {
+            hud.current_main_PopUp.closePopup();
+            MessagePopUp.Create(hud.transform,"Nobody bought this property!",3);
+            yield break;
+        }
+        hud.current_main_PopUp = PopUp.Auction(hud.transform,current_space);
+        hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
+        hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
+            if(bidders[current_bidder].cash < highest_bid+10)
+            {
+                MessagePopUp.Create(hud.current_main_PopUp.transform,"You have not enough money!",2);
+            } else {
+                highest_bid = highest_bid+10;
+                highest_bidder = bidders[current_bidder];
+                current_bidder = (current_bidder+1)%bidders.Count;
+                hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
+            }
+
+        });
+        hud.current_main_PopUp.btn2.onClick.AddListener(delegate {
+            bidders.RemoveAt(current_bidder);
+            if(bidders.Count > 0)
+            {
+                current_bidder = (current_bidder)%bidders.Count;
+                hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
+            }
+        });
+        while((highest_bidder == null || !(highest_bidder != null && bidders.Count == 1)) && bidders.Count > 0)
+        {
+            Debug.Log("highest: "+ highest_bid);
+            yield return null;
+        }
+        if(highest_bidder == null)
+        {
+            hud.current_main_PopUp.closePopup();
+            MessagePopUp.Create(hud.transform,"Nobody bought this property!",3);
+        } else {
+            highest_bidder.BuyProperty(current_space,highest_bid);
+            View.Square square = board_view.squares[current_space.position-1];
+            if(square is PropertySquare)
+            {
+                (((View.PropertySquare)square)).showRibbon(highest_bidder.color);
+            }
+            else if(square is UtilitySquare)
+            {
+                ((View.UtilitySquare)(square)).showRibbon(highest_bidder.color);
+            }
+            hud.current_main_PopUp.closePopup();
+            MessagePopUp.Create(hud.transform,highest_bidder.name+" purchased this property for "+highest_bid+"Q!",3);
+        }
+    }
     public void sendPieceToJail()
     {
         StartCoroutine(pieces[players[current_player]].goToJail());
-        jail_decision = Model.Decision_outcome.GO_TO_JAIL;
+        turnState = TurnState.MANAGE_PROPERTIES;
+        double_rolled = false;      // reset double check so it won't have another turn
     }
 
     public void sendPieceToVisitJail()
     {
         StartCoroutine(pieces[players[current_player]].goToVisitJail());
-        jail_decision = Model.Decision_outcome.GO_TO_JAIL;
+        turnState = TurnState.MANAGE_PROPERTIES;
+        double_rolled = false;      // reset double check so it won't have another turn
     }
 
-    public void sendPieceFree()
+    public void startAuction(Model.Player player, Model.Space.Purchasable space)
     {
-        jail_decision = Model.Decision_outcome.SUCCESSFUL;
+        StartCoroutine(auctionCoroutine(player,space));
     }
 
     public void tryBreakOut()
@@ -639,12 +735,40 @@ public class temp_contr : MonoBehaviour
 
     public void stayInJail()
     {
+        players[current_player].in_jail -= 1;
         turnState = TurnState.MANAGE_PROPERTIES;
     }
 
     public void finishTurn()
     {
         turnState = TurnState.END;
+    }
+    public void RemovePLayer(Model.Player player)
+    {
+        foreach(Model.Space.Purchasable space in player.owned_spaces)
+        {
+            if(space is Model.Space.Property)
+            {
+                for(int i = 0; i > ((Model.Space.Property)(space)).noOfHouses; i++) { ((View.PropertySquare)(board_view.squares[space.position-1])).removeHouse(); }
+                ((View.PropertySquare)(board_view.squares[space.position-1])).removeRibbon();
+                ((Model.Space.Property)(space)).noOfHouses = 0;
+            } else {
+                ((View.UtilitySquare)(board_view.squares[space.position-1])).removeRibbon();
+            }
+            space.owner = null;
+        }
+        hud.RemovePlayerTab(player);
+        Destroy(pieces[player].gameObject);
+        players.Remove(player);
+        hud.sort_tabs(players);
+        double_rolled = false;  // reset double check
+        double_count = 0;       // reset double count
+        dice.gameObject.SetActive(true);
+        hud.jail_bars.gameObject.SetActive(false); // reset jail bars to not active
+        current_player = (current_player) % players.Count;
+        dice.reset();
+        tabs_set = false;
+        turnState = TurnState.BEGIN;
     }
     //Camera movement
     public void moveCameraLeft()

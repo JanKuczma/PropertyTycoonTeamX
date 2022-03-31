@@ -176,12 +176,11 @@ public static class JSONData
     private static Card wrapperToCard(CardWrapper data)
     {
         Dictionary<string,int> dict = new Dictionary<string, int>();
-        for(int i = 0 ; i > data.keys.Count ;i++)
+        for(int i = 0 ; i < data.keys.Count ;i++)
         {
             dict.Add(data.keys[i],data.values[i]);
         }
         Card card = new Card(data.description,(CardAction)System.Enum.Parse(typeof(CardAction),data.action),dict);
-        
         return card;
     }
 

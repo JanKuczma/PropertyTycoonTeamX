@@ -28,8 +28,8 @@ public static class Asset
     static GameObject Chance2Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(2)");
     static GameObject Chance3Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(3)");
     //house and hotel
-    static GameObject HousePrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/House");
-    static GameObject HotelPrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/Hotel");
+    static GameObject HousePrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/HouseWithWindows");
+    static GameObject HotelPrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/HotelWithWindows");
     //pieces
     static GameObject CatPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Cat");
     static GameObject BootPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Boot");
@@ -82,6 +82,7 @@ public static class Asset
     public static GameObject ManagePropertyPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManagePropertyPopUp");
     public static GameObject CardActionPopUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionPopUp");
     public static GameObject CardActionPopWithOptionsUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionWithOptionsPopUp");
+    public static GameObject AuctionPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/AuctionPopUp");
 
 
     public static GameObject Board(SqType type,string variant = "")

@@ -50,57 +50,58 @@ public class ManagePurchasable : MonoBehaviour
         switch(decision) //((Model.Space.Property)(card.property)).buyHouse(FindObjectOfType<temp_contr>().board_model)
         {
             case Model.Decision_outcome.NOT_ALL_PROPERTIES_IN_GROUP:
-                MessagePopUp.Create(transform, "You need to own all the properties of this colour first!");
+                MessagePopUp.Create(transform.parent, "You need to own all the properties of this colour first!");
             break;
             case Model.Decision_outcome.DIFFERENCE_IN_HOUSES:
-                MessagePopUp.Create(transform, "The difference in number of houses on properties of the same colour cannot be bigger than one! Develop other properties of this colour!");
+                MessagePopUp.Create(transform.parent, "The difference in number of houses on properties of the same colour cannot be bigger than one! Develop other properties of this colour!");
             break;
             case Model.Decision_outcome.MAX_HOUSES:
-                MessagePopUp.Create(transform, "Maximum number of houses reached!");
+                MessagePopUp.Create(transform.parent, "Maximum number of houses reached!");
+                
             break;
             case Model.Decision_outcome.NOT_ENOUGH_MONEY:
-                MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!");
+                MessagePopUp.Create(transform.parent, "You have not enough money! Sell or mortgage your properties to get some cash!");
             break;
             case Model.Decision_outcome.SUCCESSFUL:
                 transform.parent.GetComponent<View.PropertyCard>().showHouse(space.noOfHouses);
                 square.addHouse();
                 MessagePopUp.Create(transform.parent, "House bought!");
-                Destroy(gameObject);
             break;
         }
+        Destroy(gameObject);
     }
     public void sellHouseOption(Model.Decision_outcome decision, Model.Space.Property space, View.PropertySquare square)
     {
         switch(decision)
         {
             case Model.Decision_outcome.DIFFERENCE_IN_HOUSES:
-                MessagePopUp.Create(transform, "The difference in number of houses on properties of the same colour cannot be bigger than one! Sell houses on other properties of this colour first!");
+                MessagePopUp.Create(transform.parent, "The difference in number of houses on properties of the same colour cannot be bigger than one! Sell houses on other properties of this colour first!");
             break;
             case Model.Decision_outcome.NO_HOUSES:
-                MessagePopUp.Create(transform, "There are no more houses to sell!");
+                MessagePopUp.Create(transform.parent, "There are no more houses to sell!");
             break;
             case Model.Decision_outcome.SUCCESSFUL:
                 transform.parent.GetComponent<View.PropertyCard>().showHouse(space.noOfHouses);
                 square.removeHouse();
                 MessagePopUp.Create(transform.parent, "House sold!");
-                Destroy(gameObject);
             break;
         }
+        Destroy(gameObject);
     }
     public void sellPropertyOption(Model.Decision_outcome desicision, View.Square square)
     {
         switch(desicision)
         {
             case Model.Decision_outcome.DIFFERENCE_IN_HOUSES:
-                MessagePopUp.Create(transform, "First sell all the houses on the properties of this colour!");
+                MessagePopUp.Create(transform.parent, "First sell all the houses on the properties of this colour!");
             break;
             case Model.Decision_outcome.SUCCESSFUL:
                 if(square is View.PropertySquare) { ((View.PropertySquare)(square)).removeRibbon(); } else { ((View.UtilitySquare)(square)).removeRibbon(); }
                 transform.parent.gameObject.SetActive(false);
                 MessagePopUp.Create(transform.parent.parent, "Property sold!");
-                Destroy(gameObject);
             break;
         }
+        Destroy(gameObject);
     }
     public void mortgagePropertyOption(Model.Decision_outcome decision, Model.Space.Purchasable property)
     {
@@ -118,7 +119,7 @@ public class ManagePurchasable : MonoBehaviour
 
     void OnDestroy()
     {
-        FindObjectOfType<View.HUD>().UpdatePlayersTabInfo();
+        FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<temp_contr>());
     }
 }
 }

@@ -16,6 +16,7 @@ public class UtilitySquare : FullSquare
         square.transform.localPosition = Square.generateCoordinates(position);
         square.transform.localRotation = getRotation(position);
         square.setName(name);
+        square._position = position;
         square.assignSpots();
         square.setPrice(price);
         return square;

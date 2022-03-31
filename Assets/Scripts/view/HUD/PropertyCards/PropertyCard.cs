@@ -29,13 +29,9 @@ public class PropertyCard : PurchasableCard
 
     public void showHouse(int noOfHouses)
     {
-        if(noOfHouses==0) {return;}
-        if(noOfHouses==5) { housesIMGs[noOfHouses-1].gameObject.SetActive(true); return;}
-        for(int i = 0; i < noOfHouses-1; i++)
-        {
-            housesIMGs[i].gameObject.SetActive(true);
-        }
-        
+        for(int i = 0; i < housesIMGs.Length; i++) { housesIMGs[i].gameObject.SetActive(false); }
+        if(noOfHouses == 5) { housesIMGs[4].gameObject.SetActive(true); return; }
+        for(int i = 0; i < noOfHouses; i++) { housesIMGs[i].gameObject.SetActive(true); }
     }
 
     public void setUpCard(Model.Space.Property space)

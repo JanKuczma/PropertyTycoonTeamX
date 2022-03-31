@@ -93,6 +93,18 @@ public class Player
                 return Decision_outcome.SUCCESSFUL;
             } 
     }
+    public Decision_outcome BuyProperty(Space.Purchasable property, int cost)
+    {
+        if(cash < cost)
+            {
+                return Decision_outcome.NOT_ENOUGH_MONEY;
+            } else {
+                PayCash(cost);
+                owned_spaces.Add(property);
+                property.owner = this;
+                return Decision_outcome.SUCCESSFUL;
+            } 
+    }
 
     public int totalValueOfAssets()
     {
