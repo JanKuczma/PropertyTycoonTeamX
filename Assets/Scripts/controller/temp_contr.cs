@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using View;
 using Space = Model.Space;
+using UnityEngine.SceneManagement;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
@@ -23,7 +24,7 @@ public class temp_contr : MonoBehaviour
     public Dictionary<Model.Player,View.Piece> pieces; // dict for Piece objects where the keys values are references to Model.Player obj
     //players
     List<Model.Player> players;     // players list in some random order, it'll be ordered in GameState.ORDERINGPHASE
-    Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order *JK: also for other stuff (for Utility Sqpace - get as much money as u throw X 4)
+    Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order
     int current_player;         // incremented every turn, holds the index of the current player (ordered in List players)
     // bits needed to manage game and turns
     TurnState turnState;
@@ -95,6 +96,7 @@ public class temp_contr : MonoBehaviour
         {
             if(turnState == TurnState.BEGIN)
             {
+                //if(players.Count == 1) { gameState = GameState.WINNERCELEBRATION; return; }
                 if(!tabs_set)
                 {
                     MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
@@ -231,6 +233,16 @@ public class temp_contr : MonoBehaviour
                 }
                 tabs_set = false;
                 turnState = TurnState.BEGIN;     // change state to initial state
+            }
+        }
+        else if(gameState == GameState.WINNERCELEBRATION)
+        {
+            if(hud.current_main_PopUp != null) {
+                hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player] + " won the game.");
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
+                    GameObject.Find("PersistentObject").GetComponent<PermObject>().players.Clear();
+                    SceneManager.LoadScene(0);
+                });
             }
         }
         

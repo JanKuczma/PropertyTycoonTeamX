@@ -12,6 +12,7 @@ public class TaxSquare : FullSquare
         square.transform.localScale = new Vector3(1,1,1);
         square.transform.localPosition = generateCoordinates(position);
         square.transform.localRotation = getRotation(position);
+        square._position = position;
         square.setName(name);
         square.setAmount(amount);
         square.assignSpots();
