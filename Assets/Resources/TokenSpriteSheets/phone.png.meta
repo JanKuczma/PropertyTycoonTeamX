@@ -138,6 +138,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1012,6 +1013,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      phone_18: -4196442940274516444
+      phone_12: -8150651479563955528
+      phone_31: -7278076501379169406
+      phone_27: -7796844187162810402
+      phone_13: 3908855378147532509
+      phone_26: 3130632481058737741
+      phone_21: -7245442798381960193
+      phone_3: -1144105141512529592
+      phone_30: -1104275172193055314
+      phone_14: 8288197760453257556
+      phone_6: 382606192943653955
+      phone_17: 6046764412960544826
+      phone_8: 6512420362022030308
+      phone_28: 6086011237012696853
+      phone_20: 3909753417540416909
+      phone_11: 5302993274790380711
+      phone_15: -6469692006186012689
+      phone_37: -6369325724228637587
+      phone_22: 4331977599019700815
+      phone_7: -2714592583434313872
+      phone_33: -4200902882170411501
+      phone_32: 3299351834031754811
+      phone_10: -1211152474970150531
+      phone_16: 7550115463558336986
+      phone_25: -6475264923848178188
+      phone_2: 345920178342225779
+      phone_5: 2360786837640316319
+      phone_34: -2441377344080958344
+      phone_9: -8644041106940657420
+      phone_1: 6778424840077107658
+      phone_4: 130943331869117335
+      phone_24: -5360885129852221667
+      phone_0: -7070431899882351391
+      phone_23: -2559707249093625668
+      phone_29: 6369718424582840053
+      phone_35: 5087996522947726695
+      phone_19: -7078562902978442887
+      phone_36: 5049356607156229366
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
