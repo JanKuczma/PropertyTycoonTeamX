@@ -678,6 +678,7 @@ MonoBehaviour:
   bankrupt_music: {fileID: 0}
   TrackSelector: 0
   TrackHistory: 0
+  state: 10
 --- !u!4 &955159197
 Transform:
   m_ObjectHideFlags: 0
