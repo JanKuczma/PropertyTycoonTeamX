@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END}
+public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END, NONE}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -45,6 +45,8 @@ public class temp_contr : MonoBehaviour
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
     bool tabs_set;
+    //SFX
+    public BGMusicSelector music_player;
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
@@ -52,6 +54,7 @@ public class temp_contr : MonoBehaviour
         pieces = new Dictionary<Model.Player, View.Piece>();
         tabs_set = false;
         invisibleWall.SetActive(false);
+        music_player = GameObject.Find("Background Music").GetComponent<BGMusicSelector>();
     }
     void Start()
     {
@@ -107,6 +110,7 @@ public class temp_contr : MonoBehaviour
 
     void FixedUpdate()
     {
+        music_player.UpdateGameState(turnState);
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
             decidePlayerOrder();
@@ -165,6 +169,7 @@ public class temp_contr : MonoBehaviour
                     rollTimer.Stop();
                     invisibleWall.SetActive(false);
                     steps = dice.get_result();  // get the result
+                    steps = 30; //DELTE WHEN DONE TESTING
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
