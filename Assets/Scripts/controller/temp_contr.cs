@@ -1,14 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
+using System.Threading;
+using System.Timers;
 using View;
+using Object = System.Object;
 using Space = Model.Space;
+using Timer = System.Timers.Timer;
 using UnityEngine.SceneManagement;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END}
+public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END, NONE}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -29,6 +34,7 @@ public class temp_contr : MonoBehaviour
     // bits needed to manage game and turns
     TurnState turnState;
     GameState gameState;
+    public Timer rollTimer = new Timer(5000);
     public bool double_rolled = false; // use this to keep track of whether player just rolled a double
     public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
@@ -39,6 +45,8 @@ public class temp_contr : MonoBehaviour
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
     bool tabs_set;
+    //SFX
+    public BGMusicSelector music_player;
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
@@ -46,6 +54,7 @@ public class temp_contr : MonoBehaviour
         pieces = new Dictionary<Model.Player, View.Piece>();
         tabs_set = false;
         invisibleWall.SetActive(false);
+        music_player = GameObject.Find("Background Music").GetComponent<BGMusicSelector>();
     }
     void Start()
     {
@@ -72,6 +81,19 @@ public class temp_contr : MonoBehaviour
         gameState = GameState.ORDERINGPHASE;
         turnState = TurnState.BEGIN;
         current_player = 0;
+        //assign timer function
+        rollTimer.Elapsed += TimedEventHandler;
+        rollTimer.AutoReset = true;
+        rollTimer.Enabled = true;
+    }
+
+    private void TimedEventHandler(object obj, ElapsedEventArgs e)
+    {
+        Debug.Log(obj);
+        
+        PopUp resetPopUp = PopUp.ResetDice(hud.transform, dice, "The dice aren't ever going to stop rolling on their own. Let's reset them!");
+        
+        dice.reset();
     }
 
     void Update()
@@ -101,6 +123,7 @@ public class temp_contr : MonoBehaviour
 
     void FixedUpdate()
     {
+        music_player.UpdateGameState(turnState);
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
             decidePlayerOrder();
@@ -131,6 +154,7 @@ public class temp_contr : MonoBehaviour
                     if(hud.current_main_PopUp == null)
                     {
                         hud.current_main_PopUp = PopUp.OK(hud.transform,"You are leaving the jail! You can roll dice in the next round!");
+                        
                         StartCoroutine(pieces[players[current_player]].leaveJail());
                         hud.jail_bars.gameObject.SetActive(false);
                         players[current_player].in_jail = 0;
@@ -148,14 +172,17 @@ public class temp_contr : MonoBehaviour
                 {
                     turnState = TurnState.DICEROLL;
                     invisibleWall.SetActive(true);
+                    rollTimer.Start();
                 }
             }
             if(turnState == TurnState.DICEROLL) // turn begins
             {
                 if(!dice.areRolling())  // if dice are not rolling anymore
                 {
+                    rollTimer.Stop();
                     invisibleWall.SetActive(false);
                     steps = dice.get_result();  // get the result
+                    steps = 30; //DELTE WHEN DONE TESTING
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
@@ -293,11 +320,14 @@ public class temp_contr : MonoBehaviour
             }
             if(dice.start_roll)     // this bit is so camera knows when to follow dice
             {
+                rollTimer.Start();
                 invisibleWall.SetActive(true);
                 turnState = TurnState.DICEROLL;
+
             }
             if(!dice.areRolling())  //when dice stopped rolling
             {
+                rollTimer.Stop();
                 invisibleWall.SetActive(false);
                 int steps = dice.get_result();  // get the result
                 if(steps < 0)                   // if result is negative (dice are stuck)
@@ -546,6 +576,7 @@ public class temp_contr : MonoBehaviour
         {
             if(dice.start_roll) 
             {
+                rollTimer.Start();
                 turnState = TurnState.DICE_ROLL_EXTRA;
                 invisibleWall.SetActive(true);
             } else {
@@ -553,6 +584,7 @@ public class temp_contr : MonoBehaviour
             }
             if(!dice.areRolling())  // if dice are not rolling anymore
             {
+                rollTimer.Stop();
                 invisibleWall.SetActive(false);
                 int dice_result = dice.get_result();  // get the result
                 if(dice_result < 0)                   // if result is negative (dice are stuck)

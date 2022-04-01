@@ -123,6 +123,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -892,6 +893,40 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      boot_25: 1489619065649449784
+      boot_13: 3381900034663440605
+      boot_8: -20858070926161437
+      boot_10: -746990311237161543
+      boot_29: 3112913883812396188
+      boot_17: 1132063538083937025
+      boot_14: 2177502886425549515
+      boot_24: -6572086662390127842
+      boot_3: 6355258036912657970
+      boot_2: 7705093190091653223
+      boot_31: 6151918550221644049
+      boot_22: -6940302450480296631
+      boot_26: 3658821185791263091
+      boot_27: 8630914598949909412
+      boot_18: -1291084212829467783
+      boot_5: -1422273771121174675
+      boot_1: -6497884128731187654
+      boot_15: -4115427045716697346
+      boot_23: 8616162201573041904
+      boot_19: 5671429512559757432
+      boot_11: -6457496439662259939
+      boot_28: 4132417421495182793
+      boot_0: -5130294652377279623
+      boot_9: -1700320362157724890
+      boot_12: -5647639109092123679
+      boot_6: 6298723049372442584
+      boot_16: -6544883810424764335
+      boot_20: -9123073141483799964
+      boot_7: 4782629051408088476
+      boot_21: 8425873971596826507
+      boot_32: 7049105406814394792
+      boot_30: 3059423638434327685
+      boot_4: 1430555062578316602
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
