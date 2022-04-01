@@ -20,7 +20,7 @@ public class temp_contr : MonoBehaviour
     public Model.Board board_model;
     public Model.CardStack opportunity_knocks;
     public Model.CardStack potluck;
-    View.DiceContainer dice;
+    public View.DiceContainer dice;
     public Dictionary<Model.Player,View.Piece> pieces; // dict for Piece objects where the keys values are references to Model.Player obj
     //players
     List<Model.Player> players;     // players list in some random order, it'll be ordered in GameState.ORDERINGPHASE
@@ -404,6 +404,7 @@ public class temp_contr : MonoBehaviour
             }
             case SqType.PROPERTY:
             case SqType.STATION:
+            case SqType.UTILITY:
             {
                 if(((Space.Purchasable)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
@@ -424,36 +425,6 @@ public class temp_contr : MonoBehaviour
                         MessagePopUp.Create(hud.transform, "The owner of this property is in jail, you don't have to pay the rent.",3);
                     } else {
                         hud.current_main_PopUp = PopUp.PayRent(hud.transform,players[current_player],(Model.Space.Purchasable)current_space,board_model,this);
-                    }
-                } else {
-                    MessagePopUp.Create(hud.transform, "You have to complete one circuit of the board by passing the GO to buy a property!",4);
-                }
-                break;
-            }
-            case SqType.UTILITY:
-            {
-                if(((Space.Purchasable)(current_space)).owner == null && players[current_player].allowed_to_buy)
-                {
-                    hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square],this);
-                }
-                else if(((Space.Purchasable)(current_space)).owner == players[current_player])
-                {
-                    
-                }
-                else if(((Space.Purchasable)(current_space)).owner != null)
-                {
-                    if(((Space.Utility)(current_space)).isMortgaged)
-                    {
-                        MessagePopUp.Create(hud.transform, "This property is under mortgage, you don't have to pay the rent.",3);
-                    }
-                    else if(((Space.Purchasable)(current_space)).owner.in_jail > 0)
-                    {
-                        MessagePopUp.Create(hud.transform, "The owner of this property is in jail, you don't have to pay the rent.",3);
-                    } else {
-                        int rent_times = ((Space.Utility)(current_space)).rent_amount(board_model);
-                        MessagePopUp.Create(hud.transform, "This company is owned by " + ((Space.Utility)(current_space)).owner.name+"! You have to pay "+ rent_times+" times the value shown on the dice!");
-                        MessagePopUp temp_popUp = MessagePopUp.Create(hud.transform, "Roll the dice! ", 3,true);
-                        StartCoroutine(payUtilityRentCoroutine(players[current_player],(Space.Purchasable)current_space,board_model));
                     }
                 } else {
                     MessagePopUp.Create(hud.transform, "You have to complete one circuit of the board by passing the GO to buy a property!",4);
@@ -565,47 +536,6 @@ public class temp_contr : MonoBehaviour
             break;
         }
 
-    }
-
-    IEnumerator payUtilityRentCoroutine(Model.Player payer, Space.Purchasable space, Model.Board board)
-    {
-        bool successful = false;
-        hud.current_main_PopUp = PopUp.OK(hud.transform,"");
-        hud.current_main_PopUp.gameObject.SetActive(false);
-        dice.reset();
-        while(!successful)
-        {
-            if(dice.start_roll) 
-            {
-                turnState = TurnState.DICE_ROLL_EXTRA;
-                invisibleWall.SetActive(true);
-            } else {
-                yield return null;
-            }
-            if(!dice.areRolling())  // if dice are not rolling anymore
-            {
-                invisibleWall.SetActive(false);
-                int dice_result = dice.get_result();  // get the result
-                if(dice_result < 0)                   // if result is negative (dice are stuck)
-                {                               // reset the dice
-                    dice.reset();
-                    MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                    turnState = TurnState.PERFORM_ACTION;
-                } else {
-                    Destroy(hud.current_main_PopUp.gameObject);
-                    hud.current_main_PopUp = PopUp.PayRentUtility(hud.transform,payer,space,board,dice_result,this);
-                    turnState = TurnState.PERFORM_ACTION;
-                    successful = true;
-                }
-            }
-            else if(dice.belowBoard())
-            {
-                dice.reset();
-                MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                turnState = TurnState.PERFORM_ACTION;
-            }
-            yield return null;
-        }
     }
 
     IEnumerator rollInJailCoroutine(Model.Player player)

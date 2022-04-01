@@ -65,10 +65,11 @@ namespace View
             return popUp;
          }
 
-        public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board,temp_contr controller)
+        public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board,temp_contr controller,int rent=0)
         {
             PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
             int rent_amount = space.rent_amount(board);
+            if(space is Model.Space.Utility) { rent_amount *= controller.dice.get_result(); }
             popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
             popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner),controller,payer));
             PurchasableCard c = null;
@@ -80,18 +81,10 @@ namespace View
                 case SqType.STATION:
                 c = StationCard.Create((Model.Space.Station)space,popUp.transform);
                 break;
+                case SqType.UTILITY:
+                c = UtilityCard.Create((Model.Space.Utility)space,popUp.transform);
+                break;
             }
-            c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
-            c.gameObject.SetActive(true);
-            return popUp;
-        }
-        public static PopUp PayRentUtility(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board, int dice_result,temp_contr controller)
-        {
-            PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
-            int rent_amount = space.rent_amount(board)*dice_result;
-            popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
-            popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner),controller,payer));
-            PurchasableCard c = UtilityCard.Create((Model.Space.Utility)space,popUp.transform);
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
             return popUp;
