@@ -45,9 +45,6 @@ public static class Asset
     static TextAsset classic_board_json = Resources.Load<TextAsset>("GameDataJSON/board_data");
     static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
     static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
-    //chance/oppknocks card IMGs
-    public static Sprite opportunity_knocks_IMG = Resources.Load<Sprite>("Textures/Communitychestcard");
-    public static Sprite chance_IMG = Resources.Load<Sprite>("Textures/chancecard");
     //token IMGs
     static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
     static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
@@ -88,7 +85,8 @@ public static class Asset
     //themes
         // Skyboxes
     public static Material StarWarsSkyBoxMaterial = Resources.Load<Material>("Materials/StarWarsTheme/StarWarsSkyBox");
-    public static Material ClassicMaterial = Resources.Load<Material>("Materials/ClassicTheme/Kitchen");
+    public static GameObject Kitchen = Resources.Load<GameObject>("Prefabs/Enviornment/Kitchen");
+    public static GameObject Walls = Resources.Load<GameObject>("Prefabs/Enviornment/walls");
         // game elements
     public static Material StarWarsThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
     public static Material StarWarsPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");
@@ -96,6 +94,11 @@ public static class Asset
     public static Material ClassicThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
     public static Material ClassicPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");
     public static Material ClassicOppKnocksMaterial = Resources.Load<Material>("Materials/StarWarsTheme/chanceCard");
+        //chance/oppknocks card IMGs
+    public static Sprite ClassicOppKnocksIMG = Resources.Load<Sprite>("Textures/Communitychestcard");
+    public static Sprite ClassicChangeIMG = Resources.Load<Sprite>("Textures/chancecard");
+    public static Sprite StarWarsOppKnocksIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/Communitychestcard-starwars copy");
+    public static Sprite StarWarsChangeIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/chance-starwars copy");
     
 
 

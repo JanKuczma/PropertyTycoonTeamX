@@ -46,7 +46,7 @@ public class JailSquare : CornerSquare
         if(cellIs.Count > 0)
         {
             cellIndex = cellIs[0];
-            cellIs.Remove(cellIndex);
+            cellIs.RemoveAt(0);
             return cellIndex;
         } else {
             return -1;

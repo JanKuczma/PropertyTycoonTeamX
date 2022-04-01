@@ -18,7 +18,7 @@ public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION,NONE}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
 */
-public class temp_contr : MonoBehaviour
+public class game_controller : MonoBehaviour
 {
     //game elements
     public View.Board board_view;
@@ -45,20 +45,48 @@ public class temp_contr : MonoBehaviour
     //other
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
+    public GameObject kitchen;
     bool tabs_set;
     //SFX
     public BGMusicSelector music_player;
+    public static game_controller Create(Transform parent, List<Model.Player> players)
+    {
+        
+        if(!GameObject.Find("PersistentObject")){ Instantiate(new GameObject("PersistentObject"));GameObject.Find("PersistentObject").AddComponent<PermObject>(); }
+        GameObject.Find("PersistentObject").GetComponent<PermObject>().players = players;
+        GameObject controller = Instantiate(new GameObject("controller"),parent);
+        controller.AddComponent<game_controller>();
+        controller.GetComponent<game_controller>().kitchen = Instantiate(Asset.Kitchen);
+        controller.GetComponent<game_controller>().invisibleWall = Instantiate(Asset.Walls);
+        if(GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme)
+        {
+            RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
+            controller.GetComponent<game_controller>().board_view.loadTheme("starwars");
+            controller.GetComponent<game_controller>().kitchen.SetActive(false);
+        }
+        if(GameObject.Find("PersistentObject").GetComponent<PermObject>().customData)
+        {
+
+        }
+        return controller.GetComponent<game_controller>();
+    }
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
+        music_player = GameObject.Find("Background Music").GetComponent<BGMusicSelector>();
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
         tabs_set = false;
         invisibleWall.SetActive(false);
-        music_player = GameObject.Find("Background Music").GetComponent<BGMusicSelector>();
     }
     void Start()
     {
+        if(GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme)
+        {
+            RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
+            board_view.loadTheme("starwars");
+            kitchen.SetActive(false);
+        }
         //load data (to be changed for XLSX in near future)
         board_model = Model.JSONData.loadBoard(Asset.board_data_json());
         opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
@@ -74,7 +102,6 @@ public class temp_contr : MonoBehaviour
         foreach(Model.Player player in players)
         {
             pieces.Add(player,View.Piece.Create(player.token,transform,board_view));
-            player.allowed_to_buy = true;
         }
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
@@ -100,6 +127,8 @@ public class temp_contr : MonoBehaviour
         {
             RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
             board_view.loadTheme("starwars");
+            GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme = true;
+            kitchen.SetActive(false);
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
@@ -111,7 +140,7 @@ public class temp_contr : MonoBehaviour
                 pausePopUp = PopUp.Pause(hud.transform,"PAUSE");
                 pausePopUp.btn2.onClick.AddListener(delegate {
                     Destroy(pausePopUp.gameObject);
-                    Destroy(GameObject.Find("PersistentObject"));
+                    GameObject.FindGameObjectWithTag("PreGameData");
                     SceneManager.LoadScene(0);
                 });
                 pausePopUp.btn1.onClick.AddListener(delegate {
@@ -298,7 +327,7 @@ public class temp_contr : MonoBehaviour
             if(hud.current_main_PopUp == null) {
                 hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
-                    Destroy(GameObject.Find("PersistentObject"));
+                    Destroy(GameObject.FindGameObjectWithTag("PreGameData"));
                     SceneManager.LoadScene(0);
                 });
             }

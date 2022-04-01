@@ -66,7 +66,7 @@ public class HUD : MonoBehaviour
         StartCoroutine(player_tabs[player].halfPopUp(GetComponentInParent<RectTransform>().sizeDelta.y));
     }
 
-    public void UpdateInfo(temp_contr controller)
+    public void UpdateInfo(game_controller controller)
     {
         foreach(KeyValuePair<Model.Player,View.PlayerTab> entry in player_tabs)
         {
