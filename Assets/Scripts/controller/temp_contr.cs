@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
 public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END, NONE}
-public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
+public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION,NONE}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
 */
@@ -34,12 +34,14 @@ public class temp_contr : MonoBehaviour
     // bits needed to manage game and turns
     TurnState turnState;
     GameState gameState;
+    GameState previous_gameState;
     public bool double_rolled = false; // use this to keep track of whether player just rolled a double
     public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
     int steps; // to pass dice result between states
     //HUD
     public View.HUD hud; 
+    PopUp pausePopUp = null;
     //other
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
@@ -72,12 +74,14 @@ public class temp_contr : MonoBehaviour
         foreach(Model.Player player in players)
         {
             pieces.Add(player,View.Piece.Create(player.token,transform,board_view));
+            player.allowed_to_buy = true;
         }
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
         //set current turn state to DICEROLL and gameState to ORDERINGPHASE (subject to change if we want to continue game from a saved game)
         gameState = GameState.ORDERINGPHASE;
+        previous_gameState = GameState.NONE;
         turnState = TurnState.BEGIN;
         current_player = 0;
     }
@@ -97,13 +101,36 @@ public class temp_contr : MonoBehaviour
             RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
             board_view.loadTheme("starwars");
         }
-        if(Input.GetKeyDown(KeyCode.X))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            foreach(Model.Player player in players)
+            if(gameState != GameState.PAUSE)
             {
-                player.cash = 0;
+                invisibleWall.SetActive(true);
+                previous_gameState = gameState;
+                gameState = GameState.PAUSE;
+                pausePopUp = PopUp.Pause(hud.transform,"PAUSE");
+                pausePopUp.btn2.onClick.AddListener(delegate {
+                    Destroy(pausePopUp.gameObject);
+                    Destroy(GameObject.Find("PersistentObject"));
+                    SceneManager.LoadScene(0);
+                });
+                pausePopUp.btn1.onClick.AddListener(delegate {
+                    gameState = previous_gameState;
+                    if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                    {
+                        invisibleWall.SetActive(false);
+                    }
+                    Destroy(pausePopUp.gameObject);
+                });
+            } else {
+                gameState = previous_gameState;
+                if(pausePopUp) { Destroy(pausePopUp.gameObject); }
+                if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                {
+                    invisibleWall.SetActive(false);
+                }
+
             }
-            players[0].cash = 10000;
         }
     }
 
@@ -269,7 +296,6 @@ public class temp_contr : MonoBehaviour
         else if(gameState == GameState.WINNERCELEBRATION)
         {
             if(hud.current_main_PopUp == null) {
-                Debug.Log("I'm here");
                 hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
                     Destroy(GameObject.Find("PersistentObject"));

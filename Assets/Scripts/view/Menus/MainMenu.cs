@@ -18,6 +18,8 @@ public class MainMenu : MonoBehaviour
     public Dictionary<string, Tuple<Token, bool>> playerInfo = new Dictionary<string, Tuple<Token, bool>>();
     
     Color[] player_colors = {Color.blue,Color.red,Color.green,Color.yellow,Color.cyan,Color.magenta};
+
+    MessagePopUp curr_pop;
     
     public void GoToPlayerSelect()
     {
@@ -150,7 +152,8 @@ public class MainMenu : MonoBehaviour
 
             if (nameErrorFound)
             {
-                Debug.LogError("Players cannot have the same name");
+                if(curr_pop) { Destroy(curr_pop.gameObject); }
+                curr_pop = MessagePopUp.Create(transform,"Players cannot have the same name",2);
                 playerInfo.Clear();
                 nameErrorFound = false;
                 return;
@@ -158,7 +161,8 @@ public class MainMenu : MonoBehaviour
 
             if (pieceErrorFound)
             {
-                Debug.LogError("Players cannot use the same piece");
+                if(curr_pop) { Destroy(curr_pop.gameObject); }
+                curr_pop = MessagePopUp.Create(transform,"Players cannot have the same piece",2);
                 playerInfo.Clear();
                 pieceErrorFound = false;
                 return;

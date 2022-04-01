@@ -105,15 +105,17 @@ public class ManagePurchasable : MonoBehaviour
     }
     public void mortgagePropertyOption(Model.Decision_outcome decision, Model.Space.Purchasable property)
     {
-            switch (decision)
-            {
-                case Model.Decision_outcome.NOT_ENOUGH_MONEY:
-                    MessagePopUp.Create(transform.parent, "You have not enough money! Sell or mortgage your properties to get some cash!");
-                break;
-                case Model.Decision_outcome.SUCCESSFUL:
-                    if(property.isMortgaged) { MessagePopUp.Create(transform.parent, "Property mortgaged!"); } else { MessagePopUp.Create(transform.parent, "Property paid off!"); }
-                break;
-            }
+        switch (decision)
+        {
+            case Model.Decision_outcome.NOT_ENOUGH_MONEY:
+                MessagePopUp.Create(transform.parent, "You have not enough money! Sell or mortgage your properties to get some cash!");
+            break;
+            case Model.Decision_outcome.SUCCESSFUL:
+                if(property.isMortgaged) { MessagePopUp.Create(transform.parent, "Property mortgaged!"); } else { MessagePopUp.Create(transform.parent, "Property paid off!"); }
+                transform.parent.Find("Mortgaged").gameObject.SetActive(property.isMortgaged);
+            break;
+        }
+        
         Destroy(gameObject);
     }
 

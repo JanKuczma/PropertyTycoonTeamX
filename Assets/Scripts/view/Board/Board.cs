@@ -70,7 +70,6 @@ public class Board : MonoBehaviour
             foreach(Square square in squares)
             {
                 square.GetComponent<MeshRenderer>().material = Asset.StarWarsThemeMaterial; //237f/255f,238f/255f,181f/255f
-                if(square is JailSquare) { square.GetComponent<MeshRenderer>().materials[1] = Asset.StarWarsThemeMaterial; }
                 square.GetComponentsInChildren<TextMeshPro>()[0].color = new Color(237f/255f,238f/255f,181f/255f);
                 if(square.GetComponentsInChildren<TextMeshPro>().Length > 1) { square.GetComponentsInChildren<TextMeshPro>()[1].color = new Color(237f/255f,238f/255f,181f/255f); }
             }
@@ -81,7 +80,6 @@ public class Board : MonoBehaviour
             foreach(Square square in squares)
             {
                 square.GetComponent<MeshRenderer>().materials[0] = Asset.ClassicThemeMaterial;
-                if(square is JailSquare) { square.GetComponent<MeshRenderer>().materials[1] = Asset.ClassicThemeMaterial; }
                 square.GetComponentsInChildren<TextMeshPro>()[0].color = new Color(31f/255f, 31f/255f,31f/255f);
                 if(square.GetComponentsInChildren<TextMeshPro>().Length > 1) { square.GetComponentsInChildren<TextMeshPro>()[1].color = new Color(31f/255f,31f/255f,31f/255f); }
             }

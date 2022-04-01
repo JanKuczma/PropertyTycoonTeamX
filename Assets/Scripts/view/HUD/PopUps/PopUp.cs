@@ -24,8 +24,14 @@ namespace View
         }
         void OnDestroy()
         {
-            FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<temp_contr>());
+            if(FindObjectOfType<View.HUD>()) {FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<temp_contr>());}
         }
+
+         public static PopUp Pause(Transform parent, string message)
+         {
+            PopUp popUp = Instantiate(Asset.PausePopUpPrefab, parent).GetComponent<PopUp>();
+            return popUp;
+         }
 
          public static PopUp OK(Transform parent, string message)
          {
