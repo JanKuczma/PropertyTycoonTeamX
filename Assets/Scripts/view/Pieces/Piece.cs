@@ -5,7 +5,7 @@ using UnityEngine;
 namespace View{
 public class Piece : MonoBehaviour
 {
-    const float SPEED = 6f;    // const movement speed
+    const float SPEED = 12f;    // const movement speed
     float var_speed;    // variable movement speed
     float rotationSpeed;    // rotation speed
     int currentSquare;  // current position 0 - 39 (40 squares)
@@ -17,7 +17,7 @@ public class Piece : MonoBehaviour
         // sets up initial values
         isMoving = false;
         var_speed = SPEED;
-        rotationSpeed = 4f;
+        rotationSpeed = 8f;
         currentSpot = -1;
         currentSquare = 0;
     }

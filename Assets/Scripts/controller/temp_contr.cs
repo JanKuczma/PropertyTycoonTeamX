@@ -596,7 +596,7 @@ public class temp_contr : MonoBehaviour
         Model.Player highest_bidder = null;
         List<Model.Player> bidders = new List<Model.Player>();
         int current_bidder = 0;
-        foreach(Model.Player p in players) { if(p != player) { bidders.Add(p);  } }
+        foreach(Model.Player p in players) { if(p != player && p.allowed_to_buy && p.in_jail == 0) { bidders.Add(p);  } }
         if(bidders.Count == 0)
         {
             hud.current_main_PopUp.closePopup();
