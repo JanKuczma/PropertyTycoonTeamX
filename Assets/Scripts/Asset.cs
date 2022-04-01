@@ -42,6 +42,7 @@ public static class Asset
     static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
     static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
     //board and card data
+    static TextAsset custom_board_data_json = Resources.Load<TextAsset>("Assets/Custom Board Data/custom_board_data");
     static TextAsset classic_board_json = Resources.Load<TextAsset>("GameDataJSON/board_data");
     static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
     static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
@@ -131,6 +132,11 @@ public static class Asset
         return  type == CursorType.FINGER ? FingerTexture :
                 type == CursorType.GRAB ? GrabTexture :
                 null;
+    }
+    
+    public static string custom_board_data()
+    {
+        return custom_board_data_json.ToString();
     }
 
     public static string board_data_json()

@@ -1,0 +1,164 @@
+ [
+  {
+    "name": "Brown",
+    "spaces": [
+      {
+        "name": "b1",
+        "cost": "2"
+      },
+      {
+        "name": "B2",
+        "cost": "2"
+      }
+    ]
+  },
+  {
+    "name": "Blue",
+    "spaces": [
+      {
+        "name": "BL1",
+        "cost": "1"
+      },
+      {
+        "name": "BL2",
+        "cost": "2"
+      },
+      {
+        "name": "BL;3",
+        "cost": "3"
+      }
+    ]
+  },
+  {
+    "name": "Purple",
+    "spaces": [
+      {
+        "name": "PU1",
+        "cost": "1"
+      },
+      {
+        "name": "PU2",
+        "cost": "2"
+      },
+      {
+        "name": "PU3",
+        "cost": "32"
+      }
+    ]
+  },
+  {
+    "name": "Orange",
+    "spaces": [
+      {
+        "name": "O1",
+        "cost": "1"
+      },
+      {
+        "name": "O2",
+        "cost": "2"
+      },
+      {
+        "name": "O3",
+        "cost": "3"
+      }
+    ]
+  },
+  {
+    "name": "Yellow",
+    "spaces": [
+      {
+        "name": "Y1",
+        "cost": "1"
+      },
+      {
+        "name": "Y2",
+        "cost": "2"
+      },
+      {
+        "name": "Y3",
+        "cost": "3"
+      }
+    ]
+  },
+  {
+    "name": "Red",
+    "spaces": [
+      {
+        "name": "R1",
+        "cost": "1"
+      },
+      {
+        "name": "R2",
+        "cost": "2"
+      },
+      {
+        "name": "R3",
+        "cost": "3"
+      }
+    ]
+  },
+  {
+    "name": "Green",
+    "spaces": [
+      {
+        "name": "G1",
+        "cost": "1"
+      },
+      {
+        "name": "G2",
+        "cost": "2"
+      },
+      {
+        "name": "G3",
+        "cost": "3"
+      }
+    ]
+  },
+  {
+    "name": "Indigo",
+    "spaces": [
+      {
+        "name": "I1",
+        "cost": "1"
+      },
+      {
+        "name": "I2",
+        "cost": "2"
+      }
+    ]
+  },
+  {
+    "name": "Utilities",
+    "spaces": [
+      {
+        "name": "U1",
+        "cost": "1"
+      },
+      {
+        "name": "U2",
+        "cost": "2"
+      }
+    ]
+  },
+  {
+    "name": "Stations",
+    "spaces": [
+      {
+        "name": "S1",
+        "cost": "1"
+      },
+      {
+        "name": "S2",
+        "cost": "2"
+      },
+      {
+        "name": "S3",
+        "cost": "3"
+      },
+      {
+        "name": "S43",
+        "cost": "3"
+      }
+    ]
+  }
+]

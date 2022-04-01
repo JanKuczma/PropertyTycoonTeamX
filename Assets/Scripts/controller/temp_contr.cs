@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using System.Linq;
 using View;
@@ -49,11 +50,17 @@ public class temp_contr : MonoBehaviour
     }
     void Start()
     {
-        //load data (to be changed for XLSX in near future)
-        board_model = Model.JSONData.loadBoard(Asset.board_data_json());
-        opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
+        if (File.Exists("Assets/Custom Board Data/custom_board_data.json"))
+        {
+            board_model = Model.CustomBoardJSONData.loadBoard(Asset.custom_board_data());
+        }
+        else
+        {
+            board_model = Model.BoardJSONData.loadBoard(Asset.board_data_json());
+        }
+        opportunity_knocks = Model.CardJSONData.loadCardStack(Asset.opportunity_knocks_data_json());
         opportunity_knocks.ShuffleStack();
-        potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
+        potluck = Model.CardJSONData.loadCardStack(Asset.potluck_data_json());
         potluck.ShuffleStack();
         //create board with card stacks and dice
         board_view = View.Board.Create(transform,board_model);

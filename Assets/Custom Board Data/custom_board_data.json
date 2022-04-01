@@ -1,0 +1,116 @@
+{
+  "spaces": [
+    {
+      "name": "b1",
+      "cost": "1"
+    },
+    {
+      "name": "b2",
+      "cost": "2"
+    },
+    {
+      "name": "bl1",
+      "cost": "1"
+    },
+    {
+      "name": "bl2",
+      "cost": "2"
+    },
+    {
+      "name": "bl3",
+      "cost": "3"
+    },
+    {
+      "name": "p1",
+      "cost": "1"
+    },
+    {
+      "name": "p2",
+      "cost": "2"
+    },
+    {
+      "name": "p3",
+      "cost": "3"
+    },
+    {
+      "name": "o1",
+      "cost": "1"
+    },
+    {
+      "name": "o2",
+      "cost": "2"
+    },
+    {
+      "name": "o3",
+      "cost": "3"
+    },
+    {
+      "name": "y1",
+      "cost": "1"
+    },
+    {
+      "name": "y2",
+      "cost": "2"
+    },
+    {
+      "name": "y3",
+      "cost": "3"
+    },
+    {
+      "name": "r1",
+      "cost": "1"
+    },
+    {
+      "name": "r2",
+      "cost": "2"
+    },
+    {
+      "name": "r3",
+      "cost": "3"
+    },
+    {
+      "name": "g1",
+      "cost": "1"
+    },
+    {
+      "name": "g2",
+      "cost": "2"
+    },
+    {
+      "name": "g3",
+      "cost": "3"
+    },
+    {
+      "name": "i1",
+      "cost": "1"
+    },
+    {
+      "name": "i2",
+      "cost": "2"
+    },
+    {
+      "name": "u1",
+      "cost": "1"
+    },
+    {
+      "name": "u2",
+      "cost": "2"
+    },
+    {
+      "name": "s1",
+      "cost": "1"
+    },
+    {
+      "name": "s2",
+      "cost": "2"
+    },
+    {
+      "name": "s3",
+      "cost": "3"
+    },
+    {
+      "name": "s4",
+      "cost": "4"
+    }
+  ]
+}
