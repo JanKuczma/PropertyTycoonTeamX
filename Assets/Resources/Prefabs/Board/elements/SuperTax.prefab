@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dcb3c09585b534f4495badf69b7f3520, type: 2}
+  - {fileID: 2100000, guid: bd3d6c180516c1845ae403af0b3d9a98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,6 +119,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5491868680426323105}
     m_Modifications:
+    - target: {fileID: 3974466914370000741, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_text
       value: SUPER TAX
@@ -241,6 +245,10 @@ PrefabInstance:
       propertyPath: m_text
       value: PAY $100
       objectReference: {fileID: 0}
+    - target: {fileID: 2819488696790917575, guid: 15d8eae136c78e542a3b7855725b71e5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 4141031413514363572, guid: 15d8eae136c78e542a3b7855725b71e5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

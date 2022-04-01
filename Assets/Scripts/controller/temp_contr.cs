@@ -86,11 +86,8 @@ public class temp_contr : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            ((View.PropertySquare)(board_view.squares[1])).addHouse();
-        }
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            ((View.PropertySquare)(board_view.squares[1])).removeHouse();
+            RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
+            board_view.loadTheme("starwars");
         }
         if(Input.GetKeyDown(KeyCode.X))
         {

@@ -83,6 +83,19 @@ public static class Asset
     public static GameObject CardActionPopUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionPopUp");
     public static GameObject CardActionPopWithOptionsUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionWithOptionsPopUp");
     public static GameObject AuctionPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/AuctionPopUp");
+    
+    //themes
+        // Skyboxes
+    public static Material StarWarsSkyBoxMaterial = Resources.Load<Material>("Materials/StarWarsTheme/StarWarsSkyBox");
+    public static Material ClassicMaterial = Resources.Load<Material>("Materials/ClassicTheme/Kitchen");
+        // game elements
+    public static Material StarWarsThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
+    public static Material StarWarsPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");
+    public static Material StarWarsOppKnocksMaterial = Resources.Load<Material>("Materials/StarWarsTheme/chanceCard");
+    public static Material ClassicThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
+    public static Material ClassicPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");
+    public static Material ClassicOppKnocksMaterial = Resources.Load<Material>("Materials/StarWarsTheme/chanceCard");
+    
 
 
     public static GameObject Board(SqType type,string variant = "")
