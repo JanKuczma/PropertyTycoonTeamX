@@ -95,14 +95,9 @@ public class DiceContainer : MonoBehaviour
         int[] dice_values = new int[2];
         foreach (Dice d in dice)
         {
-            Debug.Log(d.get_value());
             dice_values[i] = d.get_value();
             i++;
         }
-        
-        Debug.Log(dice_values[0]);
-        Debug.Log(dice_values[1]);
-        Debug.Log(dice_values[0] == dice_values[1]);
 
         return (dice_values[0] == dice_values[1]);
     }
@@ -135,7 +130,7 @@ public class DiceContainer : MonoBehaviour
     {
         foreach(Dice d in dice)
         {
-            if(d.transform.position.y <= 0.15f) { return true; }
+            if(d.transform.position.y <= 0) { return true; }
         }
         return false;
     }

@@ -162,6 +162,7 @@ MonoBehaviour:
   double_count: 0
   hud: {fileID: 1301890282}
   invisibleWall: {fileID: 2021015028}
+  music_player: {fileID: 0}
 --- !u!4 &13825638
 Transform:
   m_ObjectHideFlags: 0
