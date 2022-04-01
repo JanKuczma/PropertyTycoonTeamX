@@ -130,5 +130,14 @@ public class DiceContainer : MonoBehaviour
     {
         return (position()-dice[0].transform.position).magnitude;
     }
+
+    public bool belowBoard()
+    {
+        foreach(Dice d in dice)
+        {
+            if(d.transform.position.y <= 0.15f) { return true; }
+        }
+        return false;
+    }
 }
 }
