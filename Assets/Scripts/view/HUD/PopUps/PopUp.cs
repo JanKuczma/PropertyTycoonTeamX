@@ -42,21 +42,6 @@ namespace View
             return popUp;
          }
 
-         public static PopUp Options(Transform parent)
-         {
-             PopUp popUp = Instantiate(Asset.OptionsPopUpPreFab, parent).GetComponent<PopUp>();
-             popUp.btn3.onClick.AddListener(() => popUp.closePopup());
-             if (SceneManager.GetActiveScene().buildIndex == 0)
-                 popUp.btn1.interactable = false;
-             {
-             }
-             //to be updated
-             //to be updated
-             //popUp.btn1.onClick.AddListener(() => saveGame());
-             //popUp.btn2.onClick.AddListener(() => loadGame());
-             return popUp;
-         }
-
          public static PopUp InJail(Transform parent, game_controller controller)
          {
             PopUp popUp = Instantiate(Asset.InJailPopUpPrefab, parent).GetComponent<PopUp>();
