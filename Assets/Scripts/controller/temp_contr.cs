@@ -45,8 +45,8 @@ public class temp_contr : MonoBehaviour
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
     bool tabs_set;
-    //SFX
-    public SoundManager music_player;
+    //Audio
+    public GameObject music_player;
     void Awake()
     {
         players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
@@ -54,6 +54,7 @@ public class temp_contr : MonoBehaviour
         pieces = new Dictionary<Model.Player, View.Piece>();
         tabs_set = false;
         invisibleWall.SetActive(false);
+        music_player = GameObject.FindGameObjectWithTag("GameMusic");
     }
     void Start()
     {

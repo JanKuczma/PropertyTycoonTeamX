@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace View
 {
@@ -39,6 +40,10 @@ namespace View
          {
              PopUp popUp = Instantiate(Asset.OptionsPopUpPreFab, parent).GetComponent<PopUp>();
              popUp.btn3.onClick.AddListener(() => popUp.closePopup());
+             if (SceneManager.GetActiveScene().buildIndex == 0)
+             {
+                 popUp.btn1.interactable = false;
+             }
              //to be updated
              //popUp.btn1.onClick.AddListener(() => saveGame());
              //to be updated

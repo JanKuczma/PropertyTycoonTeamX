@@ -794,102 +794,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &4329508264033800434
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5584527188309864459}
-  - component: {fileID: 5889410853763409138}
-  - component: {fileID: 2190597062769017731}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5584527188309864459
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4329508264033800434}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -65.35919, y: 259.92157, z: -13.80822}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3396172796328039663}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5889410853763409138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4329508264033800434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9cb83aa3e2a847f9a6fcecf0a598970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
-  soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
-  sounds:
-  - audioType: 1
-    source: {fileID: 0}
-    clipName: Menu
-    audioClip: {fileID: 8300000, guid: 48f488d43ba7e4fd685c7b445676a944, type: 3}
-    isLoop: 0
-    playOnAwake: 0
-    volume: 0
-  - audioType: 1
-    source: {fileID: 0}
-    clipName: BG1
-    audioClip: {fileID: 8300000, guid: 24cf7646ac32e438a9d96b4698eab73c, type: 3}
-    isLoop: 0
-    playOnAwake: 0
-    volume: 0
-  - audioType: 1
-    source: {fileID: 0}
-    clipName: BG2
-    audioClip: {fileID: 8300000, guid: 08a826ff7cdee45358c7f5cdece31da9, type: 3}
-    isLoop: 0
-    playOnAwake: 0
-    volume: 0
-  - audioType: 1
-    source: {fileID: 0}
-    clipName: BG3
-    audioClip: {fileID: 8300000, guid: 6b16d8250374d414d99d69c13e71bbe1, type: 3}
-    isLoop: 0
-    playOnAwake: 0
-    volume: 0
-  - audioType: 1
-    source: {fileID: 0}
-    clipName: Jail
-    audioClip: {fileID: 8300000, guid: 0669f5818b38e4a9698d13ed30b91a4c, type: 3}
-    isLoop: 0
-    playOnAwake: 0
-    volume: 0
-  lastSongIndex: 0
---- !u!114 &2190597062769017731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4329508264033800434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8043796a5058e4a99a1f054432fdae63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5620812726790643550
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,7 +807,7 @@ GameObject:
   - component: {fileID: 5620812726790643520}
   m_Layer: 5
   m_Name: VolumeSlider
-  m_TagString: Untagged
+  m_TagString: MusicVol
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -983,9 +887,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2190597062769017731}
-        m_TargetAssemblyTypeName: SoundOptionsManager, Assembly-CSharp
-        m_MethodName: OnMusicSliderValueChange
+      - m_Target: {fileID: 5620812726790643520}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: ChangeMusicVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1010,7 +914,6 @@ MonoBehaviour:
   musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
   soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
   sounds: []
-  lastSongIndex: 0
 --- !u!1 &5620812726970809653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,16 +1456,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 4561510928454854603}
   m_HandleRect: {fileID: 2337939611900491650}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 0.557
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2190597062769017731}
-        m_TargetAssemblyTypeName: SoundOptionsManager, Assembly-CSharp
-        m_MethodName: OnSFXSliderValueChange
+      - m_Target: {fileID: 5620812726790643520}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: ChangeSFXVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1587,7 +1490,6 @@ MonoBehaviour:
   musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
   soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
   sounds: []
-  lastSongIndex: 0
 --- !u!1 &8121953510866965114
 GameObject:
   m_ObjectHideFlags: 0

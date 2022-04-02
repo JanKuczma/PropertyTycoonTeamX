@@ -10,7 +10,7 @@ namespace view.Sound
         public enum AudioTypes { SFX, MUSIC }
         public AudioTypes audioType;
         
-        [HideInInspector] public AudioSource source;
+        public AudioSource source;
         public string clipName;
         public AudioClip audioClip;
         public bool isLoop;

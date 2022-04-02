@@ -13,19 +13,16 @@ using Random = System.Random;
 public class SoundManager : MonoBehaviour
 {
 
-    public static SoundManager Instance;
-
     [SerializeField] private AudioMixerGroup musicMixerGroup;
     [SerializeField] private AudioMixerGroup soundMixerGroup;
     [SerializeField] Sound[] sounds;
     private string CurrentMusicID;
-
-    public int lastSongIndex;
-
+    public static float musicVolume;
+    public static float sfxVolume;
+    
     private void Awake()
     {
-        Instance = this;
-        
+
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -108,10 +105,22 @@ public class SoundManager : MonoBehaviour
         s.source.Stop();
     }
 
+    public void ChangeMusicVolume(float value)
+    {
+        musicVolume = value;
+        UpdateMixerVolume();
+    }
+    
+    public void ChangeSFXVolume(float value)
+    {
+        sfxVolume = value;
+        UpdateMixerVolume();
+    }
+    
     public void UpdateMixerVolume()
     {
-        musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(SoundOptionsManager.musicVolume) * 20);
-        soundMixerGroup.audioMixer.SetFloat("SFX Volume", Mathf.Log10(SoundOptionsManager.sfxVolume) * 20);
+        musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicVolume) * 20);
+        soundMixerGroup.audioMixer.SetFloat("SFX Volume", Mathf.Log10(sfxVolume) * 20);
     }
 }
 
