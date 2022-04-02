@@ -74,6 +74,16 @@ public class game_controller : MonoBehaviour
         this.steps = gameData.steps;
         this.tabs_set = gameData.tabs_set;
 
+        this.previous_gameState = GameState.NONE;
+
+        this.pieces = new Dictionary<Model.Player, Piece>();
+        this.board_view = View.Board.Create(transform,board_model);
+        this.dice = View.DiceContainer.Create(transform);
+        this.hud = Instantiate(Asset.hud).GetComponent<HUD>();
+
+        this.invisibleWall = Instantiate(Asset.Walls);
+        this.invisibleWall.SetActive(false);
+
         if(gameData.turboGame){
             Debug.Log("turbo game");
         }
@@ -84,20 +94,6 @@ public class game_controller : MonoBehaviour
         } else {
             Instantiate(Asset.Kitchen);
         }
-
-        this.previous_gameState = GameState.NONE;
-
-        this.invisibleWall = Instantiate(Asset.Walls);
-        this.invisibleWall.SetActive(false);
-        
-        this.board_view = View.Board.Create(transform,board_model);
-        this.dice = View.DiceContainer.Create(transform);
-
-        this.hud = Instantiate(Asset.hud).GetComponent<HUD>();
-
-
-
-        this.pieces = new Dictionary<Model.Player, Piece>();
 
     }
     void Start()
