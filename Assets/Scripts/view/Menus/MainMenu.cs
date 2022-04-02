@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour
     public TextMeshProUGUI gmDescription;
     public SpriteRenderer themePreview;
     public Sprite kingsley_classic, kingsley_yoda;
+    public PopUp currentPopUp;
     
     
     Color[] player_colors = {Color.blue,Color.red,Color.green,Color.yellow,Color.cyan,Color.magenta};
@@ -267,8 +268,9 @@ public class MainMenu : MonoBehaviour
     public void Options()
     {
         GameObject options = GameObject.Find("InGameOptionsPopUp(Clone)");
-        if(options) { Destroy(options); }
-        OptionsPopUp.Create(transform.parent);
+        Destroy(options);
+        GameObject canvas = GameObject.Find("hud(Clone)");
+        currentPopUp = PopUp.Options(canvas.transform);
     }
 
 

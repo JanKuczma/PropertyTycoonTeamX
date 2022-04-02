@@ -889,6 +889,56 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5620812726790643520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5620812726790643550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9cb83aa3e2a847f9a6fcecf0a598970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
+  soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
+  sounds:
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Menu
+    audioClip: {fileID: 8300000, guid: 48f488d43ba7e4fd685c7b445676a944, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG1
+    audioClip: {fileID: 8300000, guid: 24cf7646ac32e438a9d96b4698eab73c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG2
+    audioClip: {fileID: 8300000, guid: 08a826ff7cdee45358c7f5cdece31da9, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG3
+    audioClip: {fileID: 8300000, guid: 6b16d8250374d414d99d69c13e71bbe1, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Jail
+    audioClip: {fileID: 8300000, guid: 0669f5818b38e4a9698d13ed30b91a4c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
 --- !u!1 &5620812726970809653
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,6 +1490,56 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3411630698507135344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7863882267953497583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9cb83aa3e2a847f9a6fcecf0a598970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
+  soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
+  sounds:
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Menu
+    audioClip: {fileID: 8300000, guid: 48f488d43ba7e4fd685c7b445676a944, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG1
+    audioClip: {fileID: 8300000, guid: 24cf7646ac32e438a9d96b4698eab73c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG2
+    audioClip: {fileID: 8300000, guid: 08a826ff7cdee45358c7f5cdece31da9, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG3
+    audioClip: {fileID: 8300000, guid: 6b16d8250374d414d99d69c13e71bbe1, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Jail
+    audioClip: {fileID: 8300000, guid: 0669f5818b38e4a9698d13ed30b91a4c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
 --- !u!1 &8121953510866965114
 GameObject:
   m_ObjectHideFlags: 0
