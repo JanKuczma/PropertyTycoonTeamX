@@ -110,6 +110,10 @@ public class game_controller : MonoBehaviour
         hud.FinishTurnButton.onClick.AddListener(finishTurn);
         hud.cameraLeftBtn.onClick.AddListener(moveCameraLeft);
         hud.cameraRightBtn.onClick.AddListener(moveCameraRight);
+        hud.optionsButton.onClick.AddListener(delegate {
+            if(pausePopUp != null) { Destroy(pausePopUp.gameObject); }
+            pausePopUp = OptionsPopUp.Create(hud.transform);
+        });
     }
 
     void Update()
@@ -139,7 +143,7 @@ public class game_controller : MonoBehaviour
                 pausePopUp = PopUp.Pause(hud.transform,"PAUSE");
                 pausePopUp.btn2.onClick.AddListener(delegate {
                     Destroy(pausePopUp.gameObject);
-                    GameObject.FindGameObjectWithTag("GameData");
+                    Destroy(GameObject.FindGameObjectWithTag("GameData"));
                     SceneManager.LoadScene(0);
                 });
                 pausePopUp.btn1.onClick.AddListener(delegate {

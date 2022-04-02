@@ -13,8 +13,8 @@ using Random = System.Random;
 public class SoundManager : MonoBehaviour
 {
 
-    [SerializeField] private AudioMixerGroup musicMixerGroup;
-    [SerializeField] private AudioMixerGroup soundMixerGroup;
+    [SerializeField] public AudioMixerGroup musicMixerGroup;
+    [SerializeField] public AudioMixerGroup soundMixerGroup;
     [SerializeField] Sound[] sounds;
     private string CurrentMusicID;
     public static float musicVolume;
@@ -60,6 +60,9 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
+            Stop(sounds[1].clipName);
+            Stop(sounds[2].clipName);
+            Stop(sounds[3].clipName);
             if (!sounds[0].source.isPlaying)
             {
                 Play(sounds[0].clipName);
@@ -104,23 +107,6 @@ public class SoundManager : MonoBehaviour
         }
         s.source.Stop();
     }
-
-    public void ChangeMusicVolume(float value)
-    {
-        musicVolume = value;
-        UpdateMixerVolume();
-    }
     
-    public void ChangeSFXVolume(float value)
-    {
-        sfxVolume = value;
-        UpdateMixerVolume();
-    }
-    
-    public void UpdateMixerVolume()
-    {
-        musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicVolume) * 20);
-        soundMixerGroup.audioMixer.SetFloat("SFX Volume", Mathf.Log10(sfxVolume) * 20);
-    }
 }
 

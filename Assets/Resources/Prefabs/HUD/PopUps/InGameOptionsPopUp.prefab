@@ -28,7 +28,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8167849451839636295}
   m_RootOrder: 0
@@ -104,7 +103,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7006780204629117143}
   m_RootOrder: 0
@@ -181,7 +179,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.3125, y: 1.2125, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8534455076351589495}
   m_Father: {fileID: 3396172796328039663}
@@ -314,7 +311,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 25395342308463482}
   m_RootOrder: 0
@@ -394,7 +390,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5620812726790643521}
   m_RootOrder: 3
@@ -475,7 +470,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.3125, y: 1.2125, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3880008630253168415}
   m_Father: {fileID: 3396172796328039663}
@@ -608,7 +602,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3755496706908521151}
   m_RootOrder: 0
@@ -689,7 +682,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.3125, y: 1.2125, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2228354491689829843}
   m_Father: {fileID: 3396172796328039663}
@@ -804,7 +796,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5620812726790643521}
   - component: {fileID: 5620812726790643523}
-  - component: {fileID: 5620812726790643520}
   m_Layer: 5
   m_Name: VolumeSlider
   m_TagString: MusicVol
@@ -822,7 +813,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5620812728111324044}
   - {fileID: 5620812726970809652}
@@ -887,10 +877,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5620812726790643520}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+      - m_Target: {fileID: 3120052849644524235}
+        m_TargetAssemblyTypeName: OptionsPopUp, Assembly-CSharp
         m_MethodName: ChangeMusicVolume
-        m_Mode: 0
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -899,21 +889,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5620812726790643520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5620812726790643550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9cb83aa3e2a847f9a6fcecf0a598970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
-  soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
-  sounds: []
 --- !u!1 &5620812726970809653
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,7 +915,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5620812727377626426}
   m_Father: {fileID: 5620812726790643521}
@@ -979,7 +953,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5620812726970809652}
   m_RootOrder: 0
@@ -1055,7 +1028,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5620812728727475989}
   m_RootOrder: 0
@@ -1131,7 +1103,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5620812726790643521}
   m_RootOrder: 0
@@ -1205,7 +1176,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5620812727477992963}
   m_Father: {fileID: 5620812726790643521}
@@ -1242,7 +1212,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4561510928454854603}
   m_Father: {fileID: 4771960240059853731}
@@ -1279,7 +1248,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2337939611900491650}
   m_Father: {fileID: 4771960240059853731}
@@ -1318,7 +1286,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4771960240059853731}
   m_RootOrder: 3
@@ -1380,7 +1347,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4771960240059853731}
   - component: {fileID: 5921099978568953176}
-  - component: {fileID: 3411630698507135344}
   m_Layer: 5
   m_Name: SFX Slider
   m_TagString: Untagged
@@ -1398,7 +1364,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6264237007823665050}
   - {fileID: 7006780204629117143}
@@ -1463,10 +1428,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5620812726790643520}
-        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+      - m_Target: {fileID: 3120052849644524235}
+        m_TargetAssemblyTypeName: OptionsPopUp, Assembly-CSharp
         m_MethodName: ChangeSFXVolume
-        m_Mode: 0
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1475,21 +1440,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3411630698507135344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7863882267953497583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9cb83aa3e2a847f9a6fcecf0a598970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
-  soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
-  sounds: []
 --- !u!1 &8121953510866965114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,7 +1468,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3214848054477132366}
   m_RootOrder: 0
@@ -1598,7 +1547,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4771960240059853731}
   m_RootOrder: 0
@@ -1743,17 +1691,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
---- !u!224 &3396172796328039663 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6643248936291923849, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
-  m_PrefabInstance: {fileID: 8291178178363368294}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3735125836689622569 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4667413353404392783, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
   m_PrefabInstance: {fileID: 8291178178363368294}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7594926418958496598
+--- !u!224 &3396172796328039663 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6643248936291923849, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+  m_PrefabInstance: {fileID: 8291178178363368294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3120052849644524235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1762,11 +1710,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3735125836689622569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41145ece13a04d529433fde650091caf, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b2825b89d8264a06a2ea71a9a06bf09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  message: {fileID: 416699892281046493}
-  btn1: {fileID: 3667578144696320094}
-  btn2: {fileID: 2437140341363618582}
-  btn3: {fileID: 2666023389940752147}
+  message: {fileID: 0}
+  btn1: {fileID: 2666023389940752147}
+  btn2: {fileID: 0}
+  btn3: {fileID: 0}
   optional_img: {fileID: 0}
+  sfx: {fileID: 5921099978568953176}
+  music: {fileID: 5620812726790643523}
+  soundManager: {fileID: 0}

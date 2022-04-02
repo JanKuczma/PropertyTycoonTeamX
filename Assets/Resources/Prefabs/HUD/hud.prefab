@@ -122,9 +122,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6329745311321700635}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Options
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -275,6 +275,7 @@ MonoBehaviour:
   FinishTurnButton: {fileID: 6329745312928331861}
   cameraLeftBtn: {fileID: 6329745312140982445}
   cameraRightBtn: {fileID: 6329745313011257477}
+  optionsButton: {fileID: 6329745311321700634}
   current_main_PopUp: {fileID: 0}
   currentManager: {fileID: 0}
   jail_bars: {fileID: 6329745312612287059}
