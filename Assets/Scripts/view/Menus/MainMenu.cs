@@ -264,7 +264,7 @@ public class MainMenu : MonoBehaviour
     {
         GameObject options = GameObject.Find("InGameOptionsPopUp(Clone)");
         Destroy(options);
-        GameObject canvas = GameObject.Find("Canvas");
+        GameObject canvas = GameObject.Find("hud(Clone)");
         PopUp.Options(canvas.transform);
     }
 
