@@ -17,11 +17,26 @@ public class MainMenu : MonoBehaviour
     public int numPlayers = 2;
     public Dictionary<string, Tuple<Token, bool>> playerInfo = new Dictionary<string, Tuple<Token, bool>>();
     
+    //These are variables for the GamemodeSelect menu
+    public int gm_index = 0;
+    public int theme_index = 0;
+    public TextMeshProUGUI buttonText;
+    public TextMeshProUGUI gmDescription;
+    public SpriteRenderer themePreview;
+    public Sprite kingsley_classic, kingsley_yoda;
+    
+    
     Color[] player_colors = {Color.blue,Color.red,Color.green,Color.yellow,Color.cyan,Color.magenta};
+
 
     MessagePopUp curr_pop;
     
     public void GoToPlayerSelect()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void GoToGameOptions()
     {
         SceneManager.LoadScene(1);
     }
@@ -186,10 +201,10 @@ public class MainMenu : MonoBehaviour
         int e = 0; // to iterate over player_colors
         foreach(KeyValuePair<string, Tuple<Token, bool>> entry in playerInfo)
         {
-            GameObject.Find("PersistentObject").GetComponent<PermObject>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,player_colors[e]));
+            GameObject.Find("GameData").GetComponent<GameData>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,player_colors[e]));
             e++;
         }
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void QuitGame()
@@ -209,4 +224,49 @@ public class MainMenu : MonoBehaviour
         numPlayers = numPlayers - 1;
         Debug.Log(numPlayers);
     }
+
+    public void ChangeGameMode()
+    {
+        // gm_index 0 = classic, gm_index 1 = abridged
+        if (gm_index == 0)
+        {
+            gm_index = 1;
+            buttonText.text = "Turbo";
+            gmDescription.text =
+                "In Turbo Mode, players race to gather as much wealth as they can before the timer runs out!";
+        } else if (gm_index == 1)
+        {
+            gm_index = 0;
+            buttonText.text = "Classic";
+            gmDescription.text = "In Classic Mode, players must trade away until only one Tycoon is left standing...";
+        }
+    }
+
+    public void ChangeTheme()
+    {
+        kingsley_classic = Resources.Load<Sprite>("/Kingsleys/kingsley monopoly man");
+        kingsley_yoda = Resources.Load<Sprite>("/Kingsleys/kingsley_yoda2");
+        
+        // theme_index 0 = classic, theme_index 1 = Star Wars
+        if (theme_index == 0)
+        {
+            theme_index = 1;
+            buttonText.text = "Star Wars";
+            themePreview.sprite = kingsley_yoda;
+        } else if (theme_index == 1)
+        {
+            theme_index = 0;
+            buttonText.text = "Classic";
+            themePreview.sprite = kingsley_classic;
+        }
+    } 
+    public void Options()
+    {
+        GameObject options = GameObject.Find("InGameOptionsPopUp(Clone)");
+        Destroy(options);
+        GameObject canvas = GameObject.Find("Canvas");
+        PopUp.Options(canvas.transform);
+    }
+
+
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace View
 {
@@ -39,6 +40,21 @@ namespace View
             popUp.btn1.onClick.AddListener(popUp.closePopup);
             popUp.SetMessage(message);
             return popUp;
+         }
+
+         public static PopUp Options(Transform parent)
+         {
+             PopUp popUp = Instantiate(Asset.OptionsPopUpPreFab, parent).GetComponent<PopUp>();
+             popUp.btn3.onClick.AddListener(() => popUp.closePopup());
+             if (SceneManager.GetActiveScene().buildIndex == 0)
+                 popUp.btn1.interactable = false;
+             {
+             }
+             //to be updated
+             //to be updated
+             //popUp.btn1.onClick.AddListener(() => saveGame());
+             //popUp.btn2.onClick.AddListener(() => loadGame());
+             return popUp;
          }
 
          public static PopUp InJail(Transform parent, game_controller controller)
@@ -122,16 +138,12 @@ namespace View
 
         public static PopUp GoToJail(Transform parent, Model.Player player, game_controller controller, string msg = null)
         {
-            controller.music_player.JailMusic();
             PopUp popUp = Instantiate(Asset.GoToJailPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + " broke the law! They must go straight to jail!");
             if(msg != null) { popUp.SetMessage(msg); }
             popUp.btn1.onClick.AddListener(() => popUp.goToJailOption(player, controller));
             popUp.btn2.onClick.AddListener(() => popUp.jailCardOption(player, controller));
             popUp.btn3.onClick.AddListener(() => popUp.jailPay50Option(player, controller));
-            popUp.btn1.onClick.AddListener(() => controller.music_player.FadeOut(controller.music_player.jail_music, 5.0));
-            popUp.btn2.onClick.AddListener(() => controller.music_player.FadeOut(controller.music_player.jail_music, 5.0));
-            popUp.btn3.onClick.AddListener(() => controller.music_player.FadeOut(controller.music_player.jail_music, 5.0));
             return popUp;
         }
 
@@ -143,11 +155,11 @@ namespace View
             {
                 case SqType.CHANCE:
                     popup.optional_img.sprite = Asset.ClassicChangeIMG;
-                    if(GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
+                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
                 break;
                 case SqType.POTLUCK:
                     popup.optional_img.sprite = Asset.ClassicOppKnocksIMG;
-                    if(GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
+                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
                 break;
             }
             return popup;
@@ -160,11 +172,11 @@ namespace View
             {
                 case SqType.CHANCE:
                     popup.optional_img.sprite = Asset.ClassicChangeIMG;
-                    if(GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
+                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
                 break;
                 case SqType.POTLUCK:
                     popup.optional_img.sprite = Asset.ClassicOppKnocksIMG;
-                    if(GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
+                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
                 break;
             }
             return popup;

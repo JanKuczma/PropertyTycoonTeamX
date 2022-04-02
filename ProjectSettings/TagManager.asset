@@ -6,7 +6,9 @@ TagManager:
   tags:
   - NotTrigger
   - GameMusic
-  - PreGameData
+  - MusicVol
+  - SFXVol
+  - GameData
   layers:
   - Default
   - TransparentFX

@@ -47,24 +47,24 @@ public class game_controller : MonoBehaviour
     public GameObject invisibleWall;
     public GameObject kitchen;
     bool tabs_set;
-    //SFX
-    public BGMusicSelector music_player;
+    //Audio
+    public GameObject music_player;
     public static game_controller Create(Transform parent, List<Model.Player> players)
     {
         
-        if(!GameObject.Find("PersistentObject")){ Instantiate(new GameObject("PersistentObject"));GameObject.Find("PersistentObject").AddComponent<PermObject>(); }
-        GameObject.Find("PersistentObject").GetComponent<PermObject>().players = players;
+        if(!GameObject.Find("GameData")){ Instantiate(new GameObject("GameData"));GameObject.Find("GameData").AddComponent<GameData>(); }
+        GameObject.Find("GameData").GetComponent<GameData>().players = players;
         GameObject controller = Instantiate(new GameObject("controller"),parent);
         controller.AddComponent<game_controller>();
         controller.GetComponent<game_controller>().kitchen = Instantiate(Asset.Kitchen);
         controller.GetComponent<game_controller>().invisibleWall = Instantiate(Asset.Walls);
-        if(GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme)
+        if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme)
         {
             RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
             controller.GetComponent<game_controller>().board_view.loadTheme("starwars");
             controller.GetComponent<game_controller>().kitchen.SetActive(false);
         }
-        if(GameObject.Find("PersistentObject").GetComponent<PermObject>().customData)
+        if(GameObject.Find("GameData").GetComponent<GameData>().customData)
         {
 
         }
@@ -72,16 +72,16 @@ public class game_controller : MonoBehaviour
     }
     void Awake()
     {
-        players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
-        music_player = GameObject.Find("Background Music").GetComponent<BGMusicSelector>();
+        players = GameObject.Find("GameData").GetComponent<GameData>().players;
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
         tabs_set = false;
         invisibleWall.SetActive(false);
+        music_player = GameObject.FindGameObjectWithTag("GameMusic");
     }
     void Start()
     {
-        if(GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme)
+        if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme)
         {
             RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
             board_view.loadTheme("starwars");
@@ -127,7 +127,7 @@ public class game_controller : MonoBehaviour
         {
             RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
             board_view.loadTheme("starwars");
-            GameObject.Find("PersistentObject").GetComponent<PermObject>().starWarsTheme = true;
+            GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme = true;
             kitchen.SetActive(false);
         }
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -165,7 +165,6 @@ public class game_controller : MonoBehaviour
 
     void FixedUpdate()
     {
-        music_player.UpdateGameState(turnState);
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
             decidePlayerOrder();

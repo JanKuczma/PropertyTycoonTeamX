@@ -97,8 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 549b52ebf7fe24146b61d1ec7dabd7cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  square_name: {fileID: 265082235228762832}
   spots: []
   spotsIs: 
+  amount: {fileID: 4723915973118541731}
 --- !u!65 &-144313386346523588
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -122,11 +124,15 @@ PrefabInstance:
     - target: {fileID: 3974466914370000741, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_text
       value: SUPER TAX
       objectReference: {fileID: 0}
+    - target: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 7331567393390165115, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -234,6 +240,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7331567393390165115, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
   m_PrefabInstance: {fileID: 5457711883959227876}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &265082235228762832 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
+  m_PrefabInstance: {fileID: 5457711883959227876}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5457711884558409877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,10 +262,14 @@ PrefabInstance:
       propertyPath: m_text
       value: PAY $100
       objectReference: {fileID: 0}
+    - target: {fileID: 734940537472032566, guid: 15d8eae136c78e542a3b7855725b71e5, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 2819488696790917575, guid: 15d8eae136c78e542a3b7855725b71e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 4141031413514363572, guid: 15d8eae136c78e542a3b7855725b71e5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -356,3 +377,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4141031413514363572, guid: 15d8eae136c78e542a3b7855725b71e5, type: 3}
   m_PrefabInstance: {fileID: 5457711884558409877}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4723915973118541731 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 734940537472032566, guid: 15d8eae136c78e542a3b7855725b71e5, type: 3}
+  m_PrefabInstance: {fileID: 5457711884558409877}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

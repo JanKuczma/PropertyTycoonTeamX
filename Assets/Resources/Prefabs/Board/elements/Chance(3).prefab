@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6cf873dda980ce40be945039a609c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  square_name: {fileID: 2080448234696075201}
   spots: []
   spotsIs: 
 --- !u!65 &-4637513959567625756
@@ -121,13 +122,17 @@ PrefabInstance:
     - target: {fileID: 3974466914370000741, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_text
       value: 'CHANCE
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 7331567393390165115, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -235,3 +240,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7331567393390165115, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
   m_PrefabInstance: {fileID: 6111189308501590261}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2080448234696075201 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5192776718141810484, guid: 1b8872b21013fe84cb16b8d7859e0af2, type: 3}
+  m_PrefabInstance: {fileID: 6111189308501590261}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

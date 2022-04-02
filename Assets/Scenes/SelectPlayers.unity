@@ -257,51 +257,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13503523}
   m_CullTransparentMesh: 1
---- !u!1 &146104205
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 146104207}
-  - component: {fileID: 146104206}
-  m_Layer: 0
-  m_Name: PersistentObject
-  m_TagString: PreGameData
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &146104206
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146104205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54f6ea408afed1146a0dc25be1cdc1b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starWarsTheme: 0
-  customData: 0
---- !u!4 &146104207
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146104205}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 668.1413, y: 223.62396, z: 949.7795}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &147122050
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,6 +943,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numPlayers: 2
+  gm_index: 0
+  theme_index: 0
+  buttonText: {fileID: 0}
+  gmDescription: {fileID: 0}
+  themePreview: {fileID: 0}
+  kingsley_classic: {fileID: 0}
+  kingsley_yoda: {fileID: 0}
 --- !u!114 &1144566929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1841,6 +1803,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numPlayers: 2
+  gm_index: 0
+  theme_index: 0
+  buttonText: {fileID: 0}
+  gmDescription: {fileID: 0}
+  themePreview: {fileID: 0}
+  kingsley_classic: {fileID: 0}
+  kingsley_yoda: {fileID: 0}
 --- !u!114 &1598304943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2063,6 +2032,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numPlayers: 2
+  gm_index: 0
+  theme_index: 0
+  buttonText: {fileID: 0}
+  gmDescription: {fileID: 0}
+  themePreview: {fileID: 0}
+  kingsley_classic: {fileID: 0}
+  kingsley_yoda: {fileID: 0}
 --- !u!81 &1841086488
 AudioListener:
   m_ObjectHideFlags: 0

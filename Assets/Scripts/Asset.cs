@@ -81,6 +81,7 @@ public static class Asset
     public static GameObject CardActionPopUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionPopUp");
     public static GameObject CardActionPopWithOptionsUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionWithOptionsPopUp");
     public static GameObject AuctionPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/AuctionPopUp");
+    public static GameObject OptionsPopUpPreFab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/InGameOptionsPopUp");
     
     //themes
         // Skyboxes
@@ -100,7 +101,6 @@ public static class Asset
     public static Sprite StarWarsOppKnocksIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/Communitychestcard-starwars copy");
     public static Sprite StarWarsChangeIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/chance-starwars copy");
     
-
 
     public static GameObject Board(SqType type,string variant = "")
     {
