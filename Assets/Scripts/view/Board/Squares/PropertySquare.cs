@@ -6,6 +6,7 @@ public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=
 namespace View{
 public class PropertySquare : Square
 {
+    public TextMeshPro amount;
     Group _group;
     string _price;
     List<GameObject> houses = new List<GameObject>();

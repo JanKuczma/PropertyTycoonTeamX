@@ -25,8 +25,14 @@ namespace View
         }
         void OnDestroy()
         {
-            FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<temp_contr>());
+            if(FindObjectOfType<View.HUD>()) {FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<game_controller>());}
         }
+
+         public static PopUp Pause(Transform parent, string message)
+         {
+            PopUp popUp = Instantiate(Asset.PausePopUpPrefab, parent).GetComponent<PopUp>();
+            return popUp;
+         }
 
          public static PopUp OK(Transform parent, string message)
          {
@@ -41,17 +47,17 @@ namespace View
              PopUp popUp = Instantiate(Asset.OptionsPopUpPreFab, parent).GetComponent<PopUp>();
              popUp.btn3.onClick.AddListener(() => popUp.closePopup());
              if (SceneManager.GetActiveScene().buildIndex == 0)
-             {
                  popUp.btn1.interactable = false;
+             {
              }
              //to be updated
-             //popUp.btn1.onClick.AddListener(() => saveGame());
              //to be updated
+             //popUp.btn1.onClick.AddListener(() => saveGame());
              //popUp.btn2.onClick.AddListener(() => loadGame());
              return popUp;
          }
 
-         public static PopUp InJail(Transform parent, temp_contr controller)
+         public static PopUp InJail(Transform parent, game_controller controller)
          {
             PopUp popUp = Instantiate(Asset.InJailPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.SetMessage("Stay in Jail or try to break out by rolling a double!");
@@ -81,7 +87,7 @@ namespace View
             return popUp;
          }
 
-        public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board,temp_contr controller,int rent=0)
+        public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board,game_controller controller,int rent=0)
         {
             PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
             int rent_amount = space.rent_amount(board);
@@ -106,7 +112,7 @@ namespace View
             return popUp;
         }
 
-        public static PopUp BuyProperty(Transform parent, Model.Player player, Model.Space.Purchasable space, View.Square square, temp_contr controller)
+        public static PopUp BuyProperty(Transform parent, Model.Player player, Model.Space.Purchasable space, View.Square square, game_controller controller)
         {
             PopUp popUp = Instantiate(Asset.BuyPropertyPopup, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + ", do you wish to purchase this property?");
@@ -130,7 +136,7 @@ namespace View
             return popUp;
         }
 
-        public static PopUp GoToJail(Transform parent, Model.Player player, temp_contr controller, string msg = null)
+        public static PopUp GoToJail(Transform parent, Model.Player player, game_controller controller, string msg = null)
         {
             PopUp popUp = Instantiate(Asset.GoToJailPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + " broke the law! They must go straight to jail!");
@@ -141,45 +147,40 @@ namespace View
             return popUp;
         }
 
-        public static PopUp Card(Transform parent, Model.Player player, temp_contr controller, Model.Card card, SqType card_type)
+        public static PopUp Card(Transform parent, Model.Player player, game_controller controller, Model.Card card, SqType card_type)
         {
             PopUp popup = Instantiate(Asset.CardActionPopUp,parent).GetComponent<PopUp>();
             popup.SetMessage(card.description);
             switch(card_type)
             {
                 case SqType.CHANCE:
-                    popup.optional_img.sprite = Asset.chance_IMG;
+                    popup.optional_img.sprite = Asset.ClassicChangeIMG;
+                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
                 break;
                 case SqType.POTLUCK:
-                    popup.optional_img.sprite = Asset.opportunity_knocks_IMG;
+                    popup.optional_img.sprite = Asset.ClassicOppKnocksIMG;
+                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
                 break;
             }
             return popup;
         }
-        public static PopUp CardWithOption(Transform parent, Model.Player player, temp_contr controller, Model.Card card, SqType card_type)
+        public static PopUp CardWithOption(Transform parent, Model.Player player, game_controller controller, Model.Card card, SqType card_type)
         {
             PopUp popup = Instantiate(Asset.CardActionPopWithOptionsUp,parent).GetComponent<PopUp>();
             popup.SetMessage(card.description);
             switch(card_type)
             {
                 case SqType.CHANCE:
-                    popup.optional_img.sprite = Asset.chance_IMG;
+                    popup.optional_img.sprite = Asset.ClassicChangeIMG;
+                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
                 break;
                 case SqType.POTLUCK:
-                    popup.optional_img.sprite = Asset.opportunity_knocks_IMG;
+                    popup.optional_img.sprite = Asset.ClassicOppKnocksIMG;
+                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
                 break;
             }
             return popup;
         }
-        public static PopUp ResetDice(Transform parent, DiceContainer dice, string message)
-        {
-            PopUp popUp = Instantiate(Asset.OkPopUpPrefab, parent).GetComponent<PopUp>();
-            popUp.btn1.onClick.AddListener(dice.reset);
-            popUp.btn1.onClick.AddListener(popUp.closePopup);
-            popUp.SetMessage(message);
-            return popUp;
-        }
-
 
         public void buyPropertyOption(Model.Decision_outcome decision, Model.Player player, View.Square square)
         {
@@ -202,13 +203,13 @@ namespace View
                 break;
             }
         }
-        public void dontBuyPropertyOption(Model.Player player, Model.Space.Purchasable space, temp_contr controller)
+        public void dontBuyPropertyOption(Model.Player player, Model.Space.Purchasable space, game_controller controller)
         {
             controller.startAuction(player,space);
             closePopup();
         }
 
-        public void PayRentOption(Model.Decision_outcome decision,temp_contr controller,Model.Player player)
+        public void PayRentOption(Model.Decision_outcome decision,game_controller controller,Model.Player player)
         {
             switch(decision)
             {
@@ -231,13 +232,13 @@ namespace View
     //while in jail
 
 */
-    public void stayInJailOption(temp_contr controller)
+    public void stayInJailOption(game_controller controller)
     {
         MessagePopUp.Create(transform.parent, "You are staying in Jail!",3);
         controller.stayInJail();
         closePopup();
     }
-    public void rollInJailOption(temp_contr controller)
+    public void rollInJailOption(game_controller controller)
     {
         controller.tryBreakOut();
         closePopup();
@@ -248,7 +249,7 @@ namespace View
     // Land on GO TO JAIL options
 
 */
-        public void goToJailOption(Model.Player player, temp_contr controller)
+        public void goToJailOption(Model.Player player, game_controller controller)
         {
             player.go_to_jail();
             controller.sendPieceToJail();
@@ -256,7 +257,7 @@ namespace View
             MessagePopUp.Create(transform.parent, "You go to Jail!",3);
             closePopup();
         }
-        public void jailCardOption(Model.Player player, temp_contr controller)
+        public void jailCardOption(Model.Player player, game_controller controller)
         {
             if(player.getOutOfJailCardsNo == 0)
             {
@@ -268,7 +269,7 @@ namespace View
                 closePopup();
             }
         }
-        public void jailPay50Option(Model.Player player, temp_contr controller)
+        public void jailPay50Option(Model.Player player, game_controller controller)
         {
             if(player.cash < 50)
             {
@@ -286,7 +287,7 @@ namespace View
     // Land on TAKE CARD options
 
 */
-    public void PayOption(Model.Decision_outcome decision,temp_contr controller,Model.Player player)
+    public void PayOption(Model.Decision_outcome decision,game_controller controller,Model.Player player)
     {
         switch(decision)
         {

@@ -14,11 +14,11 @@ using UnityEngine.SceneManagement;
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
 public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END, NONE}
-public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION}
+public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION,NONE}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
 */
-public class temp_contr : MonoBehaviour
+public class game_controller : MonoBehaviour
 {
     //game elements
     public View.Board board_view;
@@ -34,66 +34,82 @@ public class temp_contr : MonoBehaviour
     // bits needed to manage game and turns
     TurnState turnState;
     GameState gameState;
-    public Timer rollTimer = new Timer(5000);
+    GameState previous_gameState;
     public bool double_rolled = false; // use this to keep track of whether player just rolled a double
     public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
     int steps; // to pass dice result between states
+    bool tabs_set;
     //HUD
     public View.HUD hud; 
+    PopUp pausePopUp = null;
     //other
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
-    bool tabs_set;
+    public GameObject kitchen;
     //Audio
     public GameObject music_player;
+    
     void Awake()
     {
-        players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
-        player_throws = new Dictionary<Model.Player, int>();    
-        pieces = new Dictionary<Model.Player, View.Piece>();
-        tabs_set = false;
-        invisibleWall.SetActive(false);
-        music_player = GameObject.FindGameObjectWithTag("GameMusic");
+        GameData gameData = GameObject.Find("GameData").GetComponent<GameData>();
+        this.music_player = GameObject.FindGameObjectWithTag("GameMusic");
+
+        this.board_model = gameData.board_model;
+        this.potluck = gameData.potluck;
+        this.opportunity_knocks = gameData.opportunity_knocks;
+
+        this.opportunity_knocks.ShuffleStack();
+        this.potluck.ShuffleStack();
+
+        this.players = gameData.players;
+        this.player_throws = gameData.player_throws;
+        this.current_player = gameData.current_player;
+
+        this.gameState = gameData.gameState;
+        this.turnState = gameData.turnState;
+        this.double_rolled = gameData.double_rolled;
+        this.double_count = gameData.double_count;
+        this.passed_go = gameData.passed_go;    
+        this.steps = gameData.steps;
+        this.tabs_set = gameData.tabs_set;
+
+        this.previous_gameState = GameState.NONE;
+
+        this.pieces = new Dictionary<Model.Player, Piece>();
+        this.board_view = View.Board.Create(transform,board_model);
+        this.dice = View.DiceContainer.Create(transform);
+        this.hud = Instantiate(Asset.hud).GetComponent<HUD>();
+
+        this.invisibleWall = Instantiate(Asset.Walls);
+        this.invisibleWall.SetActive(false);
+
+        if(gameData.turboGame){
+            Debug.Log("turbo game");
+        }
+        if(gameData.starWarsTheme)
+        {
+            RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
+            board_view.loadTheme("starwars");
+        } else {
+            Instantiate(Asset.Kitchen);
+        }
+
     }
     void Start()
     {
-        //load data (to be changed for XLSX in near future)
-        board_model = Model.JSONData.loadBoard(Asset.board_data_json());
-        opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
-        opportunity_knocks.ShuffleStack();
-        potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
-        potluck.ShuffleStack();
-        //create board with card stacks and dice
-        board_view = View.Board.Create(transform,board_model);
-        dice = View.DiceContainer.Create(transform);
-        //create playerTabs
         hud.Create_player_tabs(players,board_model);
         //craete pieces
         foreach(Model.Player player in players)
         {
-            pieces.Add(player,View.Piece.Create(player.token,transform,board_view));
+            pieces.Add(player,View.Piece.Create(player.token,transform,board_view,player.position));
         }
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
-        //set current turn state to DICEROLL and gameState to ORDERINGPHASE (subject to change if we want to continue game from a saved game)
-        gameState = GameState.ORDERINGPHASE;
-        turnState = TurnState.BEGIN;
-        current_player = 0;
-        //assign timer function
-        rollTimer.Elapsed += TimedEventHandler;
-        rollTimer.AutoReset = true;
-        rollTimer.Enabled = true;
-    }
-
-    private void TimedEventHandler(object obj, ElapsedEventArgs e)
-    {
-        Debug.Log(obj);
-        
-        PopUp resetPopUp = PopUp.ResetDice(hud.transform, dice, "The dice aren't ever going to stop rolling on their own. Let's reset them!");
-        
-        dice.reset();
+        hud.FinishTurnButton.onClick.AddListener(finishTurn);
+        hud.cameraLeftBtn.onClick.AddListener(moveCameraLeft);
+        hud.cameraRightBtn.onClick.AddListener(moveCameraRight);
     }
 
     void Update()
@@ -108,19 +124,41 @@ public class temp_contr : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            ((View.PropertySquare)(board_view.squares[1])).addHouse();
+            RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
+            board_view.loadTheme("starwars");
+            GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme = true;
+            kitchen.SetActive(false);
         }
-        if(Input.GetKeyDown(KeyCode.Z))
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            ((View.PropertySquare)(board_view.squares[1])).removeHouse();
-        }
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            foreach(Model.Player player in players)
+            if(gameState != GameState.PAUSE)
             {
-                player.cash = 0;
+                invisibleWall.SetActive(true);
+                previous_gameState = gameState;
+                gameState = GameState.PAUSE;
+                pausePopUp = PopUp.Pause(hud.transform,"PAUSE");
+                pausePopUp.btn2.onClick.AddListener(delegate {
+                    Destroy(pausePopUp.gameObject);
+                    GameObject.FindGameObjectWithTag("GameData");
+                    SceneManager.LoadScene(0);
+                });
+                pausePopUp.btn1.onClick.AddListener(delegate {
+                    gameState = previous_gameState;
+                    if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                    {
+                        invisibleWall.SetActive(false);
+                    }
+                    Destroy(pausePopUp.gameObject);
+                });
+            } else {
+                gameState = previous_gameState;
+                if(pausePopUp) { Destroy(pausePopUp.gameObject); }
+                if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                {
+                    invisibleWall.SetActive(false);
+                }
+
             }
-            players[0].cash = 10000;
         }
     }
 
@@ -174,14 +212,12 @@ public class temp_contr : MonoBehaviour
                 {
                     turnState = TurnState.DICEROLL;
                     invisibleWall.SetActive(true);
-                    rollTimer.Start();
                 }
             }
             if(turnState == TurnState.DICEROLL) // turn begins
             {
                 if(!dice.areRolling())  // if dice are not rolling anymore
                 {
-                    rollTimer.Stop();
                     invisibleWall.SetActive(false);
                     steps = dice.get_result();  // get the result
                     double_rolled = dice.is_double(); // return whether double was rolled
@@ -201,6 +237,8 @@ public class temp_contr : MonoBehaviour
                     }
                 }
                 else if(dice.belowBoard()) {
+                    invisibleWall.SetActive(false);
+                    Debug.Log("beeeeeeeeellooooww");
                     dice.reset();
                     MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
                     turnState = TurnState.PRE_DICE_ROLL;
@@ -285,10 +323,9 @@ public class temp_contr : MonoBehaviour
         else if(gameState == GameState.WINNERCELEBRATION)
         {
             if(hud.current_main_PopUp == null) {
-                Debug.Log("I'm here");
                 hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
-                    Destroy(GameObject.Find("PersistentObject"));
+                    Destroy(GameObject.FindGameObjectWithTag("GameData"));
                     SceneManager.LoadScene(0);
                 });
             }
@@ -321,14 +358,12 @@ public class temp_contr : MonoBehaviour
             }
             if(dice.start_roll)     // this bit is so camera knows when to follow dice
             {
-                rollTimer.Start();
                 invisibleWall.SetActive(true);
                 turnState = TurnState.DICEROLL;
 
             }
             if(!dice.areRolling())  //when dice stopped rolling
             {
-                rollTimer.Stop();
                 invisibleWall.SetActive(false);
                 int steps = dice.get_result();  // get the result
                 if(steps < 0)                   // if result is negative (dice are stuck)
@@ -364,8 +399,10 @@ public class temp_contr : MonoBehaviour
             }
             else if(dice.belowBoard())
             {
-                dice.reset();
+                invisibleWall.SetActive(false);
+                Debug.Log("beeeeeeeeellooooww");
                 MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
+                dice.reset();
             }
      }
 
@@ -577,7 +614,6 @@ public class temp_contr : MonoBehaviour
         {
             if(dice.start_roll) 
             {
-                rollTimer.Start();
                 turnState = TurnState.DICE_ROLL_EXTRA;
                 invisibleWall.SetActive(true);
             } else {
@@ -585,7 +621,6 @@ public class temp_contr : MonoBehaviour
             }
             if(!dice.areRolling())  // if dice are not rolling anymore
             {
-                rollTimer.Stop();
                 invisibleWall.SetActive(false);
                 int dice_result = dice.get_result();  // get the result
                 if(dice_result < 0)                   // if result is negative (dice are stuck)

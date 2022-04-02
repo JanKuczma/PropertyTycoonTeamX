@@ -45,9 +45,6 @@ public static class Asset
     static TextAsset classic_board_json = Resources.Load<TextAsset>("GameDataJSON/board_data");
     static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
     static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
-    //chance/oppknocks card IMGs
-    public static Sprite opportunity_knocks_IMG = Resources.Load<Sprite>("Textures/Communitychestcard");
-    public static Sprite chance_IMG = Resources.Load<Sprite>("Textures/chancecard");
     //token IMGs
     static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
     static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
@@ -69,8 +66,10 @@ public static class Asset
     public static GameObject StationCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/StationCard");
 
     //HUD components
+    public static GameObject hud = Resources.Load<GameObject>("Prefabs/HUD/hud");
     static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
     //Pop Ups
+    public static GameObject PausePopUpPrefab = Resources.Load<GameObject>("Prefabs/Menus/PausePopUp");
     public static GameObject OkPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/OkPopUp");
     public static GameObject InJailPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/InJailPrefab");
     public static GameObject PayRentPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PayRentPopUp");
@@ -84,6 +83,25 @@ public static class Asset
     public static GameObject CardActionPopWithOptionsUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionWithOptionsPopUp");
     public static GameObject AuctionPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/AuctionPopUp");
     public static GameObject OptionsPopUpPreFab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/InGameOptionsPopUp");
+    
+    //themes
+        // Skyboxes
+    public static Material StarWarsSkyBoxMaterial = Resources.Load<Material>("Materials/StarWarsTheme/StarWarsSkyBox");
+    public static GameObject Kitchen = Resources.Load<GameObject>("Prefabs/Enviornment/Kitchen");
+    public static GameObject Walls = Resources.Load<GameObject>("Prefabs/Enviornment/InvisibleWalls");
+        // game elements
+    public static Material StarWarsThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
+    public static Material StarWarsPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");
+    public static Material StarWarsOppKnocksMaterial = Resources.Load<Material>("Materials/StarWarsTheme/chanceCard");
+    public static Material ClassicThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
+    public static Material ClassicPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");
+    public static Material ClassicOppKnocksMaterial = Resources.Load<Material>("Materials/StarWarsTheme/chanceCard");
+        //chance/oppknocks card IMGs
+    public static Sprite ClassicOppKnocksIMG = Resources.Load<Sprite>("Textures/Communitychestcard");
+    public static Sprite ClassicChangeIMG = Resources.Load<Sprite>("Textures/chancecard");
+    public static Sprite StarWarsOppKnocksIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/Communitychestcard-starwars copy");
+    public static Sprite StarWarsChangeIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/chance-starwars copy");
+    
 
     public static GameObject Board(SqType type,string variant = "")
     {

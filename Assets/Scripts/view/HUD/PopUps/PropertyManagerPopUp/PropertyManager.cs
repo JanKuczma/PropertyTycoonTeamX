@@ -33,7 +33,7 @@ namespace View
                 cards.getValue(entry.Key).gameObject.AddComponent<ManagableCard>(); 
                 cards.getValue(entry.Key).gameObject.GetComponent<ManagableCard>().canManage = canManage;
                 cards.getValue(entry.Key).gameObject.SetActive(true);
-                cards.getValue(entry.Key).gameObject.transform.Find("Mortgaged").gameObject.SetActive(true);
+                cards.getValue(entry.Key).gameObject.transform.Find("Mortgaged").gameObject.SetActive(entry.Value.property.isMortgaged);
                 //change color or whatever
                 if(entry.Value.property.type == SqType.PROPERTY)
                 {

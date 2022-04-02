@@ -28,6 +28,9 @@ public class MainMenu : MonoBehaviour
     
     Color[] player_colors = {Color.blue,Color.red,Color.green,Color.yellow,Color.cyan,Color.magenta};
 
+
+    MessagePopUp curr_pop;
+    
     public void GoToPlayerSelect()
     {
         SceneManager.LoadScene(2);
@@ -164,7 +167,8 @@ public class MainMenu : MonoBehaviour
 
             if (nameErrorFound)
             {
-                Debug.LogError("Players cannot have the same name");
+                if(curr_pop) { Destroy(curr_pop.gameObject); }
+                curr_pop = MessagePopUp.Create(transform,"Players cannot have the same name",2);
                 playerInfo.Clear();
                 nameErrorFound = false;
                 return;
@@ -172,7 +176,8 @@ public class MainMenu : MonoBehaviour
 
             if (pieceErrorFound)
             {
-                Debug.LogError("Players cannot use the same piece");
+                if(curr_pop) { Destroy(curr_pop.gameObject); }
+                curr_pop = MessagePopUp.Create(transform,"Players cannot have the same piece",2);
                 playerInfo.Clear();
                 pieceErrorFound = false;
                 return;
@@ -196,7 +201,7 @@ public class MainMenu : MonoBehaviour
         int e = 0; // to iterate over player_colors
         foreach(KeyValuePair<string, Tuple<Token, bool>> entry in playerInfo)
         {
-            GameObject.Find("PersistentObject").GetComponent<PermObject>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,player_colors[e]));
+            GameObject.Find("GameData").GetComponent<GameData>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,player_colors[e]));
             e++;
         }
         SceneManager.LoadScene(3);
@@ -225,12 +230,14 @@ public class MainMenu : MonoBehaviour
         // gm_index 0 = classic, gm_index 1 = abridged
         if (gm_index == 0)
         {
+            GameObject.Find("GameData").GetComponent<GameData>().turboGame = true;
             gm_index = 1;
             buttonText.text = "Turbo";
             gmDescription.text =
                 "In Turbo Mode, players race to gather as much wealth as they can before the timer runs out!";
         } else if (gm_index == 1)
         {
+            GameObject.Find("GameData").GetComponent<GameData>().turboGame = false;
             gm_index = 0;
             buttonText.text = "Classic";
             gmDescription.text = "In Classic Mode, players must trade away until only one Tycoon is left standing...";
@@ -245,11 +252,13 @@ public class MainMenu : MonoBehaviour
         // theme_index 0 = classic, theme_index 1 = Star Wars
         if (theme_index == 0)
         {
+            GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme = true;
             theme_index = 1;
             buttonText.text = "Star Wars";
             themePreview.sprite = kingsley_yoda;
         } else if (theme_index == 1)
         {
+            GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme = false;
             theme_index = 0;
             buttonText.text = "Classic";
             themePreview.sprite = kingsley_classic;
@@ -259,7 +268,7 @@ public class MainMenu : MonoBehaviour
     {
         GameObject options = GameObject.Find("InGameOptionsPopUp(Clone)");
         Destroy(options);
-        GameObject canvas = GameObject.Find("Canvas");
+        GameObject canvas = GameObject.Find("hud(Clone)");
         PopUp.Options(canvas.transform);
     }
 

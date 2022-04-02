@@ -6,6 +6,7 @@ using TMPro;
 namespace View{
 public class UtilitySquare : FullSquare
 {
+    public TextMeshPro amount;
     string _price;
     public GameObject ribbon;
 
@@ -24,7 +25,7 @@ public class UtilitySquare : FullSquare
     public void setPrice(string price)
     {
         _price = price;
-        GetComponentsInChildren<TextMeshPro>()[1].SetText(price+"Q");
+        this.amount.SetText(price+"Q");
     }
 
     public void showRibbon(Color color)

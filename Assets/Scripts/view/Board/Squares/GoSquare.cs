@@ -13,18 +13,17 @@ public class GoSquare : CornerSquare
         square.transform.localPosition = Square.generateCoordinates(position);
         square.transform.localRotation = getRotation(position);
         square._position = position;
-        square.setName(name);
         square.assignSpots();
         square.setAmount(amount);
         return square;
     }
     public override void setName(string name="")
     {
-        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT 200Q SALARY AS YOU PASS");
+        square_name.SetText("COLLECT 200Q SALARY AS YOU PASS");
     }
     public void setAmount(string amount = "200")
     {
-        GetComponentsInChildren<TextMeshPro>()[0].SetText("COLLECT "+amount+"Q SALARY AS YOU PASS");
+        square_name.SetText("COLLECT "+amount+"Q SALARY AS YOU PASS");
     }
 }
 }

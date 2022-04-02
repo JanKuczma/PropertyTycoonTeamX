@@ -6,6 +6,7 @@ using TMPro;
 namespace View{
 public class TaxSquare : FullSquare
 {
+    public TextMeshPro amount;
     public static TaxSquare Create(Transform parent, int position, string name, string amount)
     {
         TaxSquare square = Instantiate(Asset.Board(SqType.TAX,name),parent).GetComponent<TaxSquare>();
@@ -22,7 +23,7 @@ public class TaxSquare : FullSquare
     public void setAmount(string amount)
     {
         _amount = amount;
-        GetComponentsInChildren<TextMeshPro>()[1].SetText("PAY "+amount+"Q");
+        this.amount.SetText("PAY "+amount+"Q");
     }
 }
 }

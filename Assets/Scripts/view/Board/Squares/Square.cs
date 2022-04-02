@@ -6,6 +6,7 @@ using TMPro;
 namespace View {
 public abstract class Square : MonoBehaviour
 {
+    public TextMeshPro square_name;
     string _name;
     // each square is divided into 6 areas stored in spaces
     public Vector3[] spots;
@@ -23,7 +24,7 @@ public abstract class Square : MonoBehaviour
     virtual public void setName(string name)
     {
         _name = name;
-        GetComponentsInChildren<TextMeshPro>()[0].SetText(name);
+        this.square_name.SetText(name);
     }
     // returns index of free area at random 
     public int peekSpotI()
