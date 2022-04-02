@@ -139,7 +139,7 @@ public class game_controller : MonoBehaviour
                 pausePopUp = PopUp.Pause(hud.transform,"PAUSE");
                 pausePopUp.btn2.onClick.AddListener(delegate {
                     Destroy(pausePopUp.gameObject);
-                    GameObject.FindGameObjectWithTag("PreGameData");
+                    GameObject.FindGameObjectWithTag("GameData");
                     SceneManager.LoadScene(0);
                 });
                 pausePopUp.btn1.onClick.AddListener(delegate {
@@ -325,7 +325,7 @@ public class game_controller : MonoBehaviour
             if(hud.current_main_PopUp == null) {
                 hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
-                    Destroy(GameObject.FindGameObjectWithTag("PreGameData"));
+                    Destroy(GameObject.FindGameObjectWithTag("GameData"));
                     SceneManager.LoadScene(0);
                 });
             }
