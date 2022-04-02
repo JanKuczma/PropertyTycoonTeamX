@@ -49,7 +49,7 @@ public class temp_contr : MonoBehaviour
     public GameObject music_player;
     void Awake()
     {
-        players = GameObject.Find("PersistentObject").GetComponent<PermObject>().players;
+        players = GameObject.Find("GameData").GetComponent<GameData>().players;
         player_throws = new Dictionary<Model.Player, int>();    
         pieces = new Dictionary<Model.Player, View.Piece>();
         tabs_set = false;
@@ -288,7 +288,7 @@ public class temp_contr : MonoBehaviour
                 Debug.Log("I'm here");
                 hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
-                    Destroy(GameObject.Find("PersistentObject"));
+                    Destroy(GameObject.Find("GameData"));
                     SceneManager.LoadScene(0);
                 });
             }

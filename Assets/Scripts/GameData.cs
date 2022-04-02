@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PermObject : MonoBehaviour
+public class GameData : MonoBehaviour
 {
     //any stuff that we want to not be deleted when changing scenes
     public List<Model.Player> players;
@@ -12,7 +12,7 @@ public class PermObject : MonoBehaviour
     void Awake()
     {
         players = new List<Model.Player>();
-        GameObject[] obj = GameObject.FindGameObjectsWithTag("PreGameData");
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("GameData");
         if(obj != null)
         {
             if (obj.Length > 1)

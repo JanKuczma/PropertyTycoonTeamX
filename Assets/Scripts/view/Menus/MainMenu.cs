@@ -196,7 +196,7 @@ public class MainMenu : MonoBehaviour
         int e = 0; // to iterate over player_colors
         foreach(KeyValuePair<string, Tuple<Token, bool>> entry in playerInfo)
         {
-            GameObject.Find("PersistentObject").GetComponent<PermObject>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,player_colors[e]));
+            GameObject.Find("GameData").GetComponent<GameData>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,player_colors[e]));
             e++;
         }
         SceneManager.LoadScene(3);
