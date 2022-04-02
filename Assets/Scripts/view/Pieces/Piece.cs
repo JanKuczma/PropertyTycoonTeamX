@@ -22,12 +22,13 @@ public class Piece : MonoBehaviour
         currentSquare = 0;
     }
 
-    public static Piece Create(Token token, Transform parent, Board board)
+    public static Piece Create(Token token, Transform parent, Board board, int position)
     {
         Piece new_piece = Instantiate(Asset.Piece(token),parent).GetComponent<Piece>();
         new_piece._board = board;
         new_piece.transform.localPosition = new Vector3(0,0.061f*new_piece.transform.localScale.x,0);
-        new_piece.moveInstant(0);
+        new_piece.currentSquare = position-1;
+        new_piece.moveInstant(new_piece.currentSquare);
         return new_piece;
     }
 

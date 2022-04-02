@@ -39,6 +39,7 @@ public class game_controller : MonoBehaviour
     public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
     int steps; // to pass dice result between states
+    bool tabs_set;
     //HUD
     public View.HUD hud; 
     PopUp pausePopUp = null;
@@ -46,71 +47,73 @@ public class game_controller : MonoBehaviour
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
     public GameObject kitchen;
-    bool tabs_set;
     //Audio
     public GameObject music_player;
-    public static game_controller Create(Transform parent, List<Model.Player> players)
-    {
-        
-        if(!GameObject.Find("GameData")){ Instantiate(new GameObject("GameData"));GameObject.Find("GameData").AddComponent<GameData>(); }
-        GameObject.Find("GameData").GetComponent<GameData>().players = players;
-        GameObject controller = Instantiate(new GameObject("controller"),parent);
-        controller.AddComponent<game_controller>();
-        controller.GetComponent<game_controller>().kitchen = Instantiate(Asset.Kitchen);
-        controller.GetComponent<game_controller>().invisibleWall = Instantiate(Asset.Walls);
-        if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme)
-        {
-            RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
-            controller.GetComponent<game_controller>().board_view.loadTheme("starwars");
-            controller.GetComponent<game_controller>().kitchen.SetActive(false);
-        }
-        if(GameObject.Find("GameData").GetComponent<GameData>().customData)
-        {
-
-        }
-        return controller.GetComponent<game_controller>();
-    }
+    
     void Awake()
     {
-        players = GameObject.Find("GameData").GetComponent<GameData>().players;
-        player_throws = new Dictionary<Model.Player, int>();    
-        pieces = new Dictionary<Model.Player, View.Piece>();
-        tabs_set = false;
-        invisibleWall.SetActive(false);
-        music_player = GameObject.FindGameObjectWithTag("GameMusic");
-    }
-    void Start()
-    {
-        if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme)
+        GameData gameData = GameObject.Find("GameData").GetComponent<GameData>();
+        this.music_player = GameObject.FindGameObjectWithTag("GameMusic");
+
+        this.board_model = gameData.board_model;
+        this.potluck = gameData.potluck;
+        this.opportunity_knocks = gameData.opportunity_knocks;
+
+        this.opportunity_knocks.ShuffleStack();
+        this.potluck.ShuffleStack();
+
+        this.players = gameData.players;
+        this.player_throws = gameData.player_throws;
+        this.current_player = gameData.current_player;
+
+        this.gameState = gameData.gameState;
+        this.turnState = gameData.turnState;
+        this.double_rolled = gameData.double_rolled;
+        this.double_count = gameData.double_count;
+        this.passed_go = gameData.passed_go;    
+        this.steps = gameData.steps;
+        this.tabs_set = gameData.tabs_set;
+
+        if(gameData.turboGame){
+            Debug.Log("turbo game");
+        }
+        if(gameData.starWarsTheme)
         {
             RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
             board_view.loadTheme("starwars");
-            kitchen.SetActive(false);
+        } else {
+            Instantiate(Asset.Kitchen);
         }
-        //load data (to be changed for XLSX in near future)
-        board_model = Model.JSONData.loadBoard(Asset.board_data_json());
-        opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
-        opportunity_knocks.ShuffleStack();
-        potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
-        potluck.ShuffleStack();
-        //create board with card stacks and dice
-        board_view = View.Board.Create(transform,board_model);
-        dice = View.DiceContainer.Create(transform);
-        //create playerTabs
+
+        this.previous_gameState = GameState.NONE;
+
+        this.invisibleWall = Instantiate(Asset.Walls);
+        this.invisibleWall.SetActive(false);
+        
+        this.board_view = View.Board.Create(transform,board_model);
+        this.dice = View.DiceContainer.Create(transform);
+
+        this.hud = Instantiate(Asset.hud).GetComponent<HUD>();
+
+
+
+        this.pieces = new Dictionary<Model.Player, Piece>();
+
+    }
+    void Start()
+    {
         hud.Create_player_tabs(players,board_model);
         //craete pieces
         foreach(Model.Player player in players)
         {
-            pieces.Add(player,View.Piece.Create(player.token,transform,board_view));
+            pieces.Add(player,View.Piece.Create(player.token,transform,board_view,player.position));
         }
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
-        //set current turn state to DICEROLL and gameState to ORDERINGPHASE (subject to change if we want to continue game from a saved game)
-        gameState = GameState.ORDERINGPHASE;
-        previous_gameState = GameState.NONE;
-        turnState = TurnState.BEGIN;
-        current_player = 0;
+        hud.FinishTurnButton.onClick.AddListener(finishTurn);
+        hud.cameraLeftBtn.onClick.AddListener(moveCameraLeft);
+        hud.cameraRightBtn.onClick.AddListener(moveCameraRight);
     }
 
     void Update()

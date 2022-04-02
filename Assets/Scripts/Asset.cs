@@ -66,6 +66,7 @@ public static class Asset
     public static GameObject StationCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/StationCard");
 
     //HUD components
+    public static GameObject hud = Resources.Load<GameObject>("Prefabs/HUD/hud");
     static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
     //Pop Ups
     public static GameObject PausePopUpPrefab = Resources.Load<GameObject>("Prefabs/Menus/PausePopUp");
@@ -87,7 +88,7 @@ public static class Asset
         // Skyboxes
     public static Material StarWarsSkyBoxMaterial = Resources.Load<Material>("Materials/StarWarsTheme/StarWarsSkyBox");
     public static GameObject Kitchen = Resources.Load<GameObject>("Prefabs/Enviornment/Kitchen");
-    public static GameObject Walls = Resources.Load<GameObject>("Prefabs/Enviornment/walls");
+    public static GameObject Walls = Resources.Load<GameObject>("Prefabs/Enviornment/InvisibleWalls");
         // game elements
     public static Material StarWarsThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
     public static Material StarWarsPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");

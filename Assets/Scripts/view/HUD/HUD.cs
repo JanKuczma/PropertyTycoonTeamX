@@ -10,6 +10,8 @@ public class HUD : MonoBehaviour
     Dictionary<Model.Player,PlayerTab> player_tabs = new Dictionary<Model.Player,PlayerTab>();
     Dictionary<int,PurchasableCard> propertyCards = new Dictionary<int, PurchasableCard>();
     public Button FinishTurnButton;
+    public Button cameraLeftBtn;
+    public Button cameraRightBtn;
     // current PopUp, in future can be changed to queue/stack of PopUps
     public PopUp current_main_PopUp = null;
     public PropertyManager currentManager = null;
