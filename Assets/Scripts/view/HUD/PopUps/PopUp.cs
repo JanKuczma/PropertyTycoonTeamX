@@ -35,6 +35,17 @@ namespace View
             return popUp;
          }
 
+         public static PopUp Options(Transform parent)
+         {
+             PopUp popUp = Instantiate(Asset.OptionsPopUpPreFab, parent).GetComponent<PopUp>();
+             popUp.btn3.onClick.AddListener(() => popUp.closePopup());
+             //to be updated
+             //popUp.btn1.onClick.AddListener(() => saveGame());
+             //to be updated
+             //popUp.btn2.onClick.AddListener(() => loadGame());
+             return popUp;
+         }
+
          public static PopUp InJail(Transform parent, temp_contr controller)
          {
             PopUp popUp = Instantiate(Asset.InJailPopUpPrefab, parent).GetComponent<PopUp>();
@@ -116,16 +127,12 @@ namespace View
 
         public static PopUp GoToJail(Transform parent, Model.Player player, temp_contr controller, string msg = null)
         {
-            controller.music_player.JailMusic();
             PopUp popUp = Instantiate(Asset.GoToJailPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + " broke the law! They must go straight to jail!");
             if(msg != null) { popUp.SetMessage(msg); }
             popUp.btn1.onClick.AddListener(() => popUp.goToJailOption(player, controller));
             popUp.btn2.onClick.AddListener(() => popUp.jailCardOption(player, controller));
             popUp.btn3.onClick.AddListener(() => popUp.jailPay50Option(player, controller));
-            popUp.btn1.onClick.AddListener(() => controller.music_player.FadeOut(controller.music_player.jail_music, 5.0));
-            popUp.btn2.onClick.AddListener(() => controller.music_player.FadeOut(controller.music_player.jail_music, 5.0));
-            popUp.btn3.onClick.AddListener(() => controller.music_player.FadeOut(controller.music_player.jail_music, 5.0));
             return popUp;
         }
 
