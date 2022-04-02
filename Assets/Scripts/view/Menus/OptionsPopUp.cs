@@ -17,6 +17,12 @@ public class OptionsPopUp : View.PopUp
         return popUp;
     }
 
+    public void Start()
+    {
+        sfx.value = SoundManager.sfxVolume;
+        music.value = SoundManager.musicVolume;
+    }
+
     public void ChangeMusicVolume(float value)
     {
         SoundManager.musicVolume = value;

@@ -17,8 +17,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] public AudioMixerGroup soundMixerGroup;
     [SerializeField] Sound[] sounds;
     private string CurrentMusicID;
-    public static float musicVolume;
-    public static float sfxVolume;
+    public static float musicVolume = 1f;
+    public static float sfxVolume = 1f;
     
     private void Awake()
     {

@@ -880,7 +880,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3120052849644524235}
         m_TargetAssemblyTypeName: OptionsPopUp, Assembly-CSharp
         m_MethodName: ChangeMusicVolume
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1431,7 +1431,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3120052849644524235}
         m_TargetAssemblyTypeName: OptionsPopUp, Assembly-CSharp
         m_MethodName: ChangeSFXVolume
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
