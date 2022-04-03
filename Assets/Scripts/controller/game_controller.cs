@@ -716,6 +716,7 @@ public class game_controller : MonoBehaviour
         {
             hud.current_main_PopUp.closePopup();
             MessagePopUp.Create(hud.transform,"Nobody bought this property!",3);
+            turnState = TurnState.MANAGE_PROPERTIES;
             yield break;
         }
         hud.current_main_PopUp = PopUp.Auction(hud.transform,current_space);
