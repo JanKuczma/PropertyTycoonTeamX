@@ -14,7 +14,7 @@ using UnityEngine.SceneManagement;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION, MANAGE_PROPERTIES,END, NONE}
+public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION,AUCTION, MANAGE_PROPERTIES,END, NONE}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION,NONE}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -713,6 +713,7 @@ public class game_controller : MonoBehaviour
 
     IEnumerator auctionCoroutine(Model.Player player,Space.Purchasable current_space)
     {
+        turnState = TurnState.AUCTION;
         int highest_bid = current_space.cost-10;
         Model.Player highest_bidder = null;
         List<Model.Player> bidders = new List<Model.Player>();
@@ -748,7 +749,7 @@ public class game_controller : MonoBehaviour
         });
         while((highest_bidder == null || !(highest_bidder != null && bidders.Count == 1)) && bidders.Count > 0)
         {
-            Debug.Log("highest: "+ highest_bid);
+            if(!bidders[current_bidder].isHuman && AICoroutineFinished) { StartCoroutine(AI_take_decision(hud.current_main_PopUp)); }
             yield return null;
         }
         if(highest_bidder == null)
@@ -769,6 +770,7 @@ public class game_controller : MonoBehaviour
             hud.current_main_PopUp.closePopup();
             MessagePopUp.Create(hud.transform,highest_bidder.name+" purchased this property for "+highest_bid+"Q!",3);
         }
+        turnState = TurnState.MANAGE_PROPERTIES;
     }
     public void sendPieceToJail()
     {
@@ -878,7 +880,7 @@ public class game_controller : MonoBehaviour
     IEnumerator AI_take_decision(View.PopUp popUp)
     {
         AICoroutineFinished = false;
-        yield return new WaitForSeconds(UnityEngine.Random.Range(.5f,1.5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2.5f));
         int options = 3;
         if(popUp.btn3 == null) { options--; } if(popUp.btn2 == null) { options--; } if(popUp.btn1 == null) { AICoroutineFinished = true; yield break; }
         int rand_decision = UnityEngine.Random.Range(1,options+1);
@@ -900,7 +902,7 @@ public class game_controller : MonoBehaviour
     IEnumerator AI_throw_dice()
     {
         AICoroutineFinished = false;
-        yield return new WaitForSeconds(UnityEngine.Random.Range(.5f,1.5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,1.5f));
         dice.random_throw();
         AICoroutineFinished = true;
         yield break;
@@ -909,7 +911,7 @@ public class game_controller : MonoBehaviour
     IEnumerator AI_finish_turn()
     {
         AICoroutineFinished = false;
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,1.5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2f));
         hud.FinishTurnButton.onClick.Invoke();
         AICoroutineFinished = true;
         yield break;
