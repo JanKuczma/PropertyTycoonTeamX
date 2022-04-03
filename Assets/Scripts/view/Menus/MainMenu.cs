@@ -244,8 +244,8 @@ public class MainMenu : MonoBehaviour
 
     public void ChangeTheme()
     {
-        kingsley_classic = Resources.Load<Sprite>("/Kingsleys/kingsley monopoly man");
-        kingsley_yoda = Resources.Load<Sprite>("/Kingsleys/kingsley_yoda2");
+        kingsley_classic = Resources.Load<Sprite>("Kingsleys/kingsley monopoly man");
+        kingsley_yoda = Resources.Load<Sprite>("Kingsleys/kingsley_yoda2");
         
         // theme_index 0 = classic, theme_index 1 = Star Wars
         if (theme_index == 0)
@@ -269,7 +269,7 @@ public class MainMenu : MonoBehaviour
         OptionsPopUp popup = OptionsPopUp.Create(transform.parent);
         popup.btn1.gameObject.SetActive(false);
         popup.btn2.GetComponentInChildren<Text>().text = "Load Game";
-        popup.btn2.onClick.AddListener(popup.LoadGame);
+        popup.btn2.onClick.AddListener(() => SaveLoadPopUp.Create(transform.parent,false));
         popup.btn3.GetComponentInChildren<Text>().text = "OK";
         popup.btn3.onClick.AddListener(popup.closePopup);
     }

@@ -139,7 +139,19 @@ public class game_controller : MonoBehaviour
                 {
                     pausePopUp.btn2.interactable = false;
                 } else {
-                pausePopUp.btn2.onClick.AddListener(() => GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().saveGame(current_player,turnState,previous_gameState,double_rolled,double_count,passed_go,steps,tabs_set));
+                pausePopUp.btn2.onClick.AddListener( delegate {
+                    GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+                    gameData.players = players;
+                    gameData.current_player = current_player;
+                    gameData.turnState = turnState;
+                    gameData.gameState = previous_gameState;
+                    gameData.double_rolled = double_rolled;
+                    gameData.double_count = double_count;
+                    gameData.passed_go = passed_go;
+                    gameData.steps = steps;
+                    gameData.tabs_set = tabs_set;
+                    SaveLoadPopUp.Create(hud.transform,true);
+                    });
                 }
                 pausePopUp.btn3.GetComponentInChildren<Text>().text = "Exit";
                 pausePopUp.btn3.onClick.AddListener(delegate {

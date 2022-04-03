@@ -2223,6 +2223,10 @@ PrefabInstance:
       propertyPath: m_CullTransparentMesh
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2716518429737443591, guid: cfcafc318ff75e74e90d6518a2b2f00d, type: 3}
+      propertyPath: m_IsOn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfcafc318ff75e74e90d6518a2b2f00d, type: 3}
 --- !u!1001 &7933031896518685530
