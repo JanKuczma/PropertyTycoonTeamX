@@ -137,5 +137,18 @@ public class DiceContainer : MonoBehaviour
         }
         return false;
     }
+
+    public void random_throw()
+    {
+        greenLight.gameObject.SetActive(false);
+        Vector3 dice_velocity = new Vector3(Random.Range(-.05f,.05f),Random.Range(-.05f,0.02f),Random.Range(-.05f,.05f))/Time.deltaTime;
+        foreach (Dice d in dice)    // for each dice assign velcity
+        {
+            d.roll(dice_velocity);
+        }
+        start_roll = true;
+        GetComponent<BoxCollider>().enabled = false;
+        enabled = false;    // disable the container
+    }
 }
 }

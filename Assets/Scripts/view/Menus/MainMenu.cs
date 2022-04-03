@@ -199,7 +199,7 @@ public class MainMenu : MonoBehaviour
         int[] colors = {0xFF0000,0x0000FF,0x00ff00,0xffea04,0xff00ff,0x00ffff};
         foreach(KeyValuePair<string, Tuple<Token, bool>> entry in playerInfo)
         {
-            GameObject.Find("GameData").GetComponent<GameData>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,colors[e]));
+            GameObject.Find("GameData").GetComponent<GameData>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,!entry.Value.Item2,colors[e]));
             e++;
         }
         SceneManager.LoadScene(3);

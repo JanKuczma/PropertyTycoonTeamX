@@ -50,6 +50,8 @@ public class game_controller : MonoBehaviour
     public GameObject kitchen;
     //Audio
     public GameObject music_player;
+    //AI decision coroutine
+    bool AICoroutineFinished = true;
     
     void Awake()
     {
@@ -219,6 +221,10 @@ public class game_controller : MonoBehaviour
                         dice.gameObject.SetActive(false);
                         hud.current_main_PopUp = PopUp.InJail(hud.transform,this);
                     }
+                    if(!players[current_player].isHuman && AICoroutineFinished){
+                        StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                    }
+
                 }
                 else if(players[current_player].in_jail == 1)   // check if resocialized
                 {
@@ -226,7 +232,9 @@ public class game_controller : MonoBehaviour
                     if(hud.current_main_PopUp == null)
                     {
                         hud.current_main_PopUp = PopUp.OK(hud.transform,"You are leaving the jail! You can roll dice in the next round!");
-                        
+                        if(!players[current_player].isHuman && AICoroutineFinished){
+                            StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                        }
                         StartCoroutine(pieces[players[current_player]].leaveJail());
                         hud.jail_bars.gameObject.SetActive(false);
                         players[current_player].in_jail = 0;
@@ -244,6 +252,9 @@ public class game_controller : MonoBehaviour
                 {
                     turnState = TurnState.DICEROLL;
                     invisibleWall.SetActive(true);
+                }
+                else if(!players[current_player].isHuman && AICoroutineFinished){
+                    StartCoroutine(AI_throw_dice());
                 }
             }
             if(turnState == TurnState.DICEROLL) // turn begins
@@ -290,6 +301,9 @@ public class game_controller : MonoBehaviour
             }
             else if(turnState == TurnState.MOVE_THE_PIECE)
             {
+                if(!players[current_player].isHuman && AICoroutineFinished && hud.current_main_PopUp != null){
+                    StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                }
                 if(hud.current_main_PopUp == null)
                 {
                     if(players[current_player].in_jail == 0) // if a good boy (not in jail in general and not rolled 3 if used card)
@@ -324,6 +338,9 @@ public class game_controller : MonoBehaviour
             }
             else if(turnState == TurnState.PERFORM_ACTION)  // ACTION state (buy property, pay rent etc...)
             {
+                if(AICoroutineFinished && hud.current_main_PopUp != null){
+                    StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                }
                 // when PopUp is closed the `trunState` is changed to MANAGEPROPERTIES
                 if(hud.current_main_PopUp == null)
                 {
@@ -333,6 +350,7 @@ public class game_controller : MonoBehaviour
             else if(turnState == TurnState.MANAGE_PROPERTIES)  // (manage your properties, check other players' properties)
             {
                 hud.FinishTurnButton.gameObject.SetActive(true);
+                if(!players[current_player].isHuman && AICoroutineFinished) { StartCoroutine(AI_finish_turn()); }
                 // when player presses FINISH TURN button the `turnState` is changed to END
             }
             else if(turnState == TurnState.END)     // END state, when player finished his turn
@@ -357,6 +375,9 @@ public class game_controller : MonoBehaviour
         {
             if(hud.current_main_PopUp == null) {
                 hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
+                if(!players[current_player].isHuman && AICoroutineFinished){
+                    StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                }
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
                     Destroy(GameObject.FindGameObjectWithTag("GameData"));
                     SceneManager.LoadScene(0);
@@ -395,6 +416,7 @@ public class game_controller : MonoBehaviour
                 turnState = TurnState.DICEROLL;
 
             }
+            else if(!players[current_player].isHuman && AICoroutineFinished) { StartCoroutine(AI_throw_dice());}
             if(!dice.areRolling())  //when dice stopped rolling
             {
                 invisibleWall.SetActive(false);
@@ -650,6 +672,7 @@ public class game_controller : MonoBehaviour
                 turnState = TurnState.DICE_ROLL_EXTRA;
                 invisibleWall.SetActive(true);
             } else {
+                if(!player.isHuman && AICoroutineFinished) { StartCoroutine(AI_throw_dice()); }
                 yield return null;
             }
             if(!dice.areRolling())  // if dice are not rolling anymore
@@ -847,5 +870,50 @@ public class game_controller : MonoBehaviour
         lookDirection.Normalize();
         Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.deltaTime);
     }
-        
+
+/*
+        AI
+*/
+
+    IEnumerator AI_take_decision(View.PopUp popUp)
+    {
+        AICoroutineFinished = false;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(.5f,1.5f));
+        int options = 3;
+        if(popUp.btn3 == null) { options--; } if(popUp.btn2 == null) { options--; } if(popUp.btn1 == null) { AICoroutineFinished = true; yield break; }
+        int rand_decision = UnityEngine.Random.Range(1,options+1);
+        switch(rand_decision){
+        case 1:
+            popUp.btn1.onClick.Invoke();
+            break;
+        case 2:
+            popUp.btn2.onClick.Invoke();
+            break;
+        case 3:
+            popUp.btn3.onClick.Invoke();
+        break;
+        }
+        AICoroutineFinished = true;
+        yield break;
+    }
+
+    IEnumerator AI_throw_dice()
+    {
+        AICoroutineFinished = false;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(.5f,1.5f));
+        dice.random_throw();
+        AICoroutineFinished = true;
+        yield break;
+    }
+
+    IEnumerator AI_finish_turn()
+    {
+        AICoroutineFinished = false;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,1.5f));
+        hud.FinishTurnButton.onClick.Invoke();
+        AICoroutineFinished = true;
+        yield break;
+    }
+
+
 }
