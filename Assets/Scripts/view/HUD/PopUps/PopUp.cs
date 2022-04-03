@@ -33,6 +33,7 @@ namespace View
             PopUp popUp = Instantiate(Asset.OkPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.btn1.onClick.AddListener(popUp.closePopup);
             popUp.SetMessage(message);
+            popUp.transform.SetSiblingIndex(2);
             return popUp;
          }
 
@@ -42,6 +43,7 @@ namespace View
             popUp.SetMessage("Stay in Jail or try to break out by rolling a double!");
             popUp.btn1.onClick.AddListener(() => popUp.stayInJailOption(controller));
             popUp.btn2.onClick.AddListener(() => popUp.rollInJailOption(controller));
+            popUp.transform.SetSiblingIndex(2);
             return popUp;
          }
 
@@ -63,6 +65,7 @@ namespace View
             }
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
+            popUp.transform.SetSiblingIndex(2);
             return popUp;
          }
 
@@ -88,6 +91,7 @@ namespace View
             }
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
+            popUp.transform.SetSiblingIndex(2);
             return popUp;
         }
 
@@ -112,6 +116,7 @@ namespace View
             }
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(220,0);
             c.gameObject.SetActive(true);
+            popUp.transform.SetSiblingIndex(2);
             return popUp;
         }
 
@@ -123,6 +128,7 @@ namespace View
             popUp.btn1.onClick.AddListener(() => popUp.goToJailOption(player, controller));
             popUp.btn2.onClick.AddListener(() => popUp.jailCardOption(player, controller));
             popUp.btn3.onClick.AddListener(() => popUp.jailPay50Option(player, controller));
+            popUp.transform.SetSiblingIndex(2);
             return popUp;
         }
 
@@ -141,6 +147,7 @@ namespace View
                     if(GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
                 break;
             }
+            popup.transform.SetSiblingIndex(2);
             return popup;
         }
         public static PopUp CardWithOption(Transform parent, Model.Player player, game_controller controller, Model.Card card, SqType card_type)
@@ -158,6 +165,7 @@ namespace View
                     if(GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
                 break;
             }
+            popup.transform.SetSiblingIndex(2);
             return popup;
         }
 

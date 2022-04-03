@@ -85,7 +85,7 @@ public class game_controller : MonoBehaviour
         this.hud = Instantiate(Asset.hud).GetComponent<HUD>();
 
         this.invisibleWall = Instantiate(Asset.Walls);
-        this.invisibleWall.SetActive(false);
+        this.invisibleWall.SetActive(!players[current_player].isHuman);
 
         if(gameData.turboGame){
             Debug.Log("turbo game");
@@ -134,7 +134,7 @@ public class game_controller : MonoBehaviour
                     gameState = previous_gameState;
                     if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
                     {
-                        invisibleWall.SetActive(false);
+                        invisibleWall.SetActive(!players[current_player].isHuman);
                     }
                 });
                 if(turnState == TurnState.DICEROLL || turnState == TurnState.DICE_ROLL_EXTRA || turnState == TurnState.PIECEMOVE)
@@ -166,7 +166,7 @@ public class game_controller : MonoBehaviour
                 if(pausePopUp) { Destroy(pausePopUp.gameObject); }
                 if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
                 {
-                    invisibleWall.SetActive(false);
+                    invisibleWall.SetActive(!players[current_player].isHuman);
                 }
             }
         });
@@ -200,6 +200,7 @@ public class game_controller : MonoBehaviour
                 {
                     MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
                     hud.set_current_player_tab(players[current_player]);
+                    hud.CpuPanel.SetActive(!players[current_player].isHuman);
                     tabs_set = true;
                 }
                 if(players[current_player].in_jail > 1) // check if a bad boy
@@ -233,6 +234,7 @@ public class game_controller : MonoBehaviour
                 else  
                 {
                     turnState = TurnState.PRE_DICE_ROLL;
+                    invisibleWall.SetActive(!players[current_player].isHuman);
                 }
             }
             else if(turnState == TurnState.PRE_DICE_ROLL)
@@ -250,7 +252,7 @@ public class game_controller : MonoBehaviour
             {
                 if(!dice.areRolling())  // if dice are not rolling anymore
                 {
-                    invisibleWall.SetActive(false);
+                    invisibleWall.SetActive(!players[current_player].isHuman);
                     steps = dice.get_result();  // get the result
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
@@ -269,7 +271,7 @@ public class game_controller : MonoBehaviour
                     }
                 }
                 else if(dice.belowBoard()) {
-                    invisibleWall.SetActive(false);
+                    invisibleWall.SetActive(!players[current_player].isHuman);
                     Debug.Log("beeeeeeeeellooooww");
                     dice.reset();
                     MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
@@ -327,7 +329,7 @@ public class game_controller : MonoBehaviour
             }
             else if(turnState == TurnState.PERFORM_ACTION)  // ACTION state (buy property, pay rent etc...)
             {
-                if(AICoroutineFinished && hud.current_main_PopUp != null){
+                if(AICoroutineFinished && hud.current_main_PopUp != null && !players[current_player].isHuman){
                     StartCoroutine(AI_take_decision(hud.current_main_PopUp));
                 }
                 // when PopUp is closed the `trunState` is changed to MANAGEPROPERTIES
@@ -397,6 +399,8 @@ public class game_controller : MonoBehaviour
             {
                 MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
                 hud.set_current_player_tab(players[current_player]);
+                hud.CpuPanel.SetActive(!players[current_player].isHuman);
+                invisibleWall.SetActive(!players[current_player].isHuman);
                 tabs_set = true;
             }
             if(dice.start_roll)     // this bit is so camera knows when to follow dice
@@ -408,14 +412,14 @@ public class game_controller : MonoBehaviour
             else if(!players[current_player].isHuman && AICoroutineFinished) { StartCoroutine(AI_throw_dice());}
             if(!dice.areRolling())  //when dice stopped rolling
             {
-                invisibleWall.SetActive(false);
+                invisibleWall.SetActive(!players[current_player].isHuman);
                 int steps = dice.get_result();  // get the result
                 if(steps < 0)                   // if result is negative (dice are stuck)
                 {                                // reset the dice
                     MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
                     dice.reset();
                 } else {    // if not in the ordering phase of the game, move Token and continue with game
-                    invisibleWall.SetActive(false);
+                    invisibleWall.SetActive(!players[current_player].isHuman);
                     Debug.Log("Player " + current_player + " rolled a " + steps);
                     if (player_throws.ContainsValue(steps))             // force re-roll if player has already rolled the same number
                     {
@@ -443,7 +447,7 @@ public class game_controller : MonoBehaviour
             }
             else if(dice.belowBoard())
             {
-                invisibleWall.SetActive(false);
+                invisibleWall.SetActive(!players[current_player].isHuman);
                 Debug.Log("beeeeeeeeellooooww");
                 MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
                 dice.reset();
@@ -666,7 +670,7 @@ public class game_controller : MonoBehaviour
             }
             if(!dice.areRolling())  // if dice are not rolling anymore
             {
-                invisibleWall.SetActive(false);
+                invisibleWall.SetActive(!players[current_player].isHuman);
                 int dice_result = dice.get_result();  // get the result
                 if(dice_result < 0)                   // if result is negative (dice are stuck)
                 {                               // reset the dice
@@ -716,6 +720,7 @@ public class game_controller : MonoBehaviour
         }
         hud.current_main_PopUp = PopUp.Auction(hud.transform,current_space);
         hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
+        hud.CpuPanel.SetActive(!bidders[current_bidder].isHuman);
         hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
             if(bidders[current_bidder].cash < highest_bid+10)
             {
@@ -724,6 +729,7 @@ public class game_controller : MonoBehaviour
                 highest_bid = highest_bid+10;
                 highest_bidder = bidders[current_bidder];
                 current_bidder = (current_bidder+1)%bidders.Count;
+                hud.CpuPanel.SetActive(!bidders[current_bidder].isHuman);
                 hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
             }
 
@@ -733,6 +739,7 @@ public class game_controller : MonoBehaviour
             if(bidders.Count > 0)
             {
                 current_bidder = (current_bidder)%bidders.Count;
+                hud.CpuPanel.SetActive(!bidders[current_bidder].isHuman);
                 hud.current_main_PopUp.SetMessage(bidders[current_bidder].name + ", do you wish to bid for "+(highest_bid+10)+"?");
             }
         });
