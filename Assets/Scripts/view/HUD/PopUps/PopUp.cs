@@ -285,5 +285,11 @@ namespace View
             break;
         }
     }
+
+    public void ControlsRulesSwitcher(int i)
+    {
+        
+    }
+    
     }
 }

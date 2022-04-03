@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour
     public Button cameraLeftBtn;
     public Button cameraRightBtn;
     public Button optionsButton;
+    public Button helpButton;
     // current PopUp, in future can be changed to queue/stack of PopUps
     public PopUp current_main_PopUp = null;
     public PropertyManager currentManager = null;
