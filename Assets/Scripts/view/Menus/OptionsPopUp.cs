@@ -10,12 +10,14 @@ public class OptionsPopUp : View.PopUp
     public Slider music;
     public Slider tokenSpeed;
     public SoundManager soundManager;
+    public Dropdown VideoSettings;
 
     public static OptionsPopUp Create(Transform parent)
     {
         OptionsPopUp popUp = Instantiate(Asset.OptionsPopUpPreFab, parent).GetComponent<OptionsPopUp>();
         popUp.btn1.onClick.AddListener(() => popUp.closePopup());
         popUp.soundManager = GameObject.FindGameObjectWithTag("GameMusic").GetComponent<SoundManager>();
+        popUp.VideoSettings.value = QualitySettings.GetQualityLevel();
         return popUp;
     }
 
@@ -41,5 +43,10 @@ public class OptionsPopUp : View.PopUp
     public void ChangeTokenSpeed(float value)
     {
         View.Piece.SPEED = value;
+    }
+
+    public void ChangeVideoQuality(int value)
+    {
+        QualitySettings.SetQualityLevel(value, true);
     }
 }

@@ -181,7 +181,7 @@ public class game_controller : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            MessagePopUp.Create(hud.transform, "smooth" + Time.smoothDeltaTime);
+            MessagePopUp.Create(hud.transform, "FPS: " + 1f/Time.smoothDeltaTime);
         }
     }
 
