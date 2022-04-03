@@ -801,6 +801,7 @@ public class game_controller : MonoBehaviour
 
     public void finishTurn()
     {
+        if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
         turnState = TurnState.END;
     }
     public void RemovePLayer(Model.Player player)

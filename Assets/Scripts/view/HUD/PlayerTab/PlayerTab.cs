@@ -24,7 +24,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerClick(PointerEventData eventData)
     {
         if(transform.parent.GetComponent<HUD>().currentManager != null) { Destroy(transform.parent.GetComponent<HUD>().currentManager.gameObject); }
-        transform.parent.GetComponent<HUD>().currentManager = PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards,(currentPlayer && player.in_jail == 0)).GetComponent<PropertyManager>();
+        transform.parent.GetComponent<HUD>().currentManager = PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards,(currentPlayer && player.in_jail == 0 && player.isHuman)).GetComponent<PropertyManager>();
     }
      
      public void OnPointerEnter(PointerEventData eventData)

@@ -42,7 +42,6 @@ public class HUD : MonoBehaviour
         {
             player_tabs.Add(players[i],PlayerTab.Create(transform,players[i],propertyCards));
             player_tabs[players[i]].GetComponent<RectTransform>().anchoredPosition = new Vector2(interval,-650*GetComponentInParent<RectTransform>().sizeDelta.x/1920);
-            player_tabs[players[i]].transform.SetSiblingIndex(3+i);
             interval += (280*GetComponentInParent<RectTransform>().sizeDelta.x/1920);
         }
     }
