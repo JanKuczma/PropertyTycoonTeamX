@@ -11,6 +11,7 @@ public class DiceContainer : MonoBehaviour
     Vector3 previous_frame_pos; // parameter used to calculate dice velocity
     Dice[] dice;                // list for references to dice monobehaviour
     Vector3 init_pos;           // initial position of the container
+    public Light greenLight;
     [System.NonSerialized] public bool start_roll; 
     void Awake()
     {
@@ -27,6 +28,7 @@ public class DiceContainer : MonoBehaviour
     void OnMouseDown()
     {
         Cursor.SetCursor(Asset.Cursor(CursorType.GRAB),Vector2.zero,CursorMode.Auto); // on click change cursor to 'closed hand'
+        greenLight.gameObject.SetActive(false);
     }
     void OnMouseDrag()
     {   // when dragging keep recalculating velocity and move towards cursor
@@ -68,6 +70,7 @@ public class DiceContainer : MonoBehaviour
     /// resets dice to initial position
     public void reset()
     {
+        greenLight.gameObject.SetActive(true);
         transform.position = init_pos;
         foreach(Dice d in dice)
         {
