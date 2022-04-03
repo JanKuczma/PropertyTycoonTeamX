@@ -123,6 +123,9 @@ namespace View
             popUp.btn1.onClick.AddListener(() => popUp.goToJailOption(player, controller));
             popUp.btn2.onClick.AddListener(() => popUp.jailCardOption(player, controller));
             popUp.btn3.onClick.AddListener(() => popUp.jailPay50Option(player, controller));
+            
+            controller.soundManager.Play("Jail");
+            
             return popUp;
         }
 

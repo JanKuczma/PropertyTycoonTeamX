@@ -52,11 +52,13 @@ public class game_controller : MonoBehaviour
     public GameObject kitchen;
     //Audio
     public GameObject music_player;
+    public SoundManager soundManager;
     
     void Awake()
     {
         GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         this.music_player = GameObject.FindGameObjectWithTag("GameMusic");
+        this.soundManager = (SoundManager) music_player.GetComponent(typeof(SoundManager));
 
         this.board_model = gameData.board_model;
         this.potluck = gameData.potluck;
@@ -136,6 +138,7 @@ public class game_controller : MonoBehaviour
         cam_pos_top = Camera.main.transform.position;
         //setup hud buttons
         hud.FinishTurnButton.onClick.AddListener(finishTurn);
+        hud.FinishTurnButton.onClick.AddListener(() => soundManager.checkPlayerStatus(players[current_player]));
         hud.cameraLeftBtn.onClick.AddListener(moveCameraLeft);
         hud.cameraRightBtn.onClick.AddListener(moveCameraRight);
         hud.optionsButton.onClick.AddListener(delegate
@@ -289,6 +292,7 @@ public class game_controller : MonoBehaviour
                 {
                     invisibleWall.SetActive(false);
                     steps = dice.get_result();  // get the result
+                    steps = 30;
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
@@ -400,7 +404,7 @@ public class game_controller : MonoBehaviour
                 });
             }
         }
-        
+        soundManager.checkPlayerStatus(players[current_player]);
     }
 
     //temp code for camera movement
@@ -483,6 +487,7 @@ public class game_controller : MonoBehaviour
          hud.jail_bars.gameObject.SetActive(false); // reset jail bars to not active
          current_player = (current_player + 1) % players.Count;
          dice.gameObject.SetActive(true);
+         // soundManager.checkPlayerStatus(players[current_player]);
      }
      
     void PerformAction()
@@ -727,6 +732,7 @@ public class game_controller : MonoBehaviour
 
     IEnumerator auctionCoroutine(Model.Player player,Space.Purchasable current_space)
     {
+        soundManager.Play("Auction");
         int highest_bid = current_space.cost-10;
         Model.Player highest_bidder = null;
         List<Model.Player> bidders = new List<Model.Player>();

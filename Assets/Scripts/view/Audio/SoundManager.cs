@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Model;
 using UnityEngine;
 using UnityEngine.UI;
 using view.Sound;
@@ -15,11 +16,11 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] public AudioMixerGroup musicMixerGroup;
     [SerializeField] public AudioMixerGroup soundMixerGroup;
-    [SerializeField] Sound[] sounds;
+    [SerializeField] public Sound[] sounds;
     private string CurrentMusicID;
     public static float musicVolume = 1f;
     public static float sfxVolume = 1f;
-    
+
     private void Awake()
     {
 
@@ -35,7 +36,7 @@ public class SoundManager : MonoBehaviour
                 case Sound.AudioTypes.SFX:
                     s.source.outputAudioMixerGroup = soundMixerGroup;
                     break;
-                
+
                 case Sound.AudioTypes.MUSIC:
                     s.source.outputAudioMixerGroup = musicMixerGroup;
                     break;
@@ -50,40 +51,39 @@ public class SoundManager : MonoBehaviour
 
     public void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 3)
+        if (SceneManager.GetActiveScene().buildIndex < 3)
         {
-            Stop(sounds[0].clipName);
-            if (!sounds[1].source.isPlaying && !sounds[2].source.isPlaying && !sounds[3].source.isPlaying )
+            if (!CheckForPlayingSong())
             {
-                ChangeMusic(sounds.Skip(1).Take(3).ToArray());
+                Play("Menu");
             }
         }
         else
         {
-            Stop(sounds[1].clipName);
-            Stop(sounds[2].clipName);
-            Stop(sounds[3].clipName);
-            if (!sounds[0].source.isPlaying)
+            sounds[0].source.Stop();
+            if (!CheckForPlayingSong())
             {
-                Play(sounds[0].clipName);
+                PlayGameMusic();
             }
         }
     }
 
-    public void ChangeMusic(Sound[] sounds)
+    public bool CheckForPlayingSong()
     {
-        foreach (Sound s in sounds)
+        bool songIsPlaying = false;
+        while (!songIsPlaying)
         {
-            if (s.clipName == CurrentMusicID)
+            foreach (Sound s in sounds)
             {
-                s.source.Stop();
-                break;
+                if (s.source.isPlaying)
+                {
+                    songIsPlaying = true;
+                }
             }
+            break;
         }
 
-        Random r = new Random();
-        int rand = r.Next(0, sounds.Length);
-        Play(sounds[rand].clipName);
+        return songIsPlaying;
     }
 
     public void Play(string clipname)
@@ -94,19 +94,50 @@ public class SoundManager : MonoBehaviour
             Debug.LogError("Sound: " + clipname + " does not exist!");
             return;
         }
+
+        foreach (Sound song in sounds)
+        {
+            if (song.source.isPlaying)
+            {
+                song.source.Stop();
+            }
+        }
+
         s.source.Play();
     }
-    
-    public void Stop(string clipname)
+
+    public void checkPlayerStatus(Player player)
     {
-        Sound s = Array.Find(sounds, dummySound => dummySound.clipName == clipname);
-        if (s == null)
+        if (player.position == 31)
         {
-            Debug.LogError("Sound: " + clipname + " does not exist!");
-            return;
+            if (!sounds[4].source.isPlaying)
+            {
+                Play("Jail");    
+            }
+        } else if (player.in_jail == 0 && !sounds[1].source.isPlaying && !sounds[2].source.isPlaying && !sounds[3].source.isPlaying)
+        {
+            PlayGameMusic();
         }
-        s.source.Stop();
+        if (player.in_jail > 0 && !sounds[4].source.isPlaying)
+        {
+            if (!sounds[4].source.isPlaying)
+            {
+                Play("Jail");    
+            }
+        }
+        //
+        // if (player.hasnomoney)
+        // {
+        //     Play("Bankrupt");
+        // }
+        
     }
-    
+
+    private void PlayGameMusic()
+    {
+        Random r = new Random();
+        int rand = r.Next(1, 4);
+        Play(sounds[rand].clipName);
+    }
 }
 

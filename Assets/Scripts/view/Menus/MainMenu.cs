@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     public int theme_index = 0;
     public TextMeshProUGUI buttonText;
     public TextMeshProUGUI gmDescription;
-    public SpriteRenderer themePreview;
+    public Image themePreview;
     public Sprite kingsley_classic, kingsley_yoda;
 
 
@@ -40,6 +40,7 @@ public class MainMenu : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        Debug.Log("yoyoyo");
         SceneManager.LoadScene(0);
     }
 
