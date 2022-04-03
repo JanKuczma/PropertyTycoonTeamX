@@ -5,11 +5,13 @@
 /// Methods need filling in and thinking about with some testing, this is just a rough outline.
 /// </summary>
 namespace Model{
+[System.Serializable]
 public abstract class Space
 {
     public SqType type;
     public int position;
     public string name;
+    [System.Serializable]
     public abstract class Purchasable : Space
     {
         public Player owner;
@@ -43,6 +45,7 @@ public abstract class Space
 
     }
 
+    [System.Serializable]
     public class Go : Space
     {
         public int amount;
@@ -55,6 +58,7 @@ public abstract class Space
         }
     }
 
+    [System.Serializable]
     public class VisitJail : Space
     {
         public VisitJail(int position, string name)
@@ -65,6 +69,7 @@ public abstract class Space
         }
     }
 
+    [System.Serializable]
     public class GoToJail : Space
     {
         public GoToJail(int position, string name)
@@ -75,6 +80,7 @@ public abstract class Space
         }
     }
 
+    [System.Serializable]
     public class Property : Purchasable
     {
         public int noOfHouses;
@@ -182,6 +188,7 @@ public abstract class Space
 
     }
 
+    [System.Serializable]
     public class Utility : Purchasable
     {
         public Utility(int position, string name, int cost, int[] rents)
@@ -205,6 +212,7 @@ public abstract class Space
         }
     }
 
+    [System.Serializable]
     public class Station : Purchasable
     {
         public Station(int position, string name, int cost, int[] rents)
@@ -224,6 +232,7 @@ public abstract class Space
         }
     }
 
+    [System.Serializable]
     public class Tax : Space
     {
         public int amount;
@@ -248,6 +257,7 @@ public abstract class Space
         }
     }
 
+    [System.Serializable]
     public class PotLuck : Space
     {
         public PotLuck(int position, string name)
@@ -258,6 +268,7 @@ public abstract class Space
         }
     }
 
+    [System.Serializable]
     public class Chance : Space
     {
         public Chance(int position, string name)
@@ -268,6 +279,7 @@ public abstract class Space
         }
     }
 
+    [System.Serializable]
     public class FreeParking : Space
     {
         public int collectedFines;

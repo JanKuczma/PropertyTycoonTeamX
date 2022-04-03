@@ -19,16 +19,16 @@ public class Piece : MonoBehaviour
         var_speed = SPEED;
         rotationSpeed = 8f;
         currentSpot = -1;
-        currentSquare = 0;
     }
 
-    public static Piece Create(Token token, Transform parent, Board board, int position)
+    public static Piece Create(Token token, Transform parent, Board board, int position, bool in_jail)
     {
         Piece new_piece = Instantiate(Asset.Piece(token),parent).GetComponent<Piece>();
         new_piece._board = board;
         new_piece.transform.localPosition = new Vector3(0,0.061f*new_piece.transform.localScale.x,0);
         new_piece.currentSquare = position-1;
-        new_piece.moveInstant(new_piece.currentSquare);
+        if(in_jail) { new_piece.moveInstantToJail(); }
+        else { new_piece.moveInstant(new_piece.currentSquare); }
         return new_piece;
     }
 
@@ -124,6 +124,19 @@ public class Piece : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(Vector3.forward);
             break;
         }
+    }
+
+    public void moveInstantToJail()
+    {
+        _board.squares[currentSquare].releaseSpotI(currentSpot);
+        // target is just position of the next square (free spot)
+        currentSquare = 10;
+        currentSpot = _board.jail.popCellI();
+        Vector3 target = _board.jail.peekCell(currentSpot);
+        // the target height is the same as current piece height
+        target[1] = transform.position.y;
+        transform.position = target;
+        transform.rotation = Quaternion.LookRotation(Vector3.right);
     }
 
     public IEnumerator goToJail()

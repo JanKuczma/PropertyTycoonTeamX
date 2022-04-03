@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class OptionsPopUp : View.PopUp
 {
@@ -35,5 +36,14 @@ public class OptionsPopUp : View.PopUp
         SoundManager.sfxVolume = value;
         Debug.Log("sfx: " + SoundManager.sfxVolume);
         soundManager.soundMixerGroup.audioMixer.SetFloat("SFX Volume", Mathf.Log10(value) * 20);
+    }
+
+    public void LoadGame()
+    {
+        GameObject obj = Instantiate(new GameObject());
+        obj.tag = "GameData";
+        obj.AddComponent<GameData>();
+        obj.GetComponent<GameData>().loadGame();
+        SceneManager.LoadScene(3);
     }
 }

@@ -24,9 +24,6 @@ public class MainMenu : MonoBehaviour
     public TextMeshProUGUI gmDescription;
     public SpriteRenderer themePreview;
     public Sprite kingsley_classic, kingsley_yoda;
-    
-    
-    Color[] player_colors = {Color.blue,Color.red,Color.green,Color.yellow,Color.cyan,Color.magenta};
 
 
     MessagePopUp curr_pop;
@@ -199,9 +196,10 @@ public class MainMenu : MonoBehaviour
             }
         }
         int e = 0; // to iterate over player_colors
+        int[] colors = {0xFF0000,0x0000FF,0x00ff00,0xffea04,0xff00ff,0x00ffff};
         foreach(KeyValuePair<string, Tuple<Token, bool>> entry in playerInfo)
         {
-            GameObject.Find("GameData").GetComponent<GameData>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,player_colors[e]));
+            GameObject.Find("GameData").GetComponent<GameData>().players.Add(new Model.Player(entry.Key,entry.Value.Item1,entry.Value.Item2,colors[e]));
             e++;
         }
         SceneManager.LoadScene(3);
@@ -268,7 +266,12 @@ public class MainMenu : MonoBehaviour
     {
         GameObject options = GameObject.Find("InGameOptionsPopUp(Clone)");
         if(options) { Destroy(options); }
-        OptionsPopUp.Create(transform.parent);
+        OptionsPopUp popup = OptionsPopUp.Create(transform.parent);
+        popup.btn1.gameObject.SetActive(false);
+        popup.btn2.GetComponentInChildren<Text>().text = "Load Game";
+        popup.btn2.onClick.AddListener(popup.LoadGame);
+        popup.btn3.GetComponentInChildren<Text>().text = "OK";
+        popup.btn3.onClick.AddListener(popup.closePopup);
     }
 
 

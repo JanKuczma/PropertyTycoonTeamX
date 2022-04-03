@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 using System.Threading;
 using System.Timers;
@@ -52,7 +53,7 @@ public class game_controller : MonoBehaviour
     
     void Awake()
     {
-        GameData gameData = GameObject.Find("GameData").GetComponent<GameData>();
+        GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         this.music_player = GameObject.FindGameObjectWithTag("GameMusic");
 
         this.board_model = gameData.board_model;
@@ -98,22 +99,64 @@ public class game_controller : MonoBehaviour
     }
     void Start()
     {
-        hud.Create_player_tabs(players,board_model);
         //craete pieces
         foreach(Model.Player player in players)
         {
-            pieces.Add(player,View.Piece.Create(player.token,transform,board_view,player.position));
+            pieces.Add(player,View.Piece.Create(player.token,transform,board_view,player.position,player.in_jail != 0));
         }
+        //after loading game
+        hud.Create_player_tabs(players,board_model);
+        hud.set_current_player_tab(players[current_player]);
+        if(players[current_player].in_jail != 0) { hud.jail_bars.gameObject.SetActive(true); }
+        if(turnState == TurnState.BEGIN || turnState == TurnState.PRE_DICE_ROLL)
+        {
+            dice.gameObject.SetActive(true);
+        } else { dice.gameObject.SetActive(false); }
+        if(turnState == TurnState.PERFORM_ACTION) { PerformAction(); }
         //setup finger cursor and get init cemara pos (top pos)
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
+        //setup hud buttons
         hud.FinishTurnButton.onClick.AddListener(finishTurn);
         hud.cameraLeftBtn.onClick.AddListener(moveCameraLeft);
         hud.cameraRightBtn.onClick.AddListener(moveCameraRight);
         hud.optionsButton.onClick.AddListener(delegate {
-            if(pausePopUp != null) { Destroy(pausePopUp.gameObject); }
-            pausePopUp = OptionsPopUp.Create(hud.transform);
+            if(gameState != GameState.PAUSE)
+            {
+                invisibleWall.SetActive(true);
+                previous_gameState = gameState;
+                gameState = GameState.PAUSE;
+                pausePopUp = OptionsPopUp.Create(hud.transform);
+                pausePopUp.btn1.GetComponentInChildren<Text>().text = "Resume";
+                pausePopUp.btn1.onClick.AddListener(delegate {
+                    gameState = previous_gameState;
+                    if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                    {
+                        invisibleWall.SetActive(false);
+                    }
+                });
+                if(turnState == TurnState.DICEROLL || turnState == TurnState.DICE_ROLL_EXTRA || turnState == TurnState.PIECEMOVE)
+                {
+                    pausePopUp.btn2.interactable = false;
+                } else {
+                pausePopUp.btn2.onClick.AddListener(() => GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().saveGame(current_player,turnState,previous_gameState,double_rolled,double_count,passed_go,steps,tabs_set));
+                }
+                pausePopUp.btn3.GetComponentInChildren<Text>().text = "Exit";
+                pausePopUp.btn3.onClick.AddListener(delegate {
+                        Destroy(pausePopUp.gameObject);
+                        Destroy(GameObject.FindGameObjectWithTag("GameData"));
+                        SceneManager.LoadScene(0);
+                    });
+            } else {
+                gameState = previous_gameState;
+                if(pausePopUp) { Destroy(pausePopUp.gameObject); }
+                if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                {
+                    invisibleWall.SetActive(false);
+                }
+            }
         });
+
     }
 
     void Update()
@@ -130,39 +173,12 @@ public class game_controller : MonoBehaviour
         {
             RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
             board_view.loadTheme("starwars");
-            GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme = true;
-            kitchen.SetActive(false);
+            GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme = true;
+            GameObject.Find("Kitchen(Clone)").SetActive(false);
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if(gameState != GameState.PAUSE)
-            {
-                invisibleWall.SetActive(true);
-                previous_gameState = gameState;
-                gameState = GameState.PAUSE;
-                pausePopUp = PopUp.Pause(hud.transform,"PAUSE");
-                pausePopUp.btn2.onClick.AddListener(delegate {
-                    Destroy(pausePopUp.gameObject);
-                    Destroy(GameObject.FindGameObjectWithTag("GameData"));
-                    SceneManager.LoadScene(0);
-                });
-                pausePopUp.btn1.onClick.AddListener(delegate {
-                    gameState = previous_gameState;
-                    if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
-                    {
-                        invisibleWall.SetActive(false);
-                    }
-                    Destroy(pausePopUp.gameObject);
-                });
-            } else {
-                gameState = previous_gameState;
-                if(pausePopUp) { Destroy(pausePopUp.gameObject); }
-                if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
-                {
-                    invisibleWall.SetActive(false);
-                }
-
-            }
+            hud.optionsButton.onClick.Invoke();
         }
     }
 
@@ -281,6 +297,7 @@ public class game_controller : MonoBehaviour
             {
                 if(!pieces[players[current_player]].isMoving)   //if piece is not moving anymore
                 {
+                    players[current_player].position = pieces[players[current_player]].GetCurrentSquare()+1;
                     turnState = TurnState.PERFORM_ACTION;   // change turn state to action
                     if(passed_go)
                     {
@@ -708,11 +725,11 @@ public class game_controller : MonoBehaviour
             View.Square square = board_view.squares[current_space.position-1];
             if(square is PropertySquare)
             {
-                (((View.PropertySquare)square)).showRibbon(highest_bidder.color);
+                (((View.PropertySquare)square)).showRibbon(highest_bidder.Color());
             }
             else if(square is UtilitySquare)
             {
-                ((View.UtilitySquare)(square)).showRibbon(highest_bidder.color);
+                ((View.UtilitySquare)(square)).showRibbon(highest_bidder.Color());
             }
             hud.current_main_PopUp.closePopup();
             MessagePopUp.Create(hud.transform,highest_bidder.name+" purchased this property for "+highest_bid+"Q!",3);

@@ -28,12 +28,6 @@ namespace View
             if(FindObjectOfType<View.HUD>()) {FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<game_controller>());}
         }
 
-         public static PopUp Pause(Transform parent, string message)
-         {
-            PopUp popUp = Instantiate(Asset.PausePopUpPrefab, parent).GetComponent<PopUp>();
-            return popUp;
-         }
-
          public static PopUp OK(Transform parent, string message)
          {
             PopUp popUp = Instantiate(Asset.OkPopUpPrefab, parent).GetComponent<PopUp>();
@@ -140,11 +134,11 @@ namespace View
             {
                 case SqType.CHANCE:
                     popup.optional_img.sprite = Asset.ClassicChangeIMG;
-                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
+                    if(GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
                 break;
                 case SqType.POTLUCK:
                     popup.optional_img.sprite = Asset.ClassicOppKnocksIMG;
-                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
+                    if(GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
                 break;
             }
             return popup;
@@ -157,11 +151,11 @@ namespace View
             {
                 case SqType.CHANCE:
                     popup.optional_img.sprite = Asset.ClassicChangeIMG;
-                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
+                    if(GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsChangeIMG; }
                 break;
                 case SqType.POTLUCK:
                     popup.optional_img.sprite = Asset.ClassicOppKnocksIMG;
-                    if(GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
+                    if(GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme) { popup.optional_img.sprite = Asset.StarWarsOppKnocksIMG; }
                 break;
             }
             return popup;
@@ -177,11 +171,11 @@ namespace View
                 case Model.Decision_outcome.SUCCESSFUL:
                     if(square is PropertySquare)
                     {
-                        (((View.PropertySquare)square)).showRibbon(player.color);
+                        (((View.PropertySquare)square)).showRibbon(player.Color());
                     }
                     else if(square is UtilitySquare)
                     {
-                        ((View.UtilitySquare)(square)).showRibbon(player.color);
+                        ((View.UtilitySquare)(square)).showRibbon(player.Color());
                     }
                     MessagePopUp.Create(transform.parent,"Property purchased!",2);
                     closePopup();
@@ -248,6 +242,7 @@ namespace View
             {
                 MessagePopUp.Create(transform, "You have no \"Break out of Jail\" cards!",2);
             } else {
+                player.position = 11;
                 player.getOutOfJailCardsNo -= 1;
                 MessagePopUp.Create(transform.parent,"You go to visit the jail... outside!",3);
                 controller.sendPieceToVisitJail();
@@ -260,6 +255,7 @@ namespace View
             {
                 MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
             } else {
+                player.position = 11;
                 player.PayCash(50,board:controller.board_model);
                 MessagePopUp.Create(transform.parent,"You go to visit the jail... outside!",3);
                 controller.sendPieceToVisitJail();

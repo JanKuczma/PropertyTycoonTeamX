@@ -31,7 +31,7 @@ public class PropertySquare : Square
     {
         _group = group;
         Color color;
-        if ( ColorUtility.TryParseHtmlString("#"+((int)group).ToString("X")+"FF", out color))
+        if ( ColorUtility.TryParseHtmlString("#"+((int)group).ToString("X6")+"FF", out color))
         { GetComponent<Renderer>().materials[1].SetColor("_Color",color); }
     }
     

@@ -25,12 +25,28 @@ public class Board : MonoBehaviour
             {
                 case SqType.PROPERTY:
                 board.squares[sp.position-1] = PropertySquare.Create(board.transform, sp.position,sp.name,((Model.Space.Property)sp).cost.ToString(),((Model.Space.Property)sp).group);
+                if(((Model.Space.Property)(sp)).owner != null)
+                {
+                    ((PropertySquare)(board.squares[sp.position-1])).showRibbon(((Model.Space.Property)(sp)).owner.Color());
+                    for(int i = 0; i < ((Model.Space.Property)(sp)).noOfHouses;i++)
+                    {
+                        ((PropertySquare)(board.squares[sp.position-1])).addHouse();
+                    }
+                }
                 break;
                 case SqType.STATION:
                 board.squares[sp.position-1] = UtilitySquare.Create(sp.type,board.transform, sp.position,sp.name,((Model.Space.Station)sp).cost.ToString());
+                if(((Model.Space.Station)(sp)).owner != null)
+                {
+                    ((UtilitySquare)(board.squares[sp.position-1])).showRibbon(((Model.Space.Station)(sp)).owner.Color());
+                }
                 break;
                 case SqType.UTILITY:
                 board.squares[sp.position-1] = UtilitySquare.Create(sp.type,board.transform, sp.position,sp.name,((Model.Space.Utility)sp).cost.ToString());
+                if(((Model.Space.Utility)(sp)).owner != null)
+                {
+                    ((UtilitySquare)(board.squares[sp.position-1])).showRibbon(((Model.Space.Utility)(sp)).owner.Color());
+                }
                 break;
                 case SqType.TAX:
                 board.squares[sp.position-1] = TaxSquare.Create(board.transform, sp.position,sp.name,((Model.Space.Tax)sp).amount.ToString());

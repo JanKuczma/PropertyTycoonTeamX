@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Model{
+[System.Serializable]
 public class Board
 {
     public Space[] spaces;

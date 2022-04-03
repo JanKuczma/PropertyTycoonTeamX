@@ -6,6 +6,7 @@ namespace Model{
 public enum Decision_outcome { SUCCESSFUL, NOT_ENOUGH_MONEY, NOT_ENOUGH_ASSETS,
                                 NOT_ALL_PROPERTIES_IN_GROUP,DIFFERENCE_IN_HOUSES,NO_HOUSES,MAX_HOUSES,
                                 GO_TO_JAIL, NONE }
+[System.Serializable]
 public class Player
 {
     public bool isHuman;
@@ -13,13 +14,13 @@ public class Player
     public Token token;
     public int cash;
     public int getOutOfJailCardsNo;
-    public Color color;
+    int color;
     public bool allowed_to_buy;
     public int in_jail;
     public int position;
     public List<Space.Purchasable> owned_spaces;
 
-    public Player(string name,Token token,bool isHuman,Color color,int position = 1,int money = 1500)
+    public Player(string name,Token token,bool isHuman,int color,int position = 1,int money = 1500)
     {
         this.name = name;
         this.token = token;
@@ -35,6 +36,7 @@ public class Player
 
     public void go_to_jail()
     {
+        this.position = 11;
         this.in_jail = 2;
     }
     public void ReceiveCash(int cash)
@@ -131,6 +133,14 @@ public class Player
         }
         total += this.cash;
         return total;
+    }
+
+    public Color Color()
+    {
+        Color color;
+        if ( ColorUtility.TryParseHtmlString("#"+this.color.ToString("X6")+"FF", out color))
+        { return color; }
+        else { return UnityEngine.Color.black; }
     }
 }
 }

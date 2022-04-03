@@ -56,7 +56,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         tab.player = player;
         tab.propertyCards = propertyCards;
         tab.setName(player.name);
-        tab.setColor(player.color);
+        tab.setColor(player.Color());
         tab.setToken(player.token);
         tab.setMoney(player.cash);
         tab.currentPlayer = false;

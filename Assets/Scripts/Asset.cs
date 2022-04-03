@@ -69,7 +69,6 @@ public static class Asset
     public static GameObject hud = Resources.Load<GameObject>("Prefabs/HUD/hud");
     static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
     //Pop Ups
-    public static GameObject PausePopUpPrefab = Resources.Load<GameObject>("Prefabs/Menus/PausePopUp");
     public static GameObject OkPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/OkPopUp");
     public static GameObject InJailPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/InJailPrefab");
     public static GameObject PayRentPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PayRentPopUp");
