@@ -194,7 +194,8 @@ public class game_controller : MonoBehaviour
             else
             {
                 gameState = previous_gameState;
-                if (pausePopUp)
+                if(pausePopUp) { Destroy(pausePopUp.gameObject); }
+                if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                 }
@@ -203,8 +204,8 @@ public class game_controller : MonoBehaviour
         hud.helpButton.onClick.AddListener(delegate
         {
             invisibleWall.SetActive(true);
-                previous_gameState = gameState;
-                helpPopUp = HelpPopUp.Create(hud.transform);
+            previous_gameState = gameState;
+            helpPopUp = HelpPopUp.Create(hud.transform);
         });
     }
 
@@ -289,7 +290,6 @@ public class game_controller : MonoBehaviour
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                     steps = dice.get_result();  // get the result
-                    steps = 30;
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
