@@ -5,8 +5,7 @@ using UnityEngine;
 namespace View{
 public class Piece : MonoBehaviour
 {
-    public static float SPEED = .8f;    // const movement speed
-    public static float rotationSpeed = 1f/SPEED;    // rotation speed
+    public static float SPEED = .6f;    // const movement speed
     int currentSquare;  // current position 0 - 39 (40 squares)
     int currentSpot; // current spot 0 - 5 (6 areas)
     [System.NonSerialized] public bool isMoving;   // bool to control the movement

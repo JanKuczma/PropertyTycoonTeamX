@@ -11,6 +11,7 @@ using Object = System.Object;
 using Space = Model.Space;
 using Timer = System.Timers.Timer;
 using UnityEngine.SceneManagement;
+using view.Menus;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
@@ -44,12 +45,14 @@ public class game_controller : MonoBehaviour
     //HUD
     public View.HUD hud; 
     PopUp pausePopUp = null;
+    PopUp helpPopUp = null;
     //other
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
     public GameObject kitchen;
     //Audio
     public GameObject music_player;
+    public SoundManager soundManager;
     //AI decision coroutine
     bool AICoroutineFinished = true;
     
@@ -57,6 +60,7 @@ public class game_controller : MonoBehaviour
     {
         GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         this.music_player = GameObject.FindGameObjectWithTag("GameMusic");
+        this.soundManager = (SoundManager) music_player.GetComponent(typeof(SoundManager));
 
         this.board_model = gameData.board_model;
         this.potluck = gameData.potluck;
@@ -99,78 +103,109 @@ public class game_controller : MonoBehaviour
         }
 
     }
+
     void Start()
     {
         //craete pieces
-        foreach(Model.Player player in players)
+        foreach (Model.Player player in players)
         {
-            pieces.Add(player,View.Piece.Create(player.token,transform,board_view,player.position,player.in_jail != 0));
+            pieces.Add(player,
+                View.Piece.Create(player.token, transform, board_view, player.position, player.in_jail != 0));
         }
+
         //after loading game
-        hud.Create_player_tabs(players,board_model);
+        hud.Create_player_tabs(players, board_model);
         hud.set_current_player_tab(players[current_player]);
-        if(players[current_player].in_jail != 0) { hud.jail_bars.gameObject.SetActive(true); }
-        if(turnState == TurnState.BEGIN || turnState == TurnState.PRE_DICE_ROLL)
+        if (players[current_player].in_jail != 0)
+        {
+            hud.jail_bars.gameObject.SetActive(true);
+        }
+
+        if (turnState == TurnState.BEGIN || turnState == TurnState.PRE_DICE_ROLL)
         {
             dice.gameObject.SetActive(true);
-        } else { dice.gameObject.SetActive(false); }
-        if(turnState == TurnState.PERFORM_ACTION) { PerformAction(); }
+        }
+        else
+        {
+            dice.gameObject.SetActive(false);
+        }
+
+        if (turnState == TurnState.PERFORM_ACTION)
+        {
+            PerformAction();
+        }
+
         //setup finger cursor and get init cemara pos (top pos)
-        Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
+        Cursor.SetCursor(Asset.Cursor(CursorType.FINGER), Vector2.zero, CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
         //setup hud buttons
         hud.FinishTurnButton.onClick.AddListener(finishTurn);
+        hud.FinishTurnButton.onClick.AddListener(() => soundManager.checkPlayerStatus(players[current_player]));
         hud.cameraLeftBtn.onClick.AddListener(moveCameraLeft);
         hud.cameraRightBtn.onClick.AddListener(moveCameraRight);
-        hud.optionsButton.onClick.AddListener(delegate {
-            if(gameState != GameState.PAUSE)
+        hud.optionsButton.onClick.AddListener(delegate
+        {
+            if (gameState != GameState.PAUSE)
             {
                 invisibleWall.SetActive(true);
                 previous_gameState = gameState;
                 gameState = GameState.PAUSE;
                 pausePopUp = OptionsPopUp.Create(hud.transform);
                 pausePopUp.btn1.GetComponentInChildren<Text>().text = "Resume";
-                pausePopUp.btn1.onClick.AddListener(delegate {
+                pausePopUp.btn1.onClick.AddListener(delegate
+                {
                     gameState = previous_gameState;
-                    if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                    if (turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
                     {
                         invisibleWall.SetActive(!players[current_player].isHuman);
                     }
                 });
-                if(turnState == TurnState.DICEROLL || turnState == TurnState.DICE_ROLL_EXTRA || turnState == TurnState.PIECEMOVE)
+                if (turnState == TurnState.DICEROLL || turnState == TurnState.DICE_ROLL_EXTRA ||
+                    turnState == TurnState.PIECEMOVE)
                 {
                     pausePopUp.btn2.interactable = false;
-                } else {
-                pausePopUp.btn2.onClick.AddListener( delegate {
-                    GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
-                    gameData.players = players;
-                    gameData.current_player = current_player;
-                    gameData.turnState = turnState;
-                    gameData.gameState = previous_gameState;
-                    gameData.double_rolled = double_rolled;
-                    gameData.double_count = double_count;
-                    gameData.passed_go = passed_go;
-                    gameData.steps = steps;
-                    gameData.tabs_set = tabs_set;
-                    SaveLoadPopUp.Create(hud.transform,true);
+                }
+                else
+                {
+                    pausePopUp.btn2.onClick.AddListener(delegate
+                    {
+                        GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+                        gameData.players = players;
+                        gameData.current_player = current_player;
+                        gameData.turnState = turnState;
+                        gameData.gameState = previous_gameState;
+                        gameData.double_rolled = double_rolled;
+                        gameData.double_count = double_count;
+                        gameData.passed_go = passed_go;
+                        gameData.steps = steps;
+                        gameData.tabs_set = tabs_set;
+                        SaveLoadPopUp.Create(hud.transform, true);
                     });
                 }
+
                 pausePopUp.btn3.GetComponentInChildren<Text>().text = "Exit";
-                pausePopUp.btn3.onClick.AddListener(delegate {
-                        Destroy(pausePopUp.gameObject);
-                        Destroy(GameObject.FindGameObjectWithTag("GameData"));
-                        SceneManager.LoadScene(0);
-                    });
-            } else {
+                pausePopUp.btn3.onClick.AddListener(delegate
+                {
+                    Destroy(pausePopUp.gameObject);
+                    Destroy(GameObject.FindGameObjectWithTag("GameData"));
+                    SceneManager.LoadScene(0);
+                });
+            }
+            else
+            {
                 gameState = previous_gameState;
-                if(pausePopUp) { Destroy(pausePopUp.gameObject); }
-                if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                if (pausePopUp)
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                 }
             }
         });
-
+        hud.helpButton.onClick.AddListener(delegate
+        {
+            invisibleWall.SetActive(true);
+                previous_gameState = gameState;
+                helpPopUp = HelpPopUp.Create(hud.transform);
+        });
     }
 
     void Update()
@@ -254,6 +289,7 @@ public class game_controller : MonoBehaviour
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                     steps = dice.get_result();  // get the result
+                    steps = 30;
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
@@ -375,7 +411,7 @@ public class game_controller : MonoBehaviour
                 });
             }
         }
-        
+        soundManager.checkPlayerStatus(players[current_player]);
     }
 
     //temp code for camera movement
@@ -461,6 +497,7 @@ public class game_controller : MonoBehaviour
          hud.jail_bars.gameObject.SetActive(false); // reset jail bars to not active
          current_player = (current_player + 1) % players.Count;
          dice.gameObject.SetActive(true);
+         // soundManager.checkPlayerStatus(players[current_player]);
      }
      
     void PerformAction()
@@ -707,6 +744,7 @@ public class game_controller : MonoBehaviour
     IEnumerator auctionCoroutine(Model.Player player,Space.Purchasable current_space)
     {
         turnState = TurnState.AUCTION;
+        soundManager.Play("Auction");
         int highest_bid = current_space.cost-10;
         Model.Player highest_bidder = null;
         List<Model.Player> bidders = new List<Model.Player>();

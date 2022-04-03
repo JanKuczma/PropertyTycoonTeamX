@@ -129,6 +129,9 @@ namespace View
             popUp.btn2.onClick.AddListener(() => popUp.jailCardOption(player, controller));
             popUp.btn3.onClick.AddListener(() => popUp.jailPay50Option(player, controller));
             popUp.transform.SetSiblingIndex(2);
+            
+            controller.soundManager.Play("Jail");
+            
             return popUp;
         }
 
@@ -293,5 +296,11 @@ namespace View
             break;
         }
     }
+
+    public void ControlsRulesSwitcher(int i)
+    {
+        
+    }
+    
     }
 }
