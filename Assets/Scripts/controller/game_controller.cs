@@ -175,24 +175,13 @@ public class game_controller : MonoBehaviour
 
     void Update()
     {
-        // temp code for speeding up piece movement
-        if(turnState == TurnState.PIECEMOVE)
-        {
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                pieces[players[current_player]].speedUp();
-            }
-        }
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            RenderSettings.skybox = Asset.StarWarsSkyBoxMaterial;
-            board_view.loadTheme("starwars");
-            GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme = true;
-            GameObject.Find("Kitchen(Clone)").SetActive(false);
-        }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             hud.optionsButton.onClick.Invoke();
+        }
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            MessagePopUp.Create(hud.transform, "smooth" + Time.smoothDeltaTime);
         }
     }
 

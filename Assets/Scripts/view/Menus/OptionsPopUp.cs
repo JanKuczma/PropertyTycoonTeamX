@@ -8,6 +8,7 @@ public class OptionsPopUp : View.PopUp
 {
     public Slider sfx;
     public Slider music;
+    public Slider tokenSpeed;
     public SoundManager soundManager;
 
     public static OptionsPopUp Create(Transform parent)
@@ -22,19 +23,23 @@ public class OptionsPopUp : View.PopUp
     {
         sfx.value = SoundManager.sfxVolume;
         music.value = SoundManager.musicVolume;
+        tokenSpeed.value = View.Piece.SPEED;
     }
 
     public void ChangeMusicVolume(float value)
     {
         SoundManager.musicVolume = value;
-        Debug.Log("vol: " + SoundManager.musicVolume);
         soundManager.musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(value) * 20);
     }
     
     public void ChangeSFXVolume(float value)
     {
         SoundManager.sfxVolume = value;
-        Debug.Log("sfx: " + SoundManager.sfxVolume);
         soundManager.soundMixerGroup.audioMixer.SetFloat("SFX Volume", Mathf.Log10(value) * 20);
+    }
+
+    public void ChangeTokenSpeed(float value)
+    {
+        View.Piece.SPEED = value;
     }
 }

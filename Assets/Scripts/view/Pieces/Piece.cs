@@ -5,9 +5,8 @@ using UnityEngine;
 namespace View{
 public class Piece : MonoBehaviour
 {
-    const float SPEED = 12f;    // const movement speed
-    float var_speed;    // variable movement speed
-    float rotationSpeed;    // rotation speed
+    public static float SPEED = 10f;    // const movement speed
+    public static float rotationSpeed = SPEED*.8f;    // rotation speed
     int currentSquare;  // current position 0 - 39 (40 squares)
     int currentSpot; // current spot 0 - 5 (6 areas)
     [System.NonSerialized] public bool isMoving;   // bool to control the movement
@@ -16,8 +15,6 @@ public class Piece : MonoBehaviour
     {
         // sets up initial values
         isMoving = false;
-        var_speed = SPEED;
-        rotationSpeed = 8f;
         currentSpot = -1;
     }
 
@@ -94,7 +91,6 @@ public class Piece : MonoBehaviour
         }
         // remove the current spot from freeSpots
         _board.squares[currentSquare].removeSpotI(currentSpot);
-        var_speed = SPEED;
         isMoving = false;
     }
 
@@ -163,7 +159,6 @@ public class Piece : MonoBehaviour
             }
             yield return null;
         }
-        var_speed = SPEED;
         isMoving = false;
     }
     public IEnumerator goToVisitJail()
@@ -190,7 +185,6 @@ public class Piece : MonoBehaviour
             }
             yield return null;
         }
-        var_speed = SPEED;
         isMoving = false;
     }
     public IEnumerator leaveJail()
@@ -217,7 +211,6 @@ public class Piece : MonoBehaviour
             }
             yield return null;
         }
-        var_speed = SPEED;
         isMoving = false;
     }
 
@@ -226,16 +219,11 @@ public class Piece : MonoBehaviour
         return currentSquare;
     }
     
-    /// speeds up piece movement
-    public void speedUp(int x = 2)
-    {
-        var_speed = x*SPEED;
-    }
 
     // moves piece towards next position and returns true if already on the target
     private bool moveTo(Vector3 targetPos)
     { 
-        return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,var_speed*Time.deltaTime));
+        return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,SPEED*Time.deltaTime));
     }
     // rotates piece towards specified direction, returns false if on the target
     private bool rotate(Vector3 targetRotation)
