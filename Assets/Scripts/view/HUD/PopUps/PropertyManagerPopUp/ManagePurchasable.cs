@@ -25,10 +25,10 @@ public class ManagePurchasable : MonoBehaviour
                 PopUp.sellHouseBtn.onClick.AddListener(() => PopUp.sellHouseOption(((Model.Space.Property)(property)).sellHouse(controller.board_model) ,(Model.Space.Property)property,((View.PropertySquare)(controller.board_view.squares[property.position-1]))));
                 if(property.isMortgaged) {
                     PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.pay_off_mortgage(),property));
-                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Pay Off Mortgage";
+                    PopUp.mortgageBtn.GetComponentInChildren<TMPro.TMP_Text>().SetText("Pay Off Mortgage");
                 } else {
                     PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.mortgage(),property));
-                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Mortgage";
+                    PopUp.mortgageBtn.GetComponentInChildren<TMPro.TMP_Text>().SetText("Mortgage");
                 }
             } else {
                 PopUp = Instantiate(Asset.ManageUtilityPopUpPrefab,parent).GetComponent<ManagePurchasable>();
@@ -36,10 +36,10 @@ public class ManagePurchasable : MonoBehaviour
                 PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model),((View.UtilitySquare)(controller.board_view.squares[property.position-1]))));
                 if(property.isMortgaged) {
                     PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.pay_off_mortgage(),property));
-                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Pay Off Mortgage";
+                    PopUp.mortgageBtn.GetComponentInChildren<TMPro.TMP_Text>().SetText("Pay Off Mortgage");
                 } else {
                     PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.mortgage(),property));
-                    PopUp.mortgageBtn.GetComponentInChildren<Text>().text = "Mortgage";
+                    PopUp.mortgageBtn.GetComponentInChildren<TMPro.TMP_Text>().SetText("Mortgage");
                 }
             }
         return PopUp;

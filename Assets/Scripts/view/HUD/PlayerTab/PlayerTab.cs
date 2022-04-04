@@ -11,8 +11,8 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Model.Player player;
     public Dictionary<int,PurchasableCard> propertyCards;
     Color color;
-    public Text player_name;
-    public Text player_money;
+    public TMPro.TMP_Text player_name;
+    public TMPro.TMP_Text player_money;
     public Image token;
     Token tokes_enum;
     public PropertyGrid propertyGrid;
@@ -65,11 +65,11 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
     public void setName(string name)
     {
-        this.player_name.text = name;
+        this.player_name.SetText(name);
     }
     public void setMoney(int money)
     {
-        this.player_money.text = money.ToString() + "Q";
+        this.player_money.SetText(money.ToString() + "Q");
     }
 
     public void setToken(Token token)

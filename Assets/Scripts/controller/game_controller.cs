@@ -293,7 +293,6 @@ public class game_controller : MonoBehaviour
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                     steps = dice.get_result();  // get the result
-                    steps = 30;
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
@@ -744,7 +743,7 @@ public class game_controller : MonoBehaviour
                 } else if (dice.is_double())
                 {
                     successful = true;
-                    Destroy(hud.current_main_PopUp.gameObject);
+                    if(hud.current_main_PopUp != null) { Destroy(hud.current_main_PopUp.gameObject); }
                     MessagePopUp.Create(hud.transform,"You go free!",4);
                     players[current_player].in_jail = 0;
                     StartCoroutine(pieces[players[current_player]].leaveJail());
@@ -752,7 +751,7 @@ public class game_controller : MonoBehaviour
                     turnState = TurnState.MANAGE_PROPERTIES;
                 } else {
                     successful = true;
-                    Destroy(hud.current_main_PopUp.gameObject);
+                    if(hud.current_main_PopUp != null) { Destroy(hud.current_main_PopUp.gameObject); }
                     MessagePopUp.Create(hud.transform,"You stay in Jail!",4);
                     players[current_player].in_jail -= 1;
                     turnState = TurnState.MANAGE_PROPERTIES;
