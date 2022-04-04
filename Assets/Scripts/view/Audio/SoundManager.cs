@@ -20,10 +20,12 @@ public class SoundManager : MonoBehaviour
     private string CurrentMusicID;
     public static float musicVolume = 1f;
     public static float sfxVolume = 1f;
+    public Button[] currentButtons;
+    public Dictionary<Button,bool> clickedButtons;
 
     private void Awake()
     {
-
+        AddButtonClicks();
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -47,6 +49,29 @@ public class SoundManager : MonoBehaviour
                 s.source.Play();
             }
         }
+    }
+
+    public void AddButtonClicks()
+    {
+        foreach (Button button in FindObjectsOfType<Button>())
+        {
+            Debug.Log(button.name);
+            currentButtons.Push(button);
+            Debug.Log("current Buttons Count:" + currentButtons.Length);
+        }
+        // Debug.Log("finished finding buttons");
+        //
+        // foreach (var cButton in clickedButtons)
+        // {
+        //     Debug.Log("Adding Clicks");
+        //     if (!cButton.Value)
+        //     {
+        //         Debug.Log("Click Added to" + cButton.Key.name);
+        //         cButton.Key.onClick.AddListener(() => Play("Click"));
+        //         cButton.Value.Equals(true);
+        //     }
+        // }
+        Debug.Log("Finished Adding Clicks");
     }
 
     public void Update()
