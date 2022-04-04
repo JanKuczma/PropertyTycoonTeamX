@@ -159,7 +159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -256,6 +256,14 @@ PrefabInstance:
     - target: {fileID: 2114510438328327973, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976477981973251094, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186657898589598803, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 6941827346719736907, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_IsActive
@@ -375,7 +383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -464,6 +472,14 @@ PrefabInstance:
     - target: {fileID: 2114510438328327973, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976477981973251094, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186657898589598803, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 6941827346719736907, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_IsActive
@@ -591,7 +607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8439007215407984124, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8439007215407984124, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_AnchorMax.x
@@ -693,7 +709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -887,6 +903,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[5].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5976477981973251094, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186657898589598803, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
     - target: {fileID: 6941827346719736907, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -929,7 +953,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1147,6 +1171,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[6].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5976477981973251094, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186657898589598803, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
     - target: {fileID: 6941827346719736907, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1184,7 +1216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1370,6 +1402,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 5976477981973251094, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186657898589598803, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
     - target: {fileID: 6941827346719736907, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1408,11 +1448,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_text
-      value: Start Game
+      value: Start
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_fontSize
-      value: 70.15
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 7883200217062894571, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_Name
@@ -1428,7 +1468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8439007215407984124, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8439007215407984124, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1650,7 +1690,8 @@ MonoBehaviour:
   numPlayers: 2
   gm_index: 0
   theme_index: 0
-  buttonText: {fileID: 0}
+  gmbuttonText: {fileID: 0}
+  themebuttonText: {fileID: 0}
   gmDescription: {fileID: 0}
   themePreview: {fileID: 0}
   kingsley_classic: {fileID: 0}
@@ -1689,7 +1730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1814,6 +1855,18 @@ PrefabInstance:
     - target: {fileID: 2114510438328327973, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976477981973251094, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSize
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976477981973251094, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186657898589598803, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 6941827346719736907, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_IsActive

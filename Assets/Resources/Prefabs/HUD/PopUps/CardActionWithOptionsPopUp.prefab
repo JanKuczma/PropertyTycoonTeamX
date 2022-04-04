@@ -137,6 +137,18 @@ PrefabInstance:
       propertyPath: m_Text
       value: PAY
       objectReference: {fileID: 0}
+    - target: {fileID: 3018333814838738460, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3018333814838738460, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3018333814838738460, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3140621521997283813, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
       propertyPath: m_Name
       value: CardActionWithOptionsPopUp
@@ -228,6 +240,10 @@ PrefabInstance:
     - target: {fileID: 5791009688117370575, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
       propertyPath: m_text
       value: Take Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 5791009688117370575, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
+      propertyPath: m_fontSize
+      value: 51.55
       objectReference: {fileID: 0}
     - target: {fileID: 6519133662998777094, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
       propertyPath: m_Name

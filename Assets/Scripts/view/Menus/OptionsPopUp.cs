@@ -10,7 +10,7 @@ public class OptionsPopUp : View.PopUp
     public Slider music;
     public Slider tokenSpeed;
     public SoundManager soundManager;
-    public Dropdown VideoSettings;
+    public TMPro.TMP_Dropdown VideoSettings;
 
     public static OptionsPopUp Create(Transform parent)
     {
