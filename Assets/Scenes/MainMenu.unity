@@ -598,6 +598,13 @@ MonoBehaviour:
     isLoop: 0
     playOnAwake: 0
     volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Auction
+    audioClip: {fileID: 8300000, guid: c7ad7d69300644be88a204fcb8ce369a, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
 --- !u!4 &914077553
 Transform:
   m_ObjectHideFlags: 0

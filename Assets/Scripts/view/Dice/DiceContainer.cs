@@ -46,7 +46,7 @@ public class DiceContainer : MonoBehaviour
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         foreach (Dice d in dice)    // for each dice assign velcity
         {
-            d.roll((transform.position - previous_frame_pos)/Time.deltaTime);
+            d.roll((transform.position - previous_frame_pos)/Time.smoothDeltaTime);
         }
         start_roll = true;
         GetComponent<BoxCollider>().enabled = false;
@@ -79,6 +79,7 @@ public class DiceContainer : MonoBehaviour
         start_roll = false;
         GetComponent<BoxCollider>().enabled = true;
         enabled = true;
+        gameObject.SetActive(true);
     }
 
     /// returns the sum of dice results

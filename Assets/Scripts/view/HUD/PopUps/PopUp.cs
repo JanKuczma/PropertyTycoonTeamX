@@ -39,6 +39,7 @@ namespace View
 
          public static PopUp InJail(Transform parent, game_controller controller)
          {
+            controller.AI_trigger = Model.Decision_trigger.INJAIL;
             PopUp popUp = Instantiate(Asset.InJailPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.SetMessage("Stay in Jail or try to break out by rolling a double!");
             popUp.btn1.onClick.AddListener(() => popUp.stayInJailOption(controller));
@@ -71,9 +72,11 @@ namespace View
 
         public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board,game_controller controller,int rent=0)
         {
+            controller.AI_trigger = Model.Decision_trigger.PAYMONEY;
             PopUp popUp = Instantiate(Asset.PayRentPopUpPrefab, parent).GetComponent<PopUp>();
             int rent_amount = space.rent_amount(board);
             if(space is Model.Space.Utility) { rent_amount *= controller.dice.get_result(); }
+            controller.AI_moneyToPay = rent_amount;
             popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
             popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner),controller,payer));
             PurchasableCard c = null;
@@ -97,6 +100,7 @@ namespace View
 
         public static PopUp BuyProperty(Transform parent, Model.Player player, Model.Space.Purchasable space, View.Square square, game_controller controller)
         {
+            controller.AI_trigger = Model.Decision_trigger.BUYPROPERTY;
             PopUp popUp = Instantiate(Asset.BuyPropertyPopup, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + ", do you wish to purchase this property?");
             popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space), player, square));
@@ -122,6 +126,7 @@ namespace View
 
         public static PopUp GoToJail(Transform parent, Model.Player player, game_controller controller, string msg = null)
         {
+            controller.AI_trigger = Model.Decision_trigger.GOTOJAIL;
             PopUp popUp = Instantiate(Asset.GoToJailPopUpPrefab, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + " broke the law! They must go straight to jail!");
             if(msg != null) { popUp.SetMessage(msg); }

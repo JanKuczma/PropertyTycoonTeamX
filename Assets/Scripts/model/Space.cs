@@ -26,6 +26,7 @@ public abstract class Space
         public abstract int rent_amount(Board board);
         public Decision_outcome mortgage()
         {
+            if(isMortgaged) { return Decision_outcome.OTHER; }
             owner.ReceiveCash(cost/2);
             isMortgaged = true;
             return Decision_outcome.SUCCESSFUL;
@@ -33,6 +34,7 @@ public abstract class Space
 
         public Decision_outcome pay_off_mortgage()
         {
+            if(!isMortgaged) { return Decision_outcome.OTHER; }
             if(owner.cash < cost/2)
             {
                 return Decision_outcome.NOT_ENOUGH_MONEY;

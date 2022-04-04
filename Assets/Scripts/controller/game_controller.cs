@@ -54,7 +54,9 @@ public class game_controller : MonoBehaviour
     public GameObject music_player;
     public SoundManager soundManager;
     //AI decision coroutine
-    bool AICoroutineFinished = true;
+    public bool AICoroutineFinished = true;
+    public Model.Decision_trigger AI_trigger = Model.Decision_trigger.UDENTIFIED;
+    public int AI_moneyToPay = 0;
     
     void Awake()
     {
@@ -116,6 +118,7 @@ public class game_controller : MonoBehaviour
         //after loading game
         hud.Create_player_tabs(players, board_model);
         hud.set_current_player_tab(players[current_player]);
+        hud.CpuPanel.SetActive(!players[current_player].isHuman);
         if (players[current_player].in_jail != 0)
         {
             hud.jail_bars.gameObject.SetActive(true);
@@ -248,7 +251,7 @@ public class game_controller : MonoBehaviour
                         hud.current_main_PopUp = PopUp.InJail(hud.transform,this);
                     }
                     if(!players[current_player].isHuman && AICoroutineFinished){
-                        StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                        StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.INJAIL));
                     }
 
                 }
@@ -259,7 +262,7 @@ public class game_controller : MonoBehaviour
                     {
                         hud.current_main_PopUp = PopUp.OK(hud.transform,"You are leaving the jail! You can roll dice in the next round!");
                         if(!players[current_player].isHuman && AICoroutineFinished){
-                            StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                            StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.OK));
                         }
                         StartCoroutine(pieces[players[current_player]].leaveJail());
                         hud.jail_bars.gameObject.SetActive(false);
@@ -329,7 +332,7 @@ public class game_controller : MonoBehaviour
             else if(turnState == TurnState.MOVE_THE_PIECE)
             {
                 if(!players[current_player].isHuman && AICoroutineFinished && hud.current_main_PopUp != null){
-                    StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                    StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.GOTOJAIL));
                 }
                 if(hud.current_main_PopUp == null)
                 {
@@ -366,7 +369,7 @@ public class game_controller : MonoBehaviour
             else if(turnState == TurnState.PERFORM_ACTION)  // ACTION state (buy property, pay rent etc...)
             {
                 if(AICoroutineFinished && hud.current_main_PopUp != null && !players[current_player].isHuman){
-                    StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                    StartCoroutine(AI_take_decision(hud.current_main_PopUp,AI_trigger));
                 }
                 // when PopUp is closed the `trunState` is changed to MANAGEPROPERTIES
                 if(hud.current_main_PopUp == null)
@@ -377,7 +380,8 @@ public class game_controller : MonoBehaviour
             else if(turnState == TurnState.MANAGE_PROPERTIES)  // (manage your properties, check other players' properties)
             {
                 hud.FinishTurnButton.gameObject.SetActive(true);
-                if(!players[current_player].isHuman && AICoroutineFinished) { StartCoroutine(AI_finish_turn()); }
+                if(!players[current_player].isHuman && AICoroutineFinished && players[current_player].in_jail==0) { StartCoroutine(AI_ManageProperties(players[current_player])); }
+                else if(!players[current_player].isHuman && AICoroutineFinished) { StartCoroutine(AI_FinishTurn()); }
                 // when player presses FINISH TURN button the `turnState` is changed to END
             }
             else if(turnState == TurnState.END)     // END state, when player finished his turn
@@ -403,7 +407,7 @@ public class game_controller : MonoBehaviour
             if(hud.current_main_PopUp == null) {
                 hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
                 if(!players[current_player].isHuman && AICoroutineFinished){
-                    StartCoroutine(AI_take_decision(hud.current_main_PopUp));
+                    StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.OK));
                 }
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
                     Destroy(GameObject.FindGameObjectWithTag("GameData"));
@@ -540,6 +544,7 @@ public class game_controller : MonoBehaviour
                     players[current_player].ReceiveCash(board_model.parkingFees);
                     board_model.parkingFees = 0;
                 });
+                AI_trigger = Model.Decision_trigger.OK;
                 //give player whatever the balance in FREE PARKING
                 //reset FREE PARKING balance to zero
                 break;
@@ -547,6 +552,7 @@ public class game_controller : MonoBehaviour
             case SqType.GOTOJAIL:
             {
                 hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this);
+                AI_trigger = Model.Decision_trigger.GOTOJAIL;
                 //player token is moved to JAIL square
                 //player hud icon is updated
                 //jail cell animation on board
@@ -559,6 +565,7 @@ public class game_controller : MonoBehaviour
                 if(((Space.Purchasable)(current_space)).owner == null && players[current_player].allowed_to_buy)
                 {
                     hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square],this);
+                    AI_trigger = Model.Decision_trigger.BUYPROPERTY;
                 }
                 else if(((Space.Purchasable)(current_space)).owner == players[current_player])
                 {
@@ -575,6 +582,7 @@ public class game_controller : MonoBehaviour
                         MessagePopUp.Create(hud.transform, "The owner of this property is in jail, you don't have to pay the rent.",3);
                     } else {
                         hud.current_main_PopUp = PopUp.PayRent(hud.transform,players[current_player],(Model.Space.Purchasable)current_space,board_model,this);
+                        AI_trigger = Model.Decision_trigger.PAYMONEY;
                     }
                 } else {
                     MessagePopUp.Create(hud.transform, "You have to complete one circuit of the board by passing the GO to buy a property!",4);
@@ -585,6 +593,8 @@ public class game_controller : MonoBehaviour
             {
                 hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " misfiled their tax returns, pay HMRC "+((Model.Space.Tax)(current_space)).amount  +"Q of "+current_space.name);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(players[current_player].PayCash(((Model.Space.Tax)(current_space)).amount),this,players[current_player]));
+                AI_moneyToPay = ((Model.Space.Tax)(current_space)).amount;
+                AI_trigger = Model.Decision_trigger.PAYMONEY;
                 break;
             }
         }
@@ -598,11 +608,14 @@ public class game_controller : MonoBehaviour
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"]),this,player));
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
+                AI_moneyToPay = card.kwargs["amount"];
+                AI_trigger = Model.Decision_trigger.PAYMONEY;
             break;
             case CardAction.PAYTOPLAYER:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => player.ReceiveCash(card.kwargs["amount"]));
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
+                AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.MOVEFORWARDTO:
                 steps = ((39+card.kwargs["position"]) - pieces[player].GetCurrentSquare())%40;
@@ -610,22 +623,26 @@ public class game_controller : MonoBehaviour
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
+                AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.MOVEBACKTO:
                 steps = -1 * ((pieces[player].GetCurrentSquare()+41 - card.kwargs["position"])%40); 
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
+                AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.MOVEBACK:
                 steps = -1*card.kwargs["steps"];
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
+                AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.GOTOJAIL:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); hud.current_main_PopUp = View.PopUp.GoToJail(hud.transform, players[current_player], this); });      
+                AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.BIRTHDAY:
                 string absent_names = "";
@@ -648,10 +665,12 @@ public class game_controller : MonoBehaviour
                         PopUp.OK(hud.transform,absent_names + "didn't come to you birthday party!");
                     }
                 });
+                AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.OUTOFJAIL:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {hud.current_main_PopUp.closePopup(); player.getOutOfJailCardsNo+=1;});
+                AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.PAYORCHANCE:
                 hud.current_main_PopUp = PopUp.CardWithOption(hud.transform,player,this,card,card_type);
@@ -661,11 +680,15 @@ public class game_controller : MonoBehaviour
                     Model.Card new_card = opportunity_knocks.PopCard();
                     performCardAction(new_card, player,SqType.CHANCE);
                     });
+                AI_moneyToPay = card.kwargs["amount"];
+                AI_trigger = Model.Decision_trigger.PAYORCARD;
             break;
             case CardAction.PAYTOPARKING:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => player.PayCash(card.kwargs["amount"],board:board_model));
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
+                AI_moneyToPay = card.kwargs["amount"];
+                AI_trigger = Model.Decision_trigger.PAYMONEY;
             break;
             case CardAction.REPAIRS:
                 int total = 0;
@@ -683,6 +706,8 @@ public class game_controller : MonoBehaviour
                 }
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(total),this,player));
+                AI_moneyToPay = total;
+                AI_trigger = Model.Decision_trigger.PAYMONEY;
             break;
         }
 
@@ -755,6 +780,7 @@ public class game_controller : MonoBehaviour
             hud.current_main_PopUp.closePopup();
             MessagePopUp.Create(hud.transform,"Nobody bought this property!",3);
             turnState = TurnState.MANAGE_PROPERTIES;
+            hud.CpuPanel.SetActive(!player.isHuman);
             yield break;
         }
         hud.current_main_PopUp = PopUp.Auction(hud.transform,current_space);
@@ -784,7 +810,7 @@ public class game_controller : MonoBehaviour
         });
         while((highest_bidder == null || !(highest_bidder != null && bidders.Count == 1)) && bidders.Count > 0)
         {
-            if(!bidders[current_bidder].isHuman && AICoroutineFinished) { StartCoroutine(AI_take_decision(hud.current_main_PopUp)); }
+            if(!bidders[current_bidder].isHuman && AICoroutineFinished) { StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.BID)); }
             yield return null;
         }
         if(highest_bidder == null)
@@ -805,6 +831,7 @@ public class game_controller : MonoBehaviour
             hud.current_main_PopUp.closePopup();
             MessagePopUp.Create(hud.transform,highest_bidder.name+" purchased this property for "+highest_bid+"Q!",3);
         }
+        hud.CpuPanel.SetActive(!player.isHuman);
         turnState = TurnState.MANAGE_PROPERTIES;
     }
     public void sendPieceToJail()
@@ -913,7 +940,8 @@ public class game_controller : MonoBehaviour
         AI
 */
 
-    IEnumerator AI_take_decision(View.PopUp popUp)
+/*
+    IEnumerator AI_take_decision(View.PopUp popUp, Model.Decision_trigger trigger)
     {
         AICoroutineFinished = false;
         yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2.5f));
@@ -934,17 +962,159 @@ public class game_controller : MonoBehaviour
         AICoroutineFinished = true;
         yield break;
     }
-
+*/
+    IEnumerator AI_take_decision(View.PopUp popUp, Model.Decision_trigger trigger)
+    {
+        AICoroutineFinished = false;
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.5f,2.5f));
+        switch(trigger){
+        case Model.Decision_trigger.OK:
+            popUp.btn1.onClick.Invoke();
+        break;
+        case Model.Decision_trigger.PAYMONEY:
+            if(AI_moneyToPay > players[current_player].cash)
+            {
+                if(AI_moneyToPay > players[current_player].totalValueOfAssets())
+                {
+                    popUp.btn1.onClick.Invoke();
+                    AICoroutineFinished = true;
+                    yield break;
+                } else {
+                    yield return AI_GetMoney(players[current_player],AI_moneyToPay);
+                    popUp.btn1.onClick.Invoke();
+                }
+            } else {
+                popUp.btn1.onClick.Invoke();
+            }
+            break;
+        case Model.Decision_trigger.BID:
+        case Model.Decision_trigger.BUYPROPERTY:
+        case Model.Decision_trigger.INJAIL:
+        case Model.Decision_trigger.PAYORCARD:
+            int rand_decision = UnityEngine.Random.Range(1,3);
+            switch(rand_decision){
+            case 1:
+                popUp.btn1.onClick.Invoke();
+                break;
+            case 2:
+                popUp.btn2.onClick.Invoke();
+                break;
+            }
+        break;
+        case Model.Decision_trigger.GOTOJAIL:
+        case Model.Decision_trigger.UDENTIFIED:
+            int options = 3;
+            if(popUp.btn3 == null) { options--; } if(popUp.btn2 == null) { options--; } if(popUp.btn1 == null) { AICoroutineFinished = true; yield break; }
+            rand_decision = UnityEngine.Random.Range(1,options+1);
+            switch(rand_decision){
+            case 1:
+                popUp.btn1.onClick.Invoke();
+                break;
+            case 2:
+                popUp.btn2.onClick.Invoke();
+                break;
+            case 3:
+                popUp.btn3.onClick.Invoke();
+            break;
+            }
+        break;
+        }
+        AICoroutineFinished = true;
+        yield break;
+    }
     IEnumerator AI_throw_dice()
     {
         AICoroutineFinished = false;
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,1.5f));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1.5f,2.5f));
         dice.random_throw();
         AICoroutineFinished = true;
         yield break;
     }
 
-    IEnumerator AI_finish_turn()
+    IEnumerator AI_GetMoney(Model.Player player,int amount)
+    {
+        if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
+        hud.currentManager = PropertyManager.Create(hud.transform,player,hud.propertyCards,false).GetComponent<PropertyManager>();
+        while(player.cash < amount)
+        {
+            Model.Space.Purchasable prop = player.owned_spaces[UnityEngine.Random.Range(0,player.owned_spaces.Count)];
+            bool successful = false;
+            if(prop is Model.Space.Property)
+            {
+                if(prop.mortgage() != Model.Decision_outcome.SUCCESSFUL){
+                    if(((Model.Space.Property)(prop)).sellHouse(board_model) == Model.Decision_outcome.SUCCESSFUL)
+                    {
+                        ((View.PropertySquare)(board_view.squares[prop.position-1])).removeHouse();
+                        successful = true;
+                    }
+                    else if(player.SellProperty(prop,board_model) == Model.Decision_outcome.SUCCESSFUL)
+                    {
+                        ((View.PropertySquare)(board_view.squares[prop.position-1])).removeRibbon();
+                        successful = true;
+                    }
+                } else {
+                    successful = true;
+                }
+            } else {
+                if(prop.mortgage() != Model.Decision_outcome.SUCCESSFUL){
+                    if(player.SellProperty(prop,board_model) == Model.Decision_outcome.SUCCESSFUL)
+                    {
+                        ((View.UtilitySquare)(board_view.squares[prop.position-1])).removeRibbon();
+                        successful = true;
+                    }
+                } else {
+                    successful = true;
+                }
+            }
+            if(hud.currentManager != null && successful) { if(hud.currentManager.player == player) {hud.currentManager.setUpCards(player,hud.propertyCards,false);} }
+            if(successful) { yield return new WaitForSeconds(1.5f); } else {yield return null;}
+        }
+        if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
+        yield break;
+    }
+
+    IEnumerator AI_ManageProperties(Model.Player player)
+    {
+        AICoroutineFinished = false;
+        bool successful = false;
+        if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
+        hud.currentManager = PropertyManager.Create(hud.transform,player,hud.propertyCards,false).GetComponent<PropertyManager>();
+        foreach(Model.Space.Purchasable prop in player.owned_spaces)
+        {
+            successful = false;
+            if(player.cash < 200) // 200Q threshold
+            {
+                yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2f));
+                if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
+                hud.FinishTurnButton.onClick.Invoke();
+                AICoroutineFinished = true;
+                yield break;
+            }
+            if(prop.isMortgaged)
+            {
+                prop.pay_off_mortgage();
+                successful = true;
+            }
+            if(prop is Model.Space.Property)
+            {
+                if(((Model.Space.Property)(prop)).buyHouse(board_model) == Model.Decision_outcome.SUCCESSFUL)
+                {
+                    ((View.PropertySquare)(board_view.squares[prop.position-1])).addHouse();
+                    successful = true;
+                }
+            }
+            if(successful) { yield return new WaitForSeconds(1f); }
+            if(hud.currentManager != null && successful) { if(hud.currentManager.player == player) {hud.currentManager.setUpCards(player,hud.propertyCards,false);} }
+        }
+        if(successful) { yield return new WaitForSeconds(2f); }
+        if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
+        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2f));
+        hud.FinishTurnButton.onClick.Invoke();
+        AICoroutineFinished = true;
+        yield break;
+    }
+
+    IEnumerator AI_FinishTurn()
     {
         AICoroutineFinished = false;
         yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2f));
@@ -952,6 +1122,4 @@ public class game_controller : MonoBehaviour
         AICoroutineFinished = true;
         yield break;
     }
-
-
 }
