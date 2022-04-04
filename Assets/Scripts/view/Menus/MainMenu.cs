@@ -20,7 +20,8 @@ public class MainMenu : MonoBehaviour
     //These are variables for the GamemodeSelect menu
     public int gm_index = 0;
     public int theme_index = 0;
-    public TextMeshProUGUI buttonText;
+    public TextMeshProUGUI gmbuttonText;
+    public TextMeshProUGUI themebuttonText;
     public TextMeshProUGUI gmDescription;
     public Image themePreview;
     public Sprite kingsley_classic, kingsley_yoda;
@@ -231,14 +232,14 @@ public class MainMenu : MonoBehaviour
         {
             GameObject.Find("GameData").GetComponent<GameData>().turboGame = true;
             gm_index = 1;
-            buttonText.text = "Turbo";
+            gmbuttonText.text = "Turbo";
             gmDescription.text =
                 "In Turbo Mode, players race to gather as much wealth as they can before the timer runs out!";
         } else if (gm_index == 1)
         {
             GameObject.Find("GameData").GetComponent<GameData>().turboGame = false;
             gm_index = 0;
-            buttonText.text = "Classic";
+            gmbuttonText.text = "Classic";
             gmDescription.text = "In Classic Mode, players must trade away until only one Tycoon is left standing...";
         }
     }
@@ -253,13 +254,13 @@ public class MainMenu : MonoBehaviour
         {
             GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme = true;
             theme_index = 1;
-            buttonText.text = "Star Wars";
+            themebuttonText.text = "Star Wars";
             themePreview.sprite = kingsley_yoda;
         } else if (theme_index == 1)
         {
             GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme = false;
             theme_index = 0;
-            buttonText.text = "Classic";
+            themebuttonText.text = "Classic";
             themePreview.sprite = kingsley_classic;
         }
     } 
