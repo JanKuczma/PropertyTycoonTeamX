@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Model{
-public enum Decision_outcome { SUCCESSFUL, NOT_ENOUGH_MONEY, NOT_ENOUGH_ASSETS,
-                                NOT_ALL_PROPERTIES_IN_GROUP,DIFFERENCE_IN_HOUSES,NO_HOUSES,MAX_HOUSES,
-                                GO_TO_JAIL, NONE }
+public enum Decision_outcome {
+    SUCCESSFUL, NOT_ENOUGH_MONEY, NOT_ENOUGH_ASSETS,
+    NOT_ALL_PROPERTIES_IN_GROUP,DIFFERENCE_IN_HOUSES,NO_HOUSES,MAX_HOUSES,
+    OTHER, NONE }
+public enum Decision_trigger {
+    GOTOJAIL, PAYMONEY, BUYPROPERTY, BID, INJAIL, OK, PAYORCARD, UDENTIFIED }
 [System.Serializable]
 public class Player
 {
@@ -14,7 +17,7 @@ public class Player
     public Token token;
     public int cash;
     public int getOutOfJailCardsNo;
-    int color;
+    protected int color;
     public bool allowed_to_buy;
     public int in_jail;
     public int position;

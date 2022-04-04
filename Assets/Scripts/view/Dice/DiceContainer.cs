@@ -36,9 +36,9 @@ public class DiceContainer : MonoBehaviour
         Vector3 targetPos = getTargetPos();
         if(transform.position.y < 1.5f || Mathf.Abs(transform.position.x) > 18.3f || Mathf.Abs(transform.position.z) > 10.5f)
         {
-            transform.position = Vector3.MoveTowards(transform.position,Vector3.up*10.0f,move_speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position,Vector3.up*10.0f,move_speed * Time.smoothDeltaTime);
         } else {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, move_speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, move_speed * Time.smoothDeltaTime);
         }
     }
     void OnMouseUp()
@@ -46,7 +46,7 @@ public class DiceContainer : MonoBehaviour
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         foreach (Dice d in dice)    // for each dice assign velcity
         {
-            d.roll((transform.position - previous_frame_pos)/Time.deltaTime);
+            d.roll((transform.position - previous_frame_pos)/Time.smoothDeltaTime);
         }
         start_roll = true;
         GetComponent<BoxCollider>().enabled = false;
@@ -79,6 +79,7 @@ public class DiceContainer : MonoBehaviour
         start_roll = false;
         GetComponent<BoxCollider>().enabled = true;
         enabled = true;
+        gameObject.SetActive(true);
     }
 
     /// returns the sum of dice results
@@ -136,6 +137,19 @@ public class DiceContainer : MonoBehaviour
             if(d.transform.position.y <= 0) { return true; }
         }
         return false;
+    }
+
+    public void random_throw()
+    {
+        greenLight.gameObject.SetActive(false);
+        Vector3 dice_velocity = new Vector3(Random.Range(-.05f,.05f),Random.Range(-.05f,0.02f),Random.Range(-.05f,.05f))/Time.deltaTime;
+        foreach (Dice d in dice)    // for each dice assign velcity
+        {
+            d.roll(dice_velocity);
+        }
+        start_roll = true;
+        GetComponent<BoxCollider>().enabled = false;
+        enabled = false;    // disable the container
     }
 }
 }

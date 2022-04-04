@@ -10,7 +10,7 @@ namespace View
     // Start is called before the first frame update
     [SerializeField] public DictionaryWrapper<int,PurchasableCard> cards;
 
-    Model.Player player;
+    public Model.Player player;
     public Text ownedByText;
 
     public static PropertyManager Create(Transform parent, Model.Player player, Dictionary<int,PurchasableCard> propertyCards,bool canManage)
@@ -22,7 +22,7 @@ namespace View
         return manager;
     }
 
-    void setUpCards(Model.Player player, Dictionary<int,PurchasableCard> propertyCards,bool canManage)
+    public void setUpCards(Model.Player player, Dictionary<int,PurchasableCard> propertyCards,bool canManage)
     {
         foreach(KeyValuePair<int, PurchasableCard> entry in propertyCards)
         {

@@ -8,7 +8,7 @@ namespace View
 public class HUD : MonoBehaviour
 {
     Dictionary<Model.Player,PlayerTab> player_tabs = new Dictionary<Model.Player,PlayerTab>();
-    Dictionary<int,PurchasableCard> propertyCards = new Dictionary<int, PurchasableCard>();
+    public Dictionary<int,PurchasableCard> propertyCards = new Dictionary<int, PurchasableCard>();
     public Button FinishTurnButton;
     public Button cameraLeftBtn;
     public Button cameraRightBtn;
@@ -19,6 +19,7 @@ public class HUD : MonoBehaviour
     public PropertyManager currentManager = null;
     public Image jail_bars;
     public Text parking_fines;
+    public GameObject CpuPanel;
 
     public void Create_player_tabs(List<Model.Player> players,Model.Board board)
     {

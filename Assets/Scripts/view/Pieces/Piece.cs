@@ -5,9 +5,7 @@ using UnityEngine;
 namespace View{
 public class Piece : MonoBehaviour
 {
-    const float SPEED = 12f;    // const movement speed
-    float var_speed;    // variable movement speed
-    float rotationSpeed;    // rotation speed
+    public static float SPEED = .6f;    // const movement speed
     int currentSquare;  // current position 0 - 39 (40 squares)
     int currentSpot; // current spot 0 - 5 (6 areas)
     [System.NonSerialized] public bool isMoving;   // bool to control the movement
@@ -16,8 +14,6 @@ public class Piece : MonoBehaviour
     {
         // sets up initial values
         isMoving = false;
-        var_speed = SPEED;
-        rotationSpeed = 8f;
         currentSpot = -1;
     }
 
@@ -69,22 +65,18 @@ public class Piece : MonoBehaviour
             {
                 Vector3 targetRotation = iterator >= 0 ? transform.right : transform.right*(-1);    // if going forward turn right else turn left
                 // while piece is not on the target square and not finished rotating
-                while(counter < path.Count && rotate(targetRotation))
+                while(counter < path.Count && rotate(targetRotation,path.Count))
                 {
-                    if(moveTo(path[counter]))
-                    {
-                        counter++;
-                    }
+                    moveTo(path[counter]);
+                    counter++;
                     yield return null;
                 }
             } else {
                 // while piece is not on the target square
                 while(counter < path.Count)
                 {
-                    if(moveTo(path[counter]))
-                    {
-                        counter++;
-                    }
+                    moveTo(path[counter]);
+                    counter++;
                     yield return null;
                 }
             }
@@ -94,7 +86,6 @@ public class Piece : MonoBehaviour
         }
         // remove the current spot from freeSpots
         _board.squares[currentSquare].removeSpotI(currentSpot);
-        var_speed = SPEED;
         isMoving = false;
     }
 
@@ -155,15 +146,12 @@ public class Piece : MonoBehaviour
         List<Vector3> path = BezierCurve(transform.position,control,target);
         int counter = 0;
         // while piece is not on the target square and not finished rotating
-        while(counter < path.Count && rotate(Vector3.right))
+        while(counter < path.Count && rotate(Vector3.right,path.Count/2))
         {
-            if(moveTo(path[counter])) // move to next point on the path
-            {
-                counter++;      // if already there increment the path point index
-            }
+            moveTo(path[counter]);
+            counter++;
             yield return null;
         }
-        var_speed = SPEED;
         isMoving = false;
     }
     public IEnumerator goToVisitJail()
@@ -182,15 +170,12 @@ public class Piece : MonoBehaviour
         List<Vector3> path = BezierCurve(transform.position,control,target);
         int counter = 0;
         // while piece is not on the target square and not finished rotating
-        while(counter < path.Count && rotate(Vector3.right))
+        while(counter < path.Count && rotate(Vector3.right,path.Count/2))
         {
-            if(moveTo(path[counter])) // move to next point on the path
-            {
-                counter++;      // if already there increment the path point index
-            }
+            moveTo(path[counter]);
+            counter++;
             yield return null;
         }
-        var_speed = SPEED;
         isMoving = false;
     }
     public IEnumerator leaveJail()
@@ -209,15 +194,12 @@ public class Piece : MonoBehaviour
         // moves piece along the curve
         int counter = 0;
         // while piece is not on the target square and not finished rotating
-        while(counter < path.Count && rotate(Vector3.right))
+        while(counter < path.Count && rotate(Vector3.right,path.Count))
         {
-            if(moveTo(path[counter]))
-            {
-                counter++;
-            }
+            moveTo(path[counter]);
+            counter++;
             yield return null;
         }
-        var_speed = SPEED;
         isMoving = false;
     }
 
@@ -226,22 +208,18 @@ public class Piece : MonoBehaviour
         return currentSquare;
     }
     
-    /// speeds up piece movement
-    public void speedUp(int x = 2)
-    {
-        var_speed = x*SPEED;
-    }
 
     // moves piece towards next position and returns true if already on the target
-    private bool moveTo(Vector3 targetPos)
+    private void moveTo(Vector3 targetPos)
     { 
-        return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,var_speed*Time.deltaTime));
+        //return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,SPEED*Time.deltaTime));
+        transform.position = targetPos;
     }
     // rotates piece towards specified direction, returns false if on the target
-    private bool rotate(Vector3 targetRotation)
+    private bool rotate(Vector3 targetRotation,int frames)
     {
         return Quaternion.Euler(targetRotation) != 
-            (transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward,targetRotation,rotationSpeed*Time.deltaTime,0.0f)));
+            (transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward,targetRotation,2f/frames,0.0f)));
     }
     // calculates bezier curve point
     private Vector3 BezierCurvePoint(Vector3 start, Vector3 control, Vector3 end, float t)
@@ -251,10 +229,11 @@ public class Piece : MonoBehaviour
     // calculates list of points of bezier curve
     private List<Vector3> BezierCurve(Vector3 start, Vector3 control, Vector3 target)
     {
-        List<Vector3> mid_positions = new List<Vector3>(31);
-        for (int i = 0; i < 30; i++)
+        List<Vector3> mid_positions = new List<Vector3>();
+        int frames = ((int)((1f/Time.smoothDeltaTime)*SPEED));
+        for (int i = 0; i < frames; i++)
         {
-            Vector3 newPosition = BezierCurvePoint(start, control, target, (float)i / 30);
+            Vector3 newPosition = BezierCurvePoint(start, control, target, (float)i / frames);
             mid_positions.Add(newPosition);
         }
         mid_positions.Add(target);

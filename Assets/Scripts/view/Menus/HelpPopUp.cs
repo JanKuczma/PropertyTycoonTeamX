@@ -10,7 +10,6 @@ namespace view.Menus
         public int text_indicator = 0; // 0 = controls, 1 = rules
         public static string controls;
         public static string rules;
-        public string message;
         
         public static HelpPopUp Create(Transform parent)
         {

@@ -83,7 +83,7 @@ public static class Asset
     public static GameObject AuctionPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/AuctionPopUp");
     public static GameObject OptionsPopUpPreFab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/InGameOptionsPopUp");
     public static GameObject LoadSavePopUpPreFab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/LoadSavePopUp");
-    public static GameObject HelpPopUpPreFab = Resources.Load<GameObject>("Prefabs/HUUD/PopUps/HelpPopUp");
+    public static GameObject HelpPopUpPreFab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/HelpPopUp");
     //themes
         // Skyboxes
     public static Material StarWarsSkyBoxMaterial = Resources.Load<Material>("Materials/StarWarsTheme/StarWarsSkyBox");
