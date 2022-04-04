@@ -727,8 +727,8 @@ public class game_controller : MonoBehaviour
                 turnState = TurnState.DICE_ROLL_EXTRA;
                 invisibleWall.SetActive(true);
             } else {
-                if(!player.isHuman && AICoroutineFinished) { StartCoroutine(AI_throw_dice()); }
-                yield return null;
+                yield return AI_throw_dice();
+                AICoroutineFinished = false; 
             }
             if(!dice.areRolling())  // if dice are not rolling anymore
             {

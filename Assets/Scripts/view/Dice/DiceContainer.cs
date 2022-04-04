@@ -36,9 +36,9 @@ public class DiceContainer : MonoBehaviour
         Vector3 targetPos = getTargetPos();
         if(transform.position.y < 1.5f || Mathf.Abs(transform.position.x) > 18.3f || Mathf.Abs(transform.position.z) > 10.5f)
         {
-            transform.position = Vector3.MoveTowards(transform.position,Vector3.up*10.0f,move_speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position,Vector3.up*10.0f,move_speed * Time.smoothDeltaTime);
         } else {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, move_speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, move_speed * Time.smoothDeltaTime);
         }
     }
     void OnMouseUp()
