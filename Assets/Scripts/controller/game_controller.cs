@@ -244,14 +244,14 @@ public class game_controller : MonoBehaviour
                 }
                 if(players[current_player].in_jail > 1) // check if a bad boy
                 {
-                    if(hud.current_main_PopUp == null)
+                    if(hud.current_main_PopUp == null && AICoroutineFinished)
                     {
                         hud.jail_bars.gameObject.SetActive(true);
                         dice.gameObject.SetActive(false);
                         hud.current_main_PopUp = PopUp.InJail(hud.transform,this);
                     }
                     if(!players[current_player].isHuman && AICoroutineFinished){
-                        StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.INJAIL));
+                        StartCoroutine(AI_take_decision(hud.current_main_PopUp,AI_trigger));
                     }
 
                 }
@@ -293,6 +293,7 @@ public class game_controller : MonoBehaviour
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                     steps = dice.get_result();  // get the result
+                    steps = 30;
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
@@ -719,6 +720,7 @@ public class game_controller : MonoBehaviour
         bool successful = false;
         hud.current_main_PopUp = PopUp.OK(hud.transform,"");
         hud.current_main_PopUp.gameObject.SetActive(false);
+        invisibleWall.SetActive(!player.isHuman);
         dice.reset();
         while(!successful)
         {
@@ -726,9 +728,9 @@ public class game_controller : MonoBehaviour
             {
                 turnState = TurnState.DICE_ROLL_EXTRA;
                 invisibleWall.SetActive(true);
-            } else {
+            }
+            else if (!player.isHuman && AICoroutineFinished) {
                 yield return AI_throw_dice();
-                AICoroutineFinished = false; 
             }
             if(!dice.areRolling())  // if dice are not rolling anymore
             {
