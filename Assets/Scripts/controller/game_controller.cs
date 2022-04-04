@@ -154,7 +154,7 @@ public class game_controller : MonoBehaviour
                 previous_gameState = gameState;
                 gameState = GameState.PAUSE;
                 pausePopUp = OptionsPopUp.Create(hud.transform);
-                pausePopUp.btn1.GetComponentInChildren<Text>().text = "Resume";
+                pausePopUp.btn1.GetComponentInChildren<TMPro.TMP_Text>().SetText("Resume");
                 pausePopUp.btn1.onClick.AddListener(delegate
                 {
                     gameState = previous_gameState;
@@ -186,7 +186,7 @@ public class game_controller : MonoBehaviour
                     });
                 }
 
-                pausePopUp.btn3.GetComponentInChildren<Text>().text = "Exit";
+                pausePopUp.btn3.GetComponentInChildren<TMPro.TMP_Text>().SetText("Exit");
                 pausePopUp.btn3.onClick.AddListener(delegate
                 {
                     Destroy(pausePopUp.gameObject);

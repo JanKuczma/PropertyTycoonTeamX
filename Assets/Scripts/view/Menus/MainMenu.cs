@@ -269,9 +269,9 @@ public class MainMenu : MonoBehaviour
         if(options) { Destroy(options); }
         OptionsPopUp popup = OptionsPopUp.Create(transform.parent);
         popup.btn1.gameObject.SetActive(false);
-        popup.btn2.GetComponentInChildren<Text>().text = "Load Game";
+        popup.btn2.GetComponentInChildren<TMP_Text>().SetText("Load Game");
         popup.btn2.onClick.AddListener(() => SaveLoadPopUp.Create(transform.parent,false));
-        popup.btn3.GetComponentInChildren<Text>().text = "OK";
+        popup.btn3.GetComponentInChildren<TMP_Text>().SetText("OK");
         popup.btn3.onClick.AddListener(popup.closePopup);
     }
 
