@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - NotTrigger
+  - GameMusic
+  - MusicVol
+  - SFXVol
+  - GameData
   layers:
   - Default
   - TransparentFX

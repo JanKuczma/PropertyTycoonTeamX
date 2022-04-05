@@ -7,6 +7,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c478297c-bc6e-4033-8891-0978a15c5cac" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PropertyTycoon/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SelectPlayers.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SelectPlayers.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/controller/temp_contr.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/controller/temp_contr.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/view/HUD/PopUps/PopUp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/view/HUD/PopUps/PopUp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/AudioManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,10 +41,19 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/view/Sound/DoNotDestory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///Users/ryandale/Documents/Github/PropertyTycoon/Assets/Scripts/view/Menus/MainMenu.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/7b/b7cb27e6/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/ryandale/Documents/Github/PropertyTycoon/Assets/Scripts/view/Menus/MainMenu.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/30/d6719f12/WaitForSecondsRealtime.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/ToggleGroup.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/3f/d0b624f0/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/DiceCatch.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/7c/e7ab7846/SceneManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/992585620d64427198ddf3a0e146773313e400/d6/479e4734/Timer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/25/bb7d0422/CursorMode.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d4bb098cce9a4793afcca824c1d0ea0113c000/7a/f0391f66/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/992585620d64427198ddf3a0e146773313e400/32/646ad0cd/IEnumerable`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/992585620d64427198ddf3a0e146773313e400/1a/81d47543/Object.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -188,6 +204,14 @@
       <workItem from="1646915459756" duration="5295000" />
       <workItem from="1646997410465" duration="10697000" />
       <workItem from="1647166306926" duration="1332000" />
+      <workItem from="1647346764357" duration="471000" />
+      <workItem from="1647350535632" duration="10887000" />
+      <workItem from="1647428068665" duration="1049000" />
+      <workItem from="1647518091877" duration="604000" />
+      <workItem from="1647525040453" duration="5287000" />
+      <workItem from="1647946277921" duration="6591000" />
+      <workItem from="1648563847511" duration="434000" />
+      <workItem from="1648632452181" duration="13762000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commits">
       <created>1644252671956</created>

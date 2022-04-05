@@ -12,6 +12,7 @@ public class GoToJailSquare : CornerSquare
         square.transform.localScale = new Vector3(1,1,1);
         square.transform.localPosition = Square.generateCoordinates(position);
         square.transform.localRotation = getRotation(position);
+        square._position = position;
         square.setName(name);
         square.assignSpots();
         return square;

@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dcb3c09585b534f4495badf69b7f3520, type: 2}
+  - {fileID: 2100000, guid: bd3d6c180516c1845ae403af0b3d9a98, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531757dc93512be43a98df49cbac517e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: {fileID: 722200341022964494}
   spots: []
   spotsIs: 
 --- !u!65 &4627427955089098848
@@ -125,6 +126,10 @@ PrefabInstance:
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 1342614435572346266, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 3287527863615794134, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
       propertyPath: m_Name
       value: goto
@@ -225,6 +230,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7897548786754002379, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 8561394054739535144, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -236,6 +245,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4543969217468200661, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
   m_PrefabInstance: {fileID: 1775590148060157588}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &722200341022964494 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1342614435572346266, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
+  m_PrefabInstance: {fileID: 1775590148060157588}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2178262163245429041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -247,6 +267,10 @@ PrefabInstance:
       propertyPath: m_text
       value: JAIL
       objectReference: {fileID: 0}
+    - target: {fileID: 1342614435572346266, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 3287527863615794134, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
       propertyPath: m_Name
       value: jail
@@ -347,6 +371,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7897548786754002379, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 6406027324204646181, guid: 3e564376234d1421f964e6b346c3bb82, type: 2}
     - target: {fileID: 8561394054739535144, guid: a009b9de7888e6b4cb82ebcb0352dca3, type: 3}
       propertyPath: m_Mesh
       value: 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 ///DICE IMPLEMENTATION NEEDS REFACTORING
@@ -10,6 +11,7 @@ public class DiceContainer : MonoBehaviour
     Vector3 previous_frame_pos; // parameter used to calculate dice velocity
     Dice[] dice;                // list for references to dice monobehaviour
     Vector3 init_pos;           // initial position of the container
+    public Light greenLight;
     [System.NonSerialized] public bool start_roll; 
     void Awake()
     {
@@ -26,19 +28,25 @@ public class DiceContainer : MonoBehaviour
     void OnMouseDown()
     {
         Cursor.SetCursor(Asset.Cursor(CursorType.GRAB),Vector2.zero,CursorMode.Auto); // on click change cursor to 'closed hand'
+        greenLight.gameObject.SetActive(false);
     }
     void OnMouseDrag()
     {   // when dragging keep recalculating velocity and move towards cursor
         previous_frame_pos = transform.position;
         Vector3 targetPos = getTargetPos();
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, move_speed * Time.deltaTime);
+        if(transform.position.y < 1.5f || Mathf.Abs(transform.position.x) > 18.3f || Mathf.Abs(transform.position.z) > 10.5f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position,Vector3.up*10.0f,move_speed * Time.smoothDeltaTime);
+        } else {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, move_speed * Time.smoothDeltaTime);
+        }
     }
     void OnMouseUp()
     {   // on mouse button release change cursor to 'poiniting hand'
         Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
         foreach (Dice d in dice)    // for each dice assign velcity
         {
-            d.roll((transform.position - previous_frame_pos)/Time.deltaTime);
+            d.roll((transform.position - previous_frame_pos)/Time.smoothDeltaTime);
         }
         start_roll = true;
         GetComponent<BoxCollider>().enabled = false;
@@ -62,6 +70,7 @@ public class DiceContainer : MonoBehaviour
     /// resets dice to initial position
     public void reset()
     {
+        greenLight.gameObject.SetActive(true);
         transform.position = init_pos;
         foreach(Dice d in dice)
         {
@@ -70,6 +79,7 @@ public class DiceContainer : MonoBehaviour
         start_roll = false;
         GetComponent<BoxCollider>().enabled = true;
         enabled = true;
+        gameObject.SetActive(true);
     }
 
     /// returns the sum of dice results
@@ -81,6 +91,19 @@ public class DiceContainer : MonoBehaviour
             result += d.get_value();
         }
         return result;
+    }
+
+    public bool is_double()
+    {
+        int i = 0;
+        int[] dice_values = new int[2];
+        foreach (Dice d in dice)
+        {
+            dice_values[i] = d.get_value();
+            i++;
+        }
+
+        return (dice_values[0] == dice_values[1]);
     }
 
     /// returns true if at least one dice is rolling
@@ -105,6 +128,28 @@ public class DiceContainer : MonoBehaviour
     public float av_distance()
     {
         return (position()-dice[0].transform.position).magnitude;
+    }
+
+    public bool belowBoard()
+    {
+        foreach(Dice d in dice)
+        {
+            if(d.transform.position.y <= 0) { return true; }
+        }
+        return false;
+    }
+
+    public void random_throw()
+    {
+        greenLight.gameObject.SetActive(false);
+        Vector3 dice_velocity = new Vector3(Random.Range(-.05f,.05f),Random.Range(-.05f,0.02f),Random.Range(-.05f,.05f))/Time.deltaTime;
+        foreach (Dice d in dice)    // for each dice assign velcity
+        {
+            d.roll(dice_velocity);
+        }
+        start_roll = true;
+        GetComponent<BoxCollider>().enabled = false;
+        enabled = false;    // disable the container
     }
 }
 }

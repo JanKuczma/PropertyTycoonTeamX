@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 /// enum types
@@ -27,8 +28,8 @@ public static class Asset
     static GameObject Chance2Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(2)");
     static GameObject Chance3Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(3)");
     //house and hotel
-    static GameObject HousePrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/House");
-    static GameObject HotelPrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/Hotel");
+    static GameObject HousePrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/HouseWithWindows");
+    static GameObject HotelPrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/HotelWithWindows");
     //pieces
     static GameObject CatPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Cat");
     static GameObject BootPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Boot");
@@ -41,10 +42,66 @@ public static class Asset
     static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
     static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
     //board and card data
-    static TextAsset classic_board_json = Resources.Load<TextAsset>("board_data");
-    static TextAsset potluck_json = Resources.Load<TextAsset>("potluck_data");
-    static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("opportunity_knocks_data");
+    static TextAsset classic_board_json = Resources.Load<TextAsset>("GameDataJSON/board_data");
+    static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
+    static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
+    //token IMGs
+    static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
+    static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
+    static Sprite bootIMG = Resources.Load<Sprite>("tokenIMGs/bootIMG");
+    static Sprite boatIMG = Resources.Load<Sprite>("tokenIMGs/boatIMG");
+    static Sprite smartphoneIMG = Resources.Load<Sprite>("tokenIMGs/phoneIMG");
+    static Sprite hatstandIMG = Resources.Load<Sprite>("tokenIMGs/hatstandIMG");
+    //token spriteSheets
+    static Sprite[] catAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/cat");
+    static Sprite[] ironAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/iron");
+    static Sprite[] bootAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/boot");
+    static Sprite[] shipAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/ship");
+    static Sprite[] phoneAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/phone");
+    static Sprite[] standAnim = Resources.LoadAll<Sprite>("TokenSpriteSheets/stand");
+    //property cards
+    public static GameObject PropertyCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/PropertyCard");
+    static GameObject WaterCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/WaterCard");
+    static GameObject BulbCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/BulbCard");
+    public static GameObject StationCard = Resources.Load<GameObject>("Prefabs/HUD/PropertyCards/StationCard");
 
+    //HUD components
+    public static GameObject hud = Resources.Load<GameObject>("Prefabs/HUD/hud");
+    static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
+    //Pop Ups
+    public static GameObject OkPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/OkPopUp");
+    public static GameObject InJailPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/InJailPrefab");
+    public static GameObject PayRentPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PayRentPopUp");
+    public static GameObject MessagePopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/MessagePopUp");
+    public static GameObject BuyPropertyPopup = Resources.Load<GameObject>("Prefabs/HUD/PopUps/BuyPropertyPopUp");
+    public static GameObject GoToJailPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/GoToJailPopUp");
+    static GameObject PropertyManagerPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/PropertyManagerPopUp");
+    public static GameObject ManageUtilityPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManageUtilityPopUp");
+    public static GameObject ManagePropertyPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManagePropertyPopUp");
+    public static GameObject CardActionPopUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionPopUp");
+    public static GameObject CardActionPopWithOptionsUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionWithOptionsPopUp");
+    public static GameObject AuctionPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/AuctionPopUp");
+    public static GameObject OptionsPopUpPreFab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/InGameOptionsPopUp");
+    public static GameObject LoadSavePopUpPreFab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/LoadSavePopUp");
+    public static GameObject HelpPopUpPreFab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/HelpPopUp");
+    //themes
+        // Skyboxes
+    public static Material StarWarsSkyBoxMaterial = Resources.Load<Material>("Materials/StarWarsTheme/StarWarsSkyBox");
+    public static GameObject Kitchen = Resources.Load<GameObject>("Prefabs/Enviornment/Kitchen");
+    public static GameObject Walls = Resources.Load<GameObject>("Prefabs/Enviornment/InvisibleWalls");
+        // game elements
+    public static Material StarWarsThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
+    public static Material StarWarsPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");
+    public static Material StarWarsOppKnocksMaterial = Resources.Load<Material>("Materials/StarWarsTheme/chanceCard");
+    public static Material ClassicThemeMaterial = Resources.Load<Material>("Materials/StarWarsTheme/theme");
+    public static Material ClassicPotLuckMaterial = Resources.Load<Material>("Materials/StarWarsTheme/communityCard");
+    public static Material ClassicOppKnocksMaterial = Resources.Load<Material>("Materials/StarWarsTheme/chanceCard");
+        //chance/oppknocks card IMGs
+    public static Sprite ClassicOppKnocksIMG = Resources.Load<Sprite>("Textures/Communitychestcard");
+    public static Sprite ClassicChangeIMG = Resources.Load<Sprite>("Textures/chancecard");
+    public static Sprite StarWarsOppKnocksIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/Communitychestcard-starwars copy");
+    public static Sprite StarWarsChangeIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/chance-starwars copy");
+    
 
     public static GameObject Board(SqType type,string variant = "")
     {
@@ -64,6 +121,11 @@ public static class Asset
     public static GameObject Board()
     {
         return BoardPrefab;
+    }
+
+    public static GameObject UtilityCard(string variant)
+    {
+        return variant == "TESLA POWER CO" ? BulbCard : WaterCard;
     }
 
     public static GameObject Piece(Token token)
@@ -112,5 +174,37 @@ public static class Asset
     public static GameObject Hotel()
     {
         return HotelPrefab;
+    }
+
+    public static Sprite TokenIMG(Token token)
+    {
+        return  token == Token.CAT ? catIMG :
+                token == Token.SHIP ? boatIMG :
+                token == Token.IRON ? ironIMG :
+                token == Token.SMARTPHONE ? smartphoneIMG :
+                token == Token.HATSTAND ? hatstandIMG :
+                token == Token.BOOT ? bootIMG :
+                null;
+    }
+
+    public static Sprite[] TokenAnim(Token token)
+    {
+        return  token == Token.CAT ? catAnim :
+                token == Token.SHIP ? shipAnim :
+                token == Token.IRON ? ironAnim :
+                token == Token.SMARTPHONE ? phoneAnim :
+                token == Token.HATSTAND ? standAnim :
+                token == Token.BOOT ? bootAnim :
+                null;
+    }
+
+    public static GameObject playerTab()
+    {
+        return playerTabPrefab;
+    }
+
+    public static GameObject propertyManager()
+    {
+        return PropertyManagerPrefab;
     }
 }

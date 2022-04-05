@@ -6,10 +6,12 @@ public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=
 namespace View{
 public class PropertySquare : Square
 {
+    public TextMeshPro amount;
     Group _group;
     string _price;
     List<GameObject> houses = new List<GameObject>();
     Vector3[] houses_spots = new Vector3[5];
+    public GameObject ribbon;
 
     public static PropertySquare Create(Transform parent, int position, string name,string price,Group group)
     {
@@ -18,7 +20,9 @@ public class PropertySquare : Square
         square.transform.localPosition = Square.generateCoordinates(position);
         square.transform.localRotation = getRotation(position);
         square.setName(name);
+        square._position = position;
         square.assignSpots();
+        square.assignHousesSpots();
         square.setPrice(price);
         square.setGroup(group);
         return square;
@@ -27,14 +31,14 @@ public class PropertySquare : Square
     {
         _group = group;
         Color color;
-        if ( ColorUtility.TryParseHtmlString("#"+((int)group).ToString("X")+"FF", out color))
+        if ( ColorUtility.TryParseHtmlString("#"+((int)group).ToString("X6")+"FF", out color))
         { GetComponent<Renderer>().materials[1].SetColor("_Color",color); }
     }
     
     public void setPrice(string price)
     {
         _price = price;
-        GetComponentsInChildren<TextMeshPro>()[1].SetText("£"+price);
+        GetComponentsInChildren<TextMeshPro>()[1].SetText(price+"Q");
     }
 
     public void addHouse()
@@ -44,7 +48,6 @@ public class PropertySquare : Square
             GameObject house = Instantiate(Asset.House(),transform);
             houses.Add(house);
             house.transform.localPosition = houses_spots[houses.Count-1];
-            house.transform.localRotation = getRotation(_position);
         }
         else if(houses.Count == 4)
         {
@@ -55,7 +58,6 @@ public class PropertySquare : Square
             GameObject hotel = Instantiate(Asset.Hotel(),transform);
             houses.Add(hotel);
             hotel.transform.localPosition = houses_spots[4];
-            hotel.transform.localRotation = getRotation(_position);
         }
     }
     public void removeHouse()
@@ -76,9 +78,20 @@ public class PropertySquare : Square
                 GameObject house = Instantiate(Asset.House(),transform);
                 houses.Add(house);
                 house.transform.localPosition = houses_spots[i];
-                house.transform.localRotation = getRotation(_position);
             }
         }
+    }
+
+    public void showRibbon(Color color)
+    {
+        ribbon.SetActive(true);
+        color.a = 150f/255f;
+        ribbon.GetComponent<Renderer>().material.SetColor("_Color",color);
+    }
+
+    public void removeRibbon()
+    {
+        ribbon.SetActive(false);
     }
     override protected void assignSpots()
     {
@@ -95,11 +108,11 @@ public class PropertySquare : Square
     private void assignHousesSpots()
     {
 
-        houses_spots[0] = transform.forward*(-1) + transform.right*(.6f);
-        houses_spots[1] = transform.forward*(-1) + transform.right*(.2f);
-        houses_spots[2] = transform.forward*(-1) + transform.right*(-.2f);
-        houses_spots[3] = transform.forward*(-1) + transform.right*(-.6f);
-        houses_spots[4] = transform.forward*(-1);
+        houses_spots[0] = new Vector3(.54f, .06f, -1);
+        houses_spots[1] = new Vector3(.18f, .06f, -1);
+        houses_spots[2] = new Vector3(-.18f, .06f, -1);
+        houses_spots[3] = new Vector3(-.54f, .06f, -1);
+        houses_spots[4] = new Vector3(0, .06f, -1);
     }
     
 }

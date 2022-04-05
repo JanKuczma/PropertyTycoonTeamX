@@ -1,10 +1,13 @@
 using UnityEngine;
+using TMPro;
 
 namespace View {
 public class Board : MonoBehaviour
 {
     [System.NonSerialized] public Square[] squares; // list for squares references
     [System.NonSerialized] public JailSquare jail;    // parameter for jail square reference
+    public GameObject opp_knock_stack;
+    public GameObject potluck_stack;
 
     void Awake()
     {
@@ -22,12 +25,28 @@ public class Board : MonoBehaviour
             {
                 case SqType.PROPERTY:
                 board.squares[sp.position-1] = PropertySquare.Create(board.transform, sp.position,sp.name,((Model.Space.Property)sp).cost.ToString(),((Model.Space.Property)sp).group);
+                if(((Model.Space.Property)(sp)).owner != null)
+                {
+                    ((PropertySquare)(board.squares[sp.position-1])).showRibbon(((Model.Space.Property)(sp)).owner.Color());
+                    for(int i = 0; i < ((Model.Space.Property)(sp)).noOfHouses;i++)
+                    {
+                        ((PropertySquare)(board.squares[sp.position-1])).addHouse();
+                    }
+                }
                 break;
                 case SqType.STATION:
                 board.squares[sp.position-1] = UtilitySquare.Create(sp.type,board.transform, sp.position,sp.name,((Model.Space.Station)sp).cost.ToString());
+                if(((Model.Space.Station)(sp)).owner != null)
+                {
+                    ((UtilitySquare)(board.squares[sp.position-1])).showRibbon(((Model.Space.Station)(sp)).owner.Color());
+                }
                 break;
                 case SqType.UTILITY:
                 board.squares[sp.position-1] = UtilitySquare.Create(sp.type,board.transform, sp.position,sp.name,((Model.Space.Utility)sp).cost.ToString());
+                if(((Model.Space.Utility)(sp)).owner != null)
+                {
+                    ((UtilitySquare)(board.squares[sp.position-1])).showRibbon(((Model.Space.Utility)(sp)).owner.Color());
+                }
                 break;
                 case SqType.TAX:
                 board.squares[sp.position-1] = TaxSquare.Create(board.transform, sp.position,sp.name,((Model.Space.Tax)sp).amount.ToString());
@@ -55,6 +74,32 @@ public class Board : MonoBehaviour
             }
         }
         return board;
+    }
+
+    public void loadTheme(string theme = "classic")
+    {
+        if(theme == "starwars")
+        {
+            GetComponent<MeshRenderer>().material = Asset.StarWarsThemeMaterial;
+            opp_knock_stack.GetComponent<MeshRenderer>().material = Asset.StarWarsOppKnocksMaterial;
+            potluck_stack.GetComponent<MeshRenderer>().material = Asset.StarWarsPotLuckMaterial;
+            foreach(Square square in squares)
+            {
+                square.GetComponent<MeshRenderer>().material = Asset.StarWarsThemeMaterial; //237f/255f,238f/255f,181f/255f
+                square.GetComponentsInChildren<TextMeshPro>()[0].color = new Color(237f/255f,238f/255f,181f/255f);
+                if(square.GetComponentsInChildren<TextMeshPro>().Length > 1) { square.GetComponentsInChildren<TextMeshPro>()[1].color = new Color(237f/255f,238f/255f,181f/255f); }
+            }
+        } else {
+            GetComponent<MeshRenderer>().material = Asset.ClassicThemeMaterial;
+            opp_knock_stack.GetComponent<MeshRenderer>().material = Asset.ClassicOppKnocksMaterial;
+            potluck_stack.GetComponent<MeshRenderer>().material = Asset.ClassicPotLuckMaterial;
+            foreach(Square square in squares)
+            {
+                square.GetComponent<MeshRenderer>().materials[0] = Asset.ClassicThemeMaterial;
+                square.GetComponentsInChildren<TextMeshPro>()[0].color = new Color(31f/255f, 31f/255f,31f/255f);
+                if(square.GetComponentsInChildren<TextMeshPro>().Length > 1) { square.GetComponentsInChildren<TextMeshPro>()[1].color = new Color(31f/255f,31f/255f,31f/255f); }
+            }
+        }
     }
 }
 }
