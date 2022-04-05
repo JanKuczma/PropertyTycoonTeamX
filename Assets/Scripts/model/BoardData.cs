@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 namespace Model
@@ -23,55 +24,9 @@ namespace Model
             public int hotel_cost;
         }
 
-        public static Board loadBoard(string json_format)
+        public static Board LoadBoard()
         {
-            BoardWrapper boardData = JsonUtility.FromJson<BoardWrapper>(json_format);
-            Board board = new Board();
-            foreach (SpaceWrapper sD in boardData.spaces)
-            {
-                SqType type = (SqType) System.Enum.Parse(typeof(SqType), sD.type_action);
-                switch (type)
-                {
-                    case SqType.PROPERTY:
-                        board.spaces[sD.position - 1] = new Space.Property(sD.position, sD.name, sD.cost_amount,
-                            (Group) System.Enum.Parse(typeof(Group), sD.group), sD.rents, sD.house_cost, sD.hotel_cost);
-                        break;
-                    case SqType.STATION:
-                        board.spaces[sD.position - 1] =
-                            new Space.Station(sD.position, sD.name, sD.cost_amount, sD.rents);
-                        break;
-                    case SqType.UTILITY:
-                        board.spaces[sD.position - 1] =
-                            new Space.Utility(sD.position, sD.name, sD.cost_amount, sD.rents);
-                        break;
-                    case SqType.TAX:
-                        board.spaces[sD.position - 1] = new Space.Tax(sD.position, sD.name, sD.cost_amount);
-                        break;
-                    case SqType.POTLUCK:
-                        board.spaces[sD.position - 1] = new Space.PotLuck(sD.position, sD.name);
-                        break;
-                    case SqType.CHANCE:
-                        board.spaces[sD.position - 1] = new Space.Chance(sD.position, sD.name);
-                        break;
-                    case SqType.GO:
-                        board.spaces[sD.position - 1] = new Space.Go(sD.position, sD.name, sD.cost_amount);
-                        break;
-                    case SqType.PARKING:
-                        board.spaces[sD.position - 1] = new Space.FreeParking(sD.position, sD.name);
-                        break;
-                    case SqType.GOTOJAIL:
-                        board.spaces[sD.position - 1] = new Space.GoToJail(sD.position, sD.name);
-                        break;
-                    case SqType.JAILVISIT:
-                        board.spaces[sD.position - 1] = new Space.VisitJail(sD.position, sD.name);
-                        break;
-                }
-            }
-            return board;
-        }
-
-        public static Board LoadCustom()
-        {
+            Debug.Log("Running LoadCustom()");
             var defaultBoard = Asset.board_data_json();
             var customBoard = Asset.custom_board_data();
             var board = new Board();
@@ -88,7 +43,7 @@ namespace Model
                     }
                 }
             }
-
+            
             foreach (var space in defaultBoardWrapper.spaces)
             {
                 SqType type = (SqType) System.Enum.Parse(typeof(SqType), space.type_action);
@@ -129,7 +84,6 @@ namespace Model
                         break;
                 }
             }
-
             return board;
         }
     }
