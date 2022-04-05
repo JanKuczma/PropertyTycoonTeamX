@@ -16,10 +16,10 @@ public class SaveLoadPopUp : MonoBehaviour
     {
         SaveLoadPopUp popUp = Instantiate(Asset.LoadSavePopUpPreFab,parent).GetComponent<SaveLoadPopUp>();
         if(saveMode) { 
-            popUp.LoadSave.GetComponentInChildren<Text>().text = "Save";
+            popUp.LoadSave.GetComponentInChildren<TMPro.TMP_Text>().SetText("Save");
             popUp.LoadSave.onClick.AddListener(popUp.save);
         } else {
-            popUp.LoadSave.GetComponentInChildren<Text>().text = "Load"; 
+            popUp.LoadSave.GetComponentInChildren<TMPro.TMP_Text>().SetText("Load"); 
             popUp.LoadSave.onClick.AddListener(popUp.load);
         }
         return popUp;

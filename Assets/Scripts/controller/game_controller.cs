@@ -154,7 +154,7 @@ public class game_controller : MonoBehaviour
                 previous_gameState = gameState;
                 gameState = GameState.PAUSE;
                 pausePopUp = OptionsPopUp.Create(hud.transform);
-                pausePopUp.btn1.GetComponentInChildren<Text>().text = "Resume";
+                pausePopUp.btn1.GetComponentInChildren<TMPro.TMP_Text>().SetText("Resume");
                 pausePopUp.btn1.onClick.AddListener(delegate
                 {
                     gameState = previous_gameState;
@@ -186,7 +186,7 @@ public class game_controller : MonoBehaviour
                     });
                 }
 
-                pausePopUp.btn3.GetComponentInChildren<Text>().text = "Exit";
+                pausePopUp.btn3.GetComponentInChildren<TMPro.TMP_Text>().SetText("Exit");
                 pausePopUp.btn3.onClick.AddListener(delegate
                 {
                     Destroy(pausePopUp.gameObject);
@@ -743,7 +743,7 @@ public class game_controller : MonoBehaviour
                 } else if (dice.is_double())
                 {
                     successful = true;
-                    Destroy(hud.current_main_PopUp.gameObject);
+                    if(hud.current_main_PopUp != null) { Destroy(hud.current_main_PopUp.gameObject); }
                     MessagePopUp.Create(hud.transform,"You go free!",4);
                     players[current_player].in_jail = 0;
                     StartCoroutine(pieces[players[current_player]].leaveJail());
@@ -751,7 +751,7 @@ public class game_controller : MonoBehaviour
                     turnState = TurnState.MANAGE_PROPERTIES;
                 } else {
                     successful = true;
-                    Destroy(hud.current_main_PopUp.gameObject);
+                    if(hud.current_main_PopUp != null) { Destroy(hud.current_main_PopUp.gameObject); }
                     MessagePopUp.Create(hud.transform,"You stay in Jail!",4);
                     players[current_player].in_jail -= 1;
                     turnState = TurnState.MANAGE_PROPERTIES;
@@ -1068,7 +1068,7 @@ public class game_controller : MonoBehaviour
                 }
             }
             if(hud.currentManager != null && successful) { if(hud.currentManager.player == player) {hud.currentManager.setUpCards(player,hud.propertyCards,false);} }
-            if(successful) { yield return new WaitForSeconds(1.5f); } else {yield return null;}
+            if(successful) { hud.UpdateInfo(this); yield return new WaitForSeconds(1.5f); } else {yield return null;}
         }
         if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
         yield break;
