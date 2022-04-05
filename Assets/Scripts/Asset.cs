@@ -1,4 +1,8 @@
+using System;
+using System.IO;
+using System.Linq.Expressions;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 /// enum types
@@ -45,6 +49,8 @@ public static class Asset
     static TextAsset classic_board_json = Resources.Load<TextAsset>("GameDataJSON/board_data");
     static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
     static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
+
+    static TextAsset custom_board_json = Resources.Load<TextAsset>("Assets/CustomData/custom_board_data");
     //token IMGs
     static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
     static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
@@ -164,6 +170,19 @@ public static class Asset
     public static string opportunity_knocks_data_json()
     {
         return opportunity_knocks_json.ToString();
+    }
+
+    public static string custom_board_data()
+    {
+        try
+        {
+            return custom_board_json.ToString();
+        }
+        catch (NullReferenceException e)
+        {
+            Debug.Log("Error. Loading default data.");
+            return board_data_json();
+        }
     }
 
         public static GameObject House()
