@@ -1,0 +1,480 @@
+{
+  "spaces": [
+    {
+      "position": 2,
+      "name": "HARROW AND WEALDSTONE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "BROWN",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 4,
+      "name": "KENTON",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "BROWN",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 7,
+      "name": "VICTORIA",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "BLUE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 9,
+      "name": "OXFORD CIRCUS",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "BLUE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 10,
+      "name": "EUSTON",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "BLUE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 12,
+      "name": "HARROW ON THE HILL",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "PURPLE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 14,
+      "name": "FINCHLEY ROAD",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "PURPLE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 15,
+      "name": "KINGS CROSS",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "PURPLE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 17,
+      "name": "ORANGE ONE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "ORANGE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 19,
+      "name": "ORANGE TWO",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "ORANGE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 20,
+      "name": "ORANGE THREE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "ORANGE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 22,
+      "name": "YELLOW ONE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "YELLOW",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 24,
+      "name": "YELLOW TWO",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "YELLOW",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 25,
+      "name": "YELLOW THREE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "YELLOW",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 27,
+      "name": "RED ONE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "RED",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 28,
+      "name": "RED TWO",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "RED",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 30,
+      "name": "RED THREE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "RED",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 32,
+      "name": "GREEN ONE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "GREEN",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 33,
+      "name": "GREEN TWO",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "GREEN",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 35,
+      "name": "GREEN THREE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "GREEN",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 38,
+      "name": "INDIGO ONE",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "DEEPBLUE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 40,
+      "name": "INDIGO TWO",
+      "type_action": "PROPERTY",
+      "cost_amount": 0,
+      "group": "DEEPBLUE",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 13,
+      "name": "U1",
+      "type_action": "UTILITIES",
+      "cost_amount": 0,
+      "group": "",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 29,
+      "name": "U2",
+      "type_action": "UTILITIES",
+      "cost_amount": 0,
+      "group": "",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 6,
+      "name": "S1",
+      "type_action": "STATIONS",
+      "cost_amount": 0,
+      "group": "",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 16,
+      "name": "S2",
+      "type_action": "STATIONS",
+      "cost_amount": 0,
+      "group": "",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 26,
+      "name": "S3",
+      "type_action": "STATIONS",
+      "cost_amount": 0,
+      "group": "",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    },
+    {
+      "position": 36,
+      "name": "S4",
+      "type_action": "STATIONS",
+      "cost_amount": 0,
+      "group": "",
+      "rents": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "house_cost": 0,
+      "hotel_cost": 0
+    }
+  ]
+}
