@@ -293,7 +293,6 @@ public class game_controller : MonoBehaviour
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                     steps = dice.get_result();  // get the result
-                    steps = 30;
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
