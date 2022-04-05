@@ -27,7 +27,6 @@ namespace Model
 
         public static Board LoadBoard()
         {
-            Debug.Log("Running LoadCustom()");
             var defaultBoard = Asset.board_data_json();
             var customBoard = Asset.custom_board_data();
             var board = new Board();
@@ -86,11 +85,6 @@ namespace Model
                         board.spaces[space.position - 1] = new Space.VisitJail(space.position, space.name);
                         break;
                 }
-            }
-
-            foreach (var s in board.spaces)
-            {
-                Debug.Log(s);
             }
             return board;
         }
