@@ -103,7 +103,6 @@ button:hover {
         <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameBlue0"></p>
         <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameBlue1"></p>
         <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameBlue2"></p>
-        <button style="float:right;" onclick="complete()">Submit</button>
     </div>
     <!--    Emulate the names of the previous groups-->
     <div class="tab">Purple Group:
@@ -242,102 +241,25 @@ function nextPrev(n, last) {
     var greenNumbers = [32, 33, 35]
     var indigoNumbers = [38, 40]
     
-    var propertyNumbers = [brownNumbers, blueNumbers, purpleNumbers, orangeNumbers, yellowNumbers, redNumbers, 
-        greenNumbers, indigoNumbers]
-    
     //Station positions
     stationNumbers = [6, 16, 26, 36]
     
     //Utilities
     utilityNumbers = [13, 29]
-   
+    
+    var propertyNumbers = [brownNumbers, blueNumbers, purpleNumbers, orangeNumbers, yellowNumbers, redNumbers, 
+        greenNumbers, indigoNumbers, utilityNumbers, stationNumbers]
+      
     for (i = 0; i < amountOfProperties; i++) {
     
         var nameId = "PropertyName" + name + i
         var nameValue = document.getElementById(nameId).value
         
-        // Adding dummy values so they can be edited externally.
-        // (Probably) more efficient than adding new elements at game run-time.
-        var dummy = 0
-        if(name == "Utilities") {
-            var u = "UTILITIES"
-            var space = {
-            position : utilityNumbers[i],
-            name: nameValue.toUpperCase(),
-            type_action: u,
-            cost_amount: dummy,
-            group: "",
-            rents: [
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy
-            ],
-            house_cost: dummy,
-            hotel_cost: dummy  
-            }
-        } else if(name == "Stations") {
-            var u = "STATIONS"
-            var space = {
-            position : stationNumbers[i],
-            name: nameValue.toUpperCase(),
-            type_action: u,
-            cost_amount: dummy,
-            group: "",
-            rents: [
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy,
-                dummy
-            ],
-            house_cost: dummy,
-            hotel_cost: dummy  
-            }
-        } else {
-            var u = "PROPERTY"
-            if(groupPages[n].name == "Indigo") {
-                var space = {
-                position : propertyNumbers[n][i],
-                name: nameValue.toUpperCase(),
-                type_action: u,
-                cost_amount: dummy,
-                group: "DEEPBLUE",
-                rents: [
-                    dummy,
-                    dummy,
-                    dummy,
-                    dummy,
-                    dummy,
-                    dummy
-                ],
-                house_cost: dummy,
-                hotel_cost: dummy  
-                }
-            }
-            else {
-                var space = {
-                position : propertyNumbers[n][i],
-                name: nameValue.toUpperCase(),
-                type_action: u,
-                cost_amount: dummy,
-                group: groupPages[n].name.toUpperCase(),
-                rents: [
-                    dummy,
-                    dummy,
-                    dummy,
-                    dummy,
-                    dummy,
-                    dummy
-                ],
-                house_cost: dummy,
-                hotel_cost: dummy  
-                }
-            }
+        var space = {
+        position : propertyNumbers[n][i],
+        name: nameValue.toUpperCase(), 
         }
+        
         groups.push(space)
     }
    
