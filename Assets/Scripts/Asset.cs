@@ -50,7 +50,7 @@ public static class Asset
     static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
     static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
 
-    static TextAsset custom_board_json = Resources.Load<TextAsset>("Assets/CustomData/custom_board_data");
+    static TextAsset custom_board_json = Resources.Load<TextAsset>("CustomData/custom_board_data");
     //token IMGs
     static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
     static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
