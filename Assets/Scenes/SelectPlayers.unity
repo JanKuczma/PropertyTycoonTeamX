@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -582,12 +582,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1841086486}
     m_Modifications:
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1841086487}
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: GoToMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_text
@@ -1439,12 +1447,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1841086486}
     m_Modifications:
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1841086487}
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: StartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_text

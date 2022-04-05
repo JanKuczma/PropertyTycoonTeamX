@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -144,11 +144,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_text
-      value: Custimise Board...
+      value: Customise Board...
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_fontSizeMax
@@ -356,8 +356,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 3187671040
-  m_fontColor: {r: 0, g: 0, b: 0, a: 0.74509805}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -491,8 +491,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -610,14 +610,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7231455, g: 0.8962264, b: 0.71444464, a: 1}
+  m_Color: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 982549adf4c01427990c0ac23293979e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -710,12 +710,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1490586896}
     m_Modifications:
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1841086487}
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangeTheme
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_text
@@ -903,8 +911,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -979,12 +987,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1841086486}
     m_Modifications:
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1841086487}
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: GoToPlayerSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_text
@@ -1156,8 +1172,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1365,12 +1381,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 481872661}
     m_Modifications:
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1841086487}
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ChangeGameMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6701722035844339170, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_text
