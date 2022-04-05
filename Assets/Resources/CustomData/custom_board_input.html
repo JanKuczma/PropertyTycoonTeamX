@@ -205,6 +205,10 @@ var groupPages = [
 
 var groups = []
 
+function completed() {
+    var x = document.getElementsByClassName("tab");
+    x[10].style.display = "block";
+}
 
 function showTab(n) {
   // This function will display the specified tab of the form...
@@ -224,7 +228,6 @@ function showTab(n) {
   fixStepIndicator(n)
 }
 
-//Could be cleaner, will refactor if there's time 
 function nextPrev(n, last) {
     
     var name = groupPages[n].name
@@ -288,7 +291,7 @@ function nextPrev(n, last) {
 }
 
 function complete() {
-nextPrev(currentTab, true)
+//nextPrev(currentTab, true)
 var s = "spaces"
 var obj = {
     spaces: groups
@@ -304,6 +307,12 @@ var json = JSON.stringify(obj, null, 2);
   anchor.href = window.URL.createObjectURL(blob);
   anchor.innerHTML = "download"
   anchor.click();
+  
+  var win = window.open("", "Submit", "width=400,height=300");
+var doc = win.document;
+    doc.open("text/html");
+    doc.write("Form submitted!");
+    doc.close();
 
 }
 
