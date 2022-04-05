@@ -88,7 +88,7 @@ public class GameData : MonoBehaviour
         public static void saveGame(string slot_name, GameData gameData)
         {
             GameDataWrapper data = new GameDataWrapper();
-            data.saveDate = System.DateTime.Today.Date.Day.ToString("D2")+"/"+System.DateTime.Today.Date.Month.ToString("D2")+"/"+System.DateTime.Today.Date.Year.ToString("D4");
+            data.saveDate = System.DateTime.Now.ToString("dd MMM yyyy\nhh:mm tt");
             data.starWarsTheme = gameData.starWarsTheme;
             data.turboGame = gameData.turboGame;
             data.board_model = gameData.board_model;

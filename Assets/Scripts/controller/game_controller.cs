@@ -1068,7 +1068,7 @@ public class game_controller : MonoBehaviour
                 }
             }
             if(hud.currentManager != null && successful) { if(hud.currentManager.player == player) {hud.currentManager.setUpCards(player,hud.propertyCards,false);} }
-            if(successful) { yield return new WaitForSeconds(1.5f); } else {yield return null;}
+            if(successful) { hud.UpdateInfo(this); yield return new WaitForSeconds(1.5f); } else {yield return null;}
         }
         if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
         yield break;

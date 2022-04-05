@@ -18,8 +18,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] public AudioMixerGroup soundMixerGroup;
     [SerializeField] public Sound[] sounds;
     private string CurrentMusicID;
-    public static float musicVolume = 1f;
-    public static float sfxVolume = 1f;
+    public static float musicVolume = .5f;
+    public static float sfxVolume = .7f;
     public Button[] currentButtons;
     public Dictionary<Button,bool> clickedButtons;
 
@@ -49,6 +49,12 @@ public class SoundManager : MonoBehaviour
                 s.source.Play();
             }
         }
+    }
+
+    void Start()
+    {
+        musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicVolume) * 20);
+        soundMixerGroup.audioMixer.SetFloat("SFX Volume", Mathf.Log10(sfxVolume) * 20);
     }
 
     public void AddButtonClicks()
