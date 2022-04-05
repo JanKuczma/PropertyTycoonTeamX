@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f1f1;
+}
+
+#regForm {
+  background-color: #ffffff;
+  margin: 100px auto;
+  font-family: Raleway;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+
+h1 {
+  text-align: center;
+  font-family: Raleway  
+}
+
+input {
+  padding: 10px;
+  width: 100%;
+  font-size: 17px;
+  font-family: Raleway;
+  border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+button {
+  background-color: #BFDBAE;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-family: Raleway;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#prevBtn {
+  background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #BFDBAE;
+  border: none;  
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #04AA6D;
+  
+.tab {
+    font-size: 17px;
+    font-family: Raleway;
+}
+}
+</style>
+<body>
+
+<!--Check board action here-->
+<form id="Board Data">
+    <h1>Board Data:</h1>
+    <!-- One "tab" for each step in the form: -->
+    <!--    Maybe add a new tab with a wizard-like intro and some information about how rents scale with prices-->
+    <div class="tab">Brown Group:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname0" id="PropertyNameBrown0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameBrown1"></p>
+    </div>
+    <div class="tab">Blue Group:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameBlue0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameBlue1"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameBlue2"></p>
+    </div>
+    <!--    Emulate the names of the previous groups-->
+    <div class="tab">Purple Group:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNamePurple0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNamePurple1"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNamePurple2"></p>
+    </div>
+    <div class="tab">Orange Group:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameOrange0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameOrange1"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameOrange2"></p>
+    </div>
+    <div class="tab">Yellow Group:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameYellow0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameYellow1"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameYellow2"></p>
+    </div>
+    <div class="tab">Red Group:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameRed0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameRed1"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameRed2"></p>
+    </div>
+    <div class="tab">Green Group:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameGreen0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameGreen1"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameGreen2"></p>
+    </div>
+    <!--    Deep Blue (can't contain spaces)-->
+    <div class="tab">Indigo Group:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameIndigo0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameIndigo1"></p>
+    </div>
+    <div class="tab">Utilities:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameUtilities0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameUtilities1"></p>
+    </div>
+    <div class="tab">Stations:
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameStations0"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameStations1"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameStations2"></p>
+        <p><input placeholder="Property name..." oninput="this.className = ''" name="fname" id="PropertyNameStations3"></p>
+        <button style="float:right;" onclick="complete()">Submit</button>
+    </div>
+    <div style="overflow:auto;">
+        <div style="float:right;">
+            <button type="button" id="prevBtn" onclick="nextPrev(currentTab - 1)">Previous</button>
+            <button type="button" id="nextBtn" onclick="nextPrev(currentTab)">Next</button>
+        </div>
+    </div>
+    <!-- Circles which indicates the steps of the form: -->
+    <div style="text-align:center;margin-top:40px;">
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+    </div>
+</form>
+
+<script>
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
+var groupPages = [
+
+    {name: "Brown",
+     properties: 2, },
+     
+    {name: "Blue",
+     properties: 3 },
+     
+    {name: "Purple",
+     properties: 3 },
+     
+     {name: "Orange",
+     properties: 3},
+     
+     {name: "Yellow",
+     properties: 3},
+     
+     {name: "Red",
+     properties: 3},
+     
+     {name: "Green",
+     properties: 3},
+     
+     {name: "Indigo",
+     properties: 2},
+     
+     {name: "Utilities",
+     properties: 2},
+     
+     {name: "Stations",
+     properties: 4},
+]
+
+var groups = []
+
+function completed() {
+    var x = document.getElementsByClassName("tab");
+    x[10].style.display = "block";
+}
+
+function showTab(n) {
+  // This function will display the specified tab of the form...
+  var x = document.getElementsByClassName("tab");
+  x[n].style.display = "block";
+  //... and fix the Previous/Next buttons:
+  if (n == 0) {
+    document.getElementById("prevBtn").style.display = "none";
+  } else {
+    document.getElementById("prevBtn").style.display = "inline";
+  }
+  if(n == 9) {
+    document.getElementById("nextBtn").style.display = "none";
+  }
+  
+  //... and run a function that will display the correct step indicator:
+  fixStepIndicator(n)
+}
+
+function nextPrev(n, last) {
+    
+    var name = groupPages[n].name
+    var amountOfProperties = groupPages[n].properties
+    var spaces = []
+    
+    //Property positions
+    var brownNumbers = [2, 4]
+    var blueNumbers = [7, 9, 10]
+    var purpleNumbers = [12, 14, 15]
+    var orangeNumbers = [17, 19, 20]
+    var yellowNumbers = [22, 24, 25]
+    var redNumbers = [27, 28, 30]
+    var greenNumbers = [32, 33, 35]
+    var indigoNumbers = [38, 40]
+    
+    //Station positions
+    stationNumbers = [6, 16, 26, 36]
+    
+    //Utilities
+    utilityNumbers = [13, 29]
+    
+    var propertyNumbers = [brownNumbers, blueNumbers, purpleNumbers, orangeNumbers, yellowNumbers, redNumbers, 
+        greenNumbers, indigoNumbers, utilityNumbers, stationNumbers]
+      
+    for (i = 0; i < amountOfProperties; i++) {
+    
+        var nameId = "PropertyName" + name + i
+        var nameValue = document.getElementById(nameId).value
+        
+        var space = {
+        position : propertyNumbers[n][i],
+        name: nameValue.toUpperCase(), 
+        }
+        
+        groups.push(space)
+    }
+   
+    if(last) {
+        return;
+    }
+                    
+    // This function will figure out which tab to display
+  var x = document.getElementsByClassName("tab");
+  // Exit the function if any field in the current tab is invalid:
+  if (n == 1 && !validateForm()) return false;
+  // Hide the current tab:
+  x[currentTab].style.display = "none";
+  // Increase or decrease the current tab by 1:
+  //currentTab = currentTab + n;
+  // if you have reached the end of the form...
+  if (currentTab >= x.length) {
+    // ... the form gets submitted:
+    document.getElementById("regForm").submit();
+    complete()
+    return false;
+  }
+  // Otherwise, display the correct tab:
+   currentTab += 1
+  showTab(currentTab)
+}
+
+function complete() {
+//nextPrev(currentTab, true)
+var s = "spaces"
+var obj = {
+    spaces: groups
+}
+var json = JSON.stringify(obj, null, 2);
+   var blob = new Blob([json], {
+    type: "Assets/Resources/GameDataJSON"
+  });
+  console.log(blob);
+
+  var anchor = document.createElement('a')
+  anchor.download = "custom_board_data.json";
+  anchor.href = window.URL.createObjectURL(blob);
+  anchor.innerHTML = "download"
+  anchor.click();
+  
+  var win = window.open("", "Submit", "width=400,height=300");
+var doc = win.document;
+    doc.open("text/html");
+    doc.write("Form submitted!");
+    doc.close();
+
+}
+
+function validateForm() {
+  // This function deals with validation of the form fields
+  var x, y, i, valid = true;
+  x = document.getElementsByClassName("tab");
+  y = x[currentTab].getElementsByTagName("input");
+  // A loop that checks every input field in the current tab:
+  for (i = 0; i < y.length; i++) {
+    // If a field is empty...
+    if (y[i].value == "") {
+      // add an "invalid" class to the field:
+      y[i].className += " invalid";
+      // and set the current valid status to false
+      valid = false;
+    }
+  }
+  // If the valid status is true, mark the step as finished and valid:
+  if (valid) {
+    document.getElementsByClassName("step")[currentTab].className += " finish";
+  }
+  return valid; // return the valid status
+}
+
+function fixStepIndicator(n) {
+  // This function removes the "active" class of all steps...
+  var i, x = document.getElementsByClassName("step");
+  for (i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace(" active", "");
+  }
+  //... and adds the "active" class on the current step:
+  x[n].className += " active";
+}
+</script>
+
+</body>
+</html>

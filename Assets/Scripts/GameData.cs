@@ -35,15 +35,16 @@ public class GameData : MonoBehaviour
             {
                 Destroy(obj[0]);
             }
-        }   
-        board_model = Model.JSONData.loadBoard(Asset.board_data_json());
-        opportunity_knocks = Model.JSONData.loadCardStack(Asset.opportunity_knocks_data_json());
-        potluck = Model.JSONData.loadCardStack(Asset.potluck_data_json());
+        }
+        
+        board_model = Model.BoardData.LoadBoard();
+        opportunity_knocks = Model.CardData.loadCardStack(Asset.opportunity_knocks_data_json());
+        potluck = Model.CardData.loadCardStack(Asset.potluck_data_json());
         players = new List<Model.Player>();
         player_throws = new Dictionary<Model.Player, int>();
         DontDestroyOnLoad(this.gameObject);
     }
-    
+
     public void loadData(GameDataWrapper data)
     {
         starWarsTheme = data.starWarsTheme;

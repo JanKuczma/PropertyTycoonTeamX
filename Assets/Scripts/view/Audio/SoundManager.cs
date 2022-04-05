@@ -62,7 +62,7 @@ public class SoundManager : MonoBehaviour
         foreach (Button button in FindObjectsOfType<Button>())
         {
             Debug.Log(button.name);
-            //currentButtons.Push(button);
+            // currentButtons.Push(button);
             Debug.Log("current Buttons Count:" + currentButtons.Length);
         }
         // Debug.Log("finished finding buttons");
