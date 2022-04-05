@@ -36,15 +36,8 @@ public class GameData : MonoBehaviour
                 Destroy(obj[0]);
             }
         }
-
-        if (File.Exists(Asset.custom_board_data()))
-        {
-            board_model = Model.BoardData.LoadCustom();
-        }
-        else
-        {
-            board_model = Model.BoardData.loadBoard(Asset.board_data_json());   
-        }
+        
+        board_model = Model.BoardData.LoadBoard();
         opportunity_knocks = Model.CardData.loadCardStack(Asset.opportunity_knocks_data_json());
         potluck = Model.CardData.loadCardStack(Asset.potluck_data_json());
         players = new List<Model.Player>();
