@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Model
 {
@@ -33,6 +34,8 @@ namespace Model
             var defaultBoardWrapper = JsonUtility.FromJson<BoardWrapper>(defaultBoard);
             var customBoardWrapper = JsonUtility.FromJson<BoardWrapper>(customBoard);
 
+            
+            
             foreach (var space in defaultBoardWrapper.spaces)
             {
                 foreach (var place in customBoardWrapper.spaces)
@@ -83,6 +86,11 @@ namespace Model
                         board.spaces[space.position - 1] = new Space.VisitJail(space.position, space.name);
                         break;
                 }
+            }
+
+            foreach (var s in board.spaces)
+            {
+                Debug.Log(s);
             }
             return board;
         }
