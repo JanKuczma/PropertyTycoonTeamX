@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Timers;
 using View;
@@ -54,7 +55,7 @@ public class game_controller : MonoBehaviour
     public GameObject kitchen;
     //Audio
     public GameObject music_player;
-    public SoundManager soundManager;
+    public SoundManager soundManagerClassic;
     //AI decision coroutine
     public bool AICoroutineFinished = true;
     public Model.Decision_trigger AI_trigger = Model.Decision_trigger.UDENTIFIED;
@@ -64,7 +65,7 @@ public class game_controller : MonoBehaviour
     {
         GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         this.music_player = GameObject.FindGameObjectWithTag("GameMusic");
-        this.soundManager = (SoundManager) music_player.GetComponent(typeof(SoundManager));
+        this.soundManagerClassic = (SoundManager) music_player.GetComponent(typeof(SoundManager));
 
         this.board_model = gameData.board_model;
         this.potluck = gameData.potluck;
@@ -147,7 +148,7 @@ public class game_controller : MonoBehaviour
         cam_pos_top = Camera.main.transform.position;
         //setup hud buttons
         hud.FinishTurnButton.onClick.AddListener(finishTurn);
-        hud.FinishTurnButton.onClick.AddListener(() => soundManager.checkPlayerStatus(players[current_player]));
+        hud.FinishTurnButton.onClick.AddListener(() => soundManagerClassic.checkPlayerStatus(players[current_player]));
         hud.cameraLeftBtn.onClick.AddListener(moveCameraLeft);
         hud.cameraRightBtn.onClick.AddListener(moveCameraRight);
         hud.optionsButton.onClick.AddListener(delegate
@@ -210,9 +211,13 @@ public class game_controller : MonoBehaviour
         });
         hud.helpButton.onClick.AddListener(delegate
         {
+            if (helpPopUp)
+            {
+                Destroy(helpPopUp.gameObject);
+            }
             invisibleWall.SetActive(true);
             previous_gameState = gameState;
-            helpPopUp = HelpPopUp.Create(hud.transform);
+            helpPopUp = PopUp.Help(hud.transform);
         });
     }
 
@@ -438,7 +443,8 @@ public class game_controller : MonoBehaviour
                 });
             }
         }
-        soundManager.checkPlayerStatus(players[current_player]);
+
+        soundManagerClassic.checkPlayerStatus(players[current_player]);
     }
 
     //temp code for camera movement
@@ -529,13 +535,13 @@ public class game_controller : MonoBehaviour
      
     void PerformAction()
     {
-        Debug.Log("here");
+        // Debug.Log("here");
         int current_square = pieces[players[current_player]].GetCurrentSquare();    // get location of current player piece on board
-        Debug.Log("current square integer: " + current_square);
+        // Debug.Log("current square integer: " + current_square);
         Space current_space = board_model.spaces[current_square];                   // get Space from location on board
-        Debug.Log("current space: " + current_space.name);
+        // Debug.Log("current space: " + current_space.name);
         SqType current_space_type = current_space.type;                             // get SqType from Space
-        Debug.Log("current space type: " + current_space_type.GetType().ToString());
+        // Debug.Log("current space type: " + current_space_type.GetType().ToString());
 
         if (current_space_type == SqType.CHANCE)                                    // first two if statements check whether square is a "take a card" square
         {
@@ -782,7 +788,7 @@ public class game_controller : MonoBehaviour
     IEnumerator auctionCoroutine(Model.Player player,Space.Purchasable current_space)
     {
         turnState = TurnState.AUCTION;
-        soundManager.Play("Auction");
+        soundManagerClassic.Play("Auction");
         int highest_bid = current_space.cost-10;
         Model.Player highest_bidder = null;
         List<Model.Player> bidders = new List<Model.Player>();

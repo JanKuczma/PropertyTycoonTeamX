@@ -9,6 +9,7 @@ TagManager:
   - MusicVol
   - SFXVol
   - GameData
+  - HelpInfo
   layers:
   - Default
   - TransparentFX
