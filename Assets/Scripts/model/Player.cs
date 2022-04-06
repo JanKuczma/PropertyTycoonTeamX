@@ -44,15 +44,18 @@ public class Player
     }
     public void ReceiveCash(int cash)
     {
+        SoundManager soundManager = GameObject.FindWithTag("GameMusic").GetComponent<SoundManager>();
+        soundManager.PlayIncomeSound();
         this.cash += cash;
     }
 
     public Decision_outcome PayCash(int amount, Player recipient = null, Board board = null)
     {
+        SoundManager soundManager = GameObject.FindWithTag("GameMusic").GetComponent<SoundManager>();
         if(totalValueOfAssets() < amount) { return Decision_outcome.NOT_ENOUGH_ASSETS; }
         if(amount > this.cash) { return Decision_outcome.NOT_ENOUGH_MONEY; }
-        if(board != null) { this.cash -= amount; board.parkingFees+=amount; return Decision_outcome.SUCCESSFUL; }
-        if(recipient == null) { this.cash -= amount; return Decision_outcome.SUCCESSFUL; }
+        if(board != null) { this.cash -= amount; board.parkingFees+=amount; soundManager.PlayPurchaseSound(); return Decision_outcome.SUCCESSFUL; }
+        if(recipient == null) { this.cash -= amount; soundManager.PlayPurchaseSound(); return Decision_outcome.SUCCESSFUL; }
         recipient.ReceiveCash(amount);
         this.cash -= amount;
         return Decision_outcome.SUCCESSFUL;

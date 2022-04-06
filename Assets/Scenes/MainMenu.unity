@@ -815,6 +815,77 @@ MonoBehaviour:
     isLoop: 0
     playOnAwake: 0
     volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice1
+    audioClip: {fileID: 8300000, guid: 00a208dcc398c4ee5b588422d64d1c4c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice2
+    audioClip: {fileID: 8300000, guid: 89feecdac326e49b9914362c75174ed6, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice3
+    audioClip: {fileID: 8300000, guid: a661316ab05974e71b92acab44a575a2, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice4
+    audioClip: {fileID: 8300000, guid: 131112e85bb744f43bdc2852cd16e9ff, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice5
+    audioClip: {fileID: 8300000, guid: a6357bc5def5f43d284c7ea7e56b2f21, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice6
+    audioClip: {fileID: 8300000, guid: 35ece53efbe3e4e33b740610157d7eb1, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice7
+    audioClip: {fileID: 8300000, guid: e89aab143f7ac43d784c6e036d79c073, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: StarWars1
+    audioClip: {fileID: 8300000, guid: bf7fcf7ca823d48cab83b861280cda42, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: StarWars2
+    audioClip: {fileID: 8300000, guid: bb779ec314d9c4de480a3413974a2c53, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Purchase
+    audioClip: {fileID: 8300000, guid: 3c2e8d3d0ba3f467fa55e46b781457c2, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  starWarsTheme: 0
 --- !u!4 &914077553
 Transform:
   m_ObjectHideFlags: 0

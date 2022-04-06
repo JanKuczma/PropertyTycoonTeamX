@@ -147,7 +147,7 @@ namespace View
             popUp.btn3.onClick.AddListener(() => popUp.jailPay50Option(player, controller));
             popUp.transform.SetSiblingIndex(2);
             
-            controller.soundManager.Play("Jail");
+            controller.soundManagerClassic.PlayAndStopOthers("Jail");
             
             return popUp;
         }
@@ -205,7 +205,10 @@ namespace View
                     {
                         ((View.UtilitySquare)(square)).showRibbon(player.Color());
                     }
+
+                    SoundManager soundManager = GameObject.FindWithTag("GameMusic").GetComponent<SoundManager>();
                     MessagePopUp.Create(transform.parent,"Property purchased!",2);
+                    soundManager.PlayPurchaseSound();
                     closePopup();
                 break;
             }

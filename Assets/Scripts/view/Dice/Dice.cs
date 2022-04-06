@@ -56,8 +56,7 @@ public class Dice : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("magnitude rounded: " + Math.Round(collision.relativeVelocity.magnitude));
-        soundManager.PlayDiceSound((int)Math.Round(collision.relativeVelocity.magnitude));
+        soundManager.PlayDiceSound((int)Math.Clamp(Math.Round(collision.relativeVelocity.magnitude), 0, 7));
     }
 
     /// if stops colliding with something onGround set to false
