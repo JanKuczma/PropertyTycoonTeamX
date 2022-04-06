@@ -117,11 +117,6 @@ public class game_controller : MonoBehaviour
         {
             pieces.Add(player,
                 View.Piece.Create(player.token, transform, board_view, player.position, player.in_jail != 0));
-            if(isTurbo)
-            {
-                PopUp tmp = PopUp.OK(hud.transform,"this game is times, seconds: " + TIMER);
-                tmp.btn1.onClick.AddListener(tmp.closePopup);
-            }
         }
 
         //after loading game
@@ -229,15 +224,15 @@ public class game_controller : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            MessagePopUp.Create(hud.transform, "FPS: " + 1f/Time.fixedDeltaTime);
+            MessagePopUp.Create(hud.transform, "FPS: " + 1f/Time.smoothDeltaTime);
         }
     }
 
     void FixedUpdate()
     {
-        if(this.isTurbo && TIMER > 0){
+        if(this.isTurbo && TIMER > 0 && gameState != GameState.PAUSE){
             TIMER -= Time.fixedDeltaTime;
-            hud.timer.text = "Time Left: " + (TIMER/3600).ToString("00") + ":" +(TIMER/60-(TIMER/3600)).ToString("00") + ":" + (TIMER%60).ToString("00");
+            hud.timer.text = "Time Left: " + Math.Truncate(TIMER/3600).ToString("00") + ":" +Math.Truncate((TIMER/60)%60).ToString("00") + ":" + Math.Truncate(TIMER%60).ToString("00");
             if(TIMER<.1f){
                 MessagePopUp.Create(hud.transform,"Time Passed!");
             }
@@ -437,7 +432,7 @@ public class game_controller : MonoBehaviour
     //temp code for camera movement
      void LateUpdate()
     {
-        if(turnState == TurnState.PIECEMOVE)
+        if(turnState == TurnState.PIECEMOVE || turnState == TurnState.PERFORM_ACTION)
         {
             moveCameraTowardsPiece(pieces[players[current_player]]);
         }
@@ -918,27 +913,27 @@ public class game_controller : MonoBehaviour
     {
         Vector3 target = piece.transform.position*1.5f;
         target[1] = board_view.transform.position.y+7.0f;
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.fixedDeltaTime*2f);
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.smoothDeltaTime*3f);
         Vector3 lookDirection = piece.transform.position - Camera.main.transform.position;
         lookDirection.Normalize();
-        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.fixedDeltaTime);
+        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),Time.smoothDeltaTime*3f);
     }
     public void moveCameraTowardsDice(View.DiceContainer diceContainer)
     {
         Vector3 target = diceContainer.position();
         //Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2)) depends only on fieldview angle so it is pretty much constatnt, could be set as constant in terms of optimisation
         target[1] = (diceContainer.transform.localScale.x + diceContainer.av_distance())/Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2));
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.fixedDeltaTime*2f);
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.smoothDeltaTime*3f);
         Vector3 lookDirection = diceContainer.position() - Camera.main.transform.position;
         lookDirection.Normalize();
-        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.fixedDeltaTime);
+        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),Time.smoothDeltaTime*3f);
     }
     public void moveCameraTopView()
     {
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,cam_pos_top,Time.fixedDeltaTime*3f);
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,cam_pos_top,Time.smoothDeltaTime*3f);
         Vector3 lookDirection = -1.0f*Camera.main.transform.position + Vector3.down*6; // 6 is how much camera is rotated down direction xD
         lookDirection.Normalize();
-        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.fixedDeltaTime);
+        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),Time.smoothDeltaTime*3f);
     }
 
 /*
