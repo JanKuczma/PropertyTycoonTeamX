@@ -729,6 +729,7 @@ public class game_controller : MonoBehaviour
 
     IEnumerator rollInJailCoroutine(Model.Player player)
     {
+        turnState = TurnState.IDLE;
         dice.gameObject.SetActive(true);
         bool successful = false;
         hud.current_main_PopUp = PopUp.OK(hud.transform,"");
