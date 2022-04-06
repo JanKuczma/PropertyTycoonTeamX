@@ -16,7 +16,7 @@ using view.Menus;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION,AUCTION, MANAGE_PROPERTIES,END, NONE}
+public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION,AUCTION, MANAGE_PROPERTIES,END, IDLE}
 public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION,NONE}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
@@ -316,6 +316,7 @@ public class game_controller : MonoBehaviour
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                     steps = dice.get_result();  // get the result
+                    steps = 30;
                     double_rolled = dice.is_double(); // return whether double was rolled
                     if(steps < 0)                   // if result is negative (dice are stuck)
                     {                               // reset the dice
@@ -334,7 +335,6 @@ public class game_controller : MonoBehaviour
                 }
                 else if(dice.belowBoard()) {
                     invisibleWall.SetActive(!players[current_player].isHuman);
-                    Debug.Log("beeeeeeeeellooooww");
                     dice.reset();
                     MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
                     turnState = TurnState.PRE_DICE_ROLL;
@@ -489,7 +489,6 @@ public class game_controller : MonoBehaviour
                     dice.reset();
                 } else {    // if not in the ordering phase of the game, move Token and continue with game
                     invisibleWall.SetActive(!players[current_player].isHuman);
-                    Debug.Log("Player " + current_player + " rolled a " + steps);
                     if (player_throws.ContainsValue(steps))             // force re-roll if player has already rolled the same number
                     {
                         MessagePopUp.Create(hud.transform, "Someone has already rolled "+ steps +". Please roll again!",2);
@@ -517,7 +516,6 @@ public class game_controller : MonoBehaviour
             else if(dice.belowBoard())
             {
                 invisibleWall.SetActive(!players[current_player].isHuman);
-                Debug.Log("beeeeeeeeellooooww");
                 MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
                 dice.reset();
             }
@@ -535,13 +533,11 @@ public class game_controller : MonoBehaviour
      
     void PerformAction()
     {
-        // Debug.Log("here");
         int current_square = pieces[players[current_player]].GetCurrentSquare();    // get location of current player piece on board
-        // Debug.Log("current square integer: " + current_square);
+        
         Space current_space = board_model.spaces[current_square];                   // get Space from location on board
-        // Debug.Log("current space: " + current_space.name);
+        
         SqType current_space_type = current_space.type;                             // get SqType from Space
-        // Debug.Log("current space type: " + current_space_type.GetType().ToString());
 
         if (current_space_type == SqType.CHANCE)                                    // first two if statements check whether square is a "take a card" square
         {
@@ -757,7 +753,7 @@ public class game_controller : MonoBehaviour
                 {                               // reset the dice
                     dice.reset();
                     MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                    turnState = TurnState.PERFORM_ACTION;
+                    turnState = TurnState.IDLE;
                 } else if (dice.is_double())
                 {
                     successful = true;

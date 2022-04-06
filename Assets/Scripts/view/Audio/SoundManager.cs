@@ -52,7 +52,7 @@ public class SoundManager : MonoBehaviour
         Debug.Log(scene.buildIndex);
         if (scene.buildIndex > 2)
         {
-            starWarsTheme = GameObject.Find("GameData").GetComponent<GameData>().starWarsTheme;
+            starWarsTheme = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>().starWarsTheme;
             PlayGameMusic();
         }
         else
