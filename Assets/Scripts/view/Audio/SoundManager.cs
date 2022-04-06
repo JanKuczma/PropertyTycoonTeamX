@@ -144,6 +144,28 @@ public class SoundManager : MonoBehaviour
         Play("Click");
     }
 
+    public void PlayDiceSound(int i)
+    {
+        //if (!checkForDiceSound())
+        //{
+        Debug.Log("playing Dice" + i); 
+        sounds[8+i].source.Play();
+       // }
+    }
+
+    public bool checkForDiceSound()
+    {
+        bool soundPlaying = false;
+            foreach (Sound s in sounds.Skip(9).Take(7))
+            {
+                if (s.source.isPlaying)
+                {
+                    return true;
+                }
+            }
+            return soundPlaying;
+    }
+
     public void checkPlayerStatus(Player player)
     {
         if (player.position == 31)

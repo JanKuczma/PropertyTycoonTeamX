@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace View{
 public class Dice : MonoBehaviour
@@ -8,11 +10,13 @@ public class Dice : MonoBehaviour
     Rigidbody rb_comp;  // reference to RigidBody component
     Vector3 init_pos;   // initial position
     bool onGround;  // parameter used to keep track if dice is colliding with something
+    SoundManager soundManager;
     void Awake()
     {
         rb_comp = GetComponent<Rigidbody>();
         init_pos = transform.position;
         onGround = false;
+        soundManager = GameObject.FindWithTag("GameMusic").GetComponent<SoundManager>();
     }
 
     /// return the value of the side that is pointing up
@@ -48,6 +52,12 @@ public class Dice : MonoBehaviour
     {
         if(col.tag == "NotTrigger") return;
         onGround = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("magnitude rounded: " + Math.Round(collision.relativeVelocity.magnitude));
+        soundManager.PlayDiceSound((int)Math.Round(collision.relativeVelocity.magnitude));
     }
 
     /// if stops colliding with something onGround set to false
