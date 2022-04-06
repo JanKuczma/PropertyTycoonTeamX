@@ -15,7 +15,7 @@ namespace View
 
     public static PropertyManager Create(Transform parent, Model.Player player, Dictionary<int,PurchasableCard> propertyCards,bool canManage)
     {
-        PropertyManager manager = Instantiate(Asset.propertyManager(),parent).GetComponent<PropertyManager>();
+        PropertyManager manager = Instantiate(Asset.PropertyManagerPrefab,parent).GetComponent<PropertyManager>();
         manager.player = player;
         manager.ownedByText.text = "Propierties owned by " + player.name;
         manager.setUpCards(player,propertyCards,canManage);

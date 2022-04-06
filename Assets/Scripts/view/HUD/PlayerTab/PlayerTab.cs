@@ -52,7 +52,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public static PlayerTab Create(Transform parent,Model.Player player,Dictionary<int,PurchasableCard> propertyCards)
     {
-        PlayerTab tab = Instantiate(Asset.playerTab(),parent).GetComponent<PlayerTab>();
+        PlayerTab tab = Instantiate(Asset.PlayerTabPrefab,parent).GetComponent<PlayerTab>();
         tab.player = player;
         tab.propertyCards = propertyCards;
         tab.setName(player.name);

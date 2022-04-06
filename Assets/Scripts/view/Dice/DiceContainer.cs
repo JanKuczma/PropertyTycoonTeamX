@@ -22,12 +22,12 @@ public class DiceContainer : MonoBehaviour
 
     public static DiceContainer Create(Transform parent)
     {
-        return Instantiate(Asset.Dice(),parent).GetComponent<DiceContainer>();
+        return Instantiate(Asset.DiceContainerPrefab,parent).GetComponent<DiceContainer>();
     }
 
     void OnMouseDown()
     {
-        Cursor.SetCursor(Asset.Cursor(CursorType.GRAB),Vector2.zero,CursorMode.Auto); // on click change cursor to 'closed hand'
+        Cursor.SetCursor(Asset.GrabTextureCursor,Vector2.zero,CursorMode.Auto); // on click change cursor to 'closed hand'
         greenLight.gameObject.SetActive(false);
     }
     void OnMouseDrag()
@@ -43,7 +43,7 @@ public class DiceContainer : MonoBehaviour
     }
     void OnMouseUp()
     {   // on mouse button release change cursor to 'poiniting hand'
-        Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
+        Cursor.SetCursor(Asset.FingerTextureCursor,Vector2.zero,CursorMode.Auto);
         foreach (Dice d in dice)    // for each dice assign velcity
         {
             d.roll((transform.position - previous_frame_pos)/Time.smoothDeltaTime);

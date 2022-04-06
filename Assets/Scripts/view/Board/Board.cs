@@ -17,7 +17,7 @@ public class Board : MonoBehaviour
     {
         // there are 3 chance colours so we want to use all of them
         int chance_variant = 1;
-        Board board = Instantiate(Asset.Board(),parent).GetComponent<Board>();
+        Board board = Instantiate(Asset.BoardPrefab,parent).GetComponent<Board>();
         // get the data from Model.Board and init all the squares
         foreach(Model.Space sp in boardData.spaces)
         {

@@ -11,11 +11,11 @@ public class SaveSlot : MonoBehaviour
     public Text empty;
     public Image raffles;
 
-    public GameData.GameDataWrapper data;
+    public GameData.Wrapper data;
 
     void Awake()
     {
-        data = GameData.GameDataWrapper.loadGame(gameObject.name);
+        data = GameData.Wrapper.loadGame(gameObject.name);
         if(data == null) { MakeEmpty(); }
         else { ShowInfo(); }
     }

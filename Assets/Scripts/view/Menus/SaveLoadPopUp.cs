@@ -46,8 +46,8 @@ public class SaveLoadPopUp : MonoBehaviour
         List<Toggle> slot = toggles.ActiveToggles().ToList<Toggle>();
         if(slot.Count == 0) { return; }
         GameData data = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
-        GameData.GameDataWrapper.saveGame(slot[0].gameObject.name,data);
-        slot[0].GetComponent<SaveSlot>().data = GameData.GameDataWrapper.loadGame(slot[0].gameObject.name);
+        GameData.Wrapper.saveGame(slot[0].gameObject.name,data);
+        slot[0].GetComponent<SaveSlot>().data = GameData.Wrapper.loadGame(slot[0].gameObject.name);
         slot[0].GetComponent<SaveSlot>().ShowInfo();
     }
 
@@ -56,7 +56,7 @@ public class SaveLoadPopUp : MonoBehaviour
         List<Toggle> slot = toggles.ActiveToggles().ToList<Toggle>();
         if(slot.Count == 0) { return; }
         if(slot[0].GetComponent<SaveSlot>().data == null) { return; }
-        GameData.GameDataWrapper.deleteGame(slot[0].gameObject.name);
+        GameData.Wrapper.deleteGame(slot[0].gameObject.name);
         slot[0].GetComponent<SaveSlot>().MakeEmpty();
     }
 

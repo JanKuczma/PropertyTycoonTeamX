@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-
+/// <summary>
+/// Extends <c>MonoBehaviour</c>.<br/>
+/// Used to store data about the game and pass it between scenes. See <see cref="Object.DontDestroyOnLoad()"/>.<br/>
+/// Used to load/save game data from/to a file <br/>
+/// </summary>
 public class GameData : MonoBehaviour
 {
     //game settings
@@ -29,24 +33,30 @@ public class GameData : MonoBehaviour
     
     void Awake()
     {
+        //checks if there's already object with the same tag
         GameObject[] obj = GameObject.FindGameObjectsWithTag("GameData");
         if(obj != null)
         {
+            //if there's one, destroy current object
             if (obj.Length > 1)
             {
                 Destroy(obj[0]);
             }
         }
-        
+        //initial values
         board_model = Model.BoardData.LoadBoard();
         opportunity_knocks = Model.CardData.loadCardStack(Asset.opportunity_knocks_data_json());
         potluck = Model.CardData.loadCardStack(Asset.potluck_data_json());
         players = new List<Model.Player>();
         player_throws = new Dictionary<Model.Player, int>();
+        //prevent's the object from being destroyed when on Scene change
         DontDestroyOnLoad(this.gameObject);
     }
-
-    public void loadData(GameDataWrapper data)
+    /// <summary>
+    /// Loads data from <c>GameDataWrapper</c> object
+    /// </summary>
+    /// <param name="data">Wrapped game data</param>
+    public void loadData(Wrapper data)
     {
         starWarsTheme = data.starWarsTheme;
         turboGame = data.turboGame;
@@ -65,9 +75,11 @@ public class GameData : MonoBehaviour
         tabs_set = data.tabs_set;
         timer = data.timer;
     }
-
+/// <summary>
+/// Class used to wrap the game data into serializable class.
+/// </summary>
     [System.Serializable]
-        public class GameDataWrapper {
+        public class Wrapper {
         public string saveDate;
         public bool starWarsTheme;
         public bool turboGame;
@@ -88,10 +100,14 @@ public class GameData : MonoBehaviour
         public int steps; // to pass dice result between states
         public bool tabs_set;
         public float timer;
-
+/// <summary>
+/// Saves game data to a file
+/// </summary>
+/// <param name="slot_name">file name</param>
+/// <param name="gameData">Wrapped game data</param>
         public static void saveGame(string slot_name, GameData gameData)
         {
-            GameDataWrapper data = new GameDataWrapper();
+            Wrapper data = new Wrapper();
             data.saveDate = System.DateTime.Now.ToString("dd MMM yyyy\nhh:mm tt");
             data.starWarsTheme = gameData.starWarsTheme;
             data.turboGame = gameData.turboGame;
@@ -115,8 +131,12 @@ public class GameData : MonoBehaviour
             formatter.Serialize(stream,data);
             stream.Close();
         }
-
-    public static GameDataWrapper loadGame(string slot_name)
+/// <summary>
+/// Loads game data from a file
+/// </summary>
+/// <param name="slot_name">File name</param>
+/// <returns>Wrapped game data</returns>
+    public static Wrapper loadGame(string slot_name)
     {
         string path = Application.persistentDataPath + "/"+slot_name + ".save";
         if(File.Exists(path))
@@ -124,7 +144,7 @@ public class GameData : MonoBehaviour
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            GameDataWrapper data = formatter.Deserialize(stream) as GameDataWrapper;
+            Wrapper data = formatter.Deserialize(stream) as Wrapper;
 
             stream.Close();
             return data;
@@ -132,7 +152,10 @@ public class GameData : MonoBehaviour
             return null;
         }
     }
-
+/// <summary>
+/// Deletes a file
+/// </summary>
+/// <param name="slot_name">File name</param>
     public static void deleteGame(string slot_name)
     {
         File.Delete(Application.persistentDataPath+"/"+slot_name+".save");

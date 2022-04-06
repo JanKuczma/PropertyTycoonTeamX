@@ -144,7 +144,7 @@ public class game_controller : MonoBehaviour
         }
 
         //setup finger cursor and get init cemara pos (top pos)
-        Cursor.SetCursor(Asset.Cursor(CursorType.FINGER), Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(Asset.FingerTextureCursor, Vector2.zero, CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
         //setup hud buttons
         hud.FinishTurnButton.onClick.AddListener(finishTurn);

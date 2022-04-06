@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+/// <summary>
+/// Represents <c>Space.Property</c> color group<br/>
+/// The assigned hex values represents RGB components of the group color
+/// </summary>
 public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=0xeb882c, RED=0xdb2428, YELLOW=0xFFF005, GREEN=0x13a857, DEEPBLUE=0x0066a4}
 namespace View{
 public class PropertySquare : Square
@@ -45,7 +49,7 @@ public class PropertySquare : Square
     {
         if(houses.Count < 4)
         {
-            GameObject house = Instantiate(Asset.House(),transform);
+            GameObject house = Instantiate(Asset.HousePrefab,transform);
             houses.Add(house);
             house.transform.localPosition = houses_spots[houses.Count-1];
         }
@@ -55,7 +59,7 @@ public class PropertySquare : Square
             {
                 Destroy(house);
             }
-            GameObject hotel = Instantiate(Asset.Hotel(),transform);
+            GameObject hotel = Instantiate(Asset.HotelPrefab,transform);
             houses.Add(hotel);
             hotel.transform.localPosition = houses_spots[4];
         }
@@ -75,7 +79,7 @@ public class PropertySquare : Square
             Destroy(tmp);
             for(int i = 0; i < 4; i++)
             {
-                GameObject house = Instantiate(Asset.House(),transform);
+                GameObject house = Instantiate(Asset.HousePrefab,transform);
                 houses.Add(house);
                 house.transform.localPosition = houses_spots[i];
             }
