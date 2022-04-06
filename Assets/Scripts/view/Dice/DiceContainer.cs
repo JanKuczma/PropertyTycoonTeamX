@@ -142,7 +142,7 @@ public class DiceContainer : MonoBehaviour
     public void random_throw()
     {
         greenLight.gameObject.SetActive(false);
-        Vector3 dice_velocity = new Vector3(Random.Range(-.05f,.05f),Random.Range(-.05f,0.02f),Random.Range(-.05f,.05f))/Time.deltaTime;
+        Vector3 dice_velocity = new Vector3(Random.Range(-15f,15f),Random.Range(-1f,1f),Random.Range(-10f,10f));
         foreach (Dice d in dice)    // for each dice assign velcity
         {
             d.roll(dice_velocity);

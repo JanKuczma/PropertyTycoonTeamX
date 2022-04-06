@@ -233,8 +233,11 @@ public class game_controller : MonoBehaviour
         if(this.isTurbo && TIMER > 0 && gameState != GameState.PAUSE){
             TIMER -= Time.fixedDeltaTime;
             hud.timer.text = "Time Left: " + Math.Truncate(TIMER/3600).ToString("00") + ":" +Math.Truncate((TIMER/60)%60).ToString("00") + ":" + Math.Truncate(TIMER%60).ToString("00");
-            if(TIMER<.1f){
-                MessagePopUp.Create(hud.transform,"Time Passed!");
+            if(TIMER<.5f){
+                hud.timer.text = "This is your last round!";
+                hud.timer.color = Color.red;
+                MessagePopUp tmpPop =  MessagePopUp.Create(hud.transform,"Time Passed! This is your last round!");
+                tmpPop.GetComponent<RectTransform>().anchoredPosition = new Vector2(-650,200);
             }
         }
         if(gameState == GameState.ORDERINGPHASE)    //if game state
@@ -245,13 +248,17 @@ public class game_controller : MonoBehaviour
         {
             if(turnState == TurnState.BEGIN)
             {
-                if(players.Count == 1) { gameState = GameState.WINNERCELEBRATION; return; }
+                if(players.Count == 1 || (TIMER<.5f && current_player == 0)) { gameState = GameState.WINNERCELEBRATION; return; }
                 if(!tabs_set)
                 {
                     MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
                     hud.set_current_player_tab(players[current_player]);
                     hud.CpuPanel.SetActive(!players[current_player].isHuman);
                     tabs_set = true;
+                    if(TIMER<.5f){
+                        MessagePopUp tmpPop = MessagePopUp.Create(hud.transform,"Time Passed! This is your last round!");
+                        tmpPop.GetComponent<RectTransform>().anchoredPosition = new Vector2(-650,200);
+                    }
                 }
                 if(players[current_player].in_jail > 1) // check if a bad boy
                 {
@@ -416,9 +423,14 @@ public class game_controller : MonoBehaviour
         else if(gameState == GameState.WINNERCELEBRATION)
         {
             if(hud.current_main_PopUp == null) {
-                hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game.");
-                if(!players[current_player].isHuman && AICoroutineFinished){
-                    StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.OK));
+                hud.CpuPanel.SetActive(false);
+                if(isTurbo)
+                {
+                    List<int> assets = new List<int>();
+                    foreach(Model.Player p in players) { assets.Add(p.totalValueOfAssets()); }
+                    hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[assets.IndexOf(assets.Max())].name + " won the game!");
+                } else {
+                    hud.current_main_PopUp = PopUp.OK(hud.transform,"Player " + players[current_player].name + " won the game!");
                 }
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
                     Destroy(GameObject.FindGameObjectWithTag("GameData"));
@@ -596,7 +608,8 @@ public class game_controller : MonoBehaviour
                         AI_trigger = Model.Decision_trigger.PAYMONEY;
                     }
                 } else {
-                    MessagePopUp.Create(hud.transform, "You have to complete one circuit of the board by passing the GO to buy a property!",4);
+                    MessagePopUp tmpPop = MessagePopUp.Create(hud.transform, "You have to complete one circuit of the board by passing the GO to buy a property!",4);
+                    tmpPop.GetComponent<RectTransform>().anchoredPosition = new Vector2(-650,0);
                 }
                 break;
             }
