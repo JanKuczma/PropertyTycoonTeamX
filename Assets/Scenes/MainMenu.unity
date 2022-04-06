@@ -513,6 +513,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1841086487}
     - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1549906989496057492, guid: 2167b1236f30c8042af3fd3a58d58287, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Options
       objectReference: {fileID: 0}
@@ -747,39 +751,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
   soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
-  musicTracks:
+  sounds:
   - audioType: 1
     source: {fileID: 0}
     clipName: Menu
     audioClip: {fileID: 8300000, guid: 181d19035464d4cc29579153d6650b15, type: 3}
-    isLoop: 0
+    isLoop: 1
     playOnAwake: 1
     volume: 0
   - audioType: 1
     source: {fileID: 0}
     clipName: BG1
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 24cf7646ac32e438a9d96b4698eab73c, type: 3}
     isLoop: 0
     playOnAwake: 0
     volume: 0
   - audioType: 1
     source: {fileID: 0}
     clipName: BG2
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 6b16d8250374d414d99d69c13e71bbe1, type: 3}
     isLoop: 0
     playOnAwake: 0
     volume: 0
   - audioType: 1
     source: {fileID: 0}
     clipName: BG3
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 08a826ff7cdee45358c7f5cdece31da9, type: 3}
     isLoop: 0
     playOnAwake: 0
     volume: 0
   - audioType: 1
     source: {fileID: 0}
     clipName: Jail
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 0669f5818b38e4a9698d13ed30b91a4c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Auction
+    audioClip: {fileID: 8300000, guid: c7ad7d69300644be88a204fcb8ce369a, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Bankrupt
+    audioClip: {fileID: 8300000, guid: f2d0909c3fb464b859db8191467fee76, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Winner
+    audioClip: {fileID: 8300000, guid: de56121e90ce24268b40659f12e74058, type: 3}
     isLoop: 0
     playOnAwake: 0
     volume: 0

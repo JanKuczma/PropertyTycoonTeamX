@@ -17,15 +17,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField] public AudioMixerGroup musicMixerGroup;
     [SerializeField] public AudioMixerGroup soundMixerGroup;
     [SerializeField] public Sound[] sounds;
-    private string CurrentMusicID;
     public static float musicVolume = .5f;
     public static float sfxVolume = .7f;
-    public Button[] currentButtons;
-    public Dictionary<Button,bool> clickedButtons;
 
     private void Awake()
     {
-        AddButtonClicks();
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -51,42 +47,32 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void OnLoadCallBack(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.buildIndex > 2)
+        {
+            PlayGameMusic();
+        }
+        else
+        {
+            PlayMenuMusic();
+        }
+    }
+
     void Start()
     {
         musicMixerGroup.audioMixer.SetFloat("Music Volume", Mathf.Log10(musicVolume) * 20);
         soundMixerGroup.audioMixer.SetFloat("SFX Volume", Mathf.Log10(sfxVolume) * 20);
+        SceneManager.sceneLoaded += this.OnLoadCallBack;
     }
 
-    public void AddButtonClicks()
-    {
-        foreach (Button button in FindObjectsOfType<Button>())
-        {
-            Debug.Log(button.name);
-            //currentButtons.Push(button);
-            Debug.Log("current Buttons Count:" + currentButtons.Length);
-        }
-        // Debug.Log("finished finding buttons");
-        //
-        // foreach (var cButton in clickedButtons)
-        // {
-        //     Debug.Log("Adding Clicks");
-        //     if (!cButton.Value)
-        //     {
-        //         Debug.Log("Click Added to" + cButton.Key.name);
-        //         cButton.Key.onClick.AddListener(() => Play("Click"));
-        //         cButton.Value.Equals(true);
-        //     }
-        // }
-        Debug.Log("Finished Adding Clicks");
-    }
-
-    public void Update()
+    public void SceneChecker()
     {
         if (SceneManager.GetActiveScene().buildIndex < 3)
         {
             if (!CheckForPlayingSong())
             {
-                Play("Menu");
+                PlayAndStopOthers("Menu");
             }
         }
         else
@@ -125,7 +111,25 @@ public class SoundManager : MonoBehaviour
             Debug.LogError("Sound: " + clipname + " does not exist!");
             return;
         }
+        s.source.Play();
+    }
 
+    public void PlayAndStopOthers(string clipname)
+    {
+        Sound s = Array.Find(sounds, dummySound => dummySound.clipName == clipname);
+        if (s == null)
+        {
+            Debug.LogError("Sound: " + clipname + " does not exist!");
+            return;
+        }
+
+        StopAllTracks();
+
+        s.source.Play();
+    }
+
+    private void StopAllTracks()
+    {
         foreach (Sound song in sounds)
         {
             if (song.source.isPlaying)
@@ -133,8 +137,11 @@ public class SoundManager : MonoBehaviour
                 song.source.Stop();
             }
         }
+    }
 
-        s.source.Play();
+    public void PlayClickSound()
+    {
+        Play("Click");
     }
 
     public void checkPlayerStatus(Player player)
@@ -143,7 +150,7 @@ public class SoundManager : MonoBehaviour
         {
             if (!sounds[4].source.isPlaying)
             {
-                Play("Jail");    
+                PlayAndStopOthers("Jail");    
             }
         } else if (player.in_jail == 0 && !sounds[1].source.isPlaying && !sounds[2].source.isPlaying && !sounds[3].source.isPlaying)
         {
@@ -153,7 +160,7 @@ public class SoundManager : MonoBehaviour
         {
             if (!sounds[4].source.isPlaying)
             {
-                Play("Jail");    
+                PlayAndStopOthers("Jail");    
             }
         }
         //
@@ -161,14 +168,23 @@ public class SoundManager : MonoBehaviour
         // {
         //     Play("Bankrupt");
         // }
-        
+         
     }
 
     private void PlayGameMusic()
     {
         Random r = new Random();
         int rand = r.Next(1, 4);
-        Play(sounds[rand].clipName);
+        PlayAndStopOthers(sounds[rand].clipName);
+    }
+
+    private void PlayMenuMusic()
+    {
+        if (!sounds[0].source.isPlaying)
+        {
+            PlayAndStopOthers("Menu");    
+        }
+        
     }
 }
 

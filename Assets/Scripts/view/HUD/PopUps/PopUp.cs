@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 namespace View
@@ -13,6 +14,8 @@ namespace View
         public Button btn2;
         public Button btn3;
         public Image optional_img;
+        public int rules_controls_index = 0;
+        public TextMeshProUGUI buttonText;
 
         public void SetMessage(string msg)
         {
@@ -35,6 +38,15 @@ namespace View
             popUp.SetMessage(message);
             popUp.transform.SetSiblingIndex(2);
             return popUp;
+         }
+
+         public static PopUp Help(Transform parent)
+         {
+             PopUp popUp = Instantiate(Asset.HelpPopUpPreFab, parent).GetComponent<PopUp>();
+             popUp.SetMessage("Click, drag and release dice to roll\n\nPress SPACEBAR while tokens are moving to speed them up\n\nHover over and click player tabs to access and manage properties");
+             popUp.btn1.onClick.AddListener(() => popUp.ControlsRulesSwitcher());
+             popUp.btn2.onClick.AddListener(popUp.closePopup);
+             return popUp;
          }
 
          public static PopUp InJail(Transform parent, game_controller controller)
@@ -302,9 +314,20 @@ namespace View
         }
     }
 
-    public void ControlsRulesSwitcher(int i)
+    public void ControlsRulesSwitcher()
     {
-        
+        if (rules_controls_index == 0)
+        {
+            rules_controls_index = 1;
+            SetMessage("Make money yo");
+            buttonText.text = "Rules";
+        }
+        else
+        {
+            rules_controls_index = 0;
+            SetMessage("Click, drag and release dice to roll\n\nPress SPACEBAR while tokens are moving to speed them up\n\nHover over and click player tabs to access and manage properties");
+            buttonText.text = "Controls";
+        }
     }
     
     }

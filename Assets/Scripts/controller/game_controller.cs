@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Timers;
 using View;
@@ -206,9 +207,13 @@ public class game_controller : MonoBehaviour
         });
         hud.helpButton.onClick.AddListener(delegate
         {
+            if (helpPopUp)
+            {
+                Destroy(helpPopUp.gameObject);
+            }
             invisibleWall.SetActive(true);
             previous_gameState = gameState;
-            helpPopUp = HelpPopUp.Create(hud.transform);
+            helpPopUp = PopUp.Help(hud.transform);
         });
     }
 

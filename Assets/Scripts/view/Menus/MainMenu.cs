@@ -41,7 +41,6 @@ public class MainMenu : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        Debug.Log("yoyoyo");
         SceneManager.LoadScene(0);
     }
 
