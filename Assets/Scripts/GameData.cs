@@ -25,6 +25,7 @@ public class GameData : MonoBehaviour
     public bool passed_go = false; // use this to keep track if the current player can get money for passing GO
     public int steps = 0; // to pass dice result between states
     public bool tabs_set = false;
+    public float timer=-1;
     
     void Awake()
     {
@@ -62,6 +63,7 @@ public class GameData : MonoBehaviour
         passed_go = data.passed_go;
         steps = data.steps;
         tabs_set = data.tabs_set;
+        timer = data.timer;
     }
 
     [System.Serializable]
@@ -85,6 +87,7 @@ public class GameData : MonoBehaviour
         public bool passed_go; // use this to keep track if the current player can get money for passing GO
         public int steps; // to pass dice result between states
         public bool tabs_set;
+        public float timer;
 
         public static void saveGame(string slot_name, GameData gameData)
         {
@@ -105,6 +108,7 @@ public class GameData : MonoBehaviour
             data.passed_go = gameData.passed_go;
             data.steps = gameData.steps;
             data.tabs_set = gameData.tabs_set;
+            data.timer = gameData.timer;
             BinaryFormatter formatter = new BinaryFormatter();
             string path = Application.persistentDataPath + "/" + slot_name +".save";
             FileStream stream = new FileStream(path, FileMode.Create);

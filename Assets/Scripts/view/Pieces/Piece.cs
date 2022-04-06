@@ -212,7 +212,7 @@ public class Piece : MonoBehaviour
     // moves piece towards next position and returns true if already on the target
     private void moveTo(Vector3 targetPos)
     { 
-        //return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,SPEED*Time.deltaTime));
+        //return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,SPEED*Time.fixedDeltaTime));
         transform.position = targetPos;
     }
     // rotates piece towards specified direction, returns false if on the target

@@ -15,5 +15,27 @@ public class Card
         this.action = action;
         this.kwargs = kwargs;
     }
+
+    public int RepairsCost(Player player)
+    {
+        if(action == CardAction.REPAIRS){
+            int total = 0;
+            foreach(Model.Space.Purchasable space in player.owned_spaces)
+            {
+                if(space.type == SqType.PROPERTY)
+                {
+                    if(((Model.Space.Property)space).noOfHouses == 5)
+                    {
+                        total += kwargs["hotel"];
+                    } else {
+                        total += ((Model.Space.Property)space).noOfHouses * kwargs["house"];
+                    }
+                }
+            }
+            return total;
+        } else {
+            return -1;
+        }
+    }
 }
 }

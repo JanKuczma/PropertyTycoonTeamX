@@ -16,6 +16,7 @@ public class MainMenu : MonoBehaviour
     //This is info to be collected from the PlayerSelect menu
     public int numPlayers = 2;
     public Dictionary<string, Tuple<Token, bool>> playerInfo = new Dictionary<string, Tuple<Token, bool>>();
+    public int[] hours_minutes = {0,30};
     
     //These are variables for the GamemodeSelect menu
     public int gm_index = 0;
@@ -25,13 +26,19 @@ public class MainMenu : MonoBehaviour
     public TextMeshProUGUI gmDescription;
     public Image themePreview;
     public Sprite kingsley_classic, kingsley_yoda;
+    public TextMeshProUGUI timer_text;
 
 
     MessagePopUp curr_pop;
     
     public void GoToPlayerSelect()
-    {
-        SceneManager.LoadScene(2);
+    { 
+        if(hours_minutes.Sum() == 0 && gm_index == 1){  // check if turbo mode combined with zero time set
+            MessagePopUp.Create(transform,"Time cannot be set to zero!",2,true);
+        } else {
+            GameObject.Find("GameData").GetComponent<GameData>().timer = hours_minutes[0]*3600+hours_minutes[1]*60;
+            SceneManager.LoadScene(2);  // load time to GameData and carry on
+        }
     }
 
     public void GoToGameOptions()
@@ -231,6 +238,7 @@ public class MainMenu : MonoBehaviour
         if (gm_index == 0)
         {
             GameObject.Find("GameData").GetComponent<GameData>().turboGame = true;
+            timer_text.gameObject.SetActive(true);
             gm_index = 1;
             gmbuttonText.text = "Turbo";
             gmDescription.text =
@@ -238,6 +246,7 @@ public class MainMenu : MonoBehaviour
         } else if (gm_index == 1)
         {
             GameObject.Find("GameData").GetComponent<GameData>().turboGame = false;
+            timer_text.gameObject.SetActive(false);
             gm_index = 0;
             gmbuttonText.text = "Classic";
             gmDescription.text = "In Classic Mode, players must trade away until only one Tycoon is left standing...";
@@ -276,5 +285,47 @@ public class MainMenu : MonoBehaviour
         popup.btn3.onClick.AddListener(popup.closePopup);
     }
 
+    //methods for timer buttons
+    public void TenHPBtn()
+    {
+        hours_minutes[0] = (hours_minutes[0] + 10)%100;
+        timer_text.SetText(hours_minutes[0].ToString("D2")+":"+hours_minutes[1].ToString("D2"));
+    }
+    public void HPBtn()
+    {
+        hours_minutes[0] = (hours_minutes[0] + 1)%100;
+        timer_text.SetText(hours_minutes[0].ToString("D2")+":"+hours_minutes[1].ToString("D2"));
+    }
+    public void TenMPBtn()
+    {
+        hours_minutes[1] = (hours_minutes[1] + 10)%60;
+        timer_text.SetText(hours_minutes[0].ToString("D2")+":"+hours_minutes[1].ToString("D2"));
+    }
+    public void MPBtn()
+    {
+        hours_minutes[1] = (hours_minutes[1] + 1)%60;
+        timer_text.SetText(hours_minutes[0].ToString("D2")+":"+hours_minutes[1].ToString("D2"));
+    }
+
+    public void TenHMBtn()
+    {
+        hours_minutes[0] = (100+hours_minutes[0] - 10)%100;
+        timer_text.SetText(hours_minutes[0].ToString("D2")+":"+hours_minutes[1].ToString("D2"));
+    }
+    public void HMBtn()
+    {
+        hours_minutes[0] = (100+hours_minutes[0] - 1)%100;
+        timer_text.SetText(hours_minutes[0].ToString("D2")+":"+hours_minutes[1].ToString("D2"));
+    }
+    public void TenMMBtn()
+    {
+        hours_minutes[1] = (60+hours_minutes[1] - 10)%60;
+        timer_text.SetText(hours_minutes[0].ToString("D2")+":"+hours_minutes[1].ToString("D2"));
+    }
+    public void MMBtn()
+    {
+        hours_minutes[1] = (60+hours_minutes[1] - 1)%60;
+        timer_text.SetText(hours_minutes[0].ToString("D2")+":"+hours_minutes[1].ToString("D2"));
+    }
 
 }

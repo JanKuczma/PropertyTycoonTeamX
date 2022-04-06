@@ -42,6 +42,8 @@ public class game_controller : MonoBehaviour
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
     int steps; // to pass dice result between states
     bool tabs_set;
+    bool isTurbo;
+    float TIMER;
     //HUD
     public View.HUD hud; 
     PopUp pausePopUp = null;
@@ -82,6 +84,8 @@ public class game_controller : MonoBehaviour
         this.passed_go = gameData.passed_go;    
         this.steps = gameData.steps;
         this.tabs_set = gameData.tabs_set;
+        this.isTurbo = gameData.turboGame;
+        this.TIMER = gameData.timer;
 
         this.previous_gameState = GameState.NONE;
 
@@ -94,7 +98,7 @@ public class game_controller : MonoBehaviour
         this.invisibleWall.SetActive(!players[current_player].isHuman);
 
         if(gameData.turboGame){
-            Debug.Log("turbo game");
+            hud.timer.transform.parent.gameObject.SetActive(true);
         }
         if(gameData.starWarsTheme)
         {
@@ -113,6 +117,11 @@ public class game_controller : MonoBehaviour
         {
             pieces.Add(player,
                 View.Piece.Create(player.token, transform, board_view, player.position, player.in_jail != 0));
+            if(isTurbo)
+            {
+                PopUp tmp = PopUp.OK(hud.transform,"this game is times, seconds: " + TIMER);
+                tmp.btn1.onClick.AddListener(tmp.closePopup);
+            }
         }
 
         //after loading game
@@ -220,12 +229,19 @@ public class game_controller : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Return))
         {
-            MessagePopUp.Create(hud.transform, "FPS: " + 1f/Time.smoothDeltaTime);
+            MessagePopUp.Create(hud.transform, "FPS: " + 1f/Time.fixedDeltaTime);
         }
     }
 
     void FixedUpdate()
     {
+        if(this.isTurbo && TIMER > 0){
+            TIMER -= Time.fixedDeltaTime;
+            hud.timer.text = "Time Left: " + (TIMER/3600).ToString("00") + ":" +(TIMER/60-(TIMER/3600)).ToString("00") + ":" + (TIMER%60).ToString("00");
+            if(TIMER<.1f){
+                MessagePopUp.Create(hud.transform,"Time Passed!");
+            }
+        }
         if(gameState == GameState.ORDERINGPHASE)    //if game state
         {
             decidePlayerOrder();
@@ -691,19 +707,7 @@ public class game_controller : MonoBehaviour
                 AI_trigger = Model.Decision_trigger.PAYMONEY;
             break;
             case CardAction.REPAIRS:
-                int total = 0;
-                foreach(Model.Space.Purchasable space in player.owned_spaces)
-                {
-                    if(space.type == SqType.PROPERTY)
-                    {
-                        if(((Model.Space.Property)space).noOfHouses == 5)
-                        {
-                            total += card.kwargs["hotel"];
-                        } else {
-                            total += ((Model.Space.Property)space).noOfHouses * card.kwargs["house"];
-                        }
-                    }
-                }
+                int total = card.RepairsCost(player);
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(total),this,player));
                 AI_moneyToPay = total;
@@ -914,27 +918,27 @@ public class game_controller : MonoBehaviour
     {
         Vector3 target = piece.transform.position*1.5f;
         target[1] = board_view.transform.position.y+7.0f;
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.deltaTime*2f);
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.fixedDeltaTime*2f);
         Vector3 lookDirection = piece.transform.position - Camera.main.transform.position;
         lookDirection.Normalize();
-        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.deltaTime);
+        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.fixedDeltaTime);
     }
     public void moveCameraTowardsDice(View.DiceContainer diceContainer)
     {
         Vector3 target = diceContainer.position();
         //Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2)) depends only on fieldview angle so it is pretty much constatnt, could be set as constant in terms of optimisation
         target[1] = (diceContainer.transform.localScale.x + diceContainer.av_distance())/Mathf.Tan(Mathf.Deg2Rad*(Camera.main.fieldOfView/2));
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.deltaTime*2f);
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,target,Time.fixedDeltaTime*2f);
         Vector3 lookDirection = diceContainer.position() - Camera.main.transform.position;
         lookDirection.Normalize();
-        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.deltaTime);
+        Camera.main.transform.rotation = Quaternion.Slerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.fixedDeltaTime);
     }
     public void moveCameraTopView()
     {
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,cam_pos_top,Time.deltaTime*3f);
+        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position,cam_pos_top,Time.fixedDeltaTime*3f);
         Vector3 lookDirection = -1.0f*Camera.main.transform.position + Vector3.down*6; // 6 is how much camera is rotated down direction xD
         lookDirection.Normalize();
-        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.deltaTime);
+        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(lookDirection),6f*Time.fixedDeltaTime);
     }
 
 /*
