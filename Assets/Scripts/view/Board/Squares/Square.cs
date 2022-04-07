@@ -4,13 +4,24 @@ using UnityEngine;
 using TMPro;
 
 namespace View {
+    /// <summary>
+    /// Extends <see cref="MonoBehaviour"/><br/>
+    /// Base class for all the square scritpts.
+    /// </summary>
 public abstract class Square : MonoBehaviour
 {
+    /// <summary>Reference to <see cref="TextMeshPro"> name.</summary>
     public TextMeshPro square_name;
+    /// <summary>Square's name.</summary>
     string _name;
-    // each square is divided into 6 areas stored in spaces
-    public Vector3[] spots;
+    /// <summary>Array of <see cref="Vector3"/> that represent spots position to be taken by tokens.</summary>
+    public Vector3[] spots; // each square is divided into 6 areas stored in spaces
+    /// <summary>List of indices of free spots.</summary>
     public List<int> spotsIs;
+    /// <summary>
+    /// Square position relative to the GO square (1).<br/>
+    /// Positions are counted clockwise around the board.
+    /// </summary>
     protected int _position;
     // offsets used for spot arrangement
     protected const float offsetS = 0.38f;
@@ -26,14 +37,14 @@ public abstract class Square : MonoBehaviour
         _name = name;
         this.square_name.SetText(name);
     }
-    // returns index of free area at random 
+    /// <returns>Index of next free spot.</returns>
     public int peekSpotI()
     {
         if(spotsIs.Count > 0) return spotsIs[0];
         else return -1; 
     }
 
-    // returns index of free area at random and removes it from free spot list
+    /// <returns>Index of the next free spot. The index is removed from <paramref name="spotsIs"/> </returns>
     public int popSpotI()
     {
         int spotIndex;
@@ -46,12 +57,19 @@ public abstract class Square : MonoBehaviour
             return -1;
         }
     }
+    /// <summary>
+    /// Removes index from <paramref name="spotsIs"/>. 
+    /// </summary>
+    /// <param name="spotI">Spot index</param>
     public void removeSpotI(int spotI)
     {
         spotsIs.Remove(spotI);
     }
 
-    // adds spotI to list of free spots
+    /// <summary>
+    /// Adds <paramref name="spotI"/> to list of free spots.
+    /// </summary>
+    /// <param name="spotI">Spot index.</param>
     public void releaseSpotI(int spotI)
     {
         if(!spotsIs.Contains(spotI) && spotI >= 0) spotsIs.Add(spotI);

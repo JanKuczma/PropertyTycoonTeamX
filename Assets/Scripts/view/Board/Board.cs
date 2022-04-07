@@ -1,18 +1,31 @@
 using UnityEngine;
 using TMPro;
-
 namespace View {
+/// <summary>
+/// Extends <see cref="MonoBehaviour"/><br/>
+/// Script atached to the board in the scence.
+/// </summary>
 public class Board : MonoBehaviour
 {
+    /// <summary>List of references to <see cref="Square"/> objects.</summary>
     [System.NonSerialized] public Square[] squares; // list for squares references
+    /// <summary>References to <see cref="JailSqare"/> object.</summary>
     [System.NonSerialized] public JailSquare jail;    // parameter for jail square reference
+    /// <summary>Reference to opportunity knocks deck object in the scene. </summary>
     public GameObject opp_knock_stack;
+    /// <summary>Reference to potluck deck object in the scene. </summary>
     public GameObject potluck_stack;
 
     void Awake()
     {
         squares = new Square[40];
     }
+    /// <summary>
+    /// Creates a 3d <see cref="GameObject"/> of PT board in the scene.
+    /// </summary>
+    /// <param name="parent"><see cref="Transform"/> of the parent object.</param>
+    /// <param name="boardData"> <see cref="Model.Board"/> object that stores board data.</param>
+    /// <returns></returns>
     public static Board Create(Transform parent,Model.Board boardData)
     {
         // there are 3 chance colours so we want to use all of them
@@ -75,7 +88,15 @@ public class Board : MonoBehaviour
         }
         return board;
     }
-
+/// <summary>
+/// Changes theme of the board.
+/// </summary>
+/// <param name="theme">Theme name.
+/// <list type="bullet">
+/// <item>"starwars" - Star Wars theme</item>
+/// <item>[any] - Classic theme</item>
+/// </list>
+/// </param>
     public void loadTheme(string theme = "classic")
     {
         if(theme == "starwars")
