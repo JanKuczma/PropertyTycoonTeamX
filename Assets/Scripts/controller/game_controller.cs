@@ -2,22 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Timers;
 using View;
-using Object = System.Object;
 using Space = Model.Space;
-using Timer = System.Timers.Timer;
 using UnityEngine.SceneManagement;
-using view.Menus;
 
 // enum for keeping track of the turnstate state
 // just chucking a comment in here, testing git stuff :) (RD)
-public enum TurnState {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION,AUCTION, MANAGE_PROPERTIES,END, IDLE}
-public enum GameState {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION,NONE}
+public enum TurnPhase {BEGIN,PRE_DICE_ROLL,DICEROLL,DICE_ROLL_EXTRA, CHECK_DOUBLE_ROLL,MOVE_THE_PIECE,PIECEMOVE, PERFORM_ACTION,AUCTION, MANAGE_PROPERTIES,END, IDLE}
+public enum GamePhase {PLAYERTURN,PAUSE,ORDERINGPHASE,WINNERCELEBRATION,NONE}
 /*
     it's just temporary script to test all MonoBehaviour Scripts together
 */
@@ -35,9 +28,9 @@ public class game_controller : MonoBehaviour
     Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order
     int current_player;         // incremented every turn, holds the index of the current player (ordered in List players)
     // bits needed to manage game and turns
-    TurnState turnState;
-    GameState gameState;
-    GameState previous_gameState;
+    TurnPhase turnState;
+    GamePhase gameState;
+    GamePhase previous_gameState;
     public bool double_rolled = false; // use this to keep track of whether player just rolled a double
     public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     bool passed_go = false; // use this to keep track if the current player can get money for passing GO
@@ -88,7 +81,7 @@ public class game_controller : MonoBehaviour
         this.isTurbo = gameData.turboGame;
         this.TIMER = gameData.timer;
 
-        this.previous_gameState = GameState.NONE;
+        this.previous_gameState = GamePhase.NONE;
 
         this.pieces = new Dictionary<Model.Player, Piece>();
         this.board_view = View.Board.Create(transform,board_model);
@@ -129,7 +122,7 @@ public class game_controller : MonoBehaviour
             hud.jail_bars.gameObject.SetActive(true);
         }
 
-        if (turnState == TurnState.BEGIN || turnState == TurnState.PRE_DICE_ROLL)
+        if (turnState == TurnPhase.BEGIN || turnState == TurnPhase.PRE_DICE_ROLL)
         {
             dice.gameObject.SetActive(true);
         }
@@ -138,7 +131,7 @@ public class game_controller : MonoBehaviour
             dice.gameObject.SetActive(false);
         }
 
-        if (turnState == TurnState.PERFORM_ACTION)
+        if (turnState == TurnPhase.PERFORM_ACTION)
         {
             PerformAction();
         }
@@ -153,23 +146,23 @@ public class game_controller : MonoBehaviour
         hud.cameraRightBtn.onClick.AddListener(moveCameraRight);
         hud.optionsButton.onClick.AddListener(delegate
         {
-            if (gameState != GameState.PAUSE)
+            if (gameState != GamePhase.PAUSE)
             {
                 invisibleWall.SetActive(true);
                 previous_gameState = gameState;
-                gameState = GameState.PAUSE;
+                gameState = GamePhase.PAUSE;
                 pausePopUp = OptionsPopUp.Create(hud.transform);
                 pausePopUp.btn1.GetComponentInChildren<TMPro.TMP_Text>().SetText("Resume");
                 pausePopUp.btn1.onClick.AddListener(delegate
                 {
                     gameState = previous_gameState;
-                    if (turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                    if (turnState != TurnPhase.DICEROLL && turnState != TurnPhase.DICE_ROLL_EXTRA)
                     {
                         invisibleWall.SetActive(!players[current_player].isHuman);
                     }
                 });
-                if (turnState == TurnState.DICEROLL || turnState == TurnState.DICE_ROLL_EXTRA ||
-                    turnState == TurnState.PIECEMOVE)
+                if (turnState == TurnPhase.DICEROLL || turnState == TurnPhase.DICE_ROLL_EXTRA ||
+                    turnState == TurnPhase.PIECEMOVE)
                 {
                     pausePopUp.btn2.interactable = false;
                 }
@@ -203,7 +196,7 @@ public class game_controller : MonoBehaviour
             {
                 gameState = previous_gameState;
                 if(pausePopUp) { Destroy(pausePopUp.gameObject); }
-                if(turnState != TurnState.DICEROLL && turnState != TurnState.DICE_ROLL_EXTRA)
+                if(turnState != TurnPhase.DICEROLL && turnState != TurnPhase.DICE_ROLL_EXTRA)
                 {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                 }
@@ -235,7 +228,7 @@ public class game_controller : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(this.isTurbo && TIMER > 0 && gameState != GameState.PAUSE){
+        if(this.isTurbo && TIMER > 0 && gameState != GamePhase.PAUSE){
             TIMER -= Time.fixedDeltaTime;
             hud.timer.text = "Time Left: " + Math.Truncate(TIMER/3600).ToString("00") + ":" +Math.Truncate((TIMER/60)%60).ToString("00") + ":" + Math.Truncate(TIMER%60).ToString("00");
             if(TIMER<.5f){
@@ -245,15 +238,15 @@ public class game_controller : MonoBehaviour
                 tmpPop.GetComponent<RectTransform>().anchoredPosition = new Vector2(-650,200);
             }
         }
-        if(gameState == GameState.ORDERINGPHASE)    //if game state
+        if(gameState == GamePhase.ORDERINGPHASE)    //if game state
         {
             decidePlayerOrder();
         }
-        else if(gameState == GameState.PLAYERTURN)
+        else if(gameState == GamePhase.PLAYERTURN)
         {
-            if(turnState == TurnState.BEGIN)
+            if(turnState == TurnPhase.BEGIN)
             {
-                if(players.Count == 1 || (TIMER<.5f && current_player == 0)) { gameState = GameState.WINNERCELEBRATION; return; }
+                if(players.Count == 1 || (TIMER<.5f && current_player == 0)) { gameState = GamePhase.WINNERCELEBRATION; return; }
                 if(!tabs_set)
                 {
                     MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
@@ -290,27 +283,27 @@ public class game_controller : MonoBehaviour
                         StartCoroutine(pieces[players[current_player]].leaveJail());
                         hud.jail_bars.gameObject.SetActive(false);
                         players[current_player].in_jail = 0;
-                        turnState = TurnState.MANAGE_PROPERTIES;
+                        turnState = TurnPhase.MANAGE_PROPERTIES;
                     }
                 }
                 else  
                 {
-                    turnState = TurnState.PRE_DICE_ROLL;
+                    turnState = TurnPhase.PRE_DICE_ROLL;
                     invisibleWall.SetActive(!players[current_player].isHuman);
                 }
             }
-            else if(turnState == TurnState.PRE_DICE_ROLL)
+            else if(turnState == TurnPhase.PRE_DICE_ROLL)
             {
                 if(dice.start_roll)
                 {
-                    turnState = TurnState.DICEROLL;
+                    turnState = TurnPhase.DICEROLL;
                     invisibleWall.SetActive(true);
                 }
                 else if(!players[current_player].isHuman && AICoroutineFinished){
                     StartCoroutine(AI_throw_dice());
                 }
             }
-            if(turnState == TurnState.DICEROLL) // turn begins
+            if(turnState == TurnPhase.DICEROLL) // turn begins
             {
                 if(!dice.areRolling())  // if dice are not rolling anymore
                 {
@@ -321,26 +314,26 @@ public class game_controller : MonoBehaviour
                     {                               // reset the dice
                         dice.reset();
                         MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                        turnState = TurnState.PRE_DICE_ROLL;
+                        turnState = TurnPhase.PRE_DICE_ROLL;
                         return;
                     }
                     if (double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
                     {
                         double_count++;
-                        turnState = TurnState.CHECK_DOUBLE_ROLL;
+                        turnState = TurnPhase.CHECK_DOUBLE_ROLL;
                     } else {
-                        turnState = TurnState.MOVE_THE_PIECE;
+                        turnState = TurnPhase.MOVE_THE_PIECE;
                     }
                 }
                 else if(dice.belowBoard()) {
                     invisibleWall.SetActive(!players[current_player].isHuman);
                     dice.reset();
                     MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                    turnState = TurnState.PRE_DICE_ROLL;
+                    turnState = TurnPhase.PRE_DICE_ROLL;
                     return;
                 }
             }
-            else if(turnState == TurnState.CHECK_DOUBLE_ROLL)
+            else if(turnState == TurnPhase.CHECK_DOUBLE_ROLL)
             {
                 if (double_count >= 3)      // if 3 doubles in a row, send player straight to jail or let them use the card
                 {
@@ -348,10 +341,10 @@ public class game_controller : MonoBehaviour
                 } else {
                     MessagePopUp.Create(hud.transform,players[current_player].name + " rolled a double, they will have another turn!",2,true);
                 }
-                turnState = TurnState.MOVE_THE_PIECE;
+                turnState = TurnPhase.MOVE_THE_PIECE;
                 
             }
-            else if(turnState == TurnState.MOVE_THE_PIECE)
+            else if(turnState == TurnPhase.MOVE_THE_PIECE)
             {
                 if(!players[current_player].isHuman && AICoroutineFinished && hud.current_main_PopUp != null){
                     StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.GOTOJAIL));
@@ -363,20 +356,20 @@ public class game_controller : MonoBehaviour
                         // start moving piece and change the turn state
                         passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
                         StartCoroutine(pieces[players[current_player]].move(steps));
-                        turnState = TurnState.PIECEMOVE;
+                        turnState = TurnPhase.PIECEMOVE;
                     } else {
                         double_count = 0;
                         double_rolled = false;
-                        turnState = TurnState.MANAGE_PROPERTIES;
+                        turnState = TurnPhase.MANAGE_PROPERTIES;
                     }
                 }
             }
-            else if(turnState == TurnState.PIECEMOVE)
+            else if(turnState == TurnPhase.PIECEMOVE)
             {
                 if(!pieces[players[current_player]].isMoving)   //if piece is not moving anymore
                 {
                     players[current_player].position = pieces[players[current_player]].GetCurrentSquare()+1;
-                    turnState = TurnState.PERFORM_ACTION;   // change turn state to action
+                    turnState = TurnPhase.PERFORM_ACTION;   // change turn state to action
                     if(passed_go)
                     {
                         players[current_player].allowed_to_buy = true;
@@ -388,7 +381,7 @@ public class game_controller : MonoBehaviour
                     PerformAction();
                 }
             }
-            else if(turnState == TurnState.PERFORM_ACTION)  // ACTION state (buy property, pay rent etc...)
+            else if(turnState == TurnPhase.PERFORM_ACTION)  // ACTION state (buy property, pay rent etc...)
             {
                 if(AICoroutineFinished && hud.current_main_PopUp != null && !players[current_player].isHuman){
                     StartCoroutine(AI_take_decision(hud.current_main_PopUp,AI_trigger));
@@ -396,17 +389,17 @@ public class game_controller : MonoBehaviour
                 // when PopUp is closed the `trunState` is changed to MANAGEPROPERTIES
                 if(hud.current_main_PopUp == null)
                 {
-                    turnState = TurnState.MANAGE_PROPERTIES;
+                    turnState = TurnPhase.MANAGE_PROPERTIES;
                 }
             }
-            else if(turnState == TurnState.MANAGE_PROPERTIES)  // (manage your properties, check other players' properties)
+            else if(turnState == TurnPhase.MANAGE_PROPERTIES)  // (manage your properties, check other players' properties)
             {
                 hud.FinishTurnButton.gameObject.SetActive(true);
                 if(!players[current_player].isHuman && AICoroutineFinished && players[current_player].in_jail==0) { StartCoroutine(AI_ManageProperties(players[current_player])); }
                 else if(!players[current_player].isHuman && AICoroutineFinished) { StartCoroutine(AI_FinishTurn()); }
                 // when player presses FINISH TURN button the `turnState` is changed to END
             }
-            else if(turnState == TurnState.END)     // END state, when player finished his turn
+            else if(turnState == TurnPhase.END)     // END state, when player finished his turn
             {
                 hud.FinishTurnButton.gameObject.SetActive(false);
                 if(double_rolled)              // if double has been rolled, increase double count by 1 and maintain current player
@@ -421,10 +414,10 @@ public class game_controller : MonoBehaviour
                     dice.reset();
                 }
                 tabs_set = false;
-                turnState = TurnState.BEGIN;     // change state to initial state
+                turnState = TurnPhase.BEGIN;     // change state to initial state
             }
         }
-        else if(gameState == GameState.WINNERCELEBRATION)
+        else if(gameState == GamePhase.WINNERCELEBRATION)
         {
             if(hud.current_main_PopUp == null) {
                 hud.CpuPanel.SetActive(false);
@@ -449,11 +442,11 @@ public class game_controller : MonoBehaviour
     //temp code for camera movement
      void LateUpdate()
     {
-        if(turnState == TurnState.PIECEMOVE || turnState == TurnState.PERFORM_ACTION)
+        if(turnState == TurnPhase.PIECEMOVE || turnState == TurnPhase.PERFORM_ACTION)
         {
             moveCameraTowardsPiece(pieces[players[current_player]]);
         }
-        else if(turnState == TurnState.DICEROLL || turnState == TurnState.DICE_ROLL_EXTRA)
+        else if(turnState == TurnPhase.DICEROLL || turnState == TurnPhase.DICE_ROLL_EXTRA)
         {
             moveCameraTowardsDice(dice);
         } else {
@@ -474,7 +467,7 @@ public class game_controller : MonoBehaviour
             if(dice.start_roll)     // this bit is so camera knows when to follow dice
             {
                 invisibleWall.SetActive(true);
-                turnState = TurnState.DICEROLL;
+                turnState = TurnPhase.DICEROLL;
 
             }
             else if(!players[current_player].isHuman && AICoroutineFinished) { StartCoroutine(AI_throw_dice());}
@@ -505,12 +498,12 @@ public class game_controller : MonoBehaviour
                             players = sorted_dict.Keys.ToList<Model.Player>();
                             current_player = 0;             // game starts with player first on ordered list
                             hud.sort_tabs(players);
-                            turnState = TurnState.BEGIN;
-                            gameState = GameState.PLAYERTURN;
+                            turnState = TurnPhase.BEGIN;
+                            gameState = GamePhase.PLAYERTURN;
                         }
                     }
                 }
-                turnState = TurnState.BEGIN;    // this bit is so camera comes back to top position
+                turnState = TurnPhase.BEGIN;    // this bit is so camera comes back to top position
             }
             else if(dice.belowBoard())
             {
@@ -647,21 +640,21 @@ public class game_controller : MonoBehaviour
                 passed_go = (steps + pieces[players[current_player]].GetCurrentSquare())>=40; // if current position plus steps is greater than 40 then it means passed_go true
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
-                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnPhase.PIECEMOVE; });
                 AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.MOVEBACKTO:
                 steps = -1 * ((pieces[player].GetCurrentSquare()+41 - card.kwargs["position"])%40); 
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
-                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnPhase.PIECEMOVE; });
                 AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.MOVEBACK:
                 steps = -1*card.kwargs["steps"];
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
                 hud.current_main_PopUp.btn1.onClick.AddListener(() => StartCoroutine(pieces[player].move(steps)));
-                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnState.PIECEMOVE; });
+                hud.current_main_PopUp.btn1.onClick.AddListener(delegate { hud.current_main_PopUp.closePopup(); turnState = TurnPhase.PIECEMOVE; });
                 AI_trigger = Model.Decision_trigger.OK;
             break;
             case CardAction.GOTOJAIL:
@@ -728,7 +721,7 @@ public class game_controller : MonoBehaviour
 
     IEnumerator rollInJailCoroutine(Model.Player player)
     {
-        turnState = TurnState.IDLE;
+        turnState = TurnPhase.IDLE;
         dice.gameObject.SetActive(true);
         bool successful = false;
         hud.current_main_PopUp = PopUp.OK(hud.transform,"");
@@ -739,7 +732,7 @@ public class game_controller : MonoBehaviour
         {
             if(dice.start_roll) 
             {
-                turnState = TurnState.DICE_ROLL_EXTRA;
+                turnState = TurnPhase.DICE_ROLL_EXTRA;
                 invisibleWall.SetActive(true);
             }
             else if (!player.isHuman && AICoroutineFinished) {
@@ -753,7 +746,7 @@ public class game_controller : MonoBehaviour
                 {                               // reset the dice
                     dice.reset();
                     MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                    turnState = TurnState.IDLE;
+                    turnState = TurnPhase.IDLE;
                 } else if (dice.is_double())
                 {
                     successful = true;
@@ -762,20 +755,20 @@ public class game_controller : MonoBehaviour
                     players[current_player].in_jail = 0;
                     StartCoroutine(pieces[players[current_player]].leaveJail());
                     hud.jail_bars.gameObject.SetActive(false);
-                    turnState = TurnState.MANAGE_PROPERTIES;
+                    turnState = TurnPhase.MANAGE_PROPERTIES;
                 } else {
                     successful = true;
                     if(hud.current_main_PopUp != null) { Destroy(hud.current_main_PopUp.gameObject); }
                     MessagePopUp.Create(hud.transform,"You stay in Jail!",4);
                     players[current_player].in_jail -= 1;
-                    turnState = TurnState.MANAGE_PROPERTIES;
+                    turnState = TurnPhase.MANAGE_PROPERTIES;
                 }
             }
             else if(dice.belowBoard())                   // if result is negative (dice are stuck)
             {                               // reset the dice
                 dice.reset();
                 MessagePopUp.Create(hud.transform, "Dice stuck. Please roll again!",2);
-                turnState = TurnState.PERFORM_ACTION;
+                turnState = TurnPhase.PERFORM_ACTION;
             }
             yield return null;
         }
@@ -783,7 +776,7 @@ public class game_controller : MonoBehaviour
 
     IEnumerator auctionCoroutine(Model.Player player,Space.Purchasable current_space)
     {
-        turnState = TurnState.AUCTION;
+        turnState = TurnPhase.AUCTION;
         soundManagerClassic.Play("Auction");
         int highest_bid = current_space.cost-10;
         Model.Player highest_bidder = null;
@@ -794,7 +787,7 @@ public class game_controller : MonoBehaviour
         {
             hud.current_main_PopUp.closePopup();
             MessagePopUp.Create(hud.transform,"Nobody bought this property!",3);
-            turnState = TurnState.MANAGE_PROPERTIES;
+            turnState = TurnPhase.MANAGE_PROPERTIES;
             hud.CpuPanel.SetActive(!player.isHuman);
             yield break;
         }
@@ -847,19 +840,19 @@ public class game_controller : MonoBehaviour
             MessagePopUp.Create(hud.transform,highest_bidder.name+" purchased this property for "+highest_bid+"Q!",3);
         }
         hud.CpuPanel.SetActive(!player.isHuman);
-        turnState = TurnState.MANAGE_PROPERTIES;
+        turnState = TurnPhase.MANAGE_PROPERTIES;
     }
     public void sendPieceToJail()
     {
         StartCoroutine(pieces[players[current_player]].goToJail());
-        turnState = TurnState.MANAGE_PROPERTIES;
+        turnState = TurnPhase.MANAGE_PROPERTIES;
         double_rolled = false;      // reset double check so it won't have another turn
     }
 
     public void sendPieceToVisitJail()
     {
         StartCoroutine(pieces[players[current_player]].goToVisitJail());
-        turnState = TurnState.MANAGE_PROPERTIES;
+        turnState = TurnPhase.MANAGE_PROPERTIES;
         double_rolled = false;      // reset double check so it won't have another turn
     }
 
@@ -876,13 +869,13 @@ public class game_controller : MonoBehaviour
     public void stayInJail()
     {
         players[current_player].in_jail -= 1;
-        turnState = TurnState.MANAGE_PROPERTIES;
+        turnState = TurnPhase.MANAGE_PROPERTIES;
     }
 
     public void finishTurn()
     {
         if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
-        turnState = TurnState.END;
+        turnState = TurnPhase.END;
     }
     public void RemovePLayer(Model.Player player)
     {
@@ -909,7 +902,7 @@ public class game_controller : MonoBehaviour
         current_player = (current_player) % players.Count;
         dice.reset();
         tabs_set = false;
-        turnState = TurnState.BEGIN;
+        turnState = TurnPhase.BEGIN;
     }
     //Camera movement
     public void moveCameraLeft()

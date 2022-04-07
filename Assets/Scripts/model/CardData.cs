@@ -4,14 +4,22 @@ using System.Linq;
 
 namespace Model
 {
+    /// <summary>
+    /// Class used to load/save <c>CardStack</c> data from/to JSON format.
+    /// </summary>
     public static class CardData
     {
+        /// <summary>
+        /// Wrapper for <c>Card</c> class
+        /// </summary>
         [System.Serializable]
         private class CardStackWrapper
         {
             public List<CardWrapper> cards = new List<CardWrapper>();
         }
-
+        /// <summary>
+        /// Wrapper for <c>CardStack</c> class
+        /// </summary>
         [System.Serializable]
         private class CardWrapper
         {
@@ -21,23 +29,34 @@ namespace Model
             public List<string> keys;
             public List<int> values;
         }
-        
+        /// <summary>
+        /// Saves <c>CardStack</c> data to a JSON file
+        /// </summary>
+        /// <param name="cards">Card Stack</param>
+        /// <param name="filename">JSON File name</param>
         public static void saveCardStack(CardStack cards,string filename = "custom_cardstack.json")
         {
             string cards_json = JsonUtility.ToJson(stackToWrapper(cards),true);
-            //System.IO.File.WriteAllText(Application.persistentDataPath + filename+".json",cards_json);
-            System.IO.File.WriteAllText(filename,cards_json);
+            System.IO.File.WriteAllText(Application.dataPath + filename+".json",cards_json);
         }
+        /// <summary>
+        /// Loads JSON format of a Card Stack data to <c>CardStack</c> object
+        /// </summary>
+        /// <param name="json_format">JSON format of the Card Stack data</param>
+        /// <returns><c>CardStack</c> object</returns>
         public static CardStack loadCardStack(string json_format)
         {
-
             CardStackWrapper cards = JsonUtility.FromJson<CardStackWrapper>(json_format);
             return wrapperToStack(cards);
         }
+        /// <summary>
+        /// Loads JCard Stack data from a JSON file to <c>CardStack</c> object
+        /// </summary>
+        /// <param name="file_name">File name</param>
+        /// <returns><c>CardStack</c> object</returns>
         public static CardStack loadCardStackFromFile(string file_name)
         {
-            //CardStack cards = JsonUtility.FromJson<CardStack>(System.IO.File.ReadAllText(Application.persistentDataPath + file_path +".json"));
-            CardStackWrapper cards = JsonUtility.FromJson<CardStackWrapper>(System.IO.File.ReadAllText(file_name));
+            CardStackWrapper cards = JsonUtility.FromJson<CardStackWrapper>(System.IO.File.ReadAllText(Application.dataPath + file_name +".json"));
             return wrapperToStack(cards);
         }
         

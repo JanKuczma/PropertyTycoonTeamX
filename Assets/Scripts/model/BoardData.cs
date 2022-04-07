@@ -1,17 +1,27 @@
-using System.IO;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace Model
 {
+    /// <summary>
+    /// Class used load/save <see cref="Board"/> data from/to json format.
+    /// </summary>
     public static class BoardData
     {
+        /// <summary>
+        /// Wrapper class for <c>Board</c> data.
+        /// </summary>
+        /*
+            Because <see cref="UnityEngine.JsonUtility"/> does not support Dictionaries
+            nor polymorphism, the <c>Board</c> data has to be wrapped into simpler format
+        */
         [System.Serializable]
         private class BoardWrapper
         {
             [SerializeField] public SpaceWrapper[] spaces = new SpaceWrapper[40];
         }
-
+        /// <summary>
+        /// Wrapper class for <c>Space</c> data
+        /// </summary>
         [System.Serializable]
         private class SpaceWrapper
         {
@@ -24,7 +34,10 @@ namespace Model
             public int house_cost;
             public int hotel_cost;
         }
-
+        /// <summary>
+        /// Loads the data from a JSON format
+        /// </summary>
+        /// <returns><c>Board</c> object of the board.</returns>
         public static Board LoadBoard()
         {
             var defaultBoard = Asset.board_data_json();
@@ -32,8 +45,6 @@ namespace Model
             var board = new Board();
             var defaultBoardWrapper = JsonUtility.FromJson<BoardWrapper>(defaultBoard);
             var customBoardWrapper = JsonUtility.FromJson<BoardWrapper>(customBoard);
-
-            
             
             foreach (var space in defaultBoardWrapper.spaces)
             {

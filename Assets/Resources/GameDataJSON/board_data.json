@@ -58,7 +58,7 @@
             "position": 5,
             "name": "INCOME TAX",
             "type_action": "TAX",
-            "cost_amount": 100,
+            "cost_amount": 200,
             "group": "",
             "rents": [],
             "house_cost": 0,

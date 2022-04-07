@@ -14,8 +14,7 @@ public enum SqType {GO,JAILVISIT,PARKING,GOTOJAIL,PROPERTY,STATION,UTILITY,POTLU
 public enum Token {CAT ,BOOT,IRON,SHIP,HATSTAND,SMARTPHONE}
 
 /// <summary>
-/// This static class is used to get the assets at the runtime
-/// it seems to be the most efficient way to load the assets to the game atm
+/// This static class is used to get the assets at the runtime.
 /// </summary>
 public static class Asset
 {

@@ -32,9 +32,11 @@ public abstract class Space
         /// </summary>
         public int cost;
         /// <summary>
-        /// For <c>Property</c>: List of rent amounts depending on level of the house.<br/>
-        /// For <c>Station</c>: List of rent amounts depending number of station owned.<br/>
-        /// For <c>Utility</c>: List of rent multipilers depending on sumber of utilities owned.<br/>
+        /// <list>
+        /// <item>For <see cref="Space.Property"/>: List of rent amounts depending on level of the house.</item>
+        /// <item>For <see cref="Space.Station"/>: List of rent amounts depending number of station owned.</item>
+        /// <item>For <see cref="Space.Utility"/>: List of rent multipilers depending on sumber of utilities owned.</item>
+        /// </list>
         /// </summary>
         public int[] rents;
         /// <summary>
@@ -87,6 +89,9 @@ public abstract class Space
         /// The amount of money received by a <c>Player</c> when passing.
         /// </summary>
         public int amount;
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
+        /// <param name="amount"><inheritdoc cref="Go.amount" path="/summary"/></param>
         public Go(int position, string name, int amount = 200)
         {
             this.position = position;
@@ -99,6 +104,8 @@ public abstract class Space
     [System.Serializable]
     public class VisitJail : Space
     {
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
         public VisitJail(int position, string name)
         {
             this.position = position;
@@ -110,6 +117,8 @@ public abstract class Space
     [System.Serializable]
     public class GoToJail : Space
     {
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
         public GoToJail(int position, string name)
         {
             this.position = position;
@@ -137,21 +146,30 @@ public abstract class Space
         /// Hotel cost
         /// </summary>
         public int hotel_cost;
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"><inheritdoc cref="position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="name" path="/summary"/></param>
+        /// <param name="cost"><inheritdoc cref="Purchasable.cost" path="/summary"/></param>
+        /// <param name="group"><inheritdoc cref="Property.group" path="/summary"/></param>
+        /// <param name="rents"><inheritdoc cref="Space.Purchasable.rents" path="/summary/list/item[1]"/></param>
+        /// <param name="rents">List of rent amounts depending on level of the house.</param>
+        /// <param name="house_cost"><inheritdoc cref="Property.house_cost" path="/summary"/></param>
+        /// <param name="hotel_cost"><inheritdoc cref="Property.hotel_cost" path="/summary"/></param>
         public Property(int position, string name, int cost, Group group, int[] rents, int house_cost, int hotel_cost)
         {
+            this.type = SqType.PROPERTY;
             this.position = position;
             this.name = name;
             this.cost = cost;
+            this.group = group;
             this.noOfHouses = 0;
             this.rents = rents;
-            this.type = SqType.PROPERTY;
-            this.group = group;
             this.house_cost = house_cost;
             this.hotel_cost = hotel_cost;
             this.isMortgaged = false;
         }
-
         override public int rent_amount(Board board)
         {
             //check if owns all properties in this Group
@@ -240,9 +258,9 @@ public abstract class Space
         /// </summary>
         /// <param name="board">The reference to the <c>Board</c> to which this space is attached</param>
         /// <returns>
-        /// <value>0</value> if no difference<br/>
-        /// <value>1</value> if there's property that has less houses<br/>
-        /// <value>-1</value> if there's property that has more houses<br/>
+        /// 0 if no difference<br/>
+        /// 1 if there's property that has less houses<br/>
+        /// -1 if there's property that has more houses<br/>
         /// </returns>
         public int differenceInHouses(Board board)
         {
@@ -254,10 +272,13 @@ public abstract class Space
         }
 
     }
-
     [System.Serializable]
     public class Utility : Purchasable
     {
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
+        /// <param name="cost"><inheritdoc cref="Purchasable.cost" path="/summary"/></param>
+        /// <param name="rents"><inheritdoc cref="Purchasable.rents" path="/summary/list/item[3]"/></param>
         public Utility(int position, string name, int cost, int[] rents)
         {
             this.position = position;
@@ -282,6 +303,10 @@ public abstract class Space
     [System.Serializable]
     public class Station : Purchasable
     {
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
+        /// <param name="cost"><inheritdoc cref="Purchasable.cost" path="/summary"/></param>
+        /// <param name="rents"><inheritdoc cref="Purchasable.rents" path="/summary/list/item[2]"/></param>
         public Station(int position, string name, int cost, int[] rents)
         {
             this.position = position;
@@ -306,6 +331,9 @@ public abstract class Space
         /// The tax amount
         /// </summary>
         public int amount;
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
+        /// <param name="amount">Tax amount due</param>
         public Tax(int position, string name, int amount)
         {
             this.position = position;
@@ -319,6 +347,8 @@ public abstract class Space
     [System.Serializable]
     public class PotLuck : Space
     {
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
         public PotLuck(int position, string name)
         {
             this.position = position;
@@ -330,6 +360,8 @@ public abstract class Space
     [System.Serializable]
     public class Chance : Space
     {
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
         public Chance(int position, string name)
         {
             this.position = position;
@@ -341,8 +373,12 @@ public abstract class Space
     [System.Serializable]
     public class FreeParking : Space
     {
+        /// <summary>
+        /// Amount of collected fines.
+        /// </summary>
         public int collectedFines;
-        
+        /// <param name="position"><inheritdoc cref="Space.position" path="/summary"/></param>
+        /// <param name="name"><inheritdoc cref="Space.name" path="/summary"/></param>
         public FreeParking(int position, string name)
         {
             this.position = position;

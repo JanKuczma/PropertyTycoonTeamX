@@ -5,8 +5,8 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 /// <summary>
 /// Extends <c>MonoBehaviour</c>.<br/>
-/// Used to store data about the game and pass it between scenes. See <see cref="Object.DontDestroyOnLoad()"/>.<br/>
 /// Used to load/save game data from/to a file <br/>
+/// Used to store data about the game and pass it between scenes. See <see cref="Object.DontDestroyOnLoad"/>.<br/>
 /// </summary>
 public class GameData : MonoBehaviour
 {
@@ -22,8 +22,8 @@ public class GameData : MonoBehaviour
     public Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order
     public int current_player = 0;
     //turn/game state bits
-    public TurnState turnState = TurnState.BEGIN;
-    public GameState gameState = GameState.ORDERINGPHASE;
+    public TurnPhase turnState = TurnPhase.BEGIN;
+    public GamePhase gameState = GamePhase.ORDERINGPHASE;
     public bool double_rolled = false; // use this to keep track of whether player just rolled a double
     public int double_count = 0;           // incremented when player rolls a double, reset back to zero when current player is updated 
     public bool passed_go = false; // use this to keep track if the current player can get money for passing GO
@@ -92,8 +92,8 @@ public class GameData : MonoBehaviour
         public Dictionary<Model.Player, int> player_throws; //holds throw values when deciding player order
         public int current_player;
         //turn/game state bits
-        public TurnState turnState;
-        public GameState gameState;
+        public TurnPhase turnState;
+        public GamePhase gameState;
         public bool double_rolled; // use this to keep track of whether player just rolled a double
         public int double_count;           // incremented when player rolls a double, reset back to zero when current player is updated 
         public bool passed_go; // use this to keep track if the current player can get money for passing GO

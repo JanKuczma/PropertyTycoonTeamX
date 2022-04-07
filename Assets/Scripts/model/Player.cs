@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Model{
+    /// <summary>
+    /// The outcome of <see cref="Player"/>'s decision
+    /// </summary>
 public enum Decision_outcome {
     SUCCESSFUL, NOT_ENOUGH_MONEY, NOT_ENOUGH_ASSETS,
     NOT_ALL_PROPERTIES_IN_GROUP,DIFFERENCE_IN_HOUSES,NO_HOUSES,MAX_HOUSES,
     OTHER, NONE }
+    /// <summary>
+    /// The reason of taking decison by a <see cref="Player"/>
+    /// </summary>
 public enum Decision_trigger {
     GOTOJAIL, PAYMONEY, BUYPROPERTY, BID, INJAIL, OK, PAYORCARD, UDENTIFIED }
 /// <summary>
@@ -68,10 +74,10 @@ public class Player
         this.cash += cash;
     }
 /// <summary>
-/// Method used to make  Player  pay specified amount of money.
+/// Method used to make <c>Player</c> pay specified amount of money.
 /// </summary>
 /// <param name="amount">The amount to pay</param>
-/// <param name="recipient">Optional: Recipient </param>
+/// <param name="recipient">Optional: Recipient<br/>NOTE: if <paramref name="board"/> is specfied then <paramref name="recipient"/> does not recieve moeny</param>
 /// <param name="board">Optional: If speciified, the amount paid lands on 'Free Parking' space</param>
 /// <returns>Decision Outcome</returns>
     public Decision_outcome PayCash(int amount, Player recipient = null, Board board = null)
