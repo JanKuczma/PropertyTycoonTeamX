@@ -7,7 +7,6 @@ namespace View
 {
 public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    // Start is called before the first frame update
     public Model.Player player;
     public Dictionary<int,PurchasableCard> propertyCards;
     Color color;
@@ -20,7 +19,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     Coroutine popUpCoruotine = null;
     Coroutine tokenCoroutine = null;
     float _FrameRate = 25f;
-
+    /// <summary>If the tab is clicked the <see cref="PropertyManager"/></summary>
     public void OnPointerClick(PointerEventData eventData)
     {
         if(transform.parent.GetComponent<HUD>().currentManager != null) { Destroy(transform.parent.GetComponent<HUD>().currentManager.gameObject); }
@@ -84,7 +83,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         this.color = color;
         GetComponent<Image>().color = color;
     }
-
+// coroutines to make that 'nice' smooth tab popup behaviour
     public IEnumerator popUp(float height)
     {
         float timeOfTravel = 1f;
@@ -133,7 +132,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             }
         }
     }
-
+    // coroutine used to play the 'current Player' token rotation animation
     IEnumerator playAnim(Sprite[] tokenSheet)
     {
         int index = 0;

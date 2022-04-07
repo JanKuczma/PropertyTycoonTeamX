@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 namespace View
 {
+    /// <summary>
+    /// Script used to make the property cards appear when one of 'cards' in Player Tab is hovered
+    /// </summary>
 public class PropertyToggle : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image group;

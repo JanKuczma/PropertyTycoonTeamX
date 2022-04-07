@@ -8,6 +8,11 @@ public class PropertyGrid : MonoBehaviour
 {
     [SerializeField] public DictionaryWrapper<int,PropertyToggle> propertyToggles;
 }
+/// <summary>
+/// Wrapper used 'serialize' System.Collections.Generic.Dictionary into two lists so it can be visible in Unity Editor
+/// </summary>
+/// <typeparam name="TK">KeyWord</typeparam>
+/// <typeparam name="TV">Value</typeparam>
 [System.Serializable]
 public class DictionaryWrapper<TK,TV>
 {

@@ -5,6 +5,11 @@ using UnityEngine;
 
 ///DICE IMPLEMENTATION NEEDS REFACTORING
 namespace View{
+    /// <summary>
+    /// Extends <see cref=" MonoBehaviour"/>.<br/>
+    /// Script attached to DiceContainer prefab.<br/>
+    /// Script used control all dice in the dice and read the values from it.
+    /// </summary>
 public class DiceContainer : MonoBehaviour
 {
     float move_speed = 20.0f;   // how fast dice is following cursor
@@ -66,8 +71,10 @@ public class DiceContainer : MonoBehaviour
         }
         return targetPos;
     }
-
-    /// resets dice to initial position
+    /// <summary>
+    /// Resets all dice to the initial position.
+    /// The dice rotation is pseudorandom.
+    /// </summary>
     public void reset()
     {
         greenLight.gameObject.SetActive(true);
@@ -81,8 +88,7 @@ public class DiceContainer : MonoBehaviour
         enabled = true;
         gameObject.SetActive(true);
     }
-
-    /// returns the sum of dice results
+    /// <returns> The sum of dice results.</returns>
     public int get_result()
     {
         int result = 0;
@@ -93,6 +99,7 @@ public class DiceContainer : MonoBehaviour
         return result;
     }
 
+    /// <returns>Bool value of dice show the same value. </returns>
     public bool is_double()
     {
         int i = 0;
@@ -106,7 +113,7 @@ public class DiceContainer : MonoBehaviour
         return (dice_values[0] == dice_values[1]);
     }
 
-    /// returns true if at least one dice is rolling
+    /// <returns> True if at least one dice is rolling.</returns>
     public bool areRolling()
     {
         foreach(Dice d in dice)
@@ -116,6 +123,7 @@ public class DiceContainer : MonoBehaviour
         return false;
     }
 
+    /// <returns>The mid-point of all the dice. </returns>
     public Vector3 position()
     {
         Vector3 point = Vector3.zero;
@@ -125,11 +133,13 @@ public class DiceContainer : MonoBehaviour
         }
         return point/dice.Length;
     }
+    /// <returns>Distance of the dice from the mid-point. See <see cref="DiceContainer.position"/></returns>
     public float av_distance()
     {
         return (position()-dice[0].transform.position).magnitude;
     }
 
+    /// <returns>True if any dice cooridinate 'y' is below or equal 0. See <see cref="Transform.position"/></returns>
     public bool belowBoard()
     {
         foreach(Dice d in dice)
@@ -138,7 +148,9 @@ public class DiceContainer : MonoBehaviour
         }
         return false;
     }
-
+/// <summary>
+/// 'Throws' all dice with some pseudorandom initial velocity.
+/// </summary>
     public void random_throw()
     {
         greenLight.gameObject.SetActive(false);

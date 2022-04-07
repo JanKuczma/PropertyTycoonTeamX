@@ -8,9 +8,10 @@ using TMPro;
 /// </summary>
 public enum Group : int {BROWN=0x864c38, BLUE=0xabddf0, PURPLE=0xc53884, ORANGE=0xeb882c, RED=0xdb2428, YELLOW=0xFFF005, GREEN=0x13a857, DEEPBLUE=0x0066a4}
 namespace View{
-    /// <summary>
-    /// 
-    /// </summary>
+/// <summary>
+/// Extends <see cref="Square"/>.<br/>
+/// Attached to Property square prefabs.
+/// </summary>
 public class PropertySquare : Square
 {
     public TextMeshPro amount;
@@ -34,6 +35,10 @@ public class PropertySquare : Square
         square.setGroup(group);
         return square;
     }
+    /// <summary>
+    /// Changes the property group color visible in the Scene.
+    /// </summary>
+    /// <param name="group"></param>
     public void setGroup(Group group)
     {
         _group = group;
@@ -47,7 +52,9 @@ public class PropertySquare : Square
         _price = price;
         GetComponentsInChildren<TextMeshPro>()[1].SetText(price+"Q");
     }
-
+/// <summary>
+/// Adds one house to the Scene on this Property square.
+/// </summary>
     public void addHouse()
     {
         if(houses.Count < 4)
@@ -67,6 +74,9 @@ public class PropertySquare : Square
             hotel.transform.localPosition = houses_spots[4];
         }
     }
+    /// <summary>
+    /// Removes one house from the Scene from this Property square.
+    /// </summary>
     public void removeHouse()
     {
         if(houses.Count <= 4)
@@ -88,14 +98,19 @@ public class PropertySquare : Square
             }
         }
     }
-
+/// <summary>
+/// Makes the ribbon visible of the given <see cref="Color"/>
+/// </summary>
+/// <param name="color"></param>
     public void showRibbon(Color color)
     {
         ribbon.SetActive(true);
         color.a = 150f/255f;
         ribbon.GetComponent<Renderer>().material.SetColor("_Color",color);
     }
-
+/// <summary>
+/// Makes the ribbon invisible.
+/// </summary>
     public void removeRibbon()
     {
         ribbon.SetActive(false);

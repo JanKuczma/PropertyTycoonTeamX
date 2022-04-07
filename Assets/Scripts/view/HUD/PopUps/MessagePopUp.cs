@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Simple popup that do not require any player interaction.
+/// </summary>
 public class MessagePopUp : MonoBehaviour, IPointerClickHandler
 {
     public Text message;

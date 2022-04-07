@@ -4,6 +4,11 @@ using UnityEngine;
 
 
 namespace View{
+    /// <summary>
+    /// Extends <see cref="Square"/>.<br/>
+    /// Base class for <see cref="UtilitySquare"/>.<br/>
+    /// Attached to Tax square prefabs.
+    /// </summary>
 public class FullSquare : Square
 {
     public static FullSquare Create(SqType type, Transform parent, int position, string name, string variant)
