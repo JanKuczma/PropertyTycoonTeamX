@@ -246,14 +246,14 @@ public class game_controller : MonoBehaviour
         {
             if(turnState == TurnPhase.BEGIN)
             {
-                if(players.Count == 1 || (TIMER<.5f && current_player == 0)) { gameState = GamePhase.WINNERCELEBRATION; return; }
+                if(players.Count == 1 || (isTurbo && TIMER<.5f && current_player == 0)) { gameState = GamePhase.WINNERCELEBRATION; return; }
                 if(!tabs_set)
                 {
                     MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
                     hud.set_current_player_tab(players[current_player]);
                     hud.CpuPanel.SetActive(!players[current_player].isHuman);
                     tabs_set = true;
-                    if(TIMER<.5f){
+                    if(isTurbo && TIMER<.5f){
                         MessagePopUp tmpPop = MessagePopUp.Create(hud.transform,"Time Passed! This is your last round!");
                         tmpPop.GetComponent<RectTransform>().anchoredPosition = new Vector2(-650,200);
                     }
