@@ -67,4 +67,33 @@ public class PlayerTests
         Assert.AreEqual(950,player1.cash);
         Assert.AreEqual(50,board.parkingFees);
     }
+    // assets with one property
+    [Test]
+    public void PlayerTotalAssetsTest1()
+    {
+        Model.Board board = Model.BoardData.LoadBoard();
+        player1.BuyProperty((Model.Space.Purchasable)board.spaces[1]);
+        Assert.AreEqual(((Model.Space.Purchasable)(board.spaces[1])).cost + player1.cash,player1.totalValueOfAssets());
+    }
+    // assets with two properties and one house
+    [Test]
+    public void PlayerTotalAssetsTest2()
+    {
+        Model.Board board = Model.BoardData.LoadBoard();
+        player1.BuyProperty((Model.Space.Purchasable)board.spaces[1]);
+        player1.BuyProperty((Model.Space.Purchasable)board.spaces[3]);
+        ((Model.Space.Property)(player1.owned_spaces[0])).buyHouse(board);
+        player1.ReceiveCash(70);
+        Assert.AreEqual(((Model.Space.Purchasable)(player1.owned_spaces[0])).cost + ((Model.Space.Purchasable)(player1.owned_spaces[1])).cost + ((Model.Space.Property)(player1.owned_spaces[0])).house_cost + player1.cash,player1.totalValueOfAssets());
+    }
+    // assets with one mortgaged property
+    [Test]
+    public void PlayerTotalAssetsTest3()
+    {
+        Model.Board board = Model.BoardData.LoadBoard();
+        player1.BuyProperty((Model.Space.Purchasable)board.spaces[1]);
+        player1.owned_spaces[0].mortgage();
+        player1.ReceiveCash(70);
+        Assert.AreEqual(((Model.Space.Property)(player1.owned_spaces[0])).cost/2 + player1.cash,player1.totalValueOfAssets());
+    }
 }
