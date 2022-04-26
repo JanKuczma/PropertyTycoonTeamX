@@ -4,20 +4,19 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-public class PlayerTests
+public class DiceRollTests
 {
     // A Test behaves as an ordinary method
     [Test]
-    public void PlayerTestsSimplePasses()
+    public void DiceRollTestsSimplePasses()
     {
         // Use the Assert class to test conditions
-        Assert.Less(1,0);
     }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
     [UnityTest]
-    public IEnumerator PlayerTestsWithEnumeratorPasses()
+    public IEnumerator DiceRollTestsWithEnumeratorPasses()
     {
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
