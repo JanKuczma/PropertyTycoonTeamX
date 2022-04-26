@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+/// <summary>
+/// Script attached to property cards in the property manager window.
+/// </summary>
 public class ManagableCard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDeselectHandler
 {
     View.ManagePurchasable PopUp;

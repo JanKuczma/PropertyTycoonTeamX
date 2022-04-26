@@ -219,8 +219,6 @@ namespace View
         }
 
 // The "what happens if I click this button" functions. In other words OnClick Events.
-
-
         public void buyPropertyOption(Model.Decision_outcome decision, Model.Player player, View.Square square)
         {
             switch(decision)

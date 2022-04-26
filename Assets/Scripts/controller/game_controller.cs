@@ -51,7 +51,7 @@ public class game_controller : MonoBehaviour
     public SoundManager soundManagerClassic;
     //AI decision coroutine
     public bool AICoroutineFinished = true;
-    public Model.Decision_trigger AI_trigger = Model.Decision_trigger.UDENTIFIED;
+    public Model.Decision_trigger AI_trigger = Model.Decision_trigger.UNSPECIFIED;
     public int AI_moneyToPay = 0;
     
     void Awake()
@@ -583,6 +583,7 @@ public class game_controller : MonoBehaviour
                 {
                     hud.current_main_PopUp = PopUp.BuyProperty(hud.transform, players[current_player],(Space.Purchasable)current_space, board_view.squares[current_square],this);
                     AI_trigger = Model.Decision_trigger.BUYPROPERTY;
+                    AI_moneyToPay = ((Space.Purchasable)(current_space)).cost;
                 }
                 else if(((Space.Purchasable)(current_space)).owner == players[current_player])
                 {
@@ -818,6 +819,7 @@ public class game_controller : MonoBehaviour
         });
         while((highest_bidder == null || !(highest_bidder != null && bidders.Count == 1)) && bidders.Count > 0)
         {
+            AI_moneyToPay = highest_bid;
             if(!bidders[current_bidder].isHuman && AICoroutineFinished) { StartCoroutine(AI_take_decision(hud.current_main_PopUp,Model.Decision_trigger.BID)); }
             yield return null;
         }
@@ -947,30 +949,6 @@ public class game_controller : MonoBehaviour
 /*
         AI
 */
-
-/*
-    IEnumerator AI_take_decision(View.PopUp popUp, Model.Decision_trigger trigger)
-    {
-        AICoroutineFinished = false;
-        yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2.5f));
-        int options = 3;
-        if(popUp.btn3 == null) { options--; } if(popUp.btn2 == null) { options--; } if(popUp.btn1 == null) { AICoroutineFinished = true; yield break; }
-        int rand_decision = UnityEngine.Random.Range(1,options+1);
-        switch(rand_decision){
-        case 1:
-            popUp.btn1.onClick.Invoke();
-            break;
-        case 2:
-            popUp.btn2.onClick.Invoke();
-            break;
-        case 3:
-            popUp.btn3.onClick.Invoke();
-        break;
-        }
-        AICoroutineFinished = true;
-        yield break;
-    }
-*/
     IEnumerator AI_take_decision(View.PopUp popUp, Model.Decision_trigger trigger)
     {
         AICoroutineFinished = false;
@@ -995,10 +973,38 @@ public class game_controller : MonoBehaviour
                 popUp.btn1.onClick.Invoke();
             }
             break;
-        case Model.Decision_trigger.BID:
         case Model.Decision_trigger.BUYPROPERTY:
-        case Model.Decision_trigger.INJAIL:
+        case Model.Decision_trigger.BID:
+            Model.Space.Purchasable space = ((Model.Space.Purchasable)(board_model.spaces[players[current_player].position-1]));
+            float prob = (players[current_player] .cash / AI_moneyToPay) - 1f;
+            if(prob > 0) {
+                switch(space.type){
+                    case SqType.STATION:
+                    if(players[current_player].ownedStations().Count > 0){
+                        prob = 1f;
+                    }
+                    break;
+                    case SqType.UTILITY:
+                    if(players[current_player].ownedUtilities().Count > 0){
+                        prob = 1f;
+                    }
+                    break;
+                    case SqType.PROPERTY:
+                    if(players[current_player].ownedPropertiesInGroup(((Model.Space.Property)(space)).group).Count > 0){
+                        prob = 1f;
+                    }
+                    break;
+                }
+            }
+            float dec = UnityEngine.Random.value;
+            if(dec <= prob){
+                popUp.btn1.onClick.Invoke();
+            } else {
+                popUp.btn2.onClick.Invoke();
+            }
+        break;
         case Model.Decision_trigger.PAYORCARD:
+        case Model.Decision_trigger.INJAIL:
             int rand_decision = UnityEngine.Random.Range(1,3);
             switch(rand_decision){
             case 1:
@@ -1010,7 +1016,7 @@ public class game_controller : MonoBehaviour
             }
         break;
         case Model.Decision_trigger.GOTOJAIL:
-        case Model.Decision_trigger.UDENTIFIED:
+        case Model.Decision_trigger.UNSPECIFIED:
             int options = 3;
             if(popUp.btn3 == null) { options--; } if(popUp.btn2 == null) { options--; } if(popUp.btn1 == null) { AICoroutineFinished = true; yield break; }
             rand_decision = UnityEngine.Random.Range(1,options+1);
@@ -1049,10 +1055,14 @@ public class game_controller : MonoBehaviour
             bool successful = false;
             if(prop is Model.Space.Property)
             {
-                if(prop.mortgage() != Model.Decision_outcome.SUCCESSFUL){
+                if(((Model.Space.Property)(prop)).noOfHouses > 0){
                     if(((Model.Space.Property)(prop)).sellHouse(board_model) == Model.Decision_outcome.SUCCESSFUL)
                     {
                         ((View.PropertySquare)(board_view.squares[prop.position-1])).removeHouse();
+                        successful = true;
+                    }
+                } else {
+                    if(prop.mortgage() == Model.Decision_outcome.SUCCESSFUL) {
                         successful = true;
                     }
                     else if(player.SellProperty(prop,board_model) == Model.Decision_outcome.SUCCESSFUL)
@@ -1060,8 +1070,6 @@ public class game_controller : MonoBehaviour
                         ((View.PropertySquare)(board_view.squares[prop.position-1])).removeRibbon();
                         successful = true;
                     }
-                } else {
-                    successful = true;
                 }
             } else {
                 if(prop.mortgage() != Model.Decision_outcome.SUCCESSFUL){
@@ -1090,7 +1098,7 @@ public class game_controller : MonoBehaviour
         foreach(Model.Space.Purchasable prop in player.owned_spaces)
         {
             successful = false;
-            if(player.cash < 200) // 200Q threshold
+            if(player.cash < 100) // 100Q threshold
             {
                 yield return new WaitForSeconds(UnityEngine.Random.Range(1f,2f));
                 if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }
@@ -1111,8 +1119,8 @@ public class game_controller : MonoBehaviour
                     successful = true;
                 }
             }
-            if(successful) { yield return new WaitForSeconds(1f); }
             if(hud.currentManager != null && successful) { if(hud.currentManager.player == player) {hud.currentManager.setUpCards(player,hud.propertyCards,false);} }
+            if(successful) { yield return new WaitForSeconds(1f); }
         }
         if(successful) { yield return new WaitForSeconds(2f); }
         if(hud.currentManager != null) { Destroy(hud.currentManager.gameObject); }

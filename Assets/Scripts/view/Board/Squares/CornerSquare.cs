@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 namespace View{
+/// <summary>
+/// Extends <see cref="Square"/><br/>
+/// Base class for all the corner square scritpts.
+/// </summary>
 public abstract class CornerSquare : Square
 {   
     override protected void assignSpots()

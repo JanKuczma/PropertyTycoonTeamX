@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace View
 {
-public class PurchasableCard : MonoBehaviour
+public abstract class PurchasableCard : MonoBehaviour
 {
     public Model.Space.Purchasable property;
     public Text propertyName;

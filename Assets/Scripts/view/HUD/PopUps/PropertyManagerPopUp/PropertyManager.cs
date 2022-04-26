@@ -7,7 +7,6 @@ namespace View
 {
     public class PropertyManager : MonoBehaviour
     {
-    // Start is called before the first frame update
     [SerializeField] public DictionaryWrapper<int,PurchasableCard> cards;
 
     public Model.Player player;

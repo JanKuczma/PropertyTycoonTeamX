@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 namespace View
 {
+    /// <summary>
+    /// Script attached to 'manage property' popups.
+    /// </summary>
 public class ManagePurchasable : MonoBehaviour
 {
     public Button mortgageBtn;
