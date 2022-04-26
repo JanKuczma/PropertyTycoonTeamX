@@ -28,11 +28,23 @@ public class DiceRollTests
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
     [UnityTest]
-    public IEnumerator DiceRollTestsWithEnumeratorPasses()
+    public IEnumerator DiceRollTest()
     {
+        float time_passed = 0f;
         dice.random_throw();
-        while(dice.areRolling()) { yield return null;}
-        Assert.LessOrEqual(dice.get_result(),12);
-        Assert.GreaterOrEqual(dice.get_result(),2);
+        
+        while(dice.areRolling() && time_passed < 10f) { time_passed+=Time.deltaTime; yield return null;}
+        Assert.Pass("Dice showed: " + dice.get_result());
+        if (time_passed >= 10f)
+        {
+            //when dice gets stuck returns -14
+            Assert.AreEqual(-14,dice.get_result());
+        }
+        else
+        {
+            // value between 2 and 12
+            Assert.LessOrEqual(dice.get_result(),12);
+            Assert.GreaterOrEqual(dice.get_result(),2);
+        }
     }
 }
