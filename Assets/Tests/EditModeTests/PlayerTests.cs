@@ -32,9 +32,8 @@ public class PlayerTests
     public void PlayerPayCashTest1()
     {
         // pay to bank
-        Model.Player player = new Model.Player("John", Token.CAT, true, (int)Group.RED, 1, 1000);
-        Assert.AreEqual(player.PayCash(100),Model.Decision_outcome.SUCCESSFUL);
-        Assert.AreEqual(900,player.cash);
+        Assert.AreEqual(player1.PayCash(100),Model.Decision_outcome.SUCCESSFUL);
+        Assert.AreEqual(900,player1.cash);
     }
     [Test]
     public void PlayerPayCashTest2()
