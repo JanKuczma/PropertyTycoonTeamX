@@ -373,6 +373,7 @@ public class game_controller : MonoBehaviour
                         players[current_player].ReceiveCash(((Model.Space.Go)(board_model.spaces[0])).amount);
                         hud.UpdateInfo(this);
                         MessagePopUp.Create(hud.transform, "You passed GO! You receive "+((Model.Space.Go)(board_model.spaces[0])).amount+ "Q in cash!",3,true);
+                        soundManagerClassic.PlayIncomeSound();
                         passed_go = false;
                     }
                     PerformAction();
@@ -556,6 +557,7 @@ public class game_controller : MonoBehaviour
                 hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " landed on Free Parking. Collect all those juicy fines!");
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
                     players[current_player].ReceiveCash(board_model.parkingFees);
+                    soundManagerClassic.PlayIncomeSound();
                     board_model.parkingFees = 0;
                 });
                 AI_trigger = Model.Decision_trigger.OK;

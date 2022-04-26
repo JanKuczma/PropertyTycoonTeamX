@@ -28,6 +28,12 @@ namespace View
         public Image optional_img;
         public int rules_controls_index = 0;
         public TextMeshProUGUI buttonText;
+        public SoundManager soundManager;
+
+        void Awake()
+        {
+            soundManager = GameObject.FindWithTag("GameMusic").GetComponent<SoundManager>();
+        }
 
         public void SetMessage(string msg)
         {
@@ -235,8 +241,6 @@ namespace View
                     {
                         ((View.UtilitySquare)(square)).showRibbon(player.Color());
                     }
-
-                    SoundManager soundManager = GameObject.FindWithTag("GameMusic").GetComponent<SoundManager>();
                     MessagePopUp.Create(transform.parent,"Property purchased!",2);
                     soundManager.PlayPurchaseSound();
                     closePopup();
@@ -263,6 +267,7 @@ namespace View
                 break;
                 case Model.Decision_outcome.SUCCESSFUL:
                     MessagePopUp.Create(transform.parent, "Rent paid!",2);
+                    soundManager.PlayPurchaseSound();
                     closePopup();
                 break;
             }
@@ -319,6 +324,7 @@ namespace View
                 player.position = 11;
                 player.PayCash(50,board:controller.board_model);
                 MessagePopUp.Create(transform.parent,"You go to visit the jail... outside!",3);
+                soundManager.PlayPurchaseSound();
                 controller.sendPieceToVisitJail();
                 closePopup();
             }
@@ -342,6 +348,7 @@ namespace View
                 closePopup();
             break;
             case Model.Decision_outcome.SUCCESSFUL:
+                soundManager.PlayPurchaseSound();
                 closePopup();
             break;
         }

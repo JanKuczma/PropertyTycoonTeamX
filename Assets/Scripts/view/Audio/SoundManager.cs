@@ -203,7 +203,7 @@ public class SoundManager : MonoBehaviour
         else
         {
             Random r = new Random();
-            int rand = r.Next(17, 19);
+            int rand = r.Next(16, 18);
             PlayAndStopOthers(sounds[rand].clipName);    
         }
     }
