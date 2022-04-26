@@ -42,14 +42,14 @@ public class game_controller : MonoBehaviour
     public View.HUD hud; 
     PopUp pausePopUp = null;
     PopUp helpPopUp = null;
-    //other
+    //cam and scene env
     Vector3 cam_pos_top;    // top cam position
     public GameObject invisibleWall;
     public GameObject kitchen;
     //Audio
     public GameObject music_player;
     public SoundManager soundManagerClassic;
-    //AI decision coroutine
+    //AI controls
     public bool AICoroutineFinished = true;
     public Model.Decision_trigger AI_trigger = Model.Decision_trigger.UNSPECIFIED;
     public int AI_moneyToPay = 0;
@@ -220,10 +220,6 @@ public class game_controller : MonoBehaviour
         {
             hud.optionsButton.onClick.Invoke();
         }
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            MessagePopUp.Create(hud.transform, "FPS: " + 1f/Time.smoothDeltaTime);
-        }
     }
 
     void FixedUpdate()
@@ -232,6 +228,7 @@ public class game_controller : MonoBehaviour
             TIMER -= Time.fixedDeltaTime;
             hud.timer.text = "Time Left: " + Math.Truncate(TIMER/3600).ToString("00") + ":" +Math.Truncate((TIMER/60)%60).ToString("00") + ":" + Math.Truncate(TIMER%60).ToString("00");
             if(TIMER<.5f){
+                TIMER = 0f;
                 hud.timer.text = "This is your last round!";
                 hud.timer.color = Color.red;
                 MessagePopUp tmpPop =  MessagePopUp.Create(hud.transform,"Time Passed! This is your last round!");

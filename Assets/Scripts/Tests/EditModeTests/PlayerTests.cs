@@ -8,10 +8,10 @@ public class PlayerTests
 {
     // A Test behaves as an ordinary method
     [Test]
-    public void GoToJailTest()
+    public void PlayerTestsSimplePasses()
     {
-        
         // Use the Assert class to test conditions
+        Assert.Less(1,0);
     }
 
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
