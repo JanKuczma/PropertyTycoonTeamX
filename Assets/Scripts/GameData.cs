@@ -13,6 +13,7 @@ public class GameData : MonoBehaviour
     //game settings
     public bool starWarsTheme = false;
     public bool turboGame = false;
+    public bool customData = false;
     //board/card data
     public Model.Board board_model;
     public Model.CardStack opportunity_knocks;

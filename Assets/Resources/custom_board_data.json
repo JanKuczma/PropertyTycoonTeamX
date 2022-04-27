@@ -1,0 +1,116 @@
+{
+  "spaces": [
+    {
+      "position": 2,
+      "name": "BAKER STREET"
+    },
+    {
+      "position": 4,
+      "name": "REGENTS PARK"
+    },
+    {
+      "position": 7,
+      "name": "VICTORIA"
+    },
+    {
+      "position": 9,
+      "name": "WARREN STREET"
+    },
+    {
+      "position": 10,
+      "name": "BRIXTON"
+    },
+    {
+      "position": 12,
+      "name": "FARRINGDON"
+    },
+    {
+      "position": 14,
+      "name": "BARBICAN"
+    },
+    {
+      "position": 15,
+      "name": "ALDGATE"
+    },
+    {
+      "position": 17,
+      "name": "DALSTON"
+    },
+    {
+      "position": 19,
+      "name": "HACKNEY CENTRAL"
+    },
+    {
+      "position": 20,
+      "name": "CLAPHAM JUNCTION"
+    },
+    {
+      "position": 22,
+      "name": "CANNON STREET"
+    },
+    {
+      "position": 24,
+      "name": "TEMPLE"
+    },
+    {
+      "position": 25,
+      "name": "EMBANKMENT"
+    },
+    {
+      "position": 27,
+      "name": "BANK"
+    },
+    {
+      "position": 28,
+      "name": "ST PAULS"
+    },
+    {
+      "position": 30,
+      "name": "HOLBORN"
+    },
+    {
+      "position": 32,
+      "name": "TOWER HILL"
+    },
+    {
+      "position": 33,
+      "name": "WHITECHAPEL"
+    },
+    {
+      "position": 35,
+      "name": "KEW GARDENS"
+    },
+    {
+      "position": 38,
+      "name": "COVENT GARDEN"
+    },
+    {
+      "position": 40,
+      "name": "LEICESTER SQUARE"
+    },
+    {
+      "position": 13,
+      "name": "THAMES VALLEY WATER"
+    },
+    {
+      "position": 29,
+      "name": "SSE GAS AND ELECTRIC"
+    },
+    {
+      "position": 6,
+      "name": "BRIGHTON"
+    },
+    {
+      "position": 16,
+      "name": "MANCHESTER"
+    },
+    {
+      "position": 26,
+      "name": "COVENTRY"
+    },
+    {
+      "position": 36,
+      "name": "EDINBURGH"
+    }
+  ]
+}

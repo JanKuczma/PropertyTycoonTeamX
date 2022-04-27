@@ -167,7 +167,7 @@ public static class Asset
     public static string custom_board_data()
     {
         string custom_data_string = "";
-        string path = Application.dataPath + "/custom_board_data.json";
+        string path = Application.dataPath + "/Resources/custom_board_data.json";
         if(File.Exists(path))
         {
             custom_data_string = File.ReadAllText(path);

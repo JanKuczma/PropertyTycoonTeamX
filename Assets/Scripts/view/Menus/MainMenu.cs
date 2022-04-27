@@ -21,9 +21,12 @@ public class MainMenu : MonoBehaviour
     //These are variables for the GamemodeSelect menu
     public int gm_index = 0;
     public int theme_index = 0;
+    public int bd_index = 0;
     public TextMeshProUGUI gmbuttonText;
+    public TextMeshProUGUI bdbuttonText;
     public TextMeshProUGUI themebuttonText;
     public TextMeshProUGUI gmDescription;
+    public TextMeshProUGUI bdDescription;
     public Image themePreview;
     public Sprite kingsley_classic, kingsley_yoda;
     public TextMeshProUGUI timer_text;
@@ -229,6 +232,23 @@ public class MainMenu : MonoBehaviour
     {
         numPlayers = numPlayers - 1;
         Debug.Log(numPlayers);
+    }
+
+    public void ChangeBoardData()
+    {
+        if (bd_index == 0)
+        {
+            GameObject.Find("GameData").GetComponent<GameData>().customData = true;
+            bd_index = 1;
+            bdbuttonText.text = "Custom";
+            bdDescription.gameObject.SetActive(true);
+        } else if (bd_index == 1)
+        {
+            GameObject.Find("GameData").GetComponent<GameData>().customData = false;
+            bd_index = 0;
+            bdDescription.gameObject.SetActive(false);
+            bdbuttonText.text = "Classic";
+        }
     }
 
     public void ChangeGameMode()

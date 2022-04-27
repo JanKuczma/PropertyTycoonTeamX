@@ -59,8 +59,11 @@ public class game_controller : MonoBehaviour
         GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
         this.music_player = GameObject.FindGameObjectWithTag("GameMusic");
         this.soundManagerClassic = (SoundManager) music_player.GetComponent(typeof(SoundManager));
-
-        this.board_model = gameData.board_model;
+        if(gameData.customData) {
+            this.board_model = Model.BoardData.LoadBoard(true);
+        } else {
+            this.board_model = gameData.board_model;
+        }
         this.potluck = gameData.potluck;
         this.opportunity_knocks = gameData.opportunity_knocks;
 
@@ -211,6 +214,11 @@ public class game_controller : MonoBehaviour
             invisibleWall.SetActive(true);
             previous_gameState = gameState;
             helpPopUp = PopUp.Help(hud.transform);
+            helpPopUp.btn2.onClick.AddListener(delegate {
+                if(players[current_player].isHuman) {
+                    invisibleWall.SetActive(false);
+                }
+            });
         });
     }
 
