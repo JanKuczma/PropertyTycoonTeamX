@@ -297,7 +297,10 @@ public class MainMenu : MonoBehaviour
         GameObject options = GameObject.Find("InGameOptionsPopUp(Clone)");
         if(options) { Destroy(options); }
         OptionsPopUp popup = OptionsPopUp.Create(transform);
-        popup.btn1.gameObject.SetActive(false);
+        popup.btn1.GetComponentInChildren<TMP_Text>().SetText("Customise Board");
+        popup.btn1.onClick.AddListener(delegate {
+            Application.OpenURL(Application.dataPath + "/Resources/CustomData/custom_board_input.html");
+        });
         popup.btn2.GetComponentInChildren<TMP_Text>().SetText("Load Game");
         popup.btn2.onClick.AddListener(() => SaveLoadPopUp.Create(transform,false));
         popup.btn3.GetComponentInChildren<TMP_Text>().SetText("OK");

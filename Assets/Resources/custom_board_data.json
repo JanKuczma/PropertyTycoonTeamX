@@ -2,115 +2,99 @@
   "spaces": [
     {
       "position": 2,
-      "name": "BAKER STREET"
+      "name": "ASD"
     },
     {
       "position": 4,
-      "name": "REGENTS PARK"
+      "name": "DSA"
     },
     {
       "position": 7,
-      "name": "VICTORIA"
+      "name": "A"
     },
     {
       "position": 9,
-      "name": "WARREN STREET"
+      "name": "D"
     },
     {
       "position": 10,
-      "name": "BRIXTON"
+      "name": "F"
     },
     {
       "position": 12,
-      "name": "FARRINGDON"
+      "name": ""
     },
     {
       "position": 14,
-      "name": "BARBICAN"
+      "name": ""
     },
     {
       "position": 15,
-      "name": "ALDGATE"
+      "name": ""
     },
     {
       "position": 17,
-      "name": "DALSTON"
+      "name": ""
     },
     {
       "position": 19,
-      "name": "HACKNEY CENTRAL"
+      "name": ""
     },
     {
       "position": 20,
-      "name": "CLAPHAM JUNCTION"
+      "name": ""
     },
     {
       "position": 22,
-      "name": "CANNON STREET"
+      "name": ""
     },
     {
       "position": 24,
-      "name": "TEMPLE"
+      "name": ""
     },
     {
       "position": 25,
-      "name": "EMBANKMENT"
+      "name": ""
     },
     {
       "position": 27,
-      "name": "BANK"
+      "name": ""
     },
     {
       "position": 28,
-      "name": "ST PAULS"
+      "name": ""
     },
     {
       "position": 30,
-      "name": "HOLBORN"
+      "name": ""
     },
     {
       "position": 32,
-      "name": "TOWER HILL"
+      "name": ""
     },
     {
       "position": 33,
-      "name": "WHITECHAPEL"
+      "name": ""
     },
     {
       "position": 35,
-      "name": "KEW GARDENS"
+      "name": ""
     },
     {
       "position": 38,
-      "name": "COVENT GARDEN"
+      "name": ""
     },
     {
       "position": 40,
-      "name": "LEICESTER SQUARE"
+      "name": ""
     },
     {
       "position": 13,
-      "name": "THAMES VALLEY WATER"
+      "name": ""
     },
     {
       "position": 29,
-      "name": "SSE GAS AND ELECTRIC"
-    },
-    {
-      "position": 6,
-      "name": "BRIGHTON"
-    },
-    {
-      "position": 16,
-      "name": "MANCHESTER"
-    },
-    {
-      "position": 26,
-      "name": "COVENTRY"
-    },
-    {
-      "position": 36,
-      "name": "EDINBURGH"
+      "name": ""
     }
   ]
 }

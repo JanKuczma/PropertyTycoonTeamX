@@ -62,6 +62,7 @@ public class game_controller : MonoBehaviour
         if(gameData.customData) {
             this.board_model = Model.BoardData.LoadBoard(true);
         } else {
+            Debug.Log("not custom");
             this.board_model = gameData.board_model;
         }
         this.potluck = gameData.potluck;
@@ -174,6 +175,7 @@ public class game_controller : MonoBehaviour
                     pausePopUp.btn2.onClick.AddListener(delegate
                     {
                         GameData gameData = GameObject.FindGameObjectWithTag("GameData").GetComponent<GameData>();
+                        gameData.board_model = this.board_model;
                         gameData.players = players;
                         gameData.current_player = current_player;
                         gameData.turnState = turnState;
