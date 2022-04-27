@@ -28,7 +28,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4080310032770836484}
   m_RootOrder: 1
@@ -108,7 +107,6 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4080310032770836484}
   m_RootOrder: 2
@@ -283,6 +281,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.a
+      value: 0.43137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4667413353404392783, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
       propertyPath: m_Name
       value: InJailPrefab
@@ -378,6 +392,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4667413353404392783, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
   m_PrefabInstance: {fileID: 7246753522156265357}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &4080310032770836484 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6643248936291923849, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+  m_PrefabInstance: {fileID: 7246753522156265357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1351294097164318765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,11 +414,9 @@ MonoBehaviour:
   btn2: {fileID: 1629512564749571868}
   btn3: {fileID: 0}
   optional_img: {fileID: 0}
---- !u!224 &4080310032770836484 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6643248936291923849, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
-  m_PrefabInstance: {fileID: 7246753522156265357}
-  m_PrefabAsset: {fileID: 0}
+  rules_controls_index: 0
+  buttonText: {fileID: 0}
+  soundManager: {fileID: 0}
 --- !u!1001 &9208666013571439360
 PrefabInstance:
   m_ObjectHideFlags: 0
