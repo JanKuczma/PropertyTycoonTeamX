@@ -38,25 +38,25 @@ namespace Model
         /// Loads the data from a JSON format
         /// </summary>
         /// <returns><c>Board</c> object of the board.</returns>
-        public static Board LoadBoard()
+        public static Board LoadBoard(bool custom = false)
         {
             var defaultBoard = Asset.board_data_json();
             var customBoard = Asset.custom_board_data();
             var board = new Board();
             var defaultBoardWrapper = JsonUtility.FromJson<BoardWrapper>(defaultBoard);
             var customBoardWrapper = JsonUtility.FromJson<BoardWrapper>(customBoard);
-            
-            foreach (var space in defaultBoardWrapper.spaces)
-            {
-                foreach (var place in customBoardWrapper.spaces)
+            if(custom) {
+                foreach (var space in defaultBoardWrapper.spaces)
                 {
-                    if (space.position == place.position)
+                    foreach (var place in customBoardWrapper.spaces)
                     {
-                        space.name = place.name;
+                        if (space.position == place.position)
+                        {
+                            space.name = place.name;
+                        }
                     }
                 }
             }
-            
             foreach (var space in defaultBoardWrapper.spaces)
             {
                 SqType type = (SqType) System.Enum.Parse(typeof(SqType), space.type_action);
