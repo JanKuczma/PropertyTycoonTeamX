@@ -120,6 +120,9 @@ public class ManagePurchasable : MonoBehaviour
     {
         switch (decision)
         {
+            case Model.Decision_outcome.NO_HOUSES:
+                MessagePopUp.Create(transform.parent, "You can't mortgage property with houses on it!");
+            break;
             case Model.Decision_outcome.NOT_ENOUGH_MONEY:
                 MessagePopUp.Create(transform.parent, "You have not enough money! Sell or mortgage your properties to get some cash!");
             break;

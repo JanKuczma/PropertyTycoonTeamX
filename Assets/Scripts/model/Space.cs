@@ -57,6 +57,12 @@ public abstract class Space
         public Decision_outcome mortgage()
         {
             if(isMortgaged) { return Decision_outcome.OTHER; }
+            if(type == SqType.PROPERTY) {
+                if(((Property)(this)).noOfHouses > 0)
+                {
+                    return Decision_outcome.NO_HOUSES;
+                }
+            }
             owner.ReceiveCash(cost/2);
             isMortgaged = true;
             return Decision_outcome.SUCCESSFUL;
