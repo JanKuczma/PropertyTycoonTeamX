@@ -237,6 +237,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_text
+      value: Computer
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSize
+      value: 61.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
       value: Player 1
@@ -464,6 +476,10 @@ PrefabInstance:
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_text
+      value: Computer
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
@@ -811,6 +827,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_text
+      value: Computer
+      objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
       value: Player 4
@@ -1062,6 +1082,10 @@ PrefabInstance:
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_text
+      value: Computer
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
@@ -1333,6 +1357,10 @@ PrefabInstance:
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_text
+      value: Computer
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
@@ -1880,6 +1908,10 @@ PrefabInstance:
     - target: {fileID: 649489121003125913, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_text
+      value: Computer
       objectReference: {fileID: 0}
     - target: {fileID: 1906038116885720928, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
