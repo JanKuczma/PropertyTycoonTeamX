@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
+using TMPro;
 using View;
 using Space = Model.Space;
 using UnityEngine.SceneManagement;
@@ -192,10 +193,20 @@ public class game_controller : MonoBehaviour
                 pausePopUp.btn3.GetComponentInChildren<TMPro.TMP_Text>().SetText("Exit");
                 pausePopUp.btn3.onClick.AddListener(delegate
                 {
-                    Destroy(pausePopUp.gameObject);
-                    Destroy(GameObject.FindGameObjectWithTag("GameData"));
-                    SceneManager.LoadScene(0);
+                    PopUp confirmPopUp = PopUp.Help(hud.transform);
+                    confirmPopUp.message.text = "Are you sure you want to quit the game?";
+                    confirmPopUp.btn1.GetComponentInChildren<TextMeshProUGUI>().text = "No";
+                    confirmPopUp.btn1.onClick.AddListener(confirmPopUp.closePopup);
+                    confirmPopUp.btn2.GetComponentInChildren<TextMeshProUGUI>().text = "Yes";
+                    confirmPopUp.btn2.onClick.AddListener(delegate
+                    {
+                        Destroy(pausePopUp.gameObject);
+                        Destroy(GameObject.FindGameObjectWithTag("GameData"));
+                        SceneManager.LoadScene(0);
+                    });
+                    
                 });
+                    
             }
             else
             {

@@ -68,7 +68,8 @@ namespace View
              popUp.btn2.onClick.AddListener(popUp.closePopup);
              return popUp;
          }
-/// <summary>
+
+         /// <summary>
 /// Popup displayed when Player is in Jail. Asks if Player either wants to stay in Jail or try to roll double to break out.
 /// </summary>
          public static PopUp InJail(Transform parent, game_controller controller)
