@@ -28,7 +28,6 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1557033000993798409}
   m_RootOrder: 1
@@ -96,12 +95,44 @@ PrefabInstance:
       value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.a
+      value: 0.3882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4667413353404392783, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
       propertyPath: m_Name
       value: MessagePopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658358209993464438, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.a
+      value: 0.3882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658358209993464438, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658358209993464438, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658358209993464438, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5658358209993464438, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
@@ -198,6 +229,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4667413353404392783, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
   m_PrefabInstance: {fileID: 5308124337191014016}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &1557033000993798409 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6643248936291923849, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+  m_PrefabInstance: {fileID: 5308124337191014016}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7663486867521602122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,8 +247,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: {fileID: 3333560263109953324}
---- !u!224 &1557033000993798409 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6643248936291923849, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
-  m_PrefabInstance: {fileID: 5308124337191014016}
-  m_PrefabAsset: {fileID: 0}

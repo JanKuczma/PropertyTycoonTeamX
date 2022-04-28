@@ -3203,9 +3203,29 @@ PrefabInstance:
       propertyPath: m_CullTransparentMesh
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.a
+      value: 0.77254903
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366900215025817296, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4667413353404392783, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
       propertyPath: m_Name
       value: LoadSavePopUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658358209993464438, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
+      propertyPath: m_Color.a
+      value: 0.40392157
       objectReference: {fileID: 0}
     - target: {fileID: 6643248936291923849, guid: c7b537f1cb17dac499a82cdb3dd0f909, type: 3}
       propertyPath: m_Pivot.x

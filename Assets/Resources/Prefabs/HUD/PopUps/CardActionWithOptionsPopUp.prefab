@@ -237,6 +237,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5037805035887653498, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
+      propertyPath: m_Color.a
+      value: 0.40392157
+      objectReference: {fileID: 0}
     - target: {fileID: 5791009688117370575, guid: 32ee10325a869474c9f37cfbe207a93e, type: 3}
       propertyPath: m_text
       value: Take Card
