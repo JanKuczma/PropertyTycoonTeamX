@@ -145,6 +145,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1841086486}
     m_Modifications:
+    - target: {fileID: 649489120900669550, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 649489121003125912, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_Name
       value: Player1
@@ -369,6 +373,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1841086486}
     m_Modifications:
+    - target: {fileID: 649489120900669550, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 649489121003125912, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_Name
       value: Player2
@@ -1752,14 +1760,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numPlayers: 2
+  hours_minutes: 000000001e000000
   gm_index: 0
   theme_index: 0
+  bd_index: 0
   gmbuttonText: {fileID: 0}
+  bdbuttonText: {fileID: 0}
   themebuttonText: {fileID: 0}
   gmDescription: {fileID: 0}
+  bdDescription: {fileID: 0}
   themePreview: {fileID: 0}
   kingsley_classic: {fileID: 0}
   kingsley_yoda: {fileID: 0}
+  timer_text: {fileID: 0}
 --- !u!81 &1841086488
 AudioListener:
   m_ObjectHideFlags: 0
