@@ -9,14 +9,12 @@ public class CardTests
 {
     private Model.Board _board;
     private Model.Player _player;
-    private SoundManager _soundManager;
 
     [SetUp]
     public void Setup()
     {
         _board = Model.BoardData.LoadBoard();
         _player = new Model.Player("John1", Token.CAT, true, (int)Group.RED, 1, 1000);
-        _soundManager = new SoundManager();
     }
     [Test]
     public void CardRepairCostsTest()

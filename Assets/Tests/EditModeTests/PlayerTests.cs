@@ -10,7 +10,6 @@ public class PlayerTests
     private GameData _gameData;
     private Model.Player player1;
     private Model.Player player2;
-    private SoundManager _soundManager;
     
 
     

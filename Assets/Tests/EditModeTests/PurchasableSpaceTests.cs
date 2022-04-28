@@ -11,7 +11,6 @@ public class PurchasableSpaceTests
 {
     private Model.Board _board;
     private Model.Player _player;
-    private SoundManager _soundManager;
 
     [SetUp]
     public void Setup()
