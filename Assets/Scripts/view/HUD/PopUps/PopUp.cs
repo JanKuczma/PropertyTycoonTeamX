@@ -63,7 +63,7 @@ namespace View
          public static PopUp Help(Transform parent)
          {
              PopUp popUp = Instantiate(Asset.HelpPopUpPreFab, parent).GetComponent<PopUp>();
-             popUp.SetMessage("Click, drag and release dice to roll\n\nPress SPACEBAR while tokens are moving to speed them up\n\nHover over and click player tabs to access and manage properties");
+             popUp.SetMessage("Click, drag and release dice to roll\n\nClick the arrows to the left and right of the screen to change camera angle\n\nHover over and click player tabs to access and manage properties");
              popUp.btn1.onClick.AddListener(() => popUp.ControlsRulesSwitcher());
              popUp.btn2.onClick.AddListener(popUp.closePopup);
              return popUp;
@@ -360,13 +360,13 @@ namespace View
         {
             rules_controls_index = 1;
             SetMessage("Make money yo");
-            buttonText.text = "Rules";
+            buttonText.text = "Controls";
         }
         else
         {
             rules_controls_index = 0;
-            SetMessage("Click, drag and release dice to roll\n\nPress SPACEBAR while tokens are moving to speed them up\n\nHover over and click player tabs to access and manage properties");
-            buttonText.text = "Controls";
+            SetMessage("Click, drag and release dice to roll\n\nClick the arrows to the left and right of the screen to change camera angle\n\nHover over and click player tabs to access and manage properties");
+            buttonText.text = "Rules";
         }
     }
     

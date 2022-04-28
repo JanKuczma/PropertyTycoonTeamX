@@ -13,13 +13,14 @@ namespace view.Menus
 
         public static int text_indicator; // 0 = controls, 1 = rules
         public static TextMeshProUGUI rulesControlsText;
-        public static string controls = "Click, drag and release dice to roll\n\nPress SPACEBAR while tokens are moving to speed them up\n\nHover over and click player tabs to access and manage properties";
+        public static string controls = "Click, drag and release dice to roll\n\nClick the arrows to the left and right of the screen to change camera angle\n\nHover over and click player tabs to access and manage properties";
         public static string rules = "Make money yo";
         
         public static HelpPopUp Create(Transform parent)
         {
             HelpPopUp popUp = Instantiate(Asset.HelpPopUpPreFab, parent).GetComponent<HelpPopUp>();
             text_indicator = 0;
+            rulesControlsText.text = "Rules";
             popUp.btn1.onClick.AddListener(() => popUp.SetMessage(SwitchText()));
             popUp.btn2.onClick.AddListener(() => popUp.closePopup());
             popUp.SetMessage(controls);
@@ -27,19 +28,19 @@ namespace view.Menus
         }
         public static string SwitchText()
         {
-            Debug.Log("Hey");
             if (text_indicator == 0)
             {
                 text_indicator = 1;
-                rulesControlsText.text = "Rules";
+                rulesControlsText.text = "Controls";
                 return rules;
             }
-            else
+            if(text_indicator == 1)
             {
                 text_indicator = 0;
-                rulesControlsText.text = "Controls";
+                rulesControlsText.text = "Rules";
                 return controls;
             }
+            return "YOU SHOULD NOT GET HERE";
         }
     }
 }
