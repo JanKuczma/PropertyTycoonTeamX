@@ -2,23 +2,23 @@
   "spaces": [
     {
       "position": 2,
-      "name": "ASD"
+      "name": ""
     },
     {
       "position": 4,
-      "name": "DSA"
+      "name": ""
     },
     {
       "position": 7,
-      "name": "A"
-    },
-    {
-      "position": 9,
       "name": "D"
     },
     {
+      "position": 9,
+      "name": "S"
+    },
+    {
       "position": 10,
-      "name": "F"
+      "name": "A"
     },
     {
       "position": 12,

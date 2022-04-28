@@ -478,8 +478,11 @@ public class game_controller : MonoBehaviour
      {
          if(!tabs_set)
          {
-             PopUp playerOrderPopUp = PopUp.OK(hud.transform,
-                 "Decide the order or turns!\n\nEach player has a go at rolling the highest number possible. Players take turns in order of who had the highest roll.\n\nIf you roll the same as somebody else, you must roll again!");
+             if(players[current_player].isHuman)
+             {
+                PopUp playerOrderPopUp = PopUp.OK(hud.transform,
+                    "Decide the order or turns!\n\nEach player has a go at rolling the highest number possible. Players take turns in order of who had the highest roll.\n\nIf you roll the same as somebody else, you must roll again!");
+             }
                 hud.set_current_player_tab(players[current_player]);
                 hud.CpuPanel.SetActive(!players[current_player].isHuman);
                 invisibleWall.SetActive(!players[current_player].isHuman);

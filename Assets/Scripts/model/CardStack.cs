@@ -37,7 +37,7 @@ public class CardStack
     {
         var rng = new Random();
         var n = cards.Count;
-
+        next = 0;
         while (n > 1)
         {
             n--;
