@@ -16,7 +16,7 @@ namespace View
     {
         PropertyManager manager = Instantiate(Asset.PropertyManagerPrefab,parent).GetComponent<PropertyManager>();
         manager.player = player;
-        manager.ownedByText.text = "Propierties owned by " + player.name;
+        manager.ownedByText.text = "Properties owned by " + player.name;
         manager.setUpCards(player,propertyCards,canManage);
         return manager;
     }

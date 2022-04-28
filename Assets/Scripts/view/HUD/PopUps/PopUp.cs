@@ -142,7 +142,7 @@ namespace View
         {
             controller.AI_trigger = Model.Decision_trigger.BUYPROPERTY;
             PopUp popUp = Instantiate(Asset.BuyPropertyPopup, parent).GetComponent<PopUp>();
-            popUp.SetMessage(player.name + ", do you wish to purchase this property?");
+            popUp.SetMessage(player.name + ", do you wish to purchase this property for " + space.cost + "Q?");
             popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space), player, square));
             popUp.btn2.onClick.AddListener(() => popUp.dontBuyPropertyOption(player,space,controller));
             PurchasableCard c = null;
