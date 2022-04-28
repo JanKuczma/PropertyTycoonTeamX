@@ -176,12 +176,7 @@ public class Player
         {
             if(space is Space.Property)
             {
-                if(((Space.Property)(space)).noOfHouses == 5)
-                {
-                    total += ((Space.Property)(space)).hotel_cost + 4*((Space.Property)(space)).house_cost;
-                } else {
-                    total += ((Space.Property)(space)).noOfHouses*((Space.Property)(space)).house_cost;
-                }
+                total += ((Space.Property)(space)).noOfHouses*((Space.Property)(space)).house_cost;
             }
             if(space.isMortgaged)
             {

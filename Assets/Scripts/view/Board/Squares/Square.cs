@@ -76,7 +76,7 @@ public abstract class Square : MonoBehaviour
     /// <param name="spotI">Spot index (0-5).</param>
     public void releaseSpotI(int spotI)
     {
-        if(!spotsIs.Contains(spotI) && spotI >= 0) spotsIs.Add(spotI);
+        if((!spotsIs.Contains(spotI)) && spotI >= 0) spotsIs.Add(spotI);
         spotsIs.Sort();
     }
     /// <returns>Vector3 of the next free spot, (0,0,0) if no free spots</returns>

@@ -32,7 +32,6 @@ namespace Model
             public string group;
             public int[] rents;
             public int house_cost;
-            public int hotel_cost;
         }
         /// <summary>
         /// Loads the data from a JSON format
@@ -64,7 +63,7 @@ namespace Model
                 {
                     case SqType.PROPERTY:
                         board.spaces[space.position - 1] = new Space.Property(space.position, space.name, space.cost_amount,
-                            (Group) System.Enum.Parse(typeof(Group), space.group), space.rents, space.house_cost, space.hotel_cost);
+                            (Group) System.Enum.Parse(typeof(Group), space.group), space.rents, space.house_cost);
                         break;
                     case SqType.STATION:
                         board.spaces[space.position - 1] =

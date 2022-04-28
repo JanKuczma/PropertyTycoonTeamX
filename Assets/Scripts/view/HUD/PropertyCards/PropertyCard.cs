@@ -49,7 +49,7 @@ public class PropertyCard : PurchasableCard
         this.fourHousesRent.text = space.rents[4].ToString()+"Q";
         this.hotelRent.text = space.rents[5].ToString()+"Q";
         this.houseCost.text = "Housecost "+space.house_cost.ToString()+"Q each";
-        this.hotelCost.text = "Hotel cost "+(space.hotel_cost-(4*space.house_cost)).ToString()+"Q each plus 4 houses";
+        this.hotelCost.text = "Hotel cost "+space.house_cost.ToString()+"Q plus 4 houses";
         this.note.text = "If a player owns ALL the Lots of any Color-Group, the renst is Doubled on Unimproved Lots in that Group.";
         this.mortgage.text = (space.cost/2).ToString()+"Q";
     }

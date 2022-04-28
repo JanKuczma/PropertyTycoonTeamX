@@ -143,10 +143,6 @@ public abstract class Space
         /// </summary>
         public int house_cost;
         /// <summary>
-        /// Hotel cost
-        /// </summary>
-        public int hotel_cost;
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="position"><inheritdoc cref="position" path="/summary"/></param>
@@ -156,8 +152,7 @@ public abstract class Space
         /// <param name="rents"><inheritdoc cref="Space.Purchasable.rents" path="/summary/list/item[1]"/></param>
         /// <param name="rents">List of rent amounts depending on level of the house.</param>
         /// <param name="house_cost"><inheritdoc cref="Property.house_cost" path="/summary"/></param>
-        /// <param name="hotel_cost"><inheritdoc cref="Property.hotel_cost" path="/summary"/></param>
-        public Property(int position, string name, int cost, Group group, int[] rents, int house_cost, int hotel_cost)
+        public Property(int position, string name, int cost, Group group, int[] rents, int house_cost)
         {
             this.type = SqType.PROPERTY;
             this.position = position;
@@ -167,7 +162,6 @@ public abstract class Space
             this.noOfHouses = 0;
             this.rents = rents;
             this.house_cost = house_cost;
-            this.hotel_cost = hotel_cost;
             this.isMortgaged = false;
         }
         override public int rent_amount(Board board)
@@ -213,17 +207,9 @@ public abstract class Space
             else if(house_cost > owner.cash)
             {
                 return Decision_outcome.NOT_ENOUGH_MONEY;
-            }
-            else if(noOfHouses == 4 && hotel_cost > owner.cash)
-            {
-                return Decision_outcome.NOT_ENOUGH_MONEY;
+            
             } else {
-                if(noOfHouses == 4)
-                {
-                    owner.PayCash(hotel_cost);
-                } else {
-                    owner.PayCash(house_cost);
-                }
+                owner.PayCash(house_cost);
                 noOfHouses += 1;
                 return Decision_outcome.SUCCESSFUL;
             }
@@ -243,12 +229,7 @@ public abstract class Space
             {
                 return Decision_outcome.NO_HOUSES;
             } else {
-                if(noOfHouses == 5)
-                {
-                    owner.ReceiveCash(hotel_cost);
-                } else {
-                    owner.ReceiveCash(house_cost);
-                }
+                owner.ReceiveCash(house_cost);
                 noOfHouses -= 1;
                 return Decision_outcome.SUCCESSFUL;
             }
