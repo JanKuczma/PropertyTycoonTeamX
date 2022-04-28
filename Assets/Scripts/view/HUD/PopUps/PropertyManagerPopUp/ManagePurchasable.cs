@@ -1,17 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 namespace View
 {
+    /// <summary>
+    /// Script attached to 'manage property' popups.
+    /// </summary>
 public class ManagePurchasable : MonoBehaviour
 {
     public Button mortgageBtn;
     public Button sellBtn;
     public Button buyHouseBtn;
     public Button sellHouseBtn;
+    private SoundManager soundManager;
+
+    void Awake()
+    {
+        soundManager = GameObject.FindWithTag("GameMusic").GetComponent<SoundManager>();
+    }
 
     public static ManagePurchasable Create(Transform parent, Model.Space.Purchasable property)
     {
@@ -66,6 +76,7 @@ public class ManagePurchasable : MonoBehaviour
                 transform.parent.GetComponent<View.PropertyCard>().showHouse(space.noOfHouses);
                 square.addHouse();
                 MessagePopUp.Create(transform.parent, "House bought!");
+                soundManager.PlayPurchaseSound();
             break;
         }
         Destroy(gameObject);
@@ -84,6 +95,7 @@ public class ManagePurchasable : MonoBehaviour
                 transform.parent.GetComponent<View.PropertyCard>().showHouse(space.noOfHouses);
                 square.removeHouse();
                 MessagePopUp.Create(transform.parent, "House sold!");
+                soundManager.PlayIncomeSound();
             break;
         }
         Destroy(gameObject);
@@ -99,6 +111,7 @@ public class ManagePurchasable : MonoBehaviour
                 if(square is View.PropertySquare) { ((View.PropertySquare)(square)).removeRibbon(); } else { ((View.UtilitySquare)(square)).removeRibbon(); }
                 transform.parent.gameObject.SetActive(false);
                 MessagePopUp.Create(transform.parent.parent, "Property sold!");
+                soundManager.PlayIncomeSound();
             break;
         }
         Destroy(gameObject);
@@ -111,7 +124,16 @@ public class ManagePurchasable : MonoBehaviour
                 MessagePopUp.Create(transform.parent, "You have not enough money! Sell or mortgage your properties to get some cash!");
             break;
             case Model.Decision_outcome.SUCCESSFUL:
-                if(property.isMortgaged) { MessagePopUp.Create(transform.parent, "Property mortgaged!"); } else { MessagePopUp.Create(transform.parent, "Property paid off!"); }
+                if (property.isMortgaged)
+                {
+                    MessagePopUp.Create(transform.parent, "Property mortgaged!"); 
+                    soundManager.PlayIncomeSound();
+                }
+                else
+                {
+                    MessagePopUp.Create(transform.parent, "Property paid off!");
+                    soundManager.PlayPurchaseSound();
+                }
                 transform.parent.Find("Mortgaged").gameObject.SetActive(property.isMortgaged);
             break;
         }

@@ -4,13 +4,24 @@ using UnityEngine;
 using TMPro;
 
 namespace View {
+    /// <summary>
+    /// Extends <see cref="MonoBehaviour"/><br/>
+    /// Base class for all the square scritpts.
+    /// </summary>
 public abstract class Square : MonoBehaviour
 {
+    /// <summary>Reference to <see cref="TextMeshPro"> name.</summary>
     public TextMeshPro square_name;
+    /// <summary>Square's name.</summary>
     string _name;
-    // each square is divided into 6 areas stored in spaces
-    public Vector3[] spots;
+    /// <summary>Array of <see cref="Vector3"/> that represent spots position to be taken by tokens.</summary>
+    public Vector3[] spots; // each square is divided into 6 areas stored in spaces
+    /// <summary>List of indices of free spots.</summary>
     public List<int> spotsIs;
+    /// <summary>
+    /// Square position relative to the GO square (1).<br/>
+    /// Positions are counted clockwise around the board.
+    /// </summary>
     protected int _position;
     // offsets used for spot arrangement
     protected const float offsetS = 0.38f;
@@ -21,19 +32,23 @@ public abstract class Square : MonoBehaviour
         spots = new Vector3[6];
         spotsIs = new List<int> {0,1,2,3,4,5};
     }
+    /// <summary>
+    /// Sets <see cref="TextMeshPro"/> attached to the square to specified text.
+    /// </summary>
+    /// <param name="name">Square title.</param>
     virtual public void setName(string name)
     {
         _name = name;
         this.square_name.SetText(name);
     }
-    // returns index of free area at random 
+    /// <returns>Index of next free spot.</returns>
     public int peekSpotI()
     {
         if(spotsIs.Count > 0) return spotsIs[0];
         else return -1; 
     }
 
-    // returns index of free area at random and removes it from free spot list
+    /// <returns>Index of the next free spot. The index is removed from <paramref name="spotsIs"/> </returns>
     public int popSpotI()
     {
         int spotIndex;
@@ -46,18 +61,25 @@ public abstract class Square : MonoBehaviour
             return -1;
         }
     }
+    /// <summary>
+    /// Removes index from <paramref name="spotsIs"/>. 
+    /// </summary>
+    /// <param name="spotI">Spot index</param>
     public void removeSpotI(int spotI)
     {
         spotsIs.Remove(spotI);
     }
 
-    // adds spotI to list of free spots
+    /// <summary>
+    /// Adds <paramref name="spotI"/> to list of free spots' indicies.
+    /// </summary>
+    /// <param name="spotI">Spot index (0-5).</param>
     public void releaseSpotI(int spotI)
     {
-        if(!spotsIs.Contains(spotI) && spotI >= 0) spotsIs.Add(spotI);
+        if((!spotsIs.Contains(spotI)) && spotI >= 0) spotsIs.Add(spotI);
         spotsIs.Sort();
     }
-    // returns Vector3 of the next free spot, (0,0,0) if no free spots
+    /// <returns>Vector3 of the next free spot, (0,0,0) if no free spots</returns>
     public Vector3 peekSpot()
     {
         if(spotsIs.Count > 0)
@@ -68,12 +90,17 @@ public abstract class Square : MonoBehaviour
             return Vector3.zero;
         }
     }
-    // returns Vector3 of the specified spot
+    /// <param name="spotI">Spot index (0-5).</param>
+    /// <returns>Vector3 of the specified spot by index</returns>
     public Vector3 peekSpot(int spotI)
     {
         return spots[spotI];
     }
-    /// generates square coordinates accordingly to the board center(this) postion/scale
+    /// <summary>
+    /// Generates square coordinates accordingly to the board center postion.
+    /// </summary>
+    /// <param name="position">Square index (0-39).</param>
+    /// <returns>Correct square position.</returns>
     protected static Vector3 generateCoordinates(int position)
     {
         float displacement = 8.0f;
@@ -93,7 +120,11 @@ public abstract class Square : MonoBehaviour
                 new Vector3(-8.5f,0,-displacement);
     }
 
-    /// generates rotation depending on the which side the square is (fornt,left,top,right)
+    /// <summary>
+    /// Generates rotation <see cref="Quaternion"/> depending on the which side of the board center the square is (fornt,left,top,right).
+    /// </summary>
+    /// <param name="position">Square index (0-39).</param>
+    /// <returns>Correct rotation.</returns>
     protected static Quaternion getRotation(int position)
     {
         return  position > 30 ? Quaternion.Euler(0,-90,0) :
@@ -101,6 +132,9 @@ public abstract class Square : MonoBehaviour
                 position > 10 ? Quaternion.Euler(0,90,0) :
                                 Quaternion.Euler(0,0,0);
     }
+    /// <summary>
+    /// Protected method used to generate spots postitions for tokens (6 positions).
+    /// </summary>
     protected abstract void assignSpots();
 }
 }

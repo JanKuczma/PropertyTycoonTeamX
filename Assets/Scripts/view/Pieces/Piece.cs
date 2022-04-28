@@ -3,13 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace View{
+/// <summary>
+/// Script that defines token behaviour.
+/// </summary>
 public class Piece : MonoBehaviour
 {
-    public static float SPEED = .6f;    // const movement speed
-    int currentSquare;  // current position 0 - 39 (40 squares)
+    /// <summary>
+    /// Constant movement speed.
+    /// </summary>
+    public static float SPEED = .6f;
+    /// <summary>
+    /// current position 0 - 39 (40 squares)
+    /// </summary>
+    int currentSquare;
     int currentSpot; // current spot 0 - 5 (6 areas)
-    [System.NonSerialized] public bool isMoving;   // bool to control the movement
-    Board _board; // reference to Board
+    /// <summary>
+    /// True if the token is "moving".
+    /// </summary>
+    [System.NonSerialized] public bool isMoving;
+    Board _board; // reference to Board object
     void Awake()
     {
         // sets up initial values
@@ -28,9 +40,13 @@ public class Piece : MonoBehaviour
         return new_piece;
     }
 
-    /// coroutine for movement
-    /// accepts positive and negative values
-    /// if negative value then moves backwards
+    /// <summary>
+    /// Coroutine for movement. 
+    /// Accepts positive and negative values.
+    /// If negative value then moves backwards.
+    /// </summary>
+    /// <param name="steps">Number of steps to move.</param>
+    /// <returns></returns>
     public IEnumerator move(int steps)
     {
         isMoving = true;
@@ -67,7 +83,7 @@ public class Piece : MonoBehaviour
                 // while piece is not on the target square and not finished rotating
                 while(counter < path.Count && rotate(targetRotation,path.Count))
                 {
-                    moveTo(path[counter]);
+                    transform.position = path[counter];
                     counter++;
                     yield return null;
                 }
@@ -75,7 +91,7 @@ public class Piece : MonoBehaviour
                 // while piece is not on the target square
                 while(counter < path.Count)
                 {
-                    moveTo(path[counter]);
+                    transform.position = path[counter];
                     counter++;
                     yield return null;
                 }
@@ -89,7 +105,10 @@ public class Piece : MonoBehaviour
         isMoving = false;
     }
 
-    // moves instantaneously to specified square
+    /// <summary>
+    /// Moves instantaneously to specified square.
+    /// </summary>
+    /// <param name="square">Square position.</param>
     public void moveInstant(int square)
     {
         _board.squares[currentSquare].releaseSpotI(currentSpot);
@@ -116,7 +135,9 @@ public class Piece : MonoBehaviour
             break;
         }
     }
-
+    /// <summary>
+    /// Moves token to Jail square without animation.
+    /// </summary>
     public void moveInstantToJail()
     {
         _board.squares[currentSquare].releaseSpotI(currentSpot);
@@ -129,7 +150,10 @@ public class Piece : MonoBehaviour
         transform.position = target;
         transform.rotation = Quaternion.LookRotation(Vector3.right);
     }
-
+    /// <summary>
+    /// Moves token to Jail with animation.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator goToJail()
     {
         // this "if" stops another dice roll while object is in move
@@ -148,12 +172,16 @@ public class Piece : MonoBehaviour
         // while piece is not on the target square and not finished rotating
         while(counter < path.Count && rotate(Vector3.right,path.Count/2))
         {
-            moveTo(path[counter]);
+            transform.position = path[counter];
             counter++;
             yield return null;
         }
         isMoving = false;
     }
+    /// <summary>
+    /// Moves token to Jail Visiting area.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator goToVisitJail()
     {
         // this "if" stops another dice roll while object is in move
@@ -172,15 +200,18 @@ public class Piece : MonoBehaviour
         // while piece is not on the target square and not finished rotating
         while(counter < path.Count && rotate(Vector3.right,path.Count/2))
         {
-            moveTo(path[counter]);
+            transform.position = path[counter];
             counter++;
             yield return null;
         }
         isMoving = false;
     }
+    /// <summary>
+    /// Moves token from Jail to Jail Visiting area.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator leaveJail()
     {
-        // this "if" stops another dice roll while object is in move
         isMoving = true;
         // free the current area
         _board.jail.releaseCellI(currentSpot);
@@ -196,37 +227,50 @@ public class Piece : MonoBehaviour
         // while piece is not on the target square and not finished rotating
         while(counter < path.Count && rotate(Vector3.right,path.Count))
         {
-            moveTo(path[counter]);
+            transform.position = path[counter];
             counter++;
             yield return null;
         }
         isMoving = false;
     }
-
+    /// <summary>
+    /// Currently occupied square.
+    /// </summary>
+    /// <returns>Currently occupied square (0 - 39).</returns>
     public int GetCurrentSquare()
     {
         return currentSquare;
     }
-    
-
-    // moves piece towards next position and returns true if already on the target
-    private void moveTo(Vector3 targetPos)
-    { 
-        //return targetPos == (transform.position = Vector3.MoveTowards(transform.position,targetPos,SPEED*Time.deltaTime));
-        transform.position = targetPos;
-    }
-    // rotates piece towards specified direction, returns false if on the target
+    /// <summary>
+    /// rotates piece towards specified direction, returns false if on the target
+    /// </summary>
+    /// <param name="targetRotation">Rotation direction.</param>
+    /// <param name="frames">Number of frames for which rotation should last.</param>
+    /// <returns></returns>
     private bool rotate(Vector3 targetRotation,int frames)
     {
         return Quaternion.Euler(targetRotation) != 
             (transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward,targetRotation,2f/frames,0.0f)));
     }
-    // calculates bezier curve point
+    /// <summary>
+    /// calculates bezier curve point
+    /// </summary>
+    /// <param name="start">Start point</param>
+    /// <param name="control">Control point</param>
+    /// <param name="end">End point</param>
+    /// <param name="t">Time step</param>
+    /// <returns></returns>
     private Vector3 BezierCurvePoint(Vector3 start, Vector3 control, Vector3 end, float t)
     {
     return (1-t)*(1-t)*start + 2*(1-t)*t*control + t*t*end;
     }
-    // calculates list of points of bezier curve
+    /// <summary>
+    /// calculates list of points of bezier curve
+    /// </summary>
+    /// <param name="start">Start point</param>
+    /// <param name="control">Control point</param>
+    /// <param name="target">End point</param>
+    /// <returns></returns>
     private List<Vector3> BezierCurve(Vector3 start, Vector3 control, Vector3 target)
     {
         List<Vector3> mid_positions = new List<Vector3>();

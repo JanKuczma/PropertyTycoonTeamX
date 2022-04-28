@@ -5,12 +5,14 @@ using UnityEngine.UI;
  using UnityEngine.EventSystems;
 namespace View
 {
+/// <summary>
+/// Script describing displayed data and behaviour of player tabs.
+/// </summary>
 public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    // Start is called before the first frame update
     public Model.Player player;
-    public Dictionary<int,PurchasableCard> propertyCards;
     Color color;
+    public Dictionary<int,PurchasableCard> propertyCards;
     public TMPro.TMP_Text player_name;
     public TMPro.TMP_Text player_money;
     public Image token;
@@ -19,23 +21,23 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public bool currentPlayer;
     Coroutine popUpCoruotine = null;
     Coroutine tokenCoroutine = null;
-    float _FrameRate = 25f;
-
+    float _FrameRate = 25f; // rotation rate of token animation
+    //  On click pops up the property manager window.
     public void OnPointerClick(PointerEventData eventData)
     {
         if(transform.parent.GetComponent<HUD>().currentManager != null) { Destroy(transform.parent.GetComponent<HUD>().currentManager.gameObject); }
         transform.parent.GetComponent<HUD>().currentManager = PropertyManager.Create(FindObjectOfType<Canvas>().transform,player,propertyCards,(currentPlayer && player.in_jail == 0 && player.isHuman)).GetComponent<PropertyManager>();
     }
-     
-     public void OnPointerEnter(PointerEventData eventData)
-     {
-        if(popUpCoruotine != null)
-        {
-            StopCoroutine(popUpCoruotine);
-        }
-        popUpCoruotine = StartCoroutine(popUp(FindObjectOfType<Canvas>().GetComponent<RectTransform>().sizeDelta.y));
-     }
-
+    // On pointer enter the tab moves upwards
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+       if(popUpCoruotine != null)
+       {
+           StopCoroutine(popUpCoruotine);
+       }
+       popUpCoruotine = StartCoroutine(popUp(FindObjectOfType<Canvas>().GetComponent<RectTransform>().sizeDelta.y));
+    }
+    //  On pointer exit the tab moves back to its initial position
     public void OnPointerExit(PointerEventData eventData)
     {
         if(popUpCoruotine != null)
@@ -52,7 +54,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public static PlayerTab Create(Transform parent,Model.Player player,Dictionary<int,PurchasableCard> propertyCards)
     {
-        PlayerTab tab = Instantiate(Asset.playerTab(),parent).GetComponent<PlayerTab>();
+        PlayerTab tab = Instantiate(Asset.PlayerTabPrefab,parent).GetComponent<PlayerTab>();
         tab.player = player;
         tab.propertyCards = propertyCards;
         tab.setName(player.name);
@@ -84,7 +86,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         this.color = color;
         GetComponent<Image>().color = color;
     }
-
+    // coroutines to make that 'nice' smooth tab popup behaviour
     public IEnumerator popUp(float height)
     {
         float timeOfTravel = 1f;
@@ -94,7 +96,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(GetComponent<RectTransform>().anchoredPosition,new Vector2(GetComponent<RectTransform>().anchoredPosition.x,-360*height/1080), currentTime/timeOfTravel); 
             yield return null; }
     }
-
+    // coroutines to move the tab back to non-active position
     public IEnumerator hide(float height)
     {
         if(tokenCoroutine != null){ StopCoroutine(tokenCoroutine); tokenCoroutine = null;}
@@ -108,7 +110,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(GetComponent<RectTransform>().anchoredPosition,new Vector2(GetComponent<RectTransform>().anchoredPosition.x,-650*height/1080), currentTime/timeOfTravel); 
             yield return null; }
     }
-
+    // coroutines to move the tab back to active position
     public IEnumerator halfPopUp(float height)
     {
         setColor(this.color,200);
@@ -122,6 +124,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(GetComponent<RectTransform>().anchoredPosition,new Vector2(GetComponent<RectTransform>().anchoredPosition.x,-580*height/1080), currentTime/timeOfTravel); 
             yield return null; }
     }
+    // links the cards to the toggles in the property grid
     void setUpPropertyGrid(Dictionary<int,PurchasableCard> propertyCards)
     {
         foreach(KeyValuePair<int, PurchasableCard> entry in propertyCards)
@@ -133,7 +136,7 @@ public class PlayerTab : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             }
         }
     }
-
+    // coroutine used to play the 'current Player' token rotation animation
     IEnumerator playAnim(Sprite[] tokenSheet)
     {
         int index = 0;

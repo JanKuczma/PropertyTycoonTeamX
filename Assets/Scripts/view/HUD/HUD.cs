@@ -20,6 +20,7 @@ public class HUD : MonoBehaviour
     public Image jail_bars;
     public Text parking_fines;
     public GameObject CpuPanel;
+    public Text timer;
 
     public void Create_player_tabs(List<Model.Player> players,Model.Board board)
     {

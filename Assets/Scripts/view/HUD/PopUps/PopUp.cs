@@ -2,17 +2,38 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 namespace View
 {
+    /// <summary>
+    /// Popups that require Player's interaction.
+    /// </summary>
     public class PopUp : MonoBehaviour
     {
         public Text message;
+        /// <summary>
+        /// The button most to the left.
+        /// </summary>
         public Button btn1;
+        /// <summary>
+        /// The button most to the right.
+        /// </summary>
         public Button btn2;
+        /// <summary>
+        /// Button most to the botttom.
+        /// </summary>
         public Button btn3;
         public Image optional_img;
+        public int rules_controls_index = 0;
+        public TextMeshProUGUI buttonText;
+        public SoundManager soundManager;
+
+        void Awake()
+        {
+            soundManager = GameObject.FindWithTag("GameMusic").GetComponent<SoundManager>();
+        }
 
         public void SetMessage(string msg)
         {
@@ -27,7 +48,9 @@ namespace View
         {
             if(FindObjectOfType<View.HUD>()) {FindObjectOfType<View.HUD>().UpdateInfo(FindObjectOfType<game_controller>());}
         }
-
+/// <summary>
+/// Popup with one button. Simple popup that does not require decision.
+/// </summary>
          public static PopUp OK(Transform parent, string message)
          {
             PopUp popUp = Instantiate(Asset.OkPopUpPrefab, parent).GetComponent<PopUp>();
@@ -37,6 +60,18 @@ namespace View
             return popUp;
          }
 
+         public static PopUp Help(Transform parent)
+         {
+             PopUp popUp = Instantiate(Asset.HelpPopUpPreFab, parent).GetComponent<PopUp>();
+             popUp.SetMessage("Click, drag and release dice to roll\n\nClick the arrows to the left and right of the screen to change camera angle\n\nHover over and click player tabs to access and manage properties");
+             popUp.btn1.onClick.AddListener(() => popUp.ControlsRulesSwitcher());
+             popUp.btn2.onClick.AddListener(popUp.closePopup);
+             return popUp;
+         }
+
+         /// <summary>
+/// Popup displayed when Player is in Jail. Asks if Player either wants to stay in Jail or try to roll double to break out.
+/// </summary>
          public static PopUp InJail(Transform parent, game_controller controller)
          {
             controller.AI_trigger = Model.Decision_trigger.INJAIL;
@@ -47,7 +82,9 @@ namespace View
             popUp.transform.SetSiblingIndex(2);
             return popUp;
          }
-
+/// <summary>
+/// Auction popup. Two buttons: Bid and Pass.
+/// </summary>
          public static PopUp Auction(Transform parent,Model.Space.Purchasable space)
          {
             PopUp popUp = Instantiate(Asset.AuctionPopUpPrefab, parent).GetComponent<PopUp>();
@@ -69,7 +106,9 @@ namespace View
             popUp.transform.SetSiblingIndex(2);
             return popUp;
          }
-
+/// <summary>
+/// 'Pay rent' popup. It won't disapear until Player can pay the rent OR player has not enough assets to pay the debt.
+/// </summary>
         public static PopUp PayRent(Transform parent, Model.Player payer, Model.Space.Purchasable space, Model.Board board,game_controller controller,int rent=0)
         {
             controller.AI_trigger = Model.Decision_trigger.PAYMONEY;
@@ -97,12 +136,14 @@ namespace View
             popUp.transform.SetSiblingIndex(2);
             return popUp;
         }
-
+/// <summary>
+/// Two options popup: Buy OR Not To Buy, this the question...
+/// </summary>
         public static PopUp BuyProperty(Transform parent, Model.Player player, Model.Space.Purchasable space, View.Square square, game_controller controller)
         {
             controller.AI_trigger = Model.Decision_trigger.BUYPROPERTY;
             PopUp popUp = Instantiate(Asset.BuyPropertyPopup, parent).GetComponent<PopUp>();
-            popUp.SetMessage(player.name + ", do you wish to purchase this property?");
+            popUp.SetMessage(player.name + ", do you wish to purchase this property for " + space.cost + "Q?");
             popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space), player, square));
             popUp.btn2.onClick.AddListener(() => popUp.dontBuyPropertyOption(player,space,controller));
             PurchasableCard c = null;
@@ -123,7 +164,9 @@ namespace View
             popUp.transform.SetSiblingIndex(2);
             return popUp;
         }
-
+/// <summary>
+/// PopUp with 3 options: Pay 50, Use Card OR Go To Jail
+/// </summary>
         public static PopUp GoToJail(Transform parent, Model.Player player, game_controller controller, string msg = null)
         {
             controller.AI_trigger = Model.Decision_trigger.GOTOJAIL;
@@ -135,11 +178,13 @@ namespace View
             popUp.btn3.onClick.AddListener(() => popUp.jailPay50Option(player, controller));
             popUp.transform.SetSiblingIndex(2);
             
-            controller.soundManager.Play("Jail");
+            controller.soundManagerClassic.PlayAndStopOthers("Jail");
             
             return popUp;
         }
-
+/// <summary>
+/// PopUp with one OK button used to display the action card description.
+/// </summary>
         public static PopUp Card(Transform parent, Model.Player player, game_controller controller, Model.Card card, SqType card_type)
         {
             PopUp popup = Instantiate(Asset.CardActionPopUp,parent).GetComponent<PopUp>();
@@ -158,6 +203,9 @@ namespace View
             popup.transform.SetSiblingIndex(2);
             return popup;
         }
+/// <summary>
+/// PopUp with TWO buttons. Used to display the action card description.
+/// </summary>
         public static PopUp CardWithOption(Transform parent, Model.Player player, game_controller controller, Model.Card card, SqType card_type)
         {
             PopUp popup = Instantiate(Asset.CardActionPopWithOptionsUp,parent).GetComponent<PopUp>();
@@ -177,6 +225,7 @@ namespace View
             return popup;
         }
 
+// The "what happens if I click this button" functions. In other words OnClick Events.
         public void buyPropertyOption(Model.Decision_outcome decision, Model.Player player, View.Square square)
         {
             switch(decision)
@@ -194,6 +243,7 @@ namespace View
                         ((View.UtilitySquare)(square)).showRibbon(player.Color());
                     }
                     MessagePopUp.Create(transform.parent,"Property purchased!",2);
+                    soundManager.PlayPurchaseSound();
                     closePopup();
                 break;
             }
@@ -218,6 +268,7 @@ namespace View
                 break;
                 case Model.Decision_outcome.SUCCESSFUL:
                     MessagePopUp.Create(transform.parent, "Rent paid!",2);
+                    soundManager.PlayPurchaseSound();
                     closePopup();
                 break;
             }
@@ -274,6 +325,7 @@ namespace View
                 player.position = 11;
                 player.PayCash(50,board:controller.board_model);
                 MessagePopUp.Create(transform.parent,"You go to visit the jail... outside!",3);
+                soundManager.PlayPurchaseSound();
                 controller.sendPieceToVisitJail();
                 closePopup();
             }
@@ -297,14 +349,26 @@ namespace View
                 closePopup();
             break;
             case Model.Decision_outcome.SUCCESSFUL:
+                soundManager.PlayPurchaseSound();
                 closePopup();
             break;
         }
     }
 
-    public void ControlsRulesSwitcher(int i)
+    public void ControlsRulesSwitcher()
     {
-        
+        if (rules_controls_index == 0)
+        {
+            rules_controls_index = 1;
+            SetMessage("Make money yo");
+            buttonText.text = "Controls";
+        }
+        else
+        {
+            rules_controls_index = 0;
+            SetMessage("Click, drag and release dice to roll\n\nClick the arrows to the left and right of the screen to change camera angle\n\nHover over and click player tabs to access and manage properties");
+            buttonText.text = "Rules";
+        }
     }
     
     }

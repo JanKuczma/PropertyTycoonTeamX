@@ -6,7 +6,13 @@ using TMPro;
 namespace View{
 public class JailSquare : CornerSquare
 {
+    /// <summary>
+    /// <inheritdoc cref="Square.spotsIs" path="/summary"/>
+    /// </summary>
     List<int> cellIs;
+    /// <summary>
+    /// <inheritdoc cref="Square.spots" path="/summary"/>
+    /// </summary>
     Vector3[] cells;
 
     new void Awake()
@@ -29,24 +35,32 @@ public class JailSquare : CornerSquare
         square.assignCells();
         return square;
     }
+    /// <param name="cellI">Spot index (0-5)./></param>
+    /// <returns><inheritdoc cref="Square.peekSpot" path="/returns"/></returns>
     public Vector3 peekCell(int cellI)
     {
         return cells[cellI];
     }
 
+/// <summary>
+/// Works just like <see cref="Square.releaseSpotI(int)"/>.
+/// </summary>
+/// <param name="cellI"></param>
     public void releaseCellI(int cellI)
     {
         if(!cellIs.Contains(cellI) && cellI >= 0) cellIs.Add(cellI);
         cellIs.Sort();
     }
-
+    /// <summary>
+    /// Returns and Removes next free cell spot index.
+    /// </summary>
     public int popCellI()
     {
         int cellIndex;
         if(cellIs.Count > 0)
         {
             cellIndex = cellIs[0];
-            cellIs.RemoveAt(0);
+            cellIs.Remove(cellIndex);
             return cellIndex;
         } else {
             return -1;

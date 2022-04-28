@@ -1,0 +1,202 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &194779363018118671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 194779363018118673}
+  - component: {fileID: 194779363018118672}
+  - component: {fileID: 194779363018118675}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: GameMusic
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &194779363018118673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194779363018118671}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 894.6408, y: 799.9216, z: -13.80822}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &194779363018118672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194779363018118671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9cb83aa3e2a847f9a6fcecf0a598970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicMixerGroup: {fileID: 4122495180317696192, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
+  soundMixerGroup: {fileID: 2652522833590209867, guid: a5348a64338e845dda2781d7e43533d3, type: 2}
+  sounds:
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Menu
+    audioClip: {fileID: 8300000, guid: 181d19035464d4cc29579153d6650b15, type: 3}
+    isLoop: 1
+    playOnAwake: 1
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG1
+    audioClip: {fileID: 8300000, guid: 24cf7646ac32e438a9d96b4698eab73c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG2
+    audioClip: {fileID: 8300000, guid: 6b16d8250374d414d99d69c13e71bbe1, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: BG3
+    audioClip: {fileID: 8300000, guid: 08a826ff7cdee45358c7f5cdece31da9, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Jail
+    audioClip: {fileID: 8300000, guid: 0669f5818b38e4a9698d13ed30b91a4c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Auction
+    audioClip: {fileID: 8300000, guid: c7ad7d69300644be88a204fcb8ce369a, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Bankrupt
+    audioClip: {fileID: 8300000, guid: f2d0909c3fb464b859db8191467fee76, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: Winner
+    audioClip: {fileID: 8300000, guid: de56121e90ce24268b40659f12e74058, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Click
+    audioClip: {fileID: 8300000, guid: d7099f6206eb54b7d9b56ed02ae23cd0, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice1
+    audioClip: {fileID: 8300000, guid: 00a208dcc398c4ee5b588422d64d1c4c, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice2
+    audioClip: {fileID: 8300000, guid: 89feecdac326e49b9914362c75174ed6, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice3
+    audioClip: {fileID: 8300000, guid: a661316ab05974e71b92acab44a575a2, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice4
+    audioClip: {fileID: 8300000, guid: 131112e85bb744f43bdc2852cd16e9ff, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice5
+    audioClip: {fileID: 8300000, guid: a6357bc5def5f43d284c7ea7e56b2f21, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice6
+    audioClip: {fileID: 8300000, guid: 35ece53efbe3e4e33b740610157d7eb1, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Dice7
+    audioClip: {fileID: 8300000, guid: e89aab143f7ac43d784c6e036d79c073, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: StarWars1
+    audioClip: {fileID: 8300000, guid: bf7fcf7ca823d48cab83b861280cda42, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 1
+    source: {fileID: 0}
+    clipName: StarWars2
+    audioClip: {fileID: 8300000, guid: bb779ec314d9c4de480a3413974a2c53, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Purchase
+    audioClip: {fileID: 8300000, guid: 3c2e8d3d0ba3f467fa55e46b781457c2, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  - audioType: 0
+    source: {fileID: 0}
+    clipName: Income
+    audioClip: {fileID: 8300000, guid: 94810531d93be4034aa93abb6ae02876, type: 3}
+    isLoop: 0
+    playOnAwake: 0
+    volume: 0
+  starWarsTheme: 0
+--- !u!114 &194779363018118675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194779363018118671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac3a8dffbeee348cca6ab96470007b7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

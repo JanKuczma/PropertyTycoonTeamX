@@ -5,6 +5,11 @@ using UnityEngine;
 
 ///DICE IMPLEMENTATION NEEDS REFACTORING
 namespace View{
+    /// <summary>
+    /// Extends <see cref=" MonoBehaviour"/>.<br/>
+    /// Script attached to DiceContainer prefab.<br/>
+    /// Script used control all dice in the dice and read the values from it.
+    /// </summary>
 public class DiceContainer : MonoBehaviour
 {
     float move_speed = 20.0f;   // how fast dice is following cursor
@@ -22,12 +27,12 @@ public class DiceContainer : MonoBehaviour
 
     public static DiceContainer Create(Transform parent)
     {
-        return Instantiate(Asset.Dice(),parent).GetComponent<DiceContainer>();
+        return Instantiate(Asset.DiceContainerPrefab,parent).GetComponent<DiceContainer>();
     }
 
     void OnMouseDown()
     {
-        Cursor.SetCursor(Asset.Cursor(CursorType.GRAB),Vector2.zero,CursorMode.Auto); // on click change cursor to 'closed hand'
+        Cursor.SetCursor(Asset.GrabTextureCursor,Vector2.zero,CursorMode.Auto); // on click change cursor to 'closed hand'
         greenLight.gameObject.SetActive(false);
     }
     void OnMouseDrag()
@@ -43,7 +48,7 @@ public class DiceContainer : MonoBehaviour
     }
     void OnMouseUp()
     {   // on mouse button release change cursor to 'poiniting hand'
-        Cursor.SetCursor(Asset.Cursor(CursorType.FINGER),Vector2.zero,CursorMode.Auto);
+        Cursor.SetCursor(Asset.FingerTextureCursor,Vector2.zero,CursorMode.Auto);
         foreach (Dice d in dice)    // for each dice assign velcity
         {
             d.roll((transform.position - previous_frame_pos)/Time.smoothDeltaTime);
@@ -66,8 +71,10 @@ public class DiceContainer : MonoBehaviour
         }
         return targetPos;
     }
-
-    /// resets dice to initial position
+    /// <summary>
+    /// Resets all dice to the initial position.
+    /// The dice rotation is pseudorandom.
+    /// </summary>
     public void reset()
     {
         greenLight.gameObject.SetActive(true);
@@ -81,8 +88,7 @@ public class DiceContainer : MonoBehaviour
         enabled = true;
         gameObject.SetActive(true);
     }
-
-    /// returns the sum of dice results
+    /// <returns> The sum of dice results.</returns>
     public int get_result()
     {
         int result = 0;
@@ -93,6 +99,7 @@ public class DiceContainer : MonoBehaviour
         return result;
     }
 
+    /// <returns>Bool value of dice show the same value. </returns>
     public bool is_double()
     {
         int i = 0;
@@ -106,7 +113,7 @@ public class DiceContainer : MonoBehaviour
         return (dice_values[0] == dice_values[1]);
     }
 
-    /// returns true if at least one dice is rolling
+    /// <returns> True if at least one dice is rolling.</returns>
     public bool areRolling()
     {
         foreach(Dice d in dice)
@@ -116,6 +123,7 @@ public class DiceContainer : MonoBehaviour
         return false;
     }
 
+    /// <returns>The mid-point of all the dice. </returns>
     public Vector3 position()
     {
         Vector3 point = Vector3.zero;
@@ -125,11 +133,13 @@ public class DiceContainer : MonoBehaviour
         }
         return point/dice.Length;
     }
+    /// <returns>Distance of the dice from the mid-point. See <see cref="DiceContainer.position"/></returns>
     public float av_distance()
     {
         return (position()-dice[0].transform.position).magnitude;
     }
 
+    /// <returns>True if any dice cooridinate 'y' is below or equal 0. See <see cref="Transform.position"/></returns>
     public bool belowBoard()
     {
         foreach(Dice d in dice)
@@ -138,11 +148,13 @@ public class DiceContainer : MonoBehaviour
         }
         return false;
     }
-
+/// <summary>
+/// 'Throws' all dice with some pseudorandom initial velocity.
+/// </summary>
     public void random_throw()
     {
         greenLight.gameObject.SetActive(false);
-        Vector3 dice_velocity = new Vector3(Random.Range(-.05f,.05f),Random.Range(-.05f,0.02f),Random.Range(-.05f,.05f))/Time.deltaTime;
+        Vector3 dice_velocity = new Vector3(Random.Range(-15f,15f),Random.Range(-1f,1f),Random.Range(-10f,10f));
         foreach (Dice d in dice)    // for each dice assign velcity
         {
             d.roll(dice_velocity);

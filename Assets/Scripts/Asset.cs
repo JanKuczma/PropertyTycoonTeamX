@@ -1,18 +1,25 @@
+using System;
+using System.IO;
+using System.Linq.Expressions;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
-
-/// enum types
+/// <summary>
+/// Represents a space/square type
+/// </summary>
 public enum SqType {GO,JAILVISIT,PARKING,GOTOJAIL,PROPERTY,STATION,UTILITY,POTLUCK,TAX,CHANCE}
+/// <summary>
+/// Represents a token type
+/// </summary>
 public enum Token {CAT ,BOOT,IRON,SHIP,HATSTAND,SMARTPHONE}
-public enum CursorType {FINGER,GRAB}
-/*
-    This static class is used to get the assets at the runtime
-    it seems to be the most efficient way to load the assets to the game atm
-*/
+
+/// <summary>
+/// This static class is used to get the assets at the runtime.
+/// </summary>
 public static class Asset
 {
     //board
-    static GameObject BoardPrefab = Resources.Load<GameObject>("Prefabs/Board/BoardCenter");
+    public static GameObject BoardPrefab = Resources.Load<GameObject>("Prefabs/Board/BoardCenter");
     static GameObject GoPrefab = Resources.Load<GameObject>("Prefabs/Board/elements/Go");
     static GameObject JailVisitPrefab = Resources.Load<GameObject>("Prefabs/Board/elements/JailVisit");
     static GameObject ParkingPrefab = Resources.Load<GameObject>("Prefabs/Board/elements/Parking");
@@ -28,8 +35,8 @@ public static class Asset
     static GameObject Chance2Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(2)");
     static GameObject Chance3Prefab = Resources.Load<GameObject>("Prefabs/Board/elements/Chance(3)");
     //house and hotel
-    static GameObject HousePrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/HouseWithWindows");
-    static GameObject HotelPrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/HotelWithWindows");
+    public static GameObject HousePrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/HouseWithWindows");
+    public static GameObject HotelPrefab = Resources.Load<GameObject>("Prefabs/Board/Houses/HotelWithWindows");
     //pieces
     static GameObject CatPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Cat");
     static GameObject BootPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Boot");
@@ -37,14 +44,16 @@ public static class Asset
     static GameObject SmartphonePrefab = Resources.Load<GameObject>("Prefabs/Pieces/Smartphone");
     static GameObject HatStandPrefab = Resources.Load<GameObject>("Prefabs/Pieces/HatStand");
     static GameObject IronPrefab = Resources.Load<GameObject>("Prefabs/Pieces/Iron");
-    static GameObject DiceContainerPrefab = Resources.Load<GameObject>("Prefabs/dice/DiceContainer");
+    public static GameObject DiceContainerPrefab = Resources.Load<GameObject>("Prefabs/dice/DiceContainer");
     //cursors
-    static Texture2D FingerTexture = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
-    static Texture2D GrabTexture = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
+    public static Texture2D FingerTextureCursor = Resources.Load<Texture2D>("Textures/FINGER-CURSOR");
+    public static Texture2D GrabTextureCursor = Resources.Load<Texture2D>("Textures/GRAB-CURSOR");
     //board and card data
     static TextAsset classic_board_json = Resources.Load<TextAsset>("GameDataJSON/board_data");
     static TextAsset potluck_json = Resources.Load<TextAsset>("GameDataJSON/potluck_data");
     static TextAsset opportunity_knocks_json = Resources.Load<TextAsset>("GameDataJSON/opportunity_knocks_data");
+
+    static TextAsset custom_board_json = Resources.Load<TextAsset>("CustomData/custom_board_data");
     //token IMGs
     static Sprite catIMG = Resources.Load<Sprite>("tokenIMGs/catIMG");
     static Sprite ironIMG = Resources.Load<Sprite>("tokenIMGs/ironIMG");
@@ -67,7 +76,7 @@ public static class Asset
 
     //HUD components
     public static GameObject hud = Resources.Load<GameObject>("Prefabs/HUD/hud");
-    static GameObject playerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
+    public static GameObject PlayerTabPrefab = Resources.Load<GameObject>("Prefabs/HUD/PlayerTab/PlayerTab");
     //Pop Ups
     public static GameObject OkPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/OkPopUp");
     public static GameObject InJailPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/InJailPrefab");
@@ -75,7 +84,7 @@ public static class Asset
     public static GameObject MessagePopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/MessagePopUp");
     public static GameObject BuyPropertyPopup = Resources.Load<GameObject>("Prefabs/HUD/PopUps/BuyPropertyPopUp");
     public static GameObject GoToJailPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/GoToJailPopUp");
-    static GameObject PropertyManagerPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/PropertyManagerPopUp");
+    public static GameObject PropertyManagerPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/PropertyManagerPopUp");
     public static GameObject ManageUtilityPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManageUtilityPopUp");
     public static GameObject ManagePropertyPopUpPrefab = Resources.Load<GameObject>("Prefabs/HUD/PopUps/PropertyManager/ManagePropertyPopUp");
     public static GameObject CardActionPopUp = Resources.Load<GameObject>("Prefabs/HUD/PopUps/CardActionPopUp");
@@ -102,7 +111,12 @@ public static class Asset
     public static Sprite StarWarsOppKnocksIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/Communitychestcard-starwars copy");
     public static Sprite StarWarsChangeIMG = Resources.Load<Sprite>("Materials/StarWarsTheme/chance-starwars copy");
     
-
+    /// <summary>
+    /// Getter for board space prefabs
+    /// </summary>
+    /// <param name="type">Type of the square</param>
+    /// <param name="variant">Optional: variant of the square</param>
+    /// <returns></returns>
     public static GameObject Board(SqType type,string variant = "")
     {
 
@@ -117,10 +131,6 @@ public static class Asset
                 type == SqType.TAX ? variant == "INCOME TAX" ? IncomeTaxPrefab : SuperTaxPrefab :
                 type == SqType.CHANCE ? variant == "1" ? Chance1Prefab : variant == "2" ? Chance2Prefab : Chance3Prefab :
                 null;
-    }
-    public static GameObject Board()
-    {
-        return BoardPrefab;
     }
 
     public static GameObject UtilityCard(string variant)
@@ -139,18 +149,6 @@ public static class Asset
                 null;
     }
 
-    public static GameObject Dice()
-    {
-        return DiceContainerPrefab;
-    }
-    
-    public static Texture2D Cursor(CursorType type)
-    {
-        return  type == CursorType.FINGER ? FingerTexture :
-                type == CursorType.GRAB ? GrabTexture :
-                null;
-    }
-
     public static string board_data_json()
     {
         return classic_board_json.ToString();
@@ -166,14 +164,19 @@ public static class Asset
         return opportunity_knocks_json.ToString();
     }
 
-        public static GameObject House()
+    public static string custom_board_data()
     {
-        return HousePrefab;
-    }
-
-    public static GameObject Hotel()
-    {
-        return HotelPrefab;
+        string custom_data_string = "";
+        string path = Application.dataPath + "/Resources/custom_board_data.json";
+        if(File.Exists(path))
+        {
+            custom_data_string = File.ReadAllText(path);
+        }
+        if(custom_data_string != "") {
+            return custom_data_string;
+        } else {
+            return Asset.board_data_json();
+        }
     }
 
     public static Sprite TokenIMG(Token token)
@@ -196,15 +199,5 @@ public static class Asset
                 token == Token.HATSTAND ? standAnim :
                 token == Token.BOOT ? bootAnim :
                 null;
-    }
-
-    public static GameObject playerTab()
-    {
-        return playerTabPrefab;
-    }
-
-    public static GameObject propertyManager()
-    {
-        return PropertyManagerPrefab;
     }
 }

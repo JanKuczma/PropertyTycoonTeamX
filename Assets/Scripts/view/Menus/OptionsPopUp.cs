@@ -9,14 +9,12 @@ public class OptionsPopUp : View.PopUp
     public Slider sfx;
     public Slider music;
     public Slider tokenSpeed;
-    public SoundManager soundManager;
     public TMPro.TMP_Dropdown VideoSettings;
 
     public static OptionsPopUp Create(Transform parent)
     {
         OptionsPopUp popUp = Instantiate(Asset.OptionsPopUpPreFab, parent).GetComponent<OptionsPopUp>();
         popUp.btn1.onClick.AddListener(() => popUp.closePopup());
-        popUp.soundManager = GameObject.FindGameObjectWithTag("GameMusic").GetComponent<SoundManager>();
         popUp.VideoSettings.value = QualitySettings.GetQualityLevel();
         return popUp;
     }
