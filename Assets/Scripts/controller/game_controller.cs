@@ -1001,7 +1001,7 @@ public class game_controller : MonoBehaviour
         case Model.Decision_trigger.BUYPROPERTY:
         case Model.Decision_trigger.BID:
             Model.Space.Purchasable space = ((Model.Space.Purchasable)(board_model.spaces[players[current_player].position-1]));
-            float prob = (players[current_player] .cash / AI_moneyToPay) - 1f;
+            float prob = (players[current_player].cash / AI_moneyToPay) - 1f;
             if(prob > 0) {
                 switch(space.type){
                     case SqType.STATION:
