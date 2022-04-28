@@ -176,20 +176,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8347a80919a83464e90fd2d2abdb344f, type: 3}
   m_PrefabInstance: {fileID: 290237498305580646}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &7790437551496587154
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 632272677357073207}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!136 &2371832762388849145
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -201,9 +187,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1.4
-  m_Height: 1.8
+  m_Height: 3.3401756
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.27008772, z: 0}
 --- !u!1001 &8594942187616049669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -291,6 +277,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f3dbf0a99d332f848ba4d5f7fb986069, type: 3}
   m_PrefabInstance: {fileID: 8594942187616049669}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &2466168138491321514
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8900862943970895700}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.2, y: 2, z: 3.3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!64 &3439545408271276041
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -305,16 +304,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: -1
   m_Mesh: {fileID: 0}
---- !u!65 &2466168138491321514
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8900862943970895700}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.2, y: 2, z: 3.3}
-  m_Center: {x: 0, y: 0, z: 0}

@@ -23,8 +23,8 @@ public class CardTests
     {
         
         Dictionary<string, int> kwargs = new Dictionary<string, int>();
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1], _soundManager);
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3], _soundManager);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1]);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3]);
         ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board);
         ((Model.Space.Property)(_player.owned_spaces[1])).buyHouse(_board);
         ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board);

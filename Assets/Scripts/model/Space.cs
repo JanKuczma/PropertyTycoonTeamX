@@ -57,7 +57,7 @@ public abstract class Space
         public Decision_outcome mortgage()
         {
             if(isMortgaged) { return Decision_outcome.OTHER; }
-            owner.ReceiveCashNoSound(cost/2);
+            owner.ReceiveCash(cost/2);
             isMortgaged = true;
             return Decision_outcome.SUCCESSFUL;
         }
@@ -74,7 +74,7 @@ public abstract class Space
             {
                 return Decision_outcome.NOT_ENOUGH_MONEY;
             } else {
-                owner.PayCashNoSound(cost/2);
+                owner.PayCash(cost/2);
                 isMortgaged = false;
                 return Decision_outcome.SUCCESSFUL;
             }
@@ -209,7 +209,7 @@ public abstract class Space
                 return Decision_outcome.NOT_ENOUGH_MONEY;
             
             } else {
-                owner.PayCashNoSound(house_cost);
+                owner.PayCash(house_cost);
                 noOfHouses += 1;
                 return Decision_outcome.SUCCESSFUL;
             }
@@ -229,7 +229,7 @@ public abstract class Space
             {
                 return Decision_outcome.NO_HOUSES;
             } else {
-                owner.ReceiveCashNoSound(house_cost);
+                owner.ReceiveCash(house_cost);
                 noOfHouses -= 1;
                 return Decision_outcome.SUCCESSFUL;
             }

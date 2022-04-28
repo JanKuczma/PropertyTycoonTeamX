@@ -1,7 +1,7 @@
 {
     "cards": [
         {
-            "description": "Bank pays you divided of £50",
+            "description": "Bank pays you dividend of £50",
             "action": "PAYTOPLAYER",
             "keys": [
                 "amount"

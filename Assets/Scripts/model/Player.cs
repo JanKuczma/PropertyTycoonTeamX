@@ -69,20 +69,10 @@ public class Player
 /// </summary>
 /// <param name="cash">The money amount </param>
 /// <param name="sm">SoundManager of the current game </param>
-    public void ReceiveCash(int cash, SoundManager sm)
+    public void ReceiveCash(int cash)
     {
         this.cash += cash;
-        sm.PlayIncomeSound();
     }
-
-/// <summary>
-/// Add's specified amount to Player money without playing sound
-/// </summary>
-/// <param name="cash">The money amount </param>
-public void ReceiveCashNoSound(int cash)
-{
-    this.cash += cash;
-}
 
 /// <summary>
 /// Method used to make <c>Player</c> pay specified amount of money with sound.
@@ -92,51 +82,23 @@ public void ReceiveCashNoSound(int cash)
 /// <param name="recipient">Optional: Recipient<br/>NOTE: if <paramref name="board"/> is specfied then <paramref name="recipient"/> does not recieve moeny</param>
 /// <param name="board">Optional: If speciified, the amount paid lands on 'Free Parking' space</param>
 /// <returns>Decision Outcome</returns>
-    public Decision_outcome PayCash(int amount, SoundManager sm, Player recipient = null, Board board = null)
+    public Decision_outcome PayCash(int amount, Player recipient = null, Board board = null)
     {
         if(totalValueOfAssets() < amount) { return Decision_outcome.NOT_ENOUGH_ASSETS; }
         if(amount > this.cash) { return Decision_outcome.NOT_ENOUGH_MONEY; }
         if(board != null) {
             this.cash -= amount;
             board.parkingFees+=amount;
-            sm.PlayPurchaseSound();
             return Decision_outcome.SUCCESSFUL;
             }
         if(recipient == null) {
             this.cash -= amount;
-            sm.PlayPurchaseSound();
             return Decision_outcome.SUCCESSFUL;
             }
-        recipient.ReceiveCashNoSound(amount);
-        this.cash -= amount;
-        sm.PlayPurchaseSound();
-        return Decision_outcome.SUCCESSFUL;
-    }
-
-/// <summary>
-/// Method used to make <c>Player</c> pay specified amount of money without sound.
-/// </summary>
-/// <param name="amount">The amount to pay</param>
-/// <param name="recipient">Optional: Recipient<br/>NOTE: if <paramref name="board"/> is specfied then <paramref name="recipient"/> does not recieve moeny</param>
-/// <param name="board">Optional: If speciified, the amount paid lands on 'Free Parking' space</param>
-/// <returns>Decision Outcome</returns>
-public Decision_outcome PayCashNoSound(int amount, Player recipient = null, Board board = null)
-{
-    if(totalValueOfAssets() < amount) { return Decision_outcome.NOT_ENOUGH_ASSETS; }
-    if(amount > this.cash) { return Decision_outcome.NOT_ENOUGH_MONEY; }
-    if(board != null) {
-        this.cash -= amount;
-        board.parkingFees+=amount;
-        return Decision_outcome.SUCCESSFUL;
-    }
-    if(recipient == null) {
+        recipient.ReceiveCash(amount);
         this.cash -= amount;
         return Decision_outcome.SUCCESSFUL;
     }
-    recipient.ReceiveCashNoSound(amount);
-    this.cash -= amount;
-    return Decision_outcome.SUCCESSFUL;
-}
 
 /// <summary>
 /// Sells specified  Player 's owned space
@@ -145,7 +107,7 @@ public Decision_outcome PayCashNoSound(int amount, Player recipient = null, Boar
 /// <param name="board">The reference to the  Board  to which this space is attached </param>
 /// <param name="sm">SoundManager of the current game </param>
 /// <returns>Decision Outcome</returns>
-    public Decision_outcome SellProperty(Space.Purchasable property, Board board, SoundManager sm)
+    public Decision_outcome SellProperty(Space.Purchasable property, Board board)
     {
         if(property is Model.Space.Property)
         {
@@ -155,9 +117,9 @@ public Decision_outcome PayCashNoSound(int amount, Player recipient = null, Boar
             } else {
                 if(property.isMortgaged)
                 {
-                    ReceiveCash(property.cost/2, sm);
+                    ReceiveCash(property.cost/2);
                     property.isMortgaged = false;
-                } else { ReceiveCash(property.cost, sm); }
+                } else { ReceiveCash(property.cost); }
                 owned_spaces.Remove(property);
                 property.owner = null;
                 return Decision_outcome.SUCCESSFUL;
@@ -166,9 +128,9 @@ public Decision_outcome PayCashNoSound(int amount, Player recipient = null, Boar
         else {
             if(property.isMortgaged)
             {
-                ReceiveCash(property.cost/2, sm);
+                ReceiveCash(property.cost/2);
                 property.isMortgaged = false;
-            } else { ReceiveCash(property.cost, sm); }
+            } else { ReceiveCash(property.cost); }
             owned_spaces.Remove(property);
             property.owner = null;
             return Decision_outcome.SUCCESSFUL;
@@ -180,13 +142,13 @@ public Decision_outcome PayCashNoSound(int amount, Player recipient = null, Boar
 /// <param name="property">Space in question</param>
 /// <param name="sm">SoundManager of the current game </param>
 /// <returns>Decision Outcome</returns>
-    public Decision_outcome BuyProperty(Space.Purchasable property, SoundManager sm)
+    public Decision_outcome BuyProperty(Space.Purchasable property)
     {
         if(cash < property.cost)
             {
                 return Decision_outcome.NOT_ENOUGH_MONEY;
             } else {
-                PayCash(property.cost, sm);
+                PayCash(property.cost);
                 owned_spaces.Add(property);
                 property.owner = this;
                 return Decision_outcome.SUCCESSFUL;
@@ -199,13 +161,13 @@ public Decision_outcome PayCashNoSound(int amount, Player recipient = null, Boar
     /// <param name="cost">The price amount</param>
     /// <param name="sm">SoundManager of the current game </param>
     /// <returns></returns>
-    public Decision_outcome BuyProperty(Space.Purchasable property, int cost, SoundManager sm)
+    public Decision_outcome BuyProperty(Space.Purchasable property, int cost)
     {
         if(cash < cost)
             {
                 return Decision_outcome.NOT_ENOUGH_MONEY;
             } else {
-                PayCash(cost, sm);
+                PayCash(cost);
                 owned_spaces.Add(property);
                 property.owner = this;
                 return Decision_outcome.SUCCESSFUL;
