@@ -42,7 +42,7 @@ public class Player
     /// <summary>List of spaces owned by  Player</summary>
     public List<Space.Purchasable> owned_spaces;
 
-    public Player(string name,Token token,bool isHuman,int color,int position = 1,int money = 1500)
+    public Player(string name,Token token,bool isHuman,int color,int position = 1,int money = 50)
     {
         this.name = name;
         this.token = token;
