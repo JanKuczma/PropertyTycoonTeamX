@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -15,7 +16,7 @@ public class ManagePurchasable : MonoBehaviour
     public Button sellBtn;
     public Button buyHouseBtn;
     public Button sellHouseBtn;
-    private SoundManager soundManager;
+    public static SoundManager soundManager;
 
     void Awake()
     {
@@ -29,7 +30,7 @@ public class ManagePurchasable : MonoBehaviour
             {
                 PopUp = Instantiate(Asset.ManagePropertyPopUpPrefab,parent).GetComponent<ManagePurchasable>();
                 game_controller controller = FindObjectOfType<game_controller>(); 
-                PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model),controller.board_view.squares[property.position-1]));
+                PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model, soundManager),controller.board_view.squares[property.position-1]));
                 PopUp.buyHouseBtn.onClick.AddListener(() => PopUp.buyHouseOption(((Model.Space.Property)(property)).buyHouse(controller.board_model) ,(Model.Space.Property)property,((View.PropertySquare)(controller.board_view.squares[property.position-1]))));
                 PopUp.sellHouseBtn.onClick.AddListener(() => PopUp.sellHouseOption(((Model.Space.Property)(property)).sellHouse(controller.board_model) ,(Model.Space.Property)property,((View.PropertySquare)(controller.board_view.squares[property.position-1]))));
                 if(property.isMortgaged) {
@@ -42,7 +43,7 @@ public class ManagePurchasable : MonoBehaviour
             } else {
                 PopUp = Instantiate(Asset.ManageUtilityPopUpPrefab,parent).GetComponent<ManagePurchasable>();
                 game_controller controller = FindObjectOfType<game_controller>(); 
-                PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model),((View.UtilitySquare)(controller.board_view.squares[property.position-1]))));
+                PopUp.sellBtn.onClick.AddListener(() => PopUp.sellPropertyOption(property.owner.SellProperty(property,controller.board_model, soundManager),((View.UtilitySquare)(controller.board_view.squares[property.position-1]))));
                 if(property.isMortgaged) {
                     PopUp.mortgageBtn.onClick.AddListener(() => PopUp.mortgagePropertyOption(property.pay_off_mortgage(),property));
                     PopUp.mortgageBtn.GetComponentInChildren<TMPro.TMP_Text>().SetText("Pay Off Mortgage");

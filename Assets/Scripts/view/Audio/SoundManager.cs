@@ -221,8 +221,6 @@ public class SoundManager : MonoBehaviour
         }
         
     }
-
-    
     
     /// <summary>
     /// Plays cash register sound whenever active player's cash decreases

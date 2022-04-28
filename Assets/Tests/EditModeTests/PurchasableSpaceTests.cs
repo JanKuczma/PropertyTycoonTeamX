@@ -11,6 +11,7 @@ public class PurchasableSpaceTests
 {
     private Model.Board _board;
     private Model.Player _player;
+    private SoundManager _soundManager;
 
     [SetUp]
     public void Setup()
@@ -22,23 +23,23 @@ public class PurchasableSpaceTests
     [Test]
     public void PropertySpaceBuyHouseTest1()
     {
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1]);
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3]);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1], _soundManager);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3], _soundManager);
         Assert.AreEqual(Model.Decision_outcome.SUCCESSFUL, ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board));
     }
     // if not all properties in group owned
     [Test]
     public void PropertySpaceBuyHouseTest2()
     {
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1]);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1], _soundManager);
         Assert.AreEqual(Model.Decision_outcome.NOT_ALL_PROPERTIES_IN_GROUP, ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board));
     }
     // house limit
     [Test]
     public void PropertySpaceBuyHouseTest3()
     {
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1]);
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3]);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1], _soundManager);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3], _soundManager);
         ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board);
         ((Model.Space.Property)(_player.owned_spaces[1])).buyHouse(_board);
         ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board);
@@ -55,8 +56,8 @@ public class PurchasableSpaceTests
     [Test]
     public void PropertySpaceBuyHouseTest4()
     {
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1]);
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3]);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1], _soundManager);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3], _soundManager);
         Assert.AreEqual(Model.Decision_outcome.SUCCESSFUL, ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board));
         Assert.AreEqual(Model.Decision_outcome.DIFFERENCE_IN_HOUSES, ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board));
     }
@@ -64,8 +65,8 @@ public class PurchasableSpaceTests
     [Test]
     public void PropertySpaceSellHouseTest1()
     {
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1]);
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3]);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1], _soundManager);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3], _soundManager);
         ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board);
         Assert.AreEqual(Model.Decision_outcome.SUCCESSFUL,((Model.Space.Property)(_player.owned_spaces[0])).sellHouse(_board));
     }
@@ -73,7 +74,7 @@ public class PurchasableSpaceTests
     [Test]
     public void PropertySpaceSellHouseTest2()
     {
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1]);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1], _soundManager);
         
         Assert.AreEqual(Model.Decision_outcome.NO_HOUSES,((Model.Space.Property)(_player.owned_spaces[0])).sellHouse(_board));
     }
@@ -81,8 +82,8 @@ public class PurchasableSpaceTests
     [Test]
     public void PropertySpaceSellHouseTest3()
     {
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1]);
-        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3]);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[1], _soundManager);
+        _player.BuyProperty((Model.Space.Purchasable)_board.spaces[3], _soundManager);
         ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board);
         ((Model.Space.Property)(_player.owned_spaces[1])).buyHouse(_board);
         ((Model.Space.Property)(_player.owned_spaces[0])).buyHouse(_board);

@@ -28,7 +28,7 @@ namespace View
         public Image optional_img;
         public int rules_controls_index = 0;
         public TextMeshProUGUI buttonText;
-        public SoundManager soundManager;
+        public static SoundManager soundManager;
 
         void Awake()
         {
@@ -116,7 +116,7 @@ namespace View
             if(space is Model.Space.Utility) { rent_amount *= controller.dice.get_result(); }
             controller.AI_moneyToPay = rent_amount;
             popUp.SetMessage("This property is owned by " + space.owner.name+"! You have to pay "+ rent_amount+"!");
-            popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,space.owner),controller,payer));
+            popUp.btn1.onClick.AddListener(() => popUp.PayRentOption(payer.PayCash(rent_amount,soundManager,space.owner),controller,payer));
             PurchasableCard c = null;
             switch(space.type)
             {
@@ -143,7 +143,7 @@ namespace View
             controller.AI_trigger = Model.Decision_trigger.BUYPROPERTY;
             PopUp popUp = Instantiate(Asset.BuyPropertyPopup, parent).GetComponent<PopUp>();
             popUp.SetMessage(player.name + ", do you wish to purchase this property for " + space.cost + "Q?");
-            popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space), player, square));
+            popUp.btn1.onClick.AddListener(() => popUp.buyPropertyOption(player.BuyProperty(space, soundManager), player, square));
             popUp.btn2.onClick.AddListener(() => popUp.dontBuyPropertyOption(player,space,controller));
             PurchasableCard c = null;
             switch(space.type)
@@ -322,7 +322,7 @@ namespace View
                 MessagePopUp.Create(transform, "You have not enough money! Sell or mortgage your properties to get some cash!",2);
             } else {
                 player.position = 11;
-                player.PayCash(50,board:controller.board_model);
+                player.PayCash(50,soundManager,board:controller.board_model);
                 MessagePopUp.Create(transform.parent,"You go to visit the jail... outside!",3);
                 soundManager.PlayPurchaseSound();
                 controller.sendPieceToVisitJail();

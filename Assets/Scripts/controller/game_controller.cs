@@ -380,7 +380,7 @@ public class game_controller : MonoBehaviour
                     if(passed_go)
                     {
                         players[current_player].allowed_to_buy = true;
-                        players[current_player].ReceiveCash(((Model.Space.Go)(board_model.spaces[0])).amount);
+                        players[current_player].ReceiveCash(((Model.Space.Go)(board_model.spaces[0])).amount, soundManagerClassic);
                         hud.UpdateInfo(this);
                         MessagePopUp.Create(hud.transform, "You passed GO! You receive "+((Model.Space.Go)(board_model.spaces[0])).amount+ "Q in cash!",3,true);
                         soundManagerClassic.PlayIncomeSound();
@@ -566,7 +566,7 @@ public class game_controller : MonoBehaviour
             {
                 hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " landed on Free Parking. Collect all those juicy fines!");
                 hud.current_main_PopUp.btn1.onClick.AddListener(delegate {
-                    players[current_player].ReceiveCash(board_model.parkingFees);
+                    players[current_player].ReceiveCash(board_model.parkingFees, soundManagerClassic);
                     soundManagerClassic.PlayIncomeSound();
                     board_model.parkingFees = 0;
                 });
@@ -620,7 +620,7 @@ public class game_controller : MonoBehaviour
             case SqType.TAX:
             {
                 hud.current_main_PopUp = PopUp.OK(hud.transform, players[current_player].name + " misfiled their tax returns, pay HMRC "+((Model.Space.Tax)(current_space)).amount  +"Q of "+current_space.name);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(players[current_player].PayCash(((Model.Space.Tax)(current_space)).amount),this,players[current_player]));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(players[current_player].PayCash(((Model.Space.Tax)(current_space)).amount, soundManagerClassic),this,players[current_player]));
                 AI_moneyToPay = ((Model.Space.Tax)(current_space)).amount;
                 AI_trigger = Model.Decision_trigger.PAYMONEY;
                 break;
@@ -634,14 +634,14 @@ public class game_controller : MonoBehaviour
         {
             case CardAction.PAYTOBANK:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"]),this,player));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"], soundManagerClassic),this,player));
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
                 AI_moneyToPay = card.kwargs["amount"];
                 AI_trigger = Model.Decision_trigger.PAYMONEY;
             break;
             case CardAction.PAYTOPLAYER:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => player.ReceiveCash(card.kwargs["amount"]));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => player.ReceiveCash(card.kwargs["amount"], soundManagerClassic));
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
                 AI_trigger = Model.Decision_trigger.OK;
             break;
@@ -681,7 +681,7 @@ public class game_controller : MonoBehaviour
                     {
                         if(p != player)
                         {
-                            Model.Decision_outcome outcome = p.PayCash(card.kwargs["amount"],player);
+                            Model.Decision_outcome outcome = p.PayCash(card.kwargs["amount"],soundManagerClassic,player);
                             if(outcome == Model.Decision_outcome.NOT_ENOUGH_MONEY || outcome == Model.Decision_outcome.NOT_ENOUGH_ASSETS)
                             {
                                 absent_names += p.name + " ";
@@ -702,7 +702,7 @@ public class game_controller : MonoBehaviour
             break;
             case CardAction.PAYORCHANCE:
                 hud.current_main_PopUp = PopUp.CardWithOption(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"],board:board_model),this,player));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(card.kwargs["amount"],soundManagerClassic,board:board_model),this,player));
                 hud.current_main_PopUp.btn2.onClick.AddListener(delegate {
                     hud.current_main_PopUp.closePopup(); 
                     Model.Card new_card = opportunity_knocks.PopCard();
@@ -713,7 +713,7 @@ public class game_controller : MonoBehaviour
             break;
             case CardAction.PAYTOPARKING:
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => player.PayCash(card.kwargs["amount"],board:board_model));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => player.PayCash(card.kwargs["amount"],soundManagerClassic,board:board_model));
                 hud.current_main_PopUp.btn1.onClick.AddListener(hud.current_main_PopUp.closePopup);
                 AI_moneyToPay = card.kwargs["amount"];
                 AI_trigger = Model.Decision_trigger.PAYMONEY;
@@ -721,7 +721,7 @@ public class game_controller : MonoBehaviour
             case CardAction.REPAIRS:
                 int total = card.RepairsCost(player);
                 hud.current_main_PopUp = PopUp.Card(hud.transform,player,this,card,card_type);
-                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(total),this,player));
+                hud.current_main_PopUp.btn1.onClick.AddListener(() => hud.current_main_PopUp.PayOption(player.PayCash(total, soundManagerClassic),this,player));
                 AI_moneyToPay = total;
                 AI_trigger = Model.Decision_trigger.PAYMONEY;
             break;
@@ -837,7 +837,7 @@ public class game_controller : MonoBehaviour
             hud.current_main_PopUp.closePopup();
             MessagePopUp.Create(hud.transform,"Nobody bought this property!",3);
         } else {
-            highest_bidder.BuyProperty(current_space,highest_bid);
+            highest_bidder.BuyProperty(current_space,highest_bid, soundManagerClassic);
             View.Square square = board_view.squares[current_space.position-1];
             if(square is PropertySquare)
             {
@@ -1074,7 +1074,7 @@ public class game_controller : MonoBehaviour
                     if(prop.mortgage() == Model.Decision_outcome.SUCCESSFUL) {
                         successful = true;
                     }
-                    else if(player.SellProperty(prop,board_model) == Model.Decision_outcome.SUCCESSFUL)
+                    else if(player.SellProperty(prop,board_model, soundManagerClassic) == Model.Decision_outcome.SUCCESSFUL)
                     {
                         ((View.PropertySquare)(board_view.squares[prop.position-1])).removeRibbon();
                         successful = true;
@@ -1082,7 +1082,7 @@ public class game_controller : MonoBehaviour
                 }
             } else {
                 if(prop.mortgage() != Model.Decision_outcome.SUCCESSFUL){
-                    if(player.SellProperty(prop,board_model) == Model.Decision_outcome.SUCCESSFUL)
+                    if(player.SellProperty(prop,board_model, soundManagerClassic) == Model.Decision_outcome.SUCCESSFUL)
                     {
                         ((View.UtilitySquare)(board_view.squares[prop.position-1])).removeRibbon();
                         successful = true;
