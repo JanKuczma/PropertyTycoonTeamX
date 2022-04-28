@@ -140,7 +140,7 @@ public class game_controller : MonoBehaviour
             PerformAction();
         }
 
-        //setup finger cursor and get init cemara pos (top pos)
+        //setup finger cursor and get init camera pos (top pos)
         Cursor.SetCursor(Asset.FingerTextureCursor, Vector2.zero, CursorMode.Auto);
         cam_pos_top = Camera.main.transform.position;
         //setup hud buttons
@@ -428,6 +428,7 @@ public class game_controller : MonoBehaviour
         else if(gameState == GamePhase.WINNERCELEBRATION)
         {
             if(hud.current_main_PopUp == null) {
+                soundManagerClassic.PlayVictoryMusic();
                 hud.CpuPanel.SetActive(false);
                 if(isTurbo)
                 {
@@ -465,8 +466,9 @@ public class game_controller : MonoBehaviour
      public void decidePlayerOrder()
      {
          if(!tabs_set)
-            {
-                MessagePopUp tmp_popUp = MessagePopUp.Create(hud.transform, players[current_player].name + ", it's your turn!",2,true);
+         {
+             PopUp playerOrderPopUp = PopUp.OK(hud.transform,
+                 "Decide the order or turns!\n\nEach player has a go at rolling the highest number possible. Players take turns in order of who had the highest roll.\n\nIf you roll the same as somebody else, you must roll again!");
                 hud.set_current_player_tab(players[current_player]);
                 hud.CpuPanel.SetActive(!players[current_player].isHuman);
                 invisibleWall.SetActive(!players[current_player].isHuman);

@@ -145,49 +145,55 @@ public class SoundManager : MonoBehaviour
     /// <param name="i">Determined by velocity of the dice upon collision></param>
     public void checkPlayerStatus(Player player)
     {
-        // if player is on Go To Jail Square
-        if (player.position == 31)
+        // victory music takes prority over every other audio source
+        if (!sounds[7].source.isPlaying)
         {
-            // if Jail music not already playing, play it
-            if (!sounds[4].source.isPlaying)
+
+            // if player is on Go To Jail Square
+            if (player.position == 31)
             {
-                PlayAndStopOthers("Jail");    
-            }
-            // if player is on any other square
-        } else if (player.in_jail == 0)
-        {
-            if (!starWarsTheme)
-            {
-                // if in classic mode and none of the background tracks are playing, play one of them
-                if (!sounds[1].source.isPlaying && !sounds[2].source.isPlaying && !sounds[3].source.isPlaying)
+                // if Jail music not already playing, play it
+                if (!sounds[4].source.isPlaying)
                 {
-                    PlayGameMusic();
+                    PlayAndStopOthers("Jail");
+                }
+                // if player is on any other square
+            }
+            else if (player.in_jail == 0)
+            {
+                if (!starWarsTheme)
+                {
+                    // if in classic mode and none of the background tracks are playing, play one of them
+                    if (!sounds[1].source.isPlaying && !sounds[2].source.isPlaying && !sounds[3].source.isPlaying)
+                    {
+                        PlayGameMusic();
+                    }
+                }
+                else
+                {
+                    // if in star wars mode and neither of the bg tracks are playing, play one of them
+                    if (!sounds[17].source.isPlaying && !sounds[18].source.isPlaying)
+                    {
+                        PlayGameMusic();
+                    }
                 }
             }
-            else
+
+            // If player is in jail and the jail music isn't playing, play it
+            if (player.in_jail > 0 && !sounds[4].source.isPlaying)
             {
-                // if in star wars mode and neither of the bg tracks are playing, play one of them
-                if (!sounds[17].source.isPlaying && !sounds[18].source.isPlaying)
+                if (!sounds[4].source.isPlaying)
                 {
-                    PlayGameMusic();
+                    PlayAndStopOthers("Jail");
                 }
             }
-        }
-        // If player is in jail and the jail music isn't playing, play it
-        if (player.in_jail > 0 && !sounds[4].source.isPlaying)
-        {
-            if (!sounds[4].source.isPlaying)
+
+            // If player has no remaining assests, play bankrupt music
+            if (player.totalValueOfAssets() < 1)
             {
-                PlayAndStopOthers("Jail");    
+                PlayAndStopOthers("Bankrupt");
             }
         }
-        
-        // If player has no remaining assests, play bankrupt music
-        if (player.totalValueOfAssets() < 1)
-        {
-             PlayAndStopOthers("Bankrupt");
-        }
-         
     }
     /// <summary>
     /// Plays random background game music based on game theme
@@ -237,5 +243,11 @@ public class SoundManager : MonoBehaviour
     {
         sounds[19].source.PlayOneShot(sounds[19].audioClip);
     }
+
+    public void PlayVictoryMusic()
+    {
+        PlayAndStopOthers("Winner");
+    }
+    
 }
 
