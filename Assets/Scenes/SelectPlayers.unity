@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -147,6 +147,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 649489120900669550, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489120986585124, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_IsOn
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125912, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
@@ -251,11 +255,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
-      value: Player 1
+      value: Enter Name...
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 649489122757779192, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_Text
@@ -387,7 +403,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 649489120900669550, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489120986585124, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_IsOn
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489120986585124, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 649489121003125912, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_Name
@@ -483,7 +507,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
-      value: Player 2
+      value: Enter Name...
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1906038116885720928, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -833,7 +865,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
-      value: Player 4
+      value: Enter Name...
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1906038116885720928, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1089,7 +1129,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
-      value: Player 5
+      value: Enter Name...
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1906038116885720928, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1364,7 +1412,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
-      value: Player 6
+      value: Enter Name...
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1906038116885720928, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -1912,6 +1968,18 @@ PrefabInstance:
     - target: {fileID: 649489121575053021, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_text
       value: Computer
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_text
+      value: Enter Name...
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 649489121654209308, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1906038116885720928, guid: 326b42129e350644b8ac274fa6aed49c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
