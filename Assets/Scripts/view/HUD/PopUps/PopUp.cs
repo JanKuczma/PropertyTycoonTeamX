@@ -360,7 +360,7 @@ namespace View
         if (rules_controls_index == 0)
         {
             rules_controls_index = 1;
-            SetMessage("The object of the game is to become the wealthiest player through buying, renting and selling property.\n\nEach player starts with 1500Q in cash.\n\nYou may buy a property once you land on it. You must pay rent after landing on another player's property. Owning full sets of properties and building houses increases rent amount.");
+            SetMessage("The objective of the game is to become the wealthiest player through buying, renting and selling property.\n\nEach player starts with 1500Q in cash.\n\nYou may buy a property once you land on it. You must pay rent after landing on another player's property. Owning full sets of properties and building houses increases rent amount.");
             buttonText.text = "Controls";
         }
         else
