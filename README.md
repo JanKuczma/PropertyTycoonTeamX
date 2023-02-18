@@ -1,2 +1,2 @@
 # PropertyTycoonTeamX
-Team project coursework, Software Engineering module
+Team X Software Engineering Project
